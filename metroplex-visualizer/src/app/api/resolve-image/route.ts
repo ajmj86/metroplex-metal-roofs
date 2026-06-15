@@ -23,12 +23,12 @@ export async function POST(req: NextRequest) {
     // Fetch satellite image only
     // Optimized parameters:
     // - zoom=20: Optimal zoom level for detailed roof visibility and framing
-    // - size=300x300: Smaller size for faster loading while maintaining quality with scale=2
-    // - scale=2: Doubles pixel density for sharper image (returns 600x600 effectively)
+    // - size=400x400: Balanced size for faster loading while maintaining quality with scale=2
+    // - scale=2: Doubles pixel density for sharper image (returns 800x800 effectively)
     // - maptype=satellite: Aerial view
     const satelliteUrl =
       `https://maps.googleapis.com/maps/api/staticmap` +
-      `?center=${enc}&zoom=20&size=300x300&scale=2&maptype=satellite&key=${KEY}`;
+      `?center=${enc}&zoom=20&size=400x400&scale=2&maptype=satellite&key=${KEY}`;
 
     console.log('[resolve-image] Satellite URL:', satelliteUrl);
 
