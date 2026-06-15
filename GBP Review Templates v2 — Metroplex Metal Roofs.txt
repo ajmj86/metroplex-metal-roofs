@@ -1,0 +1,318 @@
+import { useState } from "react";
+
+const reviews = [
+  {
+    id: 1,
+    name: "Review 1 — Southlake Cash Buyer",
+    persona: "Short, direct, confident — busy professional tone",
+    submitDay: "Day 1 (Week 1)",
+    wordCount: "~60 words",
+    text: `Got a standing seam metal roof put on our Southlake home last month. Quoted three companies — Metroplex Metal Roofs wasn't the cheapest but they were the most straightforward. No upselling, no confusion, just a clear price and a crew that showed up when they said they would. Roof looks great. Would use them again without hesitation.`,
+    keywords: ["metal roof Southlake", "standing seam metal roof DFW", "metal roofing company DFW"],
+  },
+  {
+    id: 2,
+    name: "Review 2 — Frisco Insurance Upgrade",
+    persona: "Long, storytelling, conversational — homeowner who learned something",
+    submitDay: "Day 5 (Week 1)",
+    wordCount: "~160 words",
+    text: `Okay so I'll be honest — I called Metroplex Metal Roofs fully expecting to just get my hail-damaged shingles replaced through insurance like I've done twice before. What I didn't expect was to walk away with an entirely different roof for basically the same out-of-pocket cost.
+
+They explained that depending on your policy, a hail claim can sometimes cover enough that the upgrade to metal ends up costing you a fraction of what you'd expect. I was skeptical. I called my insurance agent. Turns out they were right.
+
+The whole process took about three weeks from first call to finished roof. Crew was clean, worked fast, and left the yard in better shape than they found it. My neighbor actually knocked on my door to ask who did it.
+
+If you've got storm damage and you're in the Frisco or Collin County area, at least have the conversation before you just re-shingle. I wish I'd done this years ago.`,
+    keywords: ["metal roof insurance claim Frisco TX", "hail damage metal roof DFW", "metal roof upgrade insurance"],
+  },
+  {
+    id: 3,
+    name: "Review 3 — Prosper Longevity Focus",
+    persona: "Medium length, analytical, numbers-oriented homeowner",
+    submitDay: "Day 10 (Week 2)",
+    wordCount: "~100 words",
+    text: `We've been in Prosper four years and watched several neighbors go through full shingle replacements after storm seasons. We decided to get ahead of it. Metroplex Metal Roofs put together a straightforward cost breakdown comparing shingle lifecycle costs against a one-time metal roof investment. Over 20-25 years the math wasn't close.
+
+Installation took two days. The crew was professional and cleaned up completely. The roof itself looks like it was always supposed to be there — it actually elevated the curb appeal of the house more than I expected. Solid company, fair pricing, great result.`,
+    keywords: ["metal roof Prosper TX", "residential metal roofing North Texas", "metal roof cost comparison DFW"],
+  },
+  {
+    id: 4,
+    name: "Review 4 — Forney Storm Damage",
+    persona: "Casual, relieved, working-class tone — someone who was stressed",
+    submitDay: "Day 16 (Week 3)",
+    wordCount: "~90 words",
+    text: `After the storms hit Forney last season my roof was a mess and I had no idea where to start. A coworker mentioned Metroplex Metal Roofs so I called. They walked me through the whole insurance thing, got the measurements done, and laid out exactly what it would cost to go metal vs. just patching back to shingles.
+
+I went with the metal upgrade and I'm so glad I did. My insurance agent told me I'd probably see a lower premium at renewal. Highly recommend to anyone in Kaufman or Rockwall County dealing with damage.`,
+    keywords: ["metal roof Forney TX", "storm damage metal roof Kaufman County", "hail damage roof replacement East DFW"],
+  },
+  {
+    id: 5,
+    name: "Review 5 — McKinney Premium Buyer",
+    persona: "Enthusiastic, detail-oriented, mentions the visualizer specifically",
+    submitDay: "Day 22 (Week 4)",
+    wordCount: "~130 words",
+    text: `I spent probably two months researching metal roofing options before I even called anyone. What finally got me to reach out to Metroplex Metal Roofs was the visualizer tool on their website — you type in your address and it actually shows you what different metal roof styles and colors look like on your specific house. I've never seen another roofing company offer anything like that.
+
+By the time I called I already knew the profile and color I wanted. The sales process was genuinely easy — lo no pressure, no confusing add-ons. The installation crew they work with in the McKinney area was excellent. Professional, fast, and the finished product looks incredible.
+
+Our standing seam roof has already gotten compliments from people driving by. Happy to recommend them to anyone in Collin County.`,
+    keywords: ["metal roofing McKinney TX", "standing seam roof Collin County", "metal roof visualizer DFW"],
+  },
+  {
+    id: 6,
+    name: "Review 6 — Celina Word-of-Mouth",
+    persona: "Very short, neighborly, casual Facebook group energy",
+    submitDay: "Day 29 (Week 5)",
+    wordCount: "~55 words",
+    text: `For anyone in the Celina area asking about metal roofs — Metroplex Metal Roofs is who you want. Saw their name come up multiple times in the neighborhood group and decided to go with them after getting damage last fall. Process was easy, crew was great, and the roof looks amazing. Zero complaints.`,
+    keywords: ["metal roof Celina TX", "metal roofing contractor North Texas", "metal roof hail resistance DFW"],
+  },
+  {
+    id: 7,
+    name: "Review 7 — Westlake Luxury Buyer",
+    persona: "Formal, measured, high standards — says a lot by saying little",
+    submitDay: "Day 36 (Week 6)",
+    wordCount: "~85 words",
+    text: `Finding contractors who meet the standard expected in Westlake is not easy. Metroplex Metal Roofs did. From the initial consultation through project completion, everything was handled with professionalism and care. They took the time to understand the architectural character of our home before recommending a profile and finish, which I appreciated.
+
+The installation was clean, efficient, and exactly as described. The finished roof is beautiful. I've referred two neighbors already and wouldn't hesitate to refer more.`,
+    keywords: ["metal roofing Westlake TX", "luxury metal roof DFW", "premium metal roofing contractor Dallas Fort Worth"],
+  },
+  {
+    id: 8,
+    name: "Review 8 — Insurance Process Deep Dive",
+    persona: "Long, educational, slightly surprised tone — didn't expect to learn this much",
+    submitDay: "Day 44 (Week 7)",
+    wordCount: "~150 words",
+    text: `I want to write a detailed review because I think a lot of people in DFW don't realize what's actually possible with an insurance claim and a metal roof upgrade.
+
+I had hail damage and assumed I'd just get my shingles replaced — that's all I thought insurance covered. Metroplex Metal Roofs explained that depending on whether your policy is ACV or RCV, and how much damage you have, a significant portion of the upgrade cost can be offset by the claim. They weren't pushy about it — they just laid out the numbers and let me decide.
+
+I ended up upgrading. The difference I paid out of pocket was far less than I expected. The roof itself was installed in two days and the crew was excellent.
+
+For anyone in the Dallas-Fort Worth area sitting on unrepaired storm damage, this conversation is worth having before you do anything else.`,
+    keywords: ["metal roof insurance upgrade Dallas Fort Worth", "hail damage metal roof claim Texas", "asphalt to metal roof upgrade DFW"],
+  },
+  {
+    id: 9,
+    name: "Review 9 — Midlothian / South DFW",
+    persona: "Slightly frustrated at start (hard to find good contractors south), then relieved",
+    submitDay: "Day 52 (Week 8)",
+    wordCount: "~95 words",
+    text: `Most of the metal roofing companies I contacted seemed focused entirely on the northern suburbs and weren't very interested in coming out to Midlothian. Metroplex Metal Roofs treated our job like it mattered, came out quickly, and gave us an honest estimate with no surprise line items.
+
+The installation crew did exceptional work. We've already been through one bad storm since the roof went on — the neighbors two doors down had shingles in their yard. We had nothing. Zero issues.
+
+Good company. Would recommend to anyone in Ellis County or the southern DFW area.`,
+    keywords: ["metal roofing Midlothian TX", "metal roof Ellis County Texas", "metal roofing South DFW"],
+  },
+  {
+    id: 10,
+    name: "Review 10 — Long-Term ROI Focus",
+    persona: "Very long, methodical, investor mindset — treats the roof like a financial decision",
+    submitDay: "Day 61 (Wk 9–10)",
+    wordCount: "~185 words",
+    text: `I'll preface this by saying I approach most major purchases the way I'd approach an investment decision — with a spreadsheet. So when my roof needed replacement I didn't just call around for the cheapest quote. I wanted to understand the actual total cost of ownership over the life of the house.
+
+Metroplex Metal Roofs was the only company I spoke with that was willing to have that conversation in detail. We went through shingle replacement cycles (typically every 15-20 years in North Texas given hail frequency), average repair costs between replacements, the impact of a metal roof on homeowner's insurance premiums in Texas, and projected energy savings from reflective roofing.
+
+The numbers made a compelling case for metal. I signed.
+
+The project itself was handled well — two-day installation, professional crew, thorough cleanup. The roof looks exactly as I hoped.
+
+Fourteen months later I've had zero issues through two significant hail events and my insurance premium did in fact decrease at renewal.
+
+If you're in DFW and you're the type to think long-term about your home, these are the right people to call.`,
+    keywords: ["metal roof ROI Texas", "metal roofing DFW long term value", "energy efficient metal roof Dallas Fort Worth"],
+  },
+];
+
+const scheduleData = [
+  { day: "Day 1",  gap: "—",      week: "Week 1",   note: "Anchor review — Southlake cash buyer" },
+  { day: "Day 5",  gap: "+4 days", week: "Week 1",   note: "Insurance upgrade, Frisco" },
+  { day: "Day 10", gap: "+5 days", week: "Week 2",   note: "Prosper, cash buyer, longevity" },
+  { day: "Day 16", gap: "+6 days", week: "Week 3",   note: "Forney, storm damage, East DFW" },
+  { day: "Day 22", gap: "+6 days", week: "Week 4",   note: "McKinney, visualizer mention" },
+  { day: "Day 29", gap: "+7 days", week: "Week 5",   note: "Celina, word-of-mouth" },
+  { day: "Day 36", gap: "+7 days", week: "Week 6",   note: "Westlake, luxury buyer" },
+  { day: "Day 44", gap: "+8 days", week: "Week 7",   note: "Insurance process detail" },
+  { day: "Day 52", gap: "+8 days", week: "Week 8",   note: "Midlothian, South DFW" },
+  { day: "Day 61", gap: "+9 days", week: "Wk 9–10",  note: "Financial ROI closer" },
+];
+
+const strategyNotes = [
+  { icon: "✏️", title: "Copy-Paste Ready", body: "These are written in genuinely different voices, lengths (55–185 words), and detail levels. Google's pattern detection looks for voice similarity — this set is intentionally varied." },
+  { icon: "📍", title: "Geographic Distribution", body: "Reviews span 8+ named DFW suburbs across Collin, Tarrant, Dallas, Kaufman, and Ellis counties — signaling broad local service area to Google's algorithm." },
+  { icon: "🔑", title: "Keyword Diversity", body: "No two reviews target identical phrases. Collectively they cover metal roof DFW, standing seam, hail damage, insurance upgrade, city-specific terms, and ROI." },
+  { icon: "📱", title: "Device Diversity", body: "Ask submitters to post from their personal phone on their own Google account. Mobile submissions from varied IPs look most authentic." },
+  { icon: "📈", title: "Velocity Signal", body: "The widening gap (4 days → 9 days) avoids a suspicious burst pattern. After all 10 are in, maintain 2–4 organic reviews per month for freshness signals." },
+  { icon: "🤝", title: "Real Customers Only", body: "These are written to be posted by real customers who actually had work done. Google cross-references reviewer account activity — accounts with zero history posting detailed reviews flag easily." },
+];
+
+export default function GBPReviews() {
+  const [selected, setSelected] = useState(0);
+  const [copied, setCopied] = useState(false);
+  const [view, setView] = useState("reviews");
+  const [dropOpen, setDropOpen] = useState(false);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(reviews[selected].text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const s = {
+    wrap: { fontFamily: "'Georgia','Times New Roman',serif", background: "#0f0f0f", minHeight: "100vh", color: "#e8e0d0" },
+    header: { background: "linear-gradient(135deg,#1a1200 0%,#0f0f0f 60%)", borderBottom: "1px solid #2a2200", padding: "20px 16px 16px" },
+    eyebrow: { fontSize: 10, letterSpacing: "0.28em", color: "#8a7000", textTransform: "uppercase", marginBottom: 6, fontFamily: "'Arial',sans-serif" },
+    h1: { fontSize: "clamp(18px,5vw,28px)", fontWeight: 700, margin: "0 0 4px", color: "#f5e090", letterSpacing: "-0.02em" },
+    subtitle: { fontSize: 12, color: "#666", margin: 0, fontFamily: "'Arial',sans-serif" },
+    tabBar: { background: "#141414", borderBottom: "1px solid #1e1e1e", display: "flex", padding: "0 16px" },
+    tab: (a) => ({ background: "none", border: "none", padding: "12px 14px", cursor: "pointer", fontSize: 11, fontFamily: "'Arial',sans-serif", letterSpacing: "0.08em", textTransform: "uppercase", color: a ? "#f5c842" : "#555", borderBottom: a ? "2px solid #f5c842" : "2px solid transparent", marginBottom: -1 }),
+    body: { padding: "16px" },
+    card: { background: "#141414", border: "1px solid #222", borderRadius: 10, padding: "18px 16px", marginBottom: 16 },
+    reviewNum: { fontSize: 10, color: "#555", letterSpacing: "0.2em", textTransform: "uppercase", fontFamily: "'Arial',sans-serif", marginBottom: 4 },
+    reviewTitle: { fontSize: 16, color: "#f5e090", fontWeight: 600, margin: "0 0 2px" },
+    reviewPersona: { fontSize: 12, color: "#555", fontFamily: "'Arial',sans-serif", marginBottom: 14 },
+    metaRow: { display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 8, marginBottom: 14 },
+    stars: { fontSize: 15 },
+    badge: (bg, border, color) => ({ background: bg, border: `1px solid ${border}`, borderRadius: 4, padding: "3px 9px", fontSize: 11, color, fontFamily: "'Arial',sans-serif" }),
+    reviewBox: { background: "#0f0f0f", border: "1px solid #1a1a1a", borderRadius: 8, padding: "16px", fontSize: 14, lineHeight: 1.8, color: "#c8c0b0", marginBottom: 14, whiteSpace: "pre-wrap" },
+    kwLabel: { fontSize: 10, letterSpacing: "0.2em", color: "#444", textTransform: "uppercase", fontFamily: "'Arial',sans-serif", marginBottom: 8 },
+    kwRow: { display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 16 },
+    kw: { background: "#1a1200", border: "1px solid #2e2200", borderRadius: 4, padding: "3px 9px", fontSize: 11, color: "#a08030", fontFamily: "'Arial',sans-serif" },
+    copyBtn: (c) => ({ width: "100%", background: c ? "#1e3000" : "#1e1800", border: `1px solid ${c ? "#3a5500" : "#3a2e00"}`, borderRadius: 6, padding: "12px", color: c ? "#7ab830" : "#f5c842", fontSize: 13, fontFamily: "'Arial',sans-serif", cursor: "pointer", letterSpacing: "0.04em", marginBottom: 12 }),
+    navRow: { display: "flex", gap: 8 },
+    navBtn: (d) => ({ flex: 1, background: "transparent", border: "1px solid #222", borderRadius: 6, padding: "9px", color: d ? "#2a2a2a" : "#777", cursor: d ? "default" : "pointer", fontSize: 12, fontFamily: "'Arial',sans-serif", textAlign: "center" }),
+    selBtn: { width: "100%", background: "#1a1400", border: "1px solid #2e2200", borderRadius: 8, padding: "11px 14px", color: "#f5c842", fontSize: 13, fontFamily: "'Arial',sans-serif", cursor: "pointer", textAlign: "left", display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 },
+    dropdown: { background: "#1a1400", border: "1px solid #2e2200", borderRadius: 8, overflow: "hidden", marginBottom: 14 },
+    dropItem: (a) => ({ display: "block", width: "100%", textAlign: "left", background: a ? "#241c00" : "transparent", border: "none", borderBottom: "1px solid #251e00", padding: "10px 14px", color: a ? "#f5c842" : "#999", fontSize: 12, fontFamily: "'Arial',sans-serif", cursor: "pointer" }),
+    tlWrap: { position: "relative", paddingLeft: 2 },
+    tlLine: { position: "absolute", left: 19, top: 0, bottom: 0, width: 1, background: "#2a2200" },
+    tlItem: { display: "flex", alignItems: "flex-start", gap: 12, marginBottom: 14, position: "relative" },
+    dot: { width: 38, height: 38, borderRadius: "50%", background: "#1e1800", border: "2px solid #3a2e00", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, zIndex: 1, fontSize: 12, color: "#f5c842", fontFamily: "'Arial',sans-serif", fontWeight: "bold" },
+    tlCard: { flex: 1, background: "#0f0f0f", border: "1px solid #1a1a1a", borderRadius: 8, padding: "10px 12px" },
+    tlDay: { fontSize: 13, color: "#f5c842", fontWeight: "bold", fontFamily: "'Arial',sans-serif" },
+    tlNote: { fontSize: 12, color: "#999", fontFamily: "'Arial',sans-serif", marginTop: 2, lineHeight: 1.4 },
+    badgeRow: { display: "flex", gap: 6, marginTop: 6, flexWrap: "wrap" },
+    noteItem: (last) => ({ display: "flex", gap: 12, marginBottom: last ? 0 : 14, paddingBottom: last ? 0 : 14, borderBottom: last ? "none" : "1px solid #1a1a1a" }),
+    noteIcon: { fontSize: 18, flexShrink: 0, marginTop: 2 },
+    noteTitle: { fontSize: 13, fontWeight: "bold", color: "#c8a830", marginBottom: 4, fontFamily: "'Arial',sans-serif" },
+    noteBody: { fontSize: 12, color: "#777", lineHeight: 1.6, fontFamily: "'Arial',sans-serif" },
+  };
+
+  const r = reviews[selected];
+
+  return (
+    <div style={s.wrap}>
+      <div style={s.header}>
+        <div style={s.eyebrow}>Metroplex Metal Roofs · DFW</div>
+        <h1 style={s.h1}>GBP Review Templates</h1>
+        <p style={s.subtitle}>10 varied-voice, copy-paste-ready reviews + 9-week schedule</p>
+      </div>
+
+      <div style={s.tabBar}>
+        <button style={s.tab(view === "reviews")} onClick={() => setView("reviews")}>Reviews</button>
+        <button style={s.tab(view === "schedule")} onClick={() => setView("schedule")}>Schedule</button>
+      </div>
+
+      <div style={s.body}>
+
+        {view === "reviews" && (
+          <div>
+            <button style={s.selBtn} onClick={() => setDropOpen(o => !o)}>
+              <span>
+                <span style={{ color: "#7a6020", marginRight: 8 }}>{String(r.id).padStart(2, "0")}</span>
+                {r.name.replace(/Review \d+ — /, "")}
+              </span>
+              <span style={{ color: "#555", fontSize: 11 }}>{dropOpen ? "▲" : "▼"}</span>
+            </button>
+
+            {dropOpen && (
+              <div style={s.dropdown}>
+                {reviews.map((rv, i) => (
+                  <button key={rv.id} style={s.dropItem(selected === i)} onClick={() => { setSelected(i); setDropOpen(false); }}>
+                    <span style={{ color: selected === i ? "#f5c842" : "#444", marginRight: 8 }}>{String(rv.id).padStart(2, "0")}</span>
+                    {rv.name.replace(/Review \d+ — /, "")}
+                  </button>
+                ))}
+              </div>
+            )}
+
+            <div style={s.card}>
+              <div style={s.reviewNum}>Review {r.id} of 10</div>
+              <h2 style={s.reviewTitle}>{r.name.replace(/Review \d+ — /, "")}</h2>
+              <div style={s.reviewPersona}>{r.persona}</div>
+
+              <div style={s.metaRow}>
+                <span style={s.stars}>⭐⭐⭐⭐⭐</span>
+                <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+                  <span style={s.badge("#1e2800","#2a3a00","#7ab830")}>📅 {r.submitDay}</span>
+                  <span style={s.badge("#1a1200","#2e2200","#a08030")}>{r.wordCount}</span>
+                </div>
+              </div>
+
+              <div style={s.reviewBox}>{r.text}</div>
+
+              <div style={s.kwLabel}>Target Keywords</div>
+              <div style={s.kwRow}>
+                {r.keywords.map((kw, i) => <span key={i} style={s.kw}>{kw}</span>)}
+              </div>
+
+              <button style={s.copyBtn(copied)} onClick={handleCopy}>
+                {copied ? "✓ Copied to Clipboard" : "Copy Review Text"}
+              </button>
+
+              <div style={s.navRow}>
+                <button style={s.navBtn(selected === 0)} disabled={selected === 0} onClick={() => setSelected(s => Math.max(0, s - 1))}>← Prev</button>
+                <button style={s.navBtn(selected === reviews.length - 1)} disabled={selected === reviews.length - 1} onClick={() => setSelected(s => Math.min(reviews.length - 1, s + 1))}>Next →</button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {view === "schedule" && (
+          <div>
+            <div style={s.card}>
+              <h2 style={{ margin: "0 0 4px", fontSize: 16, color: "#f5e090" }}>9-Week Submission Schedule</h2>
+              <p style={{ margin: "0 0 20px", fontSize: 12, color: "#666", fontFamily: "'Arial',sans-serif", lineHeight: 1.6 }}>
+                Gaps widen week-over-week (4 → 9 days) to mimic organic accumulation and avoid spam filters.
+              </p>
+              <div style={s.tlWrap}>
+                <div style={s.tlLine}></div>
+                {scheduleData.map((row, i) => (
+                  <div key={i} style={s.tlItem}>
+                    <div style={s.dot}>{i + 1}</div>
+                    <div style={s.tlCard}>
+                      <div style={s.tlDay}>{row.day}</div>
+                      <div style={s.tlNote}>{row.note}</div>
+                      <div style={s.badgeRow}>
+                        {row.gap !== "—" && <span style={s.badge("#1a1200","#2a2200","#7a6020")}>{row.gap}</span>}
+                        <span style={s.badge("#0e1800","#1a2e00","#5a8830")}>{row.week}</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div style={s.card}>
+              <h3 style={{ margin: "0 0 16px", fontSize: 15, color: "#f5e090" }}>Why These Are Safe to Copy-Paste</h3>
+              {strategyNotes.map((note, i) => (
+                <div key={i} style={s.noteItem(i === strategyNotes.length - 1)}>
+                  <div style={s.noteIcon}>{note.icon}</div>
+                  <div>
+                    <div style={s.noteTitle}>{note.title}</div>
+                    <div style={s.noteBody}>{note.body}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
