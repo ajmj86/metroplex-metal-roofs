@@ -25,10 +25,9 @@ function getRoofDetail(roofType: string): string {
 
 function buildRoofRenderPrompt(roofType: string, color: string, colorHex: string, detail: string): string {
   return (
-    `CRITICAL: Edit ONLY the ROOF MATERIAL. NOTHING ELSE.\n` +
-    `Preserve EXACTLY: brick/siding colors and texture, window frames, glass, doors, entryway, stairs, landscaping, trees, driveway, pavement, sky, clouds, shadows, lighting, camera angle, perspective, all proportions, all non-roof colors.\n` +
-    `ONLY change: Replace the existing roof with ${roofType} in ${color} (${colorHex}). ${detail}.\n` +
-    `The house structure, walls, foundation, and all elements below the roofline must remain completely unchanged. This is a SURGICAL roof-only replacement.`
+    `This is an aerial satellite view of a residential home. Replace ONLY the roof surface with ${roofType} metal roofing in ${color} (${colorHex}). ${detail}.\\n` +
+    `Keep all other elements — yard, driveway, pool, surrounding houses, trees — completely unchanged.\\n` +
+    `CRITICAL: Preserve EXACTLY: grass, landscaping, shadows, lighting, camera angle, perspective, all proportions. Do NOT generate a fake house or alter the ground/surroundings.`
   );
 }
 
