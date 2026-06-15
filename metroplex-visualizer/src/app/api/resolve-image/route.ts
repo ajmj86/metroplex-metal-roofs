@@ -20,39 +20,27 @@ export async function POST(req: NextRequest) {
 
     const enc = encodeURIComponent(address);
 
-    // 1. Check Street View metadata — avoids billing for a grey placeholder image
-    const metaRes = await fetch(
-      `https://maps.googleapis.com/maps/api/streetview/metadata?location=${enc}&key=${KEY}`
-    );
-    const meta = await metaRes.json();
+    // Fetch satellite image only
+    // Optimized parameters:
+    // - zoom=19: Shows full house without cutting edges
+    // - size=640x640: Maximum allowed by Google Maps Static API
+    // - scale=2: Doubles pixel density for sharper image (returns 1280x1280 effectively)
+    // - maptype=satellite: Aerial view
+    const satelliteUrl =
+      `https://maps.googleapis.com/maps/api/staticmap` +
+      `?center=${enc}&zoom=19&size=640x640&scale=2&maptype=satellite&key=${KEY}`;
+
+    console.log('[resolve-image] Satellite URL:', satelliteUrl);
 
     const result: { 
       address: string;
-      streetview?: { imageUrl: string; available: boolean };
       satellite: { imageUrl: string };
     } = {
       address,
       satellite: {
-        imageUrl:
-          `https://maps.googleapis.com/maps/api/staticmap` +
-          `?center=${enc}&zoom=21&size=800x500&maptype=satellite&key=${KEY}`,
+        imageUrl: satelliteUrl,
       },
     };
-
-    // 2. Try Street View
-    if (meta.status === 'OK') {
-      result.streetview = {
-        imageUrl:
-          `https://maps.googleapis.com/maps/api/streetview` +
-          `?size=800x500&location=${enc}&fov=80&pitch=0&key=${KEY}`,
-        available: true,
-      };
-    } else {
-      result.streetview = {
-        imageUrl: '',
-        available: false,
-      };
-    }
 
     return NextResponse.json(result);
   } catch (err) {

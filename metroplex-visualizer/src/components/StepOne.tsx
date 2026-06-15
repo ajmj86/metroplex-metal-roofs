@@ -5,7 +5,7 @@ import { loadGoogleMapsScript } from '@/lib/loadGoogleMaps';
 import type { ImageSource } from '@/types';
 
 interface StepOneProps {
-  onComplete: (address: string, streetviewUrl: string, satelliteUrl: string) => void;
+  onComplete: (address: string, satelliteUrl: string) => void;
 }
 
 // Bounding box that covers all of Texas (biases autocomplete, not a hard clip)
@@ -18,10 +18,8 @@ export function StepOne({ onComplete }: StepOneProps) {
   const [error, setError] = useState('');
   const [showUpload, setShowUpload] = useState(false);
   const [images, setImages] = useState<{
-    streetview?: { imageUrl: string; available: boolean };
     satellite?: { imageUrl: string };
   } | null>(null);
-  const [selectedSource, setSelectedSource] = useState<ImageSource>('streetview');
 
   const inputRef = useRef<HTMLInputElement>(null);
   const acRef = useRef<{
@@ -94,7 +92,6 @@ export function StepOne({ onComplete }: StepOneProps) {
               setError('');
               setShowUpload(false);
               setImages(null);
-              setSelectedSource('streetview');
             }
           });
 
@@ -140,16 +137,8 @@ export function StepOne({ onComplete }: StepOneProps) {
 
       const data = await res.json();
       setImages({
-        streetview: data.streetview,
         satellite: data.satellite,
       });
-
-      // Auto-select Street View if available, otherwise satellite
-      if (data.streetview?.available) {
-        setSelectedSource('streetview');
-      } else {
-        setSelectedSource('satellite');
-      }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong.');
       setShowUpload(true);
@@ -158,20 +147,19 @@ export function StepOne({ onComplete }: StepOneProps) {
     }
   };
 
-  // When user confirms a view selection, proceed
-  const handleConfirmImage = () => {
+  // When satellite image is fetched, proceed immediately (no view selection)
+  const handleImageResolved = () => {
     if (!images) return;
 
-    const streetviewUrl = images.streetview?.available ? images.streetview.imageUrl : '';
     const satelliteUrl = images.satellite?.imageUrl || '';
 
-    if (!streetviewUrl && !satelliteUrl) {
-      setError('No image URLs available.');
+    if (!satelliteUrl) {
+      setError('Could not fetch satellite image.');
       return;
     }
 
-    // Both are passed (street view can be empty, but satellite must exist)
-    onComplete(address, streetviewUrl, satelliteUrl);
+    // Proceed with satellite only
+    onComplete(address, satelliteUrl);
   };
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -189,7 +177,7 @@ export function StepOne({ onComplete }: StepOneProps) {
 
     const reader = new FileReader();
     reader.onload = () => {
-      onComplete(address.trim() || 'Uploaded photo', reader.result as string, '');
+      onComplete(address.trim() || 'Uploaded photo', reader.result as string);
     };
     reader.readAsDataURL(file);
   };
@@ -242,56 +230,26 @@ export function StepOne({ onComplete }: StepOneProps) {
         )}
       </form>
 
-      {/* Image Selection View */}
+      {/* Auto-proceed with satellite image */}
       {images && (
         <div className="mt-8 pt-6 border-t border-border space-y-4">
-          <p className="text-foreground text-sm font-medium">Choose a view:</p>
-
-          {/* Tab Buttons */}
-          <div className="flex gap-3">
-            {images.streetview?.available && (
-              <button
-                onClick={() => setSelectedSource('streetview')}
-                className={`flex-1 py-2.5 px-4 rounded-lg font-medium text-sm transition-all ${
-                  selectedSource === 'streetview'
-                    ? 'bg-accent text-background'
-                    : 'bg-card border border-border text-foreground hover:border-accent/50'
-                }`}
-              >
-                📸 Street View
-              </button>
-            )}
-            <button
-              onClick={() => setSelectedSource('satellite')}
-              className={`flex-1 py-2.5 px-4 rounded-lg font-medium text-sm transition-all ${
-                selectedSource === 'satellite'
-                  ? 'bg-accent text-background'
-                  : 'bg-card border border-border text-foreground hover:border-accent/50'
-              }`}
-            >
-              🛰️ Aerial View
-            </button>
-          </div>
+          <p className="text-foreground text-sm font-medium">🛰️ Fetched satellite view</p>
 
           {/* Preview Image */}
           <div className="relative bg-background rounded-lg overflow-hidden border border-border aspect-video">
             <img
-              src={
-                selectedSource === 'streetview' && images.streetview?.available
-                  ? images.streetview.imageUrl
-                  : images.satellite?.imageUrl || ''
-              }
-              alt={selectedSource === 'streetview' ? 'Street View' : 'Aerial View'}
+              src={images.satellite?.imageUrl || ''}
+              alt="Satellite Aerial View"
               className="w-full h-full object-cover"
             />
           </div>
 
-          {/* Confirmation Button */}
+          {/* Auto-proceed Button */}
           <button
-            onClick={handleConfirmImage}
+            onClick={handleImageResolved}
             className="w-full bg-accent text-background font-semibold py-3 rounded-xl hover:bg-accent/90 transition-colors text-sm"
           >
-            Use This Image →
+            Continue to Roof Config →
           </button>
         </div>
       )}

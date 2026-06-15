@@ -416,12 +416,15 @@ function CTAStep({ formData }: { formData: any }) {
 }
 
 interface LeadFormProps {
+  address?: string;
   onComplete?: (formData: any) => void;
 }
 
-export function LeadForm({ onComplete }: LeadFormProps) {
-  const [currentStep, setCurrentStep] = useState(0);
-  const [formData, setFormData] = useState({});
+export function LeadForm({ address, onComplete }: LeadFormProps) {
+  // If address is provided, skip the address step and start at step 1 (roofType)
+  const startingStep = address ? 1 : 0;
+  const [currentStep, setCurrentStep] = useState(startingStep);
+  const [formData, setFormData] = useState(address ? { address } : {});
   const [animating, setAnimating] = useState(false);
   const [direction, setDirection] = useState(1);
   const containerRef = useRef(null);
