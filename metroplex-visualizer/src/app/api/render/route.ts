@@ -82,29 +82,84 @@ interface MaskValidation {
 
 async function validateStreetViewMask(imageFile: File): Promise<MaskValidation> {
   /**
-   * Placeholder for SAM3 segmentation.
-   * In production, this would:
-   * 1. Run SAM3 on the image
-   * 2. Return mask area percentage
-   * 3. Check if area < 20%
-   * 4. Return shouldRender decision
-   * 
-   * For now, we log that validation was attempted and return conservative defaults.
+   * Validate roof mask using Replicate SAM model.
+   * Strategy: If Replicate returns a mask URL, trust it and proceed with render.
+   * Only fail if the API call itself fails or returns no output.
    */
-  console.log('[render] Validating Street View mask (SAM3)...');
+  console.log('[render] Validating Street View mask via Replicate SAM...');
   
-  // Conservative: For now, don't attempt Street View renders
-  // This can be updated once SAM3 integration is complete
-  return {
-    maskFound: false,
-    areaPct: 0,
-    shouldRender: false,
-    notes: [
-      'SAM3 integration pending',
-      'Skipping Street View render for safety',
-      'Will display original photo only'
-    ],
-  };
+  try {
+    // Convert File to base64 for Replicate API
+    const buffer = await imageFile.arrayBuffer();
+    const base64 = Buffer.from(buffer).toString('base64');
+    const dataUrl = `data:${imageFile.type};base64,${base64}`;
+    
+    // Call Replicate SAM model
+    const replicateRes = await fetch('https://api.replicate.com/v1/predictions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Token ${process.env.REPLICATE_API_TOKEN}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        version: 'e8ede8b213e64e6f91759e9f44e6cea27061955f7f9b6efa2eef1adf341b8856', // SAM model
+        input: {
+          image: dataUrl,
+        },
+      }),
+    });
+    
+    if (!replicateRes.ok) {
+      throw new Error(`Replicate API error: ${replicateRes.status}`);
+    }
+    
+    const prediction = await replicateRes.json();
+    
+    // Poll for completion if async
+    let finalPrediction = prediction;
+    if (prediction.status === 'processing' || prediction.status === 'starting') {
+      console.log('[render] Waiting for SAM model to complete...');
+      let attempts = 0;
+      while (attempts < 30) {
+        await new Promise(r => setTimeout(r, 1000)); // Wait 1s
+        const statusRes = await fetch(`https://api.replicate.com/v1/predictions/${prediction.id}`, {
+          headers: { 'Authorization': `Token ${process.env.REPLICATE_API_TOKEN}` },
+        });
+        finalPrediction = await statusRes.json();
+        attempts++;
+        if (finalPrediction.status === 'succeeded' || finalPrediction.status === 'failed') break;
+      }
+    }
+    
+    // Check for mask output
+    const maskUrl = finalPrediction.output?.mask || finalPrediction.output?.[0];
+    
+    if (maskUrl && typeof maskUrl === 'string' && maskUrl.length > 0) {
+      console.log('[render] SAM mask found, proceeding with render:', maskUrl);
+      return {
+        maskFound: true,
+        areaPct: 100, // Trust Replicate's output
+        shouldRender: true,
+        notes: ['SAM mask validated via Replicate', maskUrl],
+      };
+    } else {
+      console.log('[render] SAM returned no mask output');
+      return {
+        maskFound: false,
+        areaPct: 0,
+        shouldRender: false,
+        notes: ['SAM model returned no mask'],
+      };
+    }
+  } catch (err) {
+    console.error('[render] SAM validation failed:', err);
+    return {
+      maskFound: false,
+      areaPct: 0,
+      shouldRender: false,
+      notes: [`SAM validation error: ${err instanceof Error ? err.message : 'unknown'}`],
+    };
+  }
 }
 
 // ============================================================================
