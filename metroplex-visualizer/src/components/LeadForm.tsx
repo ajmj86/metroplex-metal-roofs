@@ -210,7 +210,11 @@ function AddressStep({ step, value, onChange, onNext }: { step: any; value: stri
 
 function ContactStep({ data, onChange, onNext }: { data: any; onChange: (v: any) => void; onNext: (v: any) => void }) {
   const [firstName, setFirstName] = useState(data.firstName || "");
+  const [lastName, setLastName] = useState(data.lastName || "");
   const [phone, setPhone] = useState(data.phone || "");
+  const [email, setEmail] = useState(data.email || "");
+  const [smsConsent, setSmsConsent] = useState(data.smsConsent || false);
+  const [emailConsent, setEmailConsent] = useState(data.emailConsent || false);
 
   const formatPhone = (val: string) => {
     const digits = val.replace(/\D/g, "").slice(0, 10);
@@ -219,14 +223,23 @@ function ContactStep({ data, onChange, onNext }: { data: any; onChange: (v: any)
     return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
   };
 
-  const isValid = firstName.trim().length > 1 && phone.replace(/\D/g, "").length === 10;
+  const isValid = 
+    firstName.trim().length > 1 && 
+    lastName.trim().length > 1 && 
+    phone.replace(/\D/g, "").length === 10 &&
+    email.includes("@");
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, setter: (v: string) => void) => {
+    setter(e.target.value);
+  };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+      {/* First Name */}
       <input
         type="text"
         value={firstName}
-        onChange={e => setFirstName(e.target.value)}
+        onChange={e => handleInputChange(e, setFirstName)}
         placeholder="First Name"
         autoFocus
         style={{
@@ -242,15 +255,17 @@ function ContactStep({ data, onChange, onNext }: { data: any; onChange: (v: any)
           boxSizing: "border-box",
         }}
       />
+
+      {/* Last Name */}
       <input
-        type="tel"
-        value={phone}
-        onChange={e => setPhone(formatPhone(e.target.value))}
-        placeholder="(817) 555-0100"
+        type="text"
+        value={lastName}
+        onChange={e => handleInputChange(e, setLastName)}
+        placeholder="Last Name"
         style={{
           padding: "15px 18px",
           background: BRAND.surfaceAlt,
-          border: `1.5px solid ${phone.replace(/\D/g,"").length===10 ? BRAND.bronze : BRAND.border}`,
+          border: `1.5px solid ${lastName ? BRAND.bronze : BRAND.border}`,
           borderRadius: 12,
           fontSize: 15,
           fontFamily: "'Outfit', sans-serif",
@@ -260,17 +275,133 @@ function ContactStep({ data, onChange, onNext }: { data: any; onChange: (v: any)
           boxSizing: "border-box",
         }}
       />
+
+      {/* Phone */}
+      <input
+        type="tel"
+        value={phone}
+        onChange={e => setPhone(formatPhone(e.target.value))}
+        placeholder="(817) 555-0100"
+        style={{
+          padding: "15px 18px",
+          background: BRAND.surfaceAlt,
+          border: `1.5px solid ${phone.replace(/\D/g, "").length === 10 ? BRAND.bronze : BRAND.border}`,
+          borderRadius: 12,
+          fontSize: 15,
+          fontFamily: "'Outfit', sans-serif",
+          color: BRAND.textPrimary,
+          outline: "none",
+          width: "100%",
+          boxSizing: "border-box",
+        }}
+      />
+
+      {/* Email */}
+      <input
+        type="email"
+        value={email}
+        onChange={e => handleInputChange(e, setEmail)}
+        placeholder="your@email.com"
+        style={{
+          padding: "15px 18px",
+          background: BRAND.surfaceAlt,
+          border: `1.5px solid ${email.includes("@") ? BRAND.bronze : BRAND.border}`,
+          borderRadius: 12,
+          fontSize: 15,
+          fontFamily: "'Outfit', sans-serif",
+          color: BRAND.textPrimary,
+          outline: "none",
+          width: "100%",
+          boxSizing: "border-box",
+        }}
+      />
+
+      {/* SMS Consent Checkbox */}
+      <label style={{
+        display: "flex",
+        alignItems: "flex-start",
+        gap: 10,
+        padding: "12px",
+        cursor: "pointer",
+      }}>
+        <input
+          type="checkbox"
+          checked={smsConsent}
+          onChange={e => setSmsConsent(e.target.checked)}
+          style={{
+            marginTop: 3,
+            cursor: "pointer",
+            accentColor: BRAND.bronze,
+          }}
+        />
+        <span style={{
+          fontSize: 12,
+          color: BRAND.textMuted,
+          fontFamily: "'Outfit', sans-serif",
+          lineHeight: 1.5,
+        }}>
+          I agree to receive automated SMS/text messages from Metroplex Metal Roofs at the number provided. Msg & data rates may apply. Message frequency varies. Reply STOP to cancel, HELP for help.
+        </span>
+      </label>
+
+      {/* Email Consent Checkbox */}
+      <label style={{
+        display: "flex",
+        alignItems: "flex-start",
+        gap: 10,
+        padding: "12px",
+        cursor: "pointer",
+      }}>
+        <input
+          type="checkbox"
+          checked={emailConsent}
+          onChange={e => setEmailConsent(e.target.checked)}
+          style={{
+            marginTop: 3,
+            cursor: "pointer",
+            accentColor: BRAND.bronze,
+          }}
+        />
+        <span style={{
+          fontSize: 12,
+          color: BRAND.textMuted,
+          fontFamily: "'Outfit', sans-serif",
+          lineHeight: 1.5,
+        }}>
+          I agree to receive email communications from Metroplex Metal Roofs including quotes and project updates. You may unsubscribe at any time.
+        </span>
+      </label>
+
+      {/* TCPA Disclosure */}
       <p style={{
         fontSize: 11,
         color: BRAND.textDim,
         fontFamily: "'Outfit', sans-serif",
-        margin: "0 0 4px",
-        lineHeight: 1.5,
+        lineHeight: 1.6,
+        margin: "8px 0",
       }}>
-        By continuing, you consent to receive SMS/calls about your project. Msg & data rates may apply. Reply STOP to opt out.
+        Consent is not a condition of purchase. By clicking 'Generate My Roof Render' you agree to our{" "}
+        <a href="/privacy" target="_blank" rel="noopener noreferrer" style={{
+          color: BRAND.bronze,
+          textDecoration: "underline",
+          cursor: "pointer",
+        }}>
+          Privacy Policy
+        </a>
+        {" "}and{" "}
+        <a href="/terms" target="_blank" rel="noopener noreferrer" style={{
+          color: BRAND.bronze,
+          textDecoration: "underline",
+          cursor: "pointer",
+        }}>
+          Terms of Service
+        </a>
+        .
       </p>
+
+      {/* Submit Button */}
       <button
-        onClick={() => isValid && onNext({ firstName, phone })}
+        onClick={() => isValid && onNext({ firstName, lastName, phone, email, smsConsent, emailConsent })}
         disabled={!isValid}
         style={{
           padding: "15px",

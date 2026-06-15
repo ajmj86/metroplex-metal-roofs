@@ -249,7 +249,7 @@ export function StepOne({ onComplete }: StepOneProps) {
             onClick={handleImageResolved}
             className="w-full bg-accent text-background font-semibold py-3 rounded-xl hover:bg-accent/90 transition-colors text-sm"
           >
-            Continue to Roof Config →
+            See My Roof →
           </button>
         </div>
       )}

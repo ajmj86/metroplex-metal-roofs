@@ -100,7 +100,7 @@ export function StepTwo({ satelliteImageUrl, address, onComplete }: StepTwoProps
           disabled={!isValid}
           className="w-full bg-accent text-background font-semibold py-4 rounded-xl hover:bg-accent/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
-          {!isValid ? 'Select roof style and color' : 'Continue to Lead Form →'}
+          {!isValid ? 'Select roof style and color' : 'Get My Free Visualization →'}
         </button>
       </form>
     </div>

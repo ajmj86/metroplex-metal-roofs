@@ -19,6 +19,26 @@ export function StepThree({
 }: StepThreeProps) {
   const [sliderPosition, setSliderPosition] = useState(50);
 
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    const container = e.currentTarget.parentElement;
+    if (!container) return;
+
+    const handleMouseMove = (moveEvent: MouseEvent) => {
+      const rect = container.getBoundingClientRect();
+      const newX = moveEvent.clientX - rect.left;
+      const percentage = (newX / rect.width) * 100;
+      setSliderPosition(Math.max(0, Math.min(100, percentage)));
+    };
+
+    const handleMouseUp = () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+  };
+
   return (
     <div className="space-y-8">
       {/* Header */}
@@ -45,62 +65,51 @@ export function StepThree({
           </p>
         </div>
 
-        {/* Before/After Slider */}
-        <div className="relative w-full bg-gray-200 rounded-lg overflow-hidden aspect-square">
-          {/* Original (Before) - always in background */}
+        {/* Before/After Slider Container */}
+        <div className="relative w-full bg-gray-200 rounded-lg overflow-hidden aspect-square group">
+          {/* Original (Before) - always in background on LEFT */}
           <img
             src={satelliteOriginalUrl}
             alt="Satellite Before"
             className="absolute inset-0 w-full h-full object-cover"
           />
 
-          {/* Render (After) - visible to the right of divider */}
+          {/* Render (After) - visible from divider to RIGHT */}
           <div
             className="absolute inset-0 overflow-hidden"
-            style={{ width: `${100 - sliderPosition}%`, right: 0 }}
+            style={{
+              left: `${sliderPosition}%`,
+              right: 0,
+            }}
           >
             <img
               src={satelliteRenderUrl}
               alt="Satellite After"
               className="absolute inset-0 w-full h-full object-cover"
+              style={{
+                left: `-${sliderPosition}%`,
+              }}
             />
           </div>
 
-          {/* Slider handle */}
+          {/* Slider divider handle - single source of truth for position */}
           <div
-            className="absolute top-0 bottom-0 w-1 bg-white cursor-ew-resize transition-all"
-            style={{ left: `${sliderPosition}%` }}
-            onMouseDown={(e) => {
-              const container = e.currentTarget.parentElement;
-              if (!container) return;
-
-              const handleMouseMove = (moveEvent: MouseEvent) => {
-                const rect = container.getBoundingClientRect();
-                const newX = moveEvent.clientX - rect.left;
-                const percentage = (newX / rect.width) * 100;
-                setSliderPosition(Math.max(0, Math.min(100, percentage)));
-              };
-
-              const handleMouseUp = () => {
-                document.removeEventListener('mousemove', handleMouseMove);
-                document.removeEventListener('mouseup', handleMouseUp);
-              };
-
-              document.addEventListener('mousemove', handleMouseMove);
-              document.addEventListener('mouseup', handleMouseUp);
+            className="absolute top-0 bottom-0 w-1 bg-white cursor-ew-resize hover:w-1.5 transition-all"
+            style={{
+              left: `${sliderPosition}%`,
+              transform: 'translateX(-50%)',
             }}
-          >
-            {/* Labels - fixed position */}
-            <div className="absolute inset-0 pointer-events-none">
-              {/* "Before" label on LEFT side */}
-              <div className="absolute left-2 top-2 bg-black/60 text-white text-xs px-2 py-1 rounded">
-                Before
-              </div>
-              {/* "After" label on RIGHT side */}
-              <div className="absolute right-2 top-2 bg-black/60 text-white text-xs px-2 py-1 rounded">
-                After
-              </div>
-            </div>
+            onMouseDown={handleMouseDown}
+          />
+
+          {/* "Before" label - always on LEFT */}
+          <div className="absolute left-2 top-2 bg-black/60 text-white text-xs px-2 py-1 rounded pointer-events-none">
+            Before
+          </div>
+
+          {/* "After" label - always on RIGHT */}
+          <div className="absolute right-2 top-2 bg-black/60 text-white text-xs px-2 py-1 rounded pointer-events-none">
+            After
           </div>
         </div>
 
