@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 import Anthropic from '@anthropic-ai/sdk';
+import { put } from '@vercel/blob';
+import { randomUUID } from 'crypto';
 import { getRoofTypeLabel, resolveSelection } from '@/lib/roofProducts';
 
 // Allow time for one gpt-image-1.5 call plus image fetches
@@ -160,7 +162,15 @@ async function generateImage(images: File[], prompt: string): Promise<string | n
       return null;
     }
 
-    return `data:image/png;base64,${b64}`;
+    const buffer = Buffer.from(b64, 'base64');
+    const filename = `renders/${Date.now()}-${randomUUID()}.png`;
+
+    const blob = await put(filename, buffer, {
+      access: 'public',
+      contentType: 'image/png',
+    });
+
+    return blob.url;
   } catch (err) {
     console.error('[render] Render generation failed:', err);
     return null;
