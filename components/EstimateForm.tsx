@@ -82,9 +82,13 @@ export default function EstimateForm({ initialSelection }: EstimateFormProps = {
     : null
   const carriedColor = carriedProductLabel ? initialSelection?.color ?? null : null
 
+  // Address arrived pre-confirmed via the visualizer's own Places Autocomplete
+  // step, so this path skips the redundant re-confirmation click entirely.
+  const shouldAutoTrigger = Boolean(carriedRoofType && initialSelection?.address)
+
   const [selectedRoofType, setSelectedRoofType] = useState<string | null>(carriedRoofType)
   const [address, setAddress]     = useState(initialSelection?.address ?? '')
-  const [loading, setLoading]     = useState(false)
+  const [loading, setLoading]     = useState(shouldAutoTrigger)
   const [showManual, setShowManual] = useState(false)
   const [errorMsg, setErrorMsg]   = useState('')
   const [manualSqFt, setManualSqFt] = useState('')
@@ -92,11 +96,14 @@ export default function EstimateForm({ initialSelection }: EstimateFormProps = {
   const [result, setResult]       = useState<EstimateData | null>(null)
   const addressInputRef = useRef<HTMLInputElement>(null)
   const autocompleteAttachedRef = useRef(false)
+  const autoTriggeredRef = useRef(false)
 
   // Load Google Maps API and initialize Places Autocomplete.
   // The address input only exists in the DOM once selectedRoofType is set
-  // (Step 2), so this must re-run whenever that changes — not just on mount —
-  // otherwise the cold-visit path (Step 1 shown first) never attaches it.
+  // AND loading is false (Step 2's loading branch pre-empts it on the
+  // auto-trigger path), so this must re-run on either changing — not just
+  // on mount — otherwise neither the cold-visit path nor the auto-trigger
+  // failure fallback ever attaches it.
   useEffect(() => {
     if (typeof window === 'undefined' || !addressInputRef.current) {
       autocompleteAttachedRef.current = false
@@ -127,7 +134,7 @@ export default function EstimateForm({ initialSelection }: EstimateFormProps = {
     script.dataset.googleMapsPlaces = 'true'
     script.addEventListener('load', tryAttach)
     document.head.appendChild(script)
-  }, [selectedRoofType])
+  }, [selectedRoofType, loading])
 
   function initializeAutocomplete() {
     if (!addressInputRef.current || !(window as any).google) return
@@ -148,8 +155,8 @@ export default function EstimateForm({ initialSelection }: EstimateFormProps = {
     })
   }
 
-  async function handleAddressSubmit() {
-    if (!address.trim()) return
+  async function handleAddressSubmit(): Promise<boolean> {
+    if (!address.trim()) return false
     setLoading(true)
     setErrorMsg('')
     try {
@@ -161,17 +168,36 @@ export default function EstimateForm({ initialSelection }: EstimateFormProps = {
       const data = await res.json()
       if (data.success && data.estimate && data.roofType) {
         setResult({ roofType: data.roofType, estimate: data.estimate })
+        return true
       } else {
         setShowManual(true)
         setErrorMsg("We weren't able to pull data for your address. Enter your home's approximate square footage below and we'll calculate your estimate.")
+        return false
       }
     } catch {
       setShowManual(true)
       setErrorMsg("We weren't able to pull data for your address. Enter your home's approximate square footage below and we'll calculate your estimate.")
+      return false
     } finally {
       setLoading(false)
     }
   }
+
+  // Auto-trigger the calculation once on mount when arriving from the
+  // visualizer with a pre-confirmed address. On failure, drop back to the
+  // plain editable address screen (not the sqft fallback) so the user can
+  // simply retry the same address rather than re-explaining their home.
+  useEffect(() => {
+    if (autoTriggeredRef.current || !shouldAutoTrigger) return
+    autoTriggeredRef.current = true
+    handleAddressSubmit().then(success => {
+      if (!success) {
+        setShowManual(false)
+        setErrorMsg("We weren't able to generate your estimate automatically. Please confirm your address and try again.")
+      }
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   async function handleManualSubmit() {
     const sqFt = Number(manualSqFt)
@@ -281,6 +307,12 @@ export default function EstimateForm({ initialSelection }: EstimateFormProps = {
 
       {!showManual ? (
         <>
+          {errorMsg && (
+            <div style={{ background: C.surface, border: `1px solid ${C.borderLight}`, borderRadius: 6, padding: '14px 16px', marginBottom: 20, fontSize: 13, color: C.mutedLight, lineHeight: 1.7 }}>
+              {errorMsg}
+            </div>
+          )}
+
           <div style={{ fontFamily: "'Cormorant Garamond',Georgia,serif", fontSize: 22, fontWeight: 700, color: C.white, marginBottom: 8 }}>
             Enter your property address
           </div>
