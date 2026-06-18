@@ -91,20 +91,43 @@ export default function EstimateForm({ initialSelection }: EstimateFormProps = {
   const [stories, setStories]     = useState<StoryOption>('one')
   const [result, setResult]       = useState<EstimateData | null>(null)
   const addressInputRef = useRef<HTMLInputElement>(null)
+  const autocompleteAttachedRef = useRef(false)
 
-  // Load Google Maps API and initialize Places Autocomplete
+  // Load Google Maps API and initialize Places Autocomplete.
+  // The address input only exists in the DOM once selectedRoofType is set
+  // (Step 2), so this must re-run whenever that changes — not just on mount —
+  // otherwise the cold-visit path (Step 1 shown first) never attaches it.
   useEffect(() => {
-    if (!(window as any).google && typeof window !== 'undefined') {
-      const script = document.createElement('script')
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places`
-      script.async = true
-      script.defer = true
-      script.onload = () => initializeAutocomplete()
-      document.head.appendChild(script)
-    } else if ((window as any).google) {
-      initializeAutocomplete()
+    if (typeof window === 'undefined' || !addressInputRef.current) {
+      autocompleteAttachedRef.current = false
+      return
     }
-  }, [])
+
+    function tryAttach() {
+      if (!addressInputRef.current || autocompleteAttachedRef.current || !(window as any).google?.maps?.places) return
+      initializeAutocomplete()
+      autocompleteAttachedRef.current = true
+    }
+
+    if ((window as any).google?.maps?.places) {
+      tryAttach()
+      return
+    }
+
+    const existingScript = document.querySelector<HTMLScriptElement>('script[data-google-maps-places]')
+    if (existingScript) {
+      existingScript.addEventListener('load', tryAttach)
+      return () => existingScript.removeEventListener('load', tryAttach)
+    }
+
+    const script = document.createElement('script')
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places`
+    script.async = true
+    script.defer = true
+    script.dataset.googleMapsPlaces = 'true'
+    script.addEventListener('load', tryAttach)
+    document.head.appendChild(script)
+  }, [selectedRoofType])
 
   function initializeAutocomplete() {
     if (!addressInputRef.current || !(window as any).google) return

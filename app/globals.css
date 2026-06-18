@@ -27,35 +27,43 @@ body {
 
 /* Google Places Autocomplete dropdown — rendered outside the React tree,
    so it must be themed via global CSS rather than component classes. */
-.pac-container {
-  background-color: #09090A; /* Forge Black */
-  border: 1px solid #B8935A; /* Aged Bronze */
-  border-radius: 0.5rem;
-  font-family: 'Outfit', sans-serif;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+/* The Google Maps JS API injects its own <style> block for pac-container
+   into <head> at runtime, after this stylesheet, using the same bare
+   .pac-container/.pac-item selectors with !important. Equal specificity
+   means their later-injected rule wins the cascade tie even with !important
+   on our side, so "html body" is prepended here purely to outrank theirs on
+   specificity, not for any semantic reason. */
+html body .pac-container {
+  background-color: #09090A !important; /* Forge Black */
+  border: 1px solid #B8935A !important; /* Aged Bronze */
+  border-radius: 0.5rem !important;
+  font-family: 'Outfit', sans-serif !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4) !important;
 }
 
-.pac-item {
-  color: #E5E5E5;
-  border-top: 1px solid rgba(184, 147, 90, 0.2);
-  padding: 0.5rem 0.75rem;
-  cursor: pointer;
+html body .pac-item {
+  background-color: transparent !important;
+  color: #E5E5E5 !important;
+  font-family: 'Outfit', sans-serif !important;
+  border-top: 1px solid rgba(184, 147, 90, 0.2) !important;
+  padding: 0.5rem 0.75rem !important;
+  cursor: pointer !important;
 }
 
-.pac-item:hover,
-.pac-item-selected {
-  background-color: rgba(184, 147, 90, 0.15);
+html body .pac-item:hover,
+html body .pac-item-selected {
+  background-color: rgba(184, 147, 90, 0.15) !important;
 }
 
-.pac-item-query {
-  color: #FFFFFF;
+html body .pac-item-query {
+  color: #FFFFFF !important;
 }
 
-.pac-matched {
-  color: #B8935A;
-  font-weight: 600;
+html body .pac-matched {
+  color: #B8935A !important;
+  font-weight: 600 !important;
 }
 
-.pac-icon {
-  filter: invert(1) sepia(1) saturate(2) hue-rotate(15deg);
+html body .pac-icon {
+  filter: invert(1) sepia(1) saturate(2) hue-rotate(15deg) !important;
 }
