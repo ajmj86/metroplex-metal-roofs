@@ -233,7 +233,10 @@ export function StepOne({ onComplete }: StepOneProps) {
       {/* Auto-proceed with satellite image */}
       {images && (
         <div className="mt-8 pt-6 border-t border-border space-y-4">
-          <p className="text-foreground text-sm font-medium">📍 Home located — this is just a reference image.</p>
+          <p className="text-foreground text-sm font-medium">
+            📍 Home located. This satellite photo confirms we found your property — your actual roof preview will be
+            a detailed, elevated photograph of your home, not this top-down view.
+          </p>
 
           {/* Preview Image */}
           <div className="rounded-lg overflow-hidden border border-border">
@@ -253,7 +256,7 @@ export function StepOne({ onComplete }: StepOneProps) {
             onClick={handleImageResolved}
             className="w-full bg-accent text-background font-semibold py-3 rounded-xl hover:bg-accent/90 transition-colors text-sm"
           >
-            See My Roof →
+            Generate My Roof Preview →
           </button>
         </div>
       )}

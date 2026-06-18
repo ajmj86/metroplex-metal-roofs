@@ -26,8 +26,8 @@ export function StepThree({ address, selection, image, streetViewAvailable }: St
 
   const caption =
     selection.productLabel && selection.color
-      ? `Your Home — New ${selection.productLabel} Roof in ${selection.color}`
-      : `Your Home — New ${roofTypeLabel} Roof`;
+      ? `Your New Roof: ${selection.productLabel} in ${selection.color}`
+      : `Your New Roof: ${roofTypeLabel}`;
 
   return (
     <div className="space-y-8">
@@ -50,21 +50,14 @@ export function StepThree({ address, selection, image, streetViewAvailable }: St
 
       {/* Combined render — single full-width image */}
       <div className="bg-card border border-border rounded-2xl p-6 sm:p-8">
+        <h3 className="font-heading text-2xl sm:text-3xl font-semibold text-foreground mb-4">{caption}</h3>
         <div className="rounded-lg overflow-hidden">
           <img src={image} alt={caption} className="w-full h-auto block" />
         </div>
-        <p className="font-body text-xs text-accent mt-3">{caption}</p>
-        <p className="font-body text-xs text-muted mt-1">
-          {streetViewAvailable
-            ? 'Generated from street-level and aerial imagery'
-            : 'Generated from aerial imagery'}
+        <p className="font-body text-xs text-muted mt-4 leading-relaxed">
+          Renderings are AI-generated for illustration purposes. Final color and material will be confirmed during your in-home consultation.
         </p>
       </div>
-
-      {/* Disclosure */}
-      <p className="font-body text-xs text-muted text-center leading-relaxed">
-        Renderings are AI-generated for illustration purposes. Final color and material will be confirmed during your in-home consultation.
-      </p>
 
       {/* Get Your Estimate CTA */}
       <div className="bg-accent/10 border border-accent/20 rounded-2xl p-6 text-center">

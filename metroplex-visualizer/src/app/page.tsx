@@ -157,20 +157,18 @@ export default function Home() {
         )}
 
         {step === 3 && isRendering && (
-          <div className="bg-card border border-border rounded-2xl p-6 sm:p-8 space-y-5">
-            <div className="flex flex-col items-center gap-3 text-center">
+          <div className="bg-card border border-border rounded-2xl p-12 sm:p-16">
+            <div className="flex flex-col items-center gap-4 text-center">
+              <svg width="40" height="28" viewBox="0 0 40 28" fill="none" className="text-accent">
+                <path d="M2 22L20 3l18 19" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
               <svg className="animate-spin w-6 h-6 text-accent" viewBox="0 0 24 24" fill="none">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
               </svg>
-              <p className="text-foreground text-sm font-medium">Generating your photorealistic roof preview…</p>
-              <p className="text-muted text-xs">This may take up to a minute.</p>
+              <p className="text-foreground text-sm font-medium">Crafting your roof preview…</p>
+              <p className="text-muted text-xs">This usually takes under a minute.</p>
             </div>
-            {satelliteImageUrl && (
-              <div className="rounded-lg overflow-hidden border border-border opacity-50">
-                <img src={satelliteImageUrl} alt="Your home" className="w-full h-auto block" />
-              </div>
-            )}
           </div>
         )}
 
