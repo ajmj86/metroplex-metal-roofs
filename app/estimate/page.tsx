@@ -45,6 +45,7 @@ export default async function EstimatePage({ searchParams }: EstimatePageProps) 
     style: firstValue(params.style),
     product: firstValue(params.product),
     color: firstValue(params.color),
+    address: firstValue(params.address),
   }
 
   return (

@@ -2,7 +2,16 @@
 
 import { getRoofTypeLabel, type RoofSelection } from '@/lib/roofProducts';
 
-const MAIN_SITE_URL = 'https://metroplexmetalroofs.com';
+function getMainSiteUrl(): string {
+  const url = process.env.NEXT_PUBLIC_MAIN_SITE_URL;
+  if (!url) {
+    console.warn('[StepThree] NEXT_PUBLIC_MAIN_SITE_URL is not set — falling back to http://localhost:3000');
+    return 'http://localhost:3000';
+  }
+  return url;
+}
+
+const MAIN_SITE_URL = getMainSiteUrl();
 
 interface StepThreeProps {
   address: string;
@@ -11,18 +20,19 @@ interface StepThreeProps {
   streetViewAvailable: boolean;
 }
 
-function buildEstimateUrl(selection: RoofSelection): string {
+function buildEstimateUrl(selection: RoofSelection, address: string): string {
   const params = new URLSearchParams();
   params.set('roofType', selection.roofType);
   if (selection.style) params.set('style', selection.style);
   if (selection.product) params.set('product', selection.product);
   if (selection.color) params.set('color', selection.color);
+  if (address) params.set('address', address);
   return `${MAIN_SITE_URL}/estimate?${params.toString()}`;
 }
 
 export function StepThree({ address, selection, image, streetViewAvailable }: StepThreeProps) {
   const roofTypeLabel = getRoofTypeLabel(selection.roofType);
-  const estimateUrl = buildEstimateUrl(selection);
+  const estimateUrl = buildEstimateUrl(selection, address);
 
   const caption =
     selection.productLabel && selection.color

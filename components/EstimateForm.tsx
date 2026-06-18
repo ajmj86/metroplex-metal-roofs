@@ -66,6 +66,7 @@ interface InitialSelection {
   style?: string
   product?: string
   color?: string
+  address?: string
 }
 
 interface EstimateFormProps {
@@ -82,7 +83,7 @@ export default function EstimateForm({ initialSelection }: EstimateFormProps = {
   const carriedColor = carriedProductLabel ? initialSelection?.color ?? null : null
 
   const [selectedRoofType, setSelectedRoofType] = useState<string | null>(carriedRoofType)
-  const [address, setAddress]     = useState('')
+  const [address, setAddress]     = useState(initialSelection?.address ?? '')
   const [loading, setLoading]     = useState(false)
   const [showManual, setShowManual] = useState(false)
   const [errorMsg, setErrorMsg]   = useState('')

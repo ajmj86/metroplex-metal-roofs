@@ -24,3 +24,38 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Google Places Autocomplete dropdown — rendered outside the React tree,
+   so it must be themed via global CSS rather than component classes. */
+.pac-container {
+  background-color: #09090A; /* Forge Black */
+  border: 1px solid #B8935A; /* Aged Bronze */
+  border-radius: 0.5rem;
+  font-family: 'Outfit', sans-serif;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.pac-item {
+  color: #E5E5E5;
+  border-top: 1px solid rgba(184, 147, 90, 0.2);
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+}
+
+.pac-item:hover,
+.pac-item-selected {
+  background-color: rgba(184, 147, 90, 0.15);
+}
+
+.pac-item-query {
+  color: #FFFFFF;
+}
+
+.pac-matched {
+  color: #B8935A;
+  font-weight: 600;
+}
+
+.pac-icon {
+  filter: invert(1) sepia(1) saturate(2) hue-rotate(15deg);
+}
