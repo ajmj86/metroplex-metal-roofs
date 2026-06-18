@@ -1,12 +1,20 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { StepOne } from '@/components/StepOne';
 import { StepTwo } from '@/components/StepTwo';
 import { StepThree } from '@/components/StepThree';
 import { LeadForm } from '@/components/LeadForm';
 import { ErrorState } from '@/components/ErrorState';
 import { getRoofTypeLabel, type RoofSelection } from '@/lib/roofProducts';
+
+const LOADING_MESSAGES = [
+  'Generating your photorealistic roof preview…',
+  'Analyzing your roofline and structure…',
+  'Applying your selected style and color…',
+  'Finishing touches — almost ready…',
+  'Exceptional results are worth the wait…',
+];
 
 export default function Home() {
   const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
@@ -17,6 +25,20 @@ export default function Home() {
   const [isRendering, setIsRendering] = useState(false);
   const [renderError, setRenderError] = useState<string | null>(null);
   const [streetViewAvailable, setStreetViewAvailable] = useState(false);
+  const [loadingMessageIndex, setLoadingMessageIndex] = useState(0);
+
+  // Cycles the render-loading message every 15s, holding on the last one —
+  // resets/clears whenever isRendering flips off (success, error, or unmount).
+  useEffect(() => {
+    if (!isRendering) {
+      setLoadingMessageIndex(0);
+      return;
+    }
+    const interval = setInterval(() => {
+      setLoadingMessageIndex((i) => (i < LOADING_MESSAGES.length - 1 ? i + 1 : i));
+    }, 15000);
+    return () => clearInterval(interval);
+  }, [isRendering]);
 
   // Handler when form in Step 3 completes
   const handleLeadFormComplete = async (formData: any) => {
@@ -166,7 +188,7 @@ export default function Home() {
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
               </svg>
-              <p className="text-foreground text-sm font-medium">Crafting your roof preview…</p>
+              <p className="text-foreground text-sm font-medium">{LOADING_MESSAGES[loadingMessageIndex]}</p>
               <p className="text-muted text-xs">This usually takes under a minute.</p>
             </div>
           </div>
