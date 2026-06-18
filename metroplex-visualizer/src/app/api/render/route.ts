@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
-import { ROOF_TYPES } from '@/types';
+import Anthropic from '@anthropic-ai/sdk';
+import { getRoofTypeLabel, resolveSelection } from '@/lib/roofProducts';
 
-// Allow up to 60s for satellite render only
-export const maxDuration = 60;
+// Allow time for one gpt-image-1.5 call plus image fetches
+export const maxDuration = 90;
 
 // Lazy-initialize so the module loads cleanly at build time without a key
 let _openai: OpenAI | null = null;
@@ -12,47 +13,146 @@ function getOpenAI(): OpenAI {
   return _openai;
 }
 
-function getRoofDetail(roofType: string): string {
-  const match = ROOF_TYPES.find(
-    (rt) => rt.label.toLowerCase() === roofType.toLowerCase()
-  );
-  return match?.detail ?? 'clean, modern metal panels';
+let _anthropic: Anthropic | null = null;
+function getAnthropic(): Anthropic {
+  if (!_anthropic) _anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+  return _anthropic;
+}
+
+async function fetchAsFile(url: string, filename: string): Promise<File> {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`Failed to fetch ${filename}: status ${res.status}`);
+  const buffer = await res.arrayBuffer();
+  const mimeType = res.headers.get('content-type') ?? 'image/jpeg';
+  return new File([buffer], filename, { type: mimeType });
+}
+
+async function checkStreetViewAvailable(address: string, apiKey: string): Promise<boolean> {
+  try {
+    const url = `https://maps.googleapis.com/maps/api/streetview/metadata?location=${encodeURIComponent(address)}&key=${apiKey}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    return data.status === 'OK';
+  } catch (err) {
+    console.error('[render] Street View metadata check failed:', err);
+    return false;
+  }
 }
 
 // ============================================================================
 // Helper: Build Render Prompt
 // ============================================================================
 
-function buildRoofRenderPrompt(roofType: string, color: string, colorHex: string, detail: string): string {
+function buildRenderPrompt(
+  useStreetView: boolean,
+  roofTypeLabel: string,
+  productLabel: string | null,
+  color: string | null
+): string {
+  // Format the color and product label for the prompt
+  const colorAndProductLabel = productLabel && color ? `${color} ${productLabel}` : `${roofTypeLabel} metal roofing`;
+
+  if (useStreetView) {
+    return (
+      `I'm giving you 3 reference images in order:
+1. Aerial/satellite view of the house — use this as the primary reference for the home's true shape, structure, and layout
+2. Street-level view of the house — use this to preserve the facade, windows, doorway, color, and architectural details exactly as shown
+3. Close-up reference of the new roof material and color: ${colorAndProductLabel} — match this roof color and texture exactly
+
+Using all three, render a single photorealistic image of this home with a new roof in the color and material shown in image 3. The result should look like a real estate listing photograph: natural daylight, true-to-life color, sharp architectural photography detail, accurate shadows, and realistic texture — not an illustration, painting, or stylized rendering. Use an elevated, drone-like perspective that gives a clear view of the roof. Limit all changes to the roof only — do not change the windows, siding color, doorway, landscaping, fence, or any other detail from images 1 and 2. Stay as true to the actual shape, structure, and details of this specific house as possible. The final image must be photorealistic, not cartoonish or artificial-looking.`
+    );
+  }
+
   return (
-    `This is an aerial satellite view of a residential home. Replace ONLY the roof surface with ${roofType} metal roofing in ${color} (${colorHex}). ${detail}.\\n` +
-    `Keep all other elements — yard, driveway, pool, surrounding houses, trees — completely unchanged.\\n` +
-    `CRITICAL: Preserve EXACTLY: grass, landscaping, shadows, lighting, camera angle, perspective, all proportions. Do NOT generate a fake house or alter the ground/surroundings.`
+    `I'm giving you 2 reference images in order:
+1. Aerial/satellite view of the house — use this as the reference for the home's true shape, structure, layout, and surroundings
+2. Close-up reference of the new roof material and color: ${colorAndProductLabel} — match this roof color and texture exactly
+
+Using both, render a single photorealistic image of this home with a new roof in the color and material shown in image 2. The result should look like a real estate listing photograph: natural daylight, true-to-life color, sharp architectural photography detail, accurate shadows, and realistic texture — not an illustration, painting, or stylized rendering. Use a slightly elevated, photogenic angle that gives a clear view of the roof. Limit all changes to the roof only — do not change the structure, landscaping, or yard details. Stay as true to the actual shape, structure, and details of this specific house as possible. The final image must be photorealistic, not cartoonish or artificial-looking.`
   );
+}
+
+// ============================================================================
+// Helper: Expand Render Prompt (adds photographic detail via Claude)
+// ============================================================================
+
+const PROMPT_EXPANSION_SYSTEM_PROMPT = `You are a minimal prompt editor for an image-editing pipeline. Your ONLY job is to add a single short sentence about photographic technical quality (camera sharpness, natural lighting, realistic detail) to the END of the given prompt.
+
+CRITICAL RULES:
+- Do not add atmospheric, mood, or time-of-day language (no "golden hour," no "dramatic lighting," no "cinematic," no sunset/sunrise references)
+- Do not add, remove, or reword ANY existing sentence in the original prompt
+- Do not change the numbered image instructions
+- Do not change any preservation/constraint language (anything about "do not change," "limit changes to," "stay true to")
+- Your addition must be ONE sentence, no more than 20 words
+- Acceptable additions look like: "Render with natural, even daylight and sharp, true-to-life photographic detail."
+- Unacceptable additions look like: anything mentioning specific times of day, weather drama, artistic style, or mood
+
+Output the original prompt with your one sentence appended at the very end. Output ONLY the final prompt text, nothing else — no preamble, no explanation.`;
+
+async function expandRenderPrompt(basePrompt: string): Promise<string> {
+  try {
+    const anthropic = getAnthropic();
+
+    const message = await anthropic.messages.create({
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: 1024,
+      system: PROMPT_EXPANSION_SYSTEM_PROMPT,
+      messages: [
+        {
+          role: 'user',
+          content: basePrompt,
+        },
+      ],
+    });
+
+    const textBlock = message.content.find((block) => block.type === 'text');
+    if (!textBlock || textBlock.type !== 'text' || !textBlock.text.trim()) {
+      console.error('[render] Prompt expansion returned no text block, falling back to base prompt');
+      return basePrompt;
+    }
+
+    console.log(
+      '[render] Prompt expansion token usage — input:',
+      message.usage.input_tokens,
+      'output:',
+      message.usage.output_tokens
+    );
+
+    return textBlock.text.trim();
+  } catch (err) {
+    console.error('[render] Prompt expansion failed, falling back to base prompt:', err);
+    return basePrompt;
+  }
 }
 
 // ============================================================================
 // Helper: Generate AI Render
 // ============================================================================
 
-async function generateRoofRender(
-  imageFile: File,
-  prompt: string
-): Promise<string | null> {
+async function generateImage(images: File[], prompt: string): Promise<string | null> {
   try {
     const openai = getOpenAI();
-    
-    console.log('[render] Generating satellite render...');
-    
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const response = await (openai.images as any).edit({
-      model: 'gpt-image-1',
-      image: imageFile,
+    const renderModel = process.env.RENDER_MODEL ?? 'gpt-image-1.5';
+
+    console.log('[render] Generating combined render with model:', renderModel);
+
+    const editParams: Record<string, unknown> = {
+      model: renderModel,
+      image: images.length === 1 ? images[0] : images,
       prompt,
       n: 1,
       size: '1024x1024',
       quality: 'high',
-    });
+      output_format: 'png',
+    };
+
+    // input_fidelity is only supported by gpt-image-1.5; gpt-image-2 always uses maximum fidelity
+    if (renderModel !== 'gpt-image-2') {
+      editParams.input_fidelity = 'high';
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const response = await (openai.images as any).edit(editParams);
 
     const b64 = response.data?.[0]?.b64_json as string | undefined;
     if (!b64) {
@@ -62,13 +162,13 @@ async function generateRoofRender(
 
     return `data:image/png;base64,${b64}`;
   } catch (err) {
-    console.error('[render] Satellite generation failed:', err);
+    console.error('[render] Render generation failed:', err);
     return null;
   }
 }
 
 // ============================================================================
-// Main Handler — Satellite Only
+// Main Handler
 // ============================================================================
 
 export async function POST(req: NextRequest) {
@@ -77,82 +177,106 @@ export async function POST(req: NextRequest) {
       console.error('[render] OPENAI_API_KEY is not set');
       return NextResponse.json({ error: 'Server configuration error' }, { status: 500 });
     }
+    const mapsKey = process.env.GOOGLE_MAPS_API_KEY;
+    if (!mapsKey) {
+      console.error('[render] GOOGLE_MAPS_API_KEY is not set');
+      return NextResponse.json({ error: 'Server configuration error' }, { status: 500 });
+    }
 
     const body = await req.json();
-    const {
-      satelliteImageUrl,
-      roofType,
-      color,
-      colorHex,
-    } = body as {
+    const { address, satelliteImageUrl, roofType, style, product, color } = body as {
+      address: string;
       satelliteImageUrl: string;
       roofType: string;
-      color: string;
-      colorHex: string;
+      style: string | null;
+      product: string | null;
+      color: string | null;
     };
 
-    if (!satelliteImageUrl || !roofType || !color || !colorHex) {
+    if (!address || !satelliteImageUrl || !roofType) {
       return NextResponse.json(
-        { error: 'Missing required fields: satelliteImageUrl, roofType, color, colorHex' },
+        { error: 'Missing required fields: address, satelliteImageUrl, roofType' },
         { status: 400 }
       );
     }
 
-    const roofDetail = getRoofDetail(roofType);
-    const prompt = buildRoofRenderPrompt(roofType, color, colorHex, roofDetail);
+    // Resolve productLabel/colorImagePath server-side from the shared config —
+    // never trust client-supplied file paths.
+    const selection = resolveSelection(roofType, style ?? null, product ?? null, color ?? null);
+    const roofTypeLabel = getRoofTypeLabel(roofType);
 
-    console.log('[render] Render Request');
-    console.log('[render] Roof Type:', roofType);
-    console.log('[render] Color:', color, colorHex);
-    console.log('[render] Prompt:');
-    console.log(prompt);
+    console.log('[render] Render Request:', { roofType, style, product, color: selection.color });
 
     // ========================================================================
     // Fetch Satellite Image (Required)
     // ========================================================================
 
-    let satelliteBuffer: ArrayBuffer | null = null;
-    let satelliteMimeType = 'image/jpeg';
-
+    let satelliteFile: File;
     try {
-      const satRes = await fetch(satelliteImageUrl);
-      if (!satRes.ok) throw new Error(`Status ${satRes.status}`);
-      satelliteBuffer = await satRes.arrayBuffer();
-      satelliteMimeType = satRes.headers.get('content-type') ?? 'image/jpeg';
-      console.log('[render] Satellite image fetched:', satelliteBuffer.byteLength, 'bytes');
+      satelliteFile = await fetchAsFile(satelliteImageUrl, 'satellite.jpg');
+      console.log('[render] Satellite image fetched');
     } catch (err) {
       console.error('[render] Failed to fetch satellite image:', err);
       return NextResponse.json({ error: 'Could not fetch satellite image' }, { status: 400 });
     }
 
-    // ========================================================================
-    // Render Satellite (Primary - Only Render)
-    // ========================================================================
-
-    console.log('[render] === SATELLITE RENDER ===');
-
-    const satelliteFile = new File([satelliteBuffer], 'satellite.jpg', { type: satelliteMimeType });
-    const satelliteRenderUrl = await generateRoofRender(satelliteFile, prompt);
-
-    if (!satelliteRenderUrl) {
-      return NextResponse.json({ error: 'Satellite render failed' }, { status: 500 });
+    // Color reference photo (angle 1), if a color was selected
+    let colorRefFile: File | null = null;
+    if (selection.colorImagePath) {
+      try {
+        const colorRefUrl = new URL(selection.colorImagePath, req.nextUrl.origin).toString();
+        colorRefFile = await fetchAsFile(colorRefUrl, 'color-reference.jpg');
+      } catch (err) {
+        console.error('[render] Failed to fetch color reference photo:', err);
+      }
     }
 
-    console.log('[render] Satellite render successful');
-
     // ========================================================================
-    // Build Response (Satellite Only)
+    // Street View Availability Check (unchanged) — determines prompt template
     // ========================================================================
 
-    const response = {
-      satellite: {
-        original: satelliteImageUrl,
-        render: satelliteRenderUrl,
+    const streetViewAvailable = await checkStreetViewAvailable(address, mapsKey);
+    console.log('[render] Street View available:', streetViewAvailable);
+
+    let streetViewFile: File | null = null;
+    if (streetViewAvailable) {
+      try {
+        const streetViewUrl = `https://maps.googleapis.com/maps/api/streetview?size=640x640&location=${encodeURIComponent(address)}&key=${mapsKey}`;
+        streetViewFile = await fetchAsFile(streetViewUrl, 'streetview.jpg');
+      } catch (err) {
+        console.error('[render] Failed to fetch Street View image, falling back to satellite-only render:', err);
+      }
+    }
+
+    // ========================================================================
+    // Single Combined Render
+    // ========================================================================
+
+    const inputs = [satelliteFile, ...(streetViewFile ? [streetViewFile] : []), ...(colorRefFile ? [colorRefFile] : [])];
+    const prompt = buildRenderPrompt(!!streetViewFile, roofTypeLabel, selection.productLabel, selection.color);
+
+    console.log('[render] Original prompt:', prompt);
+    const expandedPrompt = await expandRenderPrompt(prompt);
+    console.log('[render] Expanded prompt:', expandedPrompt);
+
+    const image = await generateImage(inputs, expandedPrompt);
+
+    if (!image) {
+      return NextResponse.json({ error: 'Render failed' }, { status: 500 });
+    }
+
+    console.log('[render] Render complete');
+
+    return NextResponse.json({
+      success: true,
+      streetViewAvailable,
+      image,
+      selection: {
+        roofType,
+        productLabel: selection.productLabel,
+        color: selection.color,
       },
-    };
-
-    console.log('[render] Response prepared');
-    return NextResponse.json(response);
+    });
   } catch (err) {
     console.error('[render]', err);
     const message = err instanceof Error ? err.message : 'Render failed';

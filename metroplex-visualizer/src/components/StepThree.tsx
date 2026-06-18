@@ -1,93 +1,80 @@
 'use client';
 
+import { getRoofTypeLabel, type RoofSelection } from '@/lib/roofProducts';
+
+const MAIN_SITE_URL = 'https://metroplexmetalroofs.com';
+
 interface StepThreeProps {
-  satelliteOriginalUrl: string;
-  satelliteRenderUrl: string;
   address: string;
-  roofType: string;
-  color: string;
+  selection: RoofSelection;
+  image: string;
+  streetViewAvailable: boolean;
 }
 
-export function StepThree({
-  satelliteOriginalUrl,
-  satelliteRenderUrl,
-  address,
-  roofType,
-  color,
-}: StepThreeProps) {
+function buildEstimateUrl(selection: RoofSelection): string {
+  const params = new URLSearchParams();
+  params.set('roofType', selection.roofType);
+  if (selection.style) params.set('style', selection.style);
+  if (selection.product) params.set('product', selection.product);
+  if (selection.color) params.set('color', selection.color);
+  return `${MAIN_SITE_URL}/estimate?${params.toString()}`;
+}
+
+export function StepThree({ address, selection, image, streetViewAvailable }: StepThreeProps) {
+  const roofTypeLabel = getRoofTypeLabel(selection.roofType);
+  const estimateUrl = buildEstimateUrl(selection);
+
+  const caption =
+    selection.productLabel && selection.color
+      ? `Your Home — New ${selection.productLabel} Roof in ${selection.color}`
+      : `Your Home — New ${roofTypeLabel} Roof`;
+
   return (
     <div className="space-y-8">
       {/* Header */}
       <div className="text-center">
-        <h2 className="font-heading text-3xl font-semibold text-foreground mb-2">
-          Your New Roof
-        </h2>
+        <h2 className="font-heading text-3xl font-semibold text-foreground mb-2">Your New Roof</h2>
         <p className="text-muted">
-          <span className="font-medium">{roofType}</span>
-          <span> in </span>
-          <span className="font-medium">{color}</span>
+          <span className="font-medium">{roofTypeLabel}</span>
+          {selection.productLabel && selection.color && (
+            <>
+              <span> — </span>
+              <span className="font-medium">{selection.productLabel}</span>
+              <span> in </span>
+              <span className="font-medium">{selection.color}</span>
+            </>
+          )}
         </p>
         <p className="text-muted text-sm mt-2">{address}</p>
       </div>
 
-      {/* Side-by-Side Before/After Layout */}
+      {/* Combined render — single full-width image */}
       <div className="bg-card border border-border rounded-2xl p-6 sm:p-8">
-        <div className="mb-6">
-          <h3 className="font-heading text-xl font-semibold text-foreground mb-2">
-            🛰️ Aerial View — Your New Roof
-          </h3>
-          <p className="text-muted text-sm">
-            High-quality aerial perspective of your roof with {roofType.toLowerCase()} in {color.toLowerCase()}
-          </p>
+        <div className="rounded-lg overflow-hidden">
+          <img src={image} alt={caption} className="w-full h-auto block" />
         </div>
-
-        {/* Before and After Side-by-Side */}
-        <div className="flex gap-px bg-border rounded-lg overflow-hidden aspect-video">
-          {/* Left: Before (Original) */}
-          <div className="relative flex-1">
-            <img
-              src={satelliteOriginalUrl}
-              alt="Before - Original Satellite"
-              className="w-full h-full object-cover"
-            />
-            {/* "Before" label - top-left */}
-            <div className="absolute top-4 left-4 bg-black/60 text-white text-sm font-semibold px-3 py-2 rounded">
-              Before
-            </div>
-          </div>
-
-          {/* Right: After (Rendered) */}
-          <div className="relative flex-1">
-            <img
-              src={satelliteRenderUrl}
-              alt="After - Rendered Roof"
-              className="w-full h-full object-cover"
-            />
-            {/* "After" label - top-right */}
-            <div className="absolute top-4 right-4 bg-black/60 text-white text-sm font-semibold px-3 py-2 rounded">
-              After
-            </div>
-          </div>
-        </div>
-
-        <p className="text-muted text-sm mt-4">Before and after your new metal roof</p>
+        <p className="font-body text-xs text-accent mt-3">{caption}</p>
+        <p className="font-body text-xs text-muted mt-1">
+          {streetViewAvailable
+            ? 'Generated from street-level and aerial imagery'
+            : 'Generated from aerial imagery'}
+        </p>
       </div>
 
-      {/* Next Steps CTA */}
+      {/* Disclosure */}
+      <p className="font-body text-xs text-muted text-center leading-relaxed">
+        Renderings are AI-generated for illustration purposes. Final color and material will be confirmed during your in-home consultation.
+      </p>
+
+      {/* Get Your Estimate CTA */}
       <div className="bg-accent/10 border border-accent/20 rounded-2xl p-6 text-center">
-        <h3 className="font-heading text-lg font-semibold text-foreground mb-2">
-          Love your new roof?
-        </h3>
-        <p className="text-muted text-sm mb-4">
-          Contact Metroplex Metal Roofs to discuss your project and get a free estimate.
-        </p>
+        <h3 className="font-heading text-lg font-semibold text-foreground mb-2">Love your new roof?</h3>
+        <p className="text-muted text-sm mb-4">Get a real price estimate for this roof type in just a couple minutes.</p>
         <a
-          href="https://metroplexmetalroofs.com"
-          target="_blank"
-          rel="noopener noreferrer"
+          href={estimateUrl}
           className="inline-flex items-center justify-center px-6 py-3 bg-accent text-background font-semibold rounded-lg hover:bg-accent/90 transition-colors"
         >
-          Get Your Free Estimate →
+          Get Your Estimate →
         </a>
       </div>
     </div>

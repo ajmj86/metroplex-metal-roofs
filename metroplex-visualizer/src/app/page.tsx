@@ -5,30 +5,35 @@ import { StepOne } from '@/components/StepOne';
 import { StepTwo } from '@/components/StepTwo';
 import { StepThree } from '@/components/StepThree';
 import { LeadForm } from '@/components/LeadForm';
+import { ErrorState } from '@/components/ErrorState';
+import { getRoofTypeLabel, type RoofSelection } from '@/lib/roofProducts';
 
 export default function Home() {
   const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
   const [address, setAddress] = useState('');
   const [satelliteImageUrl, setSatelliteImageUrl] = useState('');
-  const [roofType, setRoofType] = useState('');
-  const [color, setColor] = useState('');
-  const [colorHex, setColorHex] = useState('');
-  const [satelliteRenderUrl, setSatelliteRenderUrl] = useState('');
+  const [selection, setSelection] = useState<RoofSelection | null>(null);
+  const [renderedImage, setRenderedImage] = useState('');
   const [isRendering, setIsRendering] = useState(false);
+  const [renderError, setRenderError] = useState<string | null>(null);
+  const [streetViewAvailable, setStreetViewAvailable] = useState(false);
 
   // Handler when form in Step 3 completes
   const handleLeadFormComplete = async (formData: any) => {
+    if (!selection) return;
     setIsRendering(true);
+    setRenderError(null);
     try {
-      // Call /api/render with satellite image only
       const res = await fetch('/api/render', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          address,
           satelliteImageUrl,
-          roofType,
-          color: color,
-          colorHex,
+          roofType: selection.roofType,
+          style: selection.style,
+          product: selection.product,
+          color: selection.color,
         }),
       });
 
@@ -38,7 +43,8 @@ export default function Home() {
       }
 
       const data = await res.json();
-      setSatelliteRenderUrl(data.satellite.render);
+      setRenderedImage(data.image);
+      setStreetViewAvailable(data.streetViewAvailable ?? false);
 
       // Post to GHL
       const webhookUrl = process.env.NEXT_PUBLIC_GHL_WEBHOOK_URL;
@@ -51,8 +57,9 @@ export default function Home() {
             phone: formData.phone || '',
             email: formData.email || '',
             address,
-            roofType,
-            color,
+            roofType: getRoofTypeLabel(selection.roofType),
+            productLabel: selection.productLabel,
+            color: selection.color,
             smsConsent: true,
             emailConsent: false,
             imageSource: 'satellite',
@@ -68,7 +75,8 @@ export default function Home() {
       setStep(4);
     } catch (err) {
       console.error('Render error:', err);
-      alert(err instanceof Error ? err.message : 'Rendering failed. Please try again.');
+      const errorMessage = err instanceof Error ? err.message : 'Rendering failed. Please try again.';
+      setRenderError(errorMessage);
     } finally {
       setIsRendering(false);
     }
@@ -129,16 +137,14 @@ export default function Home() {
           <StepTwo
             satelliteImageUrl={satelliteImageUrl}
             address={address}
-            onComplete={(rt, c, ch) => {
-              setRoofType(rt);
-              setColor(c);
-              setColorHex(ch);
+            onComplete={(sel) => {
+              setSelection(sel);
               setStep(3);
             }}
           />
         )}
 
-        {step === 3 && (
+        {step === 3 && !isRendering && !renderError && (
           <div className="bg-card border border-border rounded-2xl p-6 sm:p-8">
             <h2 className="font-heading text-2xl font-semibold text-foreground mb-6">
               Lead Information
@@ -150,13 +156,37 @@ export default function Home() {
           </div>
         )}
 
-        {step === 4 && (
+        {step === 3 && isRendering && (
+          <div className="bg-card border border-border rounded-2xl p-6 sm:p-8 space-y-5">
+            <div className="flex flex-col items-center gap-3 text-center">
+              <svg className="animate-spin w-6 h-6 text-accent" viewBox="0 0 24 24" fill="none">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+              </svg>
+              <p className="text-foreground text-sm font-medium">Generating your photorealistic roof preview…</p>
+              <p className="text-muted text-xs">This may take up to a minute.</p>
+            </div>
+            {satelliteImageUrl && (
+              <div className="rounded-lg overflow-hidden border border-border opacity-50">
+                <img src={satelliteImageUrl} alt="Your home" className="w-full h-auto block" />
+              </div>
+            )}
+          </div>
+        )}
+
+        {step === 3 && renderError && (
+          <ErrorState
+            message={renderError}
+            onRetry={() => setRenderError(null)}
+          />
+        )}
+
+        {step === 4 && selection && (
           <StepThree
-            satelliteOriginalUrl={satelliteImageUrl}
-            satelliteRenderUrl={satelliteRenderUrl}
             address={address}
-            roofType={roofType}
-            color={color}
+            selection={selection}
+            image={renderedImage}
+            streetViewAvailable={streetViewAvailable}
           />
         )}
 

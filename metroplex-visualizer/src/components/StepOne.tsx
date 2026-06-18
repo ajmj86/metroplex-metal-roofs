@@ -233,16 +233,20 @@ export function StepOne({ onComplete }: StepOneProps) {
       {/* Auto-proceed with satellite image */}
       {images && (
         <div className="mt-8 pt-6 border-t border-border space-y-4">
-          <p className="text-foreground text-sm font-medium">🛰️ Fetched satellite view</p>
+          <p className="text-foreground text-sm font-medium">📍 Home located — this is just a reference image.</p>
 
           {/* Preview Image */}
-          <div className="relative bg-background rounded-lg overflow-hidden border border-border aspect-video">
+          <div className="rounded-lg overflow-hidden border border-border">
             <img
               src={images.satellite?.imageUrl || ''}
               alt="Satellite Aerial View"
-              className="w-full h-full object-cover"
+              className="w-full h-auto block"
             />
           </div>
+
+          <p className="text-muted text-xs text-center">
+            Click below to generate your detailed, photorealistic roof preview.
+          </p>
 
           {/* Auto-proceed Button */}
           <button
