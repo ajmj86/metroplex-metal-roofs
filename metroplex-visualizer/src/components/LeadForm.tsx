@@ -591,12 +591,15 @@ export function LeadForm({ address, onComplete }: LeadFormProps) {
   const handleContactNext = (contactData: any) => {
     setAnimating(true);
     setTimeout(() => {
-      setFormData(prev => ({ ...prev, ...contactData }));
+      const merged = { ...formData, ...contactData };
+      setFormData(merged);
       setCurrentStep(s => s + 1);
       setAnimating(false);
-      // Call callback when CTA step is reached
+      // Call callback when CTA step is reached — pass the full merged
+      // form data (address/roofType/reason/insuranceClaim/timeline included),
+      // not just the contact step's fields.
       if (onComplete) {
-        onComplete(contactData);
+        onComplete(merged);
       }
     }, 220);
   };

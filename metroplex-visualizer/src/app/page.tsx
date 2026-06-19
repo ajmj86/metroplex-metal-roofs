@@ -71,23 +71,33 @@ export default function Home() {
       // Post to GHL
       const webhookUrl = process.env.NEXT_PUBLIC_GHL_WEBHOOK_URL;
       if (webhookUrl) {
+        const ghlPayload = {
+          name: formData.firstName || '',
+          phone: formData.phone || '',
+          email: formData.email || '',
+          address,
+          roofType: getRoofTypeLabel(selection.roofType),
+          productLabel: selection.productLabel,
+          color: selection.color,
+          smsConsent: true,
+          emailConsent: false,
+          imageSource: 'satellite',
+          timestamp: new Date().toISOString(),
+          source: 'visualizer',
+          contact: {
+            property_address: address,
+            current_roof_type: formData.roofType,
+            project_reason: formData.reason,
+            insurance_claim_status: formData.insuranceClaim,
+            homeowner_timeline: formData.timeline,
+            lead_source: 'Visualizer',
+          },
+        };
+        console.log('GHL webhook payload (visualizer):', ghlPayload);
         await fetch(webhookUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            name: formData.firstName || '',
-            phone: formData.phone || '',
-            email: formData.email || '',
-            address,
-            roofType: getRoofTypeLabel(selection.roofType),
-            productLabel: selection.productLabel,
-            color: selection.color,
-            smsConsent: true,
-            emailConsent: false,
-            imageSource: 'satellite',
-            timestamp: new Date().toISOString(),
-            source: 'visualizer',
-          }),
+          body: JSON.stringify(ghlPayload),
         }).catch(() => {
           // Non-blocking GHL failure
         });
