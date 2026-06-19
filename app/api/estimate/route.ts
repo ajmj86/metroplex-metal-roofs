@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import pricingConfig from '@/config/pricing.json'
+import { formatFormValue } from '@/lib/formatFormValue'
 
 type RoofTypeKey = keyof typeof pricingConfig.roofTypes
 
@@ -77,6 +78,7 @@ export async function POST(request: NextRequest) {
     roofType, address, manualSqFt, stories, reason, insuranceClaim, timeline,
     firstName, lastName, phone, email, leadOrigin,
     leadSource: leadSourceFromBody, utmSource, utmMedium, utmCampaign,
+    productLabel,
   } = body
   // leadSource is computed upstream (app/estimate/page.tsx) from UTM params /
   // visualizer origin. Fall back to the old leadOrigin check if it's missing.
@@ -89,6 +91,7 @@ export async function POST(request: NextRequest) {
   const rt = roofType as RoofTypeKey
   const config = pricingConfig.roofTypes[rt] as RoofTypeConfig
   const roofTypeLabel = config.label
+  const selectedRoofLabel = productLabel || roofTypeLabel
 
   // Manual fallback path
   if (manualSqFt != null) {
@@ -113,24 +116,23 @@ export async function POST(request: NextRequest) {
       email,
       contact: {
         property_address: address,
-        current_roof_type: roofTypeLabel,
-        project_reason: reason,
-        insurance_claim_status: insuranceClaim,
-        homeowner_timeline: timeline,
+        project_reason: formatFormValue('reason', reason),
+        insurance_claim_status: formatFormValue('insuranceClaim', insuranceClaim),
+        homeowner_timeline: formatFormValue('timeline', timeline),
         lead_source: leadSource,
         estimated_roof_size: Math.round(squares),
         estimate_range: `${estimate.low} - ${estimate.high}`,
       },
       customField: [
         { id: 'pOqyjdxOHg67C4JWdkaG', value: leadSource },
-        { id: 'Vo7YnqmuZnhV2U66uKJA', value: roofTypeLabel },
-        { id: 'prLMUoMzKClcfmBzDH3R', value: reason },
-        { id: 'tpAq0AZMqWJZeTy3dPsS', value: insuranceClaim },
-        { id: '7F3CKSSVRj7jdHKoq87X', value: timeline },
+        { id: 'prLMUoMzKClcfmBzDH3R', value: formatFormValue('reason', reason) },
+        { id: 'tpAq0AZMqWJZeTy3dPsS', value: formatFormValue('insuranceClaim', insuranceClaim) },
+        { id: '7F3CKSSVRj7jdHKoq87X', value: formatFormValue('timeline', timeline) },
         { id: 'acFCeylcy8uhep3stymL', value: address },
         { id: 'S3E1cQMFQ2vD2Ec1nSAR', value: Math.round(squares) },
         { id: 'cEjn1x0nid6taqIaQxKt', value: `${estimate.low} - ${estimate.high}` },
         ...utmCustomFields(utmSource, utmMedium, utmCampaign),
+        ...(selectedRoofLabel ? [{ id: 'ooxcklKOKGrDCRunZnh3', value: selectedRoofLabel }] : []),
       ],
     })
 
@@ -202,24 +204,23 @@ export async function POST(request: NextRequest) {
       email,
       contact: {
         property_address: address,
-        current_roof_type: roofTypeLabel,
-        project_reason: reason,
-        insurance_claim_status: insuranceClaim,
-        homeowner_timeline: timeline,
+        project_reason: formatFormValue('reason', reason),
+        insurance_claim_status: formatFormValue('insuranceClaim', insuranceClaim),
+        homeowner_timeline: formatFormValue('timeline', timeline),
         lead_source: leadSource,
         estimated_roof_size: Math.round(squares),
         estimate_range: `${estimate.low} - ${estimate.high}`,
       },
       customField: [
         { id: 'pOqyjdxOHg67C4JWdkaG', value: leadSource },
-        { id: 'Vo7YnqmuZnhV2U66uKJA', value: roofTypeLabel },
-        { id: 'prLMUoMzKClcfmBzDH3R', value: reason },
-        { id: 'tpAq0AZMqWJZeTy3dPsS', value: insuranceClaim },
-        { id: '7F3CKSSVRj7jdHKoq87X', value: timeline },
+        { id: 'prLMUoMzKClcfmBzDH3R', value: formatFormValue('reason', reason) },
+        { id: 'tpAq0AZMqWJZeTy3dPsS', value: formatFormValue('insuranceClaim', insuranceClaim) },
+        { id: '7F3CKSSVRj7jdHKoq87X', value: formatFormValue('timeline', timeline) },
         { id: 'acFCeylcy8uhep3stymL', value: address },
         { id: 'S3E1cQMFQ2vD2Ec1nSAR', value: Math.round(squares) },
         { id: 'cEjn1x0nid6taqIaQxKt', value: `${estimate.low} - ${estimate.high}` },
         ...utmCustomFields(utmSource, utmMedium, utmCampaign),
+        ...(selectedRoofLabel ? [{ id: 'ooxcklKOKGrDCRunZnh3', value: selectedRoofLabel }] : []),
       ],
     })
 
