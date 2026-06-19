@@ -38,6 +38,19 @@ function firstValue(v: string | string[] | undefined): string | undefined {
   return Array.isArray(v) ? v[0] : v
 }
 
+function getLeadSource(leadOrigin: string | undefined, utmMedium: string | undefined): string {
+  if (leadOrigin === 'visualizer') return 'Visualizer'
+  if (!utmMedium) return 'SEO Organic'
+  switch (utmMedium) {
+    case 'postcard': return 'Direct Mailer'
+    case 'cpc': return 'Google Ads'
+    case 'paid_social': return 'Meta Ads'
+    case 'video': return 'YouTube Ads'
+    case 'gbp': return 'Google Business Profile'
+    default: return 'Other'
+  }
+}
+
 export default async function EstimatePage({ searchParams }: EstimatePageProps) {
   const params = await searchParams
   const initialSelection = {
@@ -47,6 +60,20 @@ export default async function EstimatePage({ searchParams }: EstimatePageProps) 
     color: firstValue(params.color),
     address: firstValue(params.address),
   }
+  const leadInfo = {
+    firstName: firstValue(params.firstName),
+    lastName: firstValue(params.lastName),
+    phone: firstValue(params.phone),
+    email: firstValue(params.email),
+    reason: firstValue(params.reason),
+    insuranceClaim: firstValue(params.insuranceClaim),
+    timeline: firstValue(params.timeline),
+    leadOrigin: firstValue(params.leadOrigin),
+  }
+  const utmSource = firstValue(params.utm_source)
+  const utmMedium = firstValue(params.utm_medium)
+  const utmCampaign = firstValue(params.utm_campaign)
+  const leadSource = getLeadSource(leadInfo.leadOrigin, utmMedium)
 
   return (
     <>
@@ -94,7 +121,14 @@ export default async function EstimatePage({ searchParams }: EstimatePageProps) 
           <div style={{ borderTop: `1px solid ${C.border}`, marginBottom: 48 }} />
 
           {/* Form */}
-          <EstimateForm initialSelection={initialSelection} />
+          <EstimateForm
+            initialSelection={initialSelection}
+            leadInfo={leadInfo}
+            leadSource={leadSource}
+            utmSource={utmSource}
+            utmMedium={utmMedium}
+            utmCampaign={utmCampaign}
+          />
         </div>
       </div>
     </>

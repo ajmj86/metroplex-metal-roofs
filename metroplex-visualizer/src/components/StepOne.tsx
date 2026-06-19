@@ -4,8 +4,29 @@ import { useState, useRef, useCallback, useEffect } from 'react';
 import { loadGoogleMapsScript } from '@/lib/loadGoogleMaps';
 import type { ImageSource } from '@/types';
 
+export interface ParsedAddress {
+  address1: string;
+  city: string;
+  state: string;
+  postalCode: string;
+}
+
+type AddressComponent = { long_name: string; short_name: string; types: string[] };
+
+function parseAddressComponents(components: AddressComponent[] = []): ParsedAddress {
+  const get = (type: string) => components.find((c) => c.types.includes(type));
+  const streetNumber = get('street_number')?.long_name ?? '';
+  const route = get('route')?.long_name ?? '';
+  return {
+    address1: [streetNumber, route].filter(Boolean).join(' '),
+    city: get('locality')?.long_name ?? '',
+    state: get('administrative_area_level_1')?.short_name ?? '',
+    postalCode: get('postal_code')?.long_name ?? '',
+  };
+}
+
 interface StepOneProps {
-  onComplete: (address: string, satelliteUrl: string) => void;
+  onComplete: (address: string, satelliteUrl: string, addressComponents?: ParsedAddress) => void;
 }
 
 // Bounding box that covers all of Texas (biases autocomplete, not a hard clip)
@@ -23,10 +44,11 @@ export function StepOne({ onComplete }: StepOneProps) {
 
   const inputRef = useRef<HTMLInputElement>(null);
   const acRef = useRef<{
-    getPlace: () => { formatted_address?: string };
+    getPlace: () => { formatted_address?: string; address_components?: AddressComponent[] };
     addListener: (event: string, handler: () => void) => { remove: () => void };
   } | null>(null);
   const listenerRef = useRef<{ remove: () => void } | null>(null);
+  const addressComponentsRef = useRef<ParsedAddress | undefined>(undefined);
 
   // Initialize Google Places Autocomplete once the component mounts
   useEffect(() => {
@@ -80,7 +102,7 @@ export function StepOne({ onComplete }: StepOneProps) {
             componentRestrictions: { country: 'us' },
             bounds: texasBounds,
             strictBounds: false,
-            fields: ['formatted_address'],
+            fields: ['formatted_address', 'address_components'],
           });
           console.log('Autocomplete widget created');
 
@@ -89,6 +111,7 @@ export function StepOne({ onComplete }: StepOneProps) {
             const place = ac.getPlace();
             if (place.formatted_address) {
               setAddress(place.formatted_address);
+              addressComponentsRef.current = parseAddressComponents(place.address_components);
               setError('');
               setShowUpload(false);
               setImages(null);
@@ -159,7 +182,7 @@ export function StepOne({ onComplete }: StepOneProps) {
     }
 
     // Proceed with satellite only
-    onComplete(address, satelliteUrl);
+    onComplete(address, satelliteUrl, addressComponentsRef.current);
   };
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -198,6 +221,7 @@ export function StepOne({ onComplete }: StepOneProps) {
           value={address}
           onChange={(e) => {
             setAddress(e.target.value);
+            addressComponentsRef.current = undefined;
             setError('');
             setShowUpload(false);
             setImages(null);

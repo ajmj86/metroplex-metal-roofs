@@ -69,11 +69,27 @@ interface InitialSelection {
   address?: string
 }
 
-interface EstimateFormProps {
-  initialSelection?: InitialSelection
+interface LeadInfo {
+  firstName?: string
+  lastName?: string
+  phone?: string
+  email?: string
+  reason?: string
+  insuranceClaim?: string
+  timeline?: string
+  leadOrigin?: string
 }
 
-export default function EstimateForm({ initialSelection }: EstimateFormProps = {}) {
+interface EstimateFormProps {
+  initialSelection?: InitialSelection
+  leadInfo?: LeadInfo
+  leadSource?: string
+  utmSource?: string
+  utmMedium?: string
+  utmCampaign?: string
+}
+
+export default function EstimateForm({ initialSelection, leadInfo, leadSource, utmSource, utmMedium, utmCampaign }: EstimateFormProps = {}) {
   const carriedRoofType = initialSelection?.roofType && ROOF_TYPES.some(rt => rt.id === initialSelection.roofType)
     ? initialSelection.roofType
     : null
@@ -155,6 +171,25 @@ export default function EstimateForm({ initialSelection }: EstimateFormProps = {
     })
   }
 
+  // Passed through silently (no UI) so route.ts can forward identity/qualifying
+  // data and lead source to the GHL webhook on both submission paths.
+  function leadFields() {
+    return {
+      firstName: leadInfo?.firstName,
+      lastName: leadInfo?.lastName,
+      phone: leadInfo?.phone,
+      email: leadInfo?.email,
+      reason: leadInfo?.reason,
+      insuranceClaim: leadInfo?.insuranceClaim,
+      timeline: leadInfo?.timeline,
+      leadOrigin: leadInfo?.leadOrigin,
+      leadSource,
+      utmSource,
+      utmMedium,
+      utmCampaign,
+    }
+  }
+
   async function handleAddressSubmit(): Promise<boolean> {
     if (!address.trim()) return false
     setLoading(true)
@@ -163,7 +198,7 @@ export default function EstimateForm({ initialSelection }: EstimateFormProps = {
       const res = await fetch('/api/estimate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ address, roofType: selectedRoofType }),
+        body: JSON.stringify({ address, roofType: selectedRoofType, ...leadFields() }),
       })
       const data = await res.json()
       if (data.success && data.estimate && data.roofType) {
@@ -208,7 +243,7 @@ export default function EstimateForm({ initialSelection }: EstimateFormProps = {
       const res = await fetch('/api/estimate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ manualSqFt: sqFt, stories, roofType: selectedRoofType }),
+        body: JSON.stringify({ manualSqFt: sqFt, stories, roofType: selectedRoofType, ...leadFields() }),
       })
       const data = await res.json()
       if (data.success && data.estimate && data.roofType) {

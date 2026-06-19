@@ -13,26 +13,45 @@ function getMainSiteUrl(): string {
 
 const MAIN_SITE_URL = getMainSiteUrl();
 
+export interface LeadInfo {
+  firstName?: string;
+  lastName?: string;
+  phone?: string;
+  email?: string;
+  reason?: string;
+  insuranceClaim?: string;
+  timeline?: string;
+}
+
 interface StepThreeProps {
   address: string;
   selection: RoofSelection;
   image: string;
   streetViewAvailable: boolean;
+  leadInfo?: LeadInfo | null;
 }
 
-function buildEstimateUrl(selection: RoofSelection, address: string): string {
+function buildEstimateUrl(selection: RoofSelection, address: string, leadInfo?: LeadInfo | null): string {
   const params = new URLSearchParams();
   params.set('roofType', selection.roofType);
   if (selection.style) params.set('style', selection.style);
   if (selection.product) params.set('product', selection.product);
   if (selection.color) params.set('color', selection.color);
   if (address) params.set('address', address);
+  if (leadInfo?.firstName) params.set('firstName', leadInfo.firstName);
+  if (leadInfo?.lastName) params.set('lastName', leadInfo.lastName);
+  if (leadInfo?.phone) params.set('phone', leadInfo.phone);
+  if (leadInfo?.email) params.set('email', leadInfo.email);
+  if (leadInfo?.reason) params.set('reason', leadInfo.reason);
+  if (leadInfo?.insuranceClaim) params.set('insuranceClaim', leadInfo.insuranceClaim);
+  if (leadInfo?.timeline) params.set('timeline', leadInfo.timeline);
+  params.set('leadOrigin', 'visualizer');
   return `${MAIN_SITE_URL}/estimate?${params.toString()}`;
 }
 
-export function StepThree({ address, selection, image, streetViewAvailable }: StepThreeProps) {
+export function StepThree({ address, selection, image, streetViewAvailable, leadInfo }: StepThreeProps) {
   const roofTypeLabel = getRoofTypeLabel(selection.roofType);
-  const estimateUrl = buildEstimateUrl(selection, address);
+  const estimateUrl = buildEstimateUrl(selection, address, leadInfo);
 
   const caption =
     selection.productLabel && selection.color

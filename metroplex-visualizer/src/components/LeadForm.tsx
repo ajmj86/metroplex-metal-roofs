@@ -598,6 +598,7 @@ export function LeadForm({ address, onComplete }: LeadFormProps) {
       // Call callback when CTA step is reached — pass the full merged
       // form data (address/roofType/reason/insuranceClaim/timeline included),
       // not just the contact step's fields.
+      console.log('[LeadForm] contact step done, calling onComplete with:', merged, 'onComplete defined?', Boolean(onComplete));
       if (onComplete) {
         onComplete(merged);
       }
