@@ -54,6 +54,7 @@ function calculateEstimate(
 
 function fireGHLWebhook(payload: Record<string, unknown>): void {
   const url = process.env.GHL_ESTIMATE_WEBHOOK_URL
+  console.log('GHL webhook payload (estimate):', JSON.stringify(payload, null, 2))
   if (!url) return
   fetch(url, {
     method: 'POST',
@@ -64,7 +65,7 @@ function fireGHLWebhook(payload: Record<string, unknown>): void {
 
 export async function POST(request: NextRequest) {
   const body = await request.json()
-  const { roofType, address, manualSqFt, stories } = body
+  const { roofType, address, manualSqFt, stories, reason, insuranceClaim, timeline } = body
 
   if (!roofType || !(roofType in pricingConfig.roofTypes)) {
     return NextResponse.json({ success: false, error: 'Invalid roof type' }, { status: 400 })
@@ -91,6 +92,16 @@ export async function POST(request: NextRequest) {
       estimateSquares: Math.round(squares),
       estimateSource: 'manual',
       estimateTimestamp: new Date().toISOString(),
+      contact: {
+        property_address: address,
+        current_roof_type: roofTypeLabel,
+        project_reason: reason,
+        insurance_claim_status: insuranceClaim,
+        homeowner_timeline: timeline,
+        lead_source: 'Estimate Tool',
+        estimated_roof_size: Math.round(squares),
+        estimate_range: `${estimate.low} - ${estimate.high}`,
+      },
     })
 
     return NextResponse.json({
@@ -155,6 +166,16 @@ export async function POST(request: NextRequest) {
       estimateSquares: Math.round(squares),
       estimateSource: 'solar_api',
       estimateTimestamp: new Date().toISOString(),
+      contact: {
+        property_address: address,
+        current_roof_type: roofTypeLabel,
+        project_reason: reason,
+        insurance_claim_status: insuranceClaim,
+        homeowner_timeline: timeline,
+        lead_source: 'Estimate Tool',
+        estimated_roof_size: Math.round(squares),
+        estimate_range: `${estimate.low} - ${estimate.high}`,
+      },
     })
 
     return NextResponse.json({
