@@ -7,6 +7,7 @@ import { StepThree, type LeadInfo } from '@/components/StepThree';
 import { LeadForm } from '@/components/LeadForm';
 import { ErrorState } from '@/components/ErrorState';
 import { getRoofTypeLabel, type RoofSelection } from '@/lib/roofProducts';
+import { formatFormValue } from '@/lib/formatFormValue';
 
 console.log('[page] module evaluated — NEXT_PUBLIC_GHL_WEBHOOK_URL =', process.env.NEXT_PUBLIC_GHL_WEBHOOK_URL);
 
@@ -126,22 +127,23 @@ export default function Home() {
             city: addressComponents?.city ?? '',
             state: addressComponents?.state ?? '',
             postalCode: addressComponents?.postalCode ?? '',
-            current_roof_type: formData.roofType,
-            project_reason: formData.reason,
-            insurance_claim_status: formData.insuranceClaim,
-            homeowner_timeline: formData.timeline,
+            current_roof_type: formatFormValue('roofType', formData.roofType),
+            project_reason: formatFormValue('reason', formData.reason),
+            insurance_claim_status: formatFormValue('insuranceClaim', formData.insuranceClaim),
+            homeowner_timeline: formatFormValue('timeline', formData.timeline),
             lead_source: 'Visualizer',
           },
           customField: [
             { id: 'pOqyjdxOHg67C4JWdkaG', value: 'Visualizer' },
-            { id: 'Vo7YnqmuZnhV2U66uKJA', value: formData.roofType },
-            { id: 'prLMUoMzKClcfmBzDH3R', value: formData.reason },
-            { id: 'tpAq0AZMqWJZeTy3dPsS', value: formData.insuranceClaim },
-            { id: '7F3CKSSVRj7jdHKoq87X', value: formData.timeline },
+            { id: 'Vo7YnqmuZnhV2U66uKJA', value: formatFormValue('roofType', formData.roofType) },
+            { id: 'prLMUoMzKClcfmBzDH3R', value: formatFormValue('reason', formData.reason) },
+            { id: 'tpAq0AZMqWJZeTy3dPsS', value: formatFormValue('insuranceClaim', formData.insuranceClaim) },
+            { id: '7F3CKSSVRj7jdHKoq87X', value: formatFormValue('timeline', formData.timeline) },
             { id: 'acFCeylcy8uhep3stymL', value: address },
             ...(utmParams.utmSource ? [{ id: 'NNZiielScQomx8VDF7q8', value: utmParams.utmSource }] : []),
             ...(utmParams.utmMedium ? [{ id: 'ELW45zGCkwQkpUV2TnEW', value: utmParams.utmMedium }] : []),
             ...(utmParams.utmCampaign ? [{ id: 'VrI3HZtaymdTdf0lggfD', value: utmParams.utmCampaign }] : []),
+            ...(selection.productLabel ? [{ id: 'ooxcklKOKGrDCRunZnh3', value: selection.productLabel }] : []),
           ],
         };
         console.log('GHL webhook payload (visualizer):', ghlPayload);
