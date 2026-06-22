@@ -9,7 +9,7 @@ import { ErrorState } from '@/components/ErrorState';
 import { getRoofTypeLabel, type RoofSelection } from '@/lib/roofProducts';
 import { formatFormValue } from '@/lib/formatFormValue';
 
-console.log('[page] module evaluated — NEXT_PUBLIC_GHL_WEBHOOK_URL =', process.env.NEXT_PUBLIC_GHL_WEBHOOK_URL);
+console.log('[page] module evaluated');
 
 const LOADING_MESSAGES = [
   'Generating your photorealistic roof preview…',
@@ -100,63 +100,55 @@ export default function Home() {
       setStreetViewAvailable(data.streetViewAvailable ?? false);
       console.log('[page] render succeeded, proceeding to GHL post');
 
-      // Post to GHL
-      const webhookUrl = process.env.NEXT_PUBLIC_GHL_WEBHOOK_URL;
-      console.log('[page] NEXT_PUBLIC_GHL_WEBHOOK_URL =', webhookUrl);
-      if (!webhookUrl) {
-        console.warn('[page] NEXT_PUBLIC_GHL_WEBHOOK_URL is not set — skipping GHL webhook entirely. Set it in .env.local (see .env.example) and restart the dev server.');
-      }
-      if (webhookUrl) {
-        const ghlPayload = {
+      // Post to n8n Lead Intake (Visualizer) workflow via our own API route
+      // (keeps the n8n webhook URL server-side — see /api/lead-intake/route.ts).
+      // n8n owns all GHL contact/opportunity/tag writes from here; never write
+      // GHL custom field IDs from the client (see n8n-workflows/lead-intake-visualizer.json).
+      const leadIntakePayload = {
+        source: 'visualizer',
+        timestamp: new Date().toISOString(),
+        utm: {
+          source: utmParams.utmSource ?? null,
+          medium: utmParams.utmMedium ?? null,
+          campaign: utmParams.utmCampaign ?? null,
+        },
+        contact: {
           firstName: formData.firstName || '',
           lastName: formData.lastName || '',
-          phone: formData.phone || '',
           email: formData.email || '',
-          address,
-          roofType: getRoofTypeLabel(selection.roofType),
-          productLabel: selection.productLabel,
+          phone: formData.phone || '',
+          address1: addressComponents?.address1 ?? address,
+          city: addressComponents?.city ?? '',
+          state: addressComponents?.state ?? '',
+          postalCode: addressComponents?.postalCode ?? '',
+        },
+        fields: {
+          lead_source: 'Visualizer',
+          current_roof_type: formatFormValue('roofType', formData.roofType),
+          selected_roof_type: selection.productLabel ?? '',
+          project_reason: formatFormValue('reason', formData.reason),
+          insurance_claim_status: formatFormValue('insuranceClaim', formData.insuranceClaim),
+          homeowner_timeline: formatFormValue('timeline', formData.timeline),
+          property_address: address,
+        },
+        tags: ['Visualizer'],
+        consent: { sms: true, email: false },
+        // Kept for render/CTA display purposes only — not written to GHL custom fields.
+        display: {
+          roofTypeLabel: getRoofTypeLabel(selection.roofType),
           color: selection.color,
-          smsConsent: true,
-          emailConsent: false,
-          imageSource: 'satellite',
-          timestamp: new Date().toISOString(),
-          source: 'visualizer',
-          contact: {
-            property_address: address,
-            address1: addressComponents?.address1 ?? '',
-            city: addressComponents?.city ?? '',
-            state: addressComponents?.state ?? '',
-            postalCode: addressComponents?.postalCode ?? '',
-            current_roof_type: formatFormValue('roofType', formData.roofType),
-            project_reason: formatFormValue('reason', formData.reason),
-            insurance_claim_status: formatFormValue('insuranceClaim', formData.insuranceClaim),
-            homeowner_timeline: formatFormValue('timeline', formData.timeline),
-            lead_source: 'Visualizer',
-          },
-          customField: [
-            { id: 'pOqyjdxOHg67C4JWdkaG', value: 'Visualizer' },
-            { id: 'Vo7YnqmuZnhV2U66uKJA', value: formatFormValue('roofType', formData.roofType) },
-            { id: 'prLMUoMzKClcfmBzDH3R', value: formatFormValue('reason', formData.reason) },
-            { id: 'tpAq0AZMqWJZeTy3dPsS', value: formatFormValue('insuranceClaim', formData.insuranceClaim) },
-            { id: '7F3CKSSVRj7jdHKoq87X', value: formatFormValue('timeline', formData.timeline) },
-            { id: 'acFCeylcy8uhep3stymL', value: address },
-            ...(utmParams.utmSource ? [{ id: 'NNZiielScQomx8VDF7q8', value: utmParams.utmSource }] : []),
-            ...(utmParams.utmMedium ? [{ id: 'ELW45zGCkwQkpUV2TnEW', value: utmParams.utmMedium }] : []),
-            ...(utmParams.utmCampaign ? [{ id: 'VrI3HZtaymdTdf0lggfD', value: utmParams.utmCampaign }] : []),
-            ...(selection.productLabel ? [{ id: 'ooxcklKOKGrDCRunZnh3', value: selection.productLabel }] : []),
-          ],
-        };
-        console.log('GHL webhook payload (visualizer):', ghlPayload);
-        try {
-          const ghlRes = await fetch(webhookUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(ghlPayload),
-          });
-          console.log('[page] GHL webhook response status:', ghlRes.status);
-        } catch (ghlErr) {
-          console.error('[page] GHL webhook fetch failed (non-blocking):', ghlErr);
-        }
+        },
+      };
+      console.log('[page] lead-intake payload:', leadIntakePayload);
+      try {
+        const leadRes = await fetch('/api/lead-intake', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(leadIntakePayload),
+        });
+        console.log('[page] /api/lead-intake response status:', leadRes.status);
+      } catch (leadErr) {
+        console.error('[page] /api/lead-intake fetch failed (non-blocking):', leadErr);
       }
 
       // Move to results

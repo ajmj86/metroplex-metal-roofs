@@ -20,7 +20,7 @@ const INSURANCE_CLAIM_LABELS: Record<string, string> = {
   yes_approved: 'Approved',
   yes_pending: 'Pending',
   no_but_considering: 'Considering',
-  no_cash: 'Cash',
+  no_cash: 'Paying Out of Pocket',
 }
 
 const TIMELINE_LABELS: Record<string, string> = {

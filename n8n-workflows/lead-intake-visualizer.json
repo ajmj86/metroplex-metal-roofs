@@ -1,0 +1,402 @@
+{
+  "name": "Lead Intake – Visualizer",
+  "nodes": [
+    {
+      "id": "webhook_trigger",
+      "name": "Webhook – Lead Intake (Visualizer)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [-1680, 300],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "lead-intake-visualizer",
+        "responseMode": "responseNode",
+        "options": {}
+      }
+    },
+    {
+      "id": "config_ghl_ids",
+      "name": "Config – GHL IDs",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [-1440, 300],
+      "notes": "locationId/pipelineId/stageId resolved for the Retail Sales pipeline, Visualizer/Estimate Submitted stage.",
+      "parameters": {
+        "mode": "manual",
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a1",
+              "name": "locationId",
+              "type": "string",
+              "value": "4rvwvGT5Ot8Dxyoo7UwS"
+            },
+            {
+              "id": "a2",
+              "name": "pipelineId",
+              "type": "string",
+              "value": "SzHop4GlTOMVp566igQV"
+            },
+            {
+              "id": "a3",
+              "name": "stageId",
+              "type": "string",
+              "value": "774f82d6-a9ee-404a-b646-1edb0af3ca6e"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "if_required_fields",
+      "name": "IF – Required Fields Present?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [-1200, 300],
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "loose" },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "c1",
+              "leftValue": "={{ $json.body.contact?.email }}",
+              "rightValue": "",
+              "operator": { "type": "string", "operation": "notEmpty", "singleValue": true }
+            },
+            {
+              "id": "c2",
+              "leftValue": "={{ $json.body.contact?.phone }}",
+              "rightValue": "",
+              "operator": { "type": "string", "operation": "notEmpty", "singleValue": true }
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "respond_400",
+      "name": "Respond – 400 Missing Fields",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [-960, 460],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { \"success\": false, \"error\": \"Missing required field: contact.email or contact.phone\" } }}",
+        "options": { "responseCode": 400 }
+      }
+    },
+    {
+      "id": "build_contact_payload",
+      "name": "Build Contact Payload (Filter Nulls)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-960, 220],
+      "notes": "Never-null-write fix: only includes keys that are actually present in the payload. Carries the real GHL custom field IDs already proven in production (see metroplex-visualizer/src/app/page.tsx history) so the ID mapping lives server-side in n8n, not in the client bundle.",
+      "parameters": {
+        "jsCode": "const input = $input.first().json;\nconst body = input.body || {};\nconst contact = body.contact || {};\nconst fields = body.fields || {};\nconst utm = body.utm || {};\n\nconst FIELD_IDS = {\n  lead_source: 'pOqyjdxOHg67C4JWdkaG',\n  current_roof_type: 'Vo7YnqmuZnhV2U66uKJA',\n  project_reason: 'prLMUoMzKClcfmBzDH3R',\n  insurance_claim_status: 'tpAq0AZMqWJZeTy3dPsS',\n  homeowner_timeline: '7F3CKSSVRj7jdHKoq87X',\n  property_address: 'acFCeylcy8uhep3stymL',\n  selected_roof_type: 'ooxcklKOKGrDCRunZnh3',\n};\nconst UTM_FIELD_IDS = {\n  source: 'NNZiielScQomx8VDF7q8',\n  medium: 'ELW45zGCkwQkpUV2TnEW',\n  campaign: 'VrI3HZtaymdTdf0lggfD',\n};\n\nconst isEmpty = (v) => v === null || v === undefined || v === '';\n\n// Base contact fields — never-null-write: only include keys that are actually present\nconst contactFields = {};\nfor (const key of ['firstName', 'lastName', 'email', 'phone', 'address1', 'city', 'state', 'postalCode']) {\n  if (!isEmpty(contact[key])) contactFields[key] = contact[key];\n}\n\nconst customFields = [];\nfor (const [key, id] of Object.entries(FIELD_IDS)) {\n  if (!isEmpty(fields[key])) customFields.push({ id, value: fields[key] });\n}\nfor (const [key, id] of Object.entries(UTM_FIELD_IDS)) {\n  if (!isEmpty(utm[key])) customFields.push({ id, value: utm[key] });\n}\nif (customFields.length) contactFields.customFields = customFields;\nif (Array.isArray(body.tags) && body.tags.length) contactFields.tags = body.tags;\n\nconst contactPayloadCreate = { ...contactFields, locationId: input.locationId };\nconst contactPayloadUpdate = { ...contactFields };\n\nreturn [{\n  json: {\n    email: contact.email,\n    contactPayloadCreate,\n    contactPayloadUpdate,\n    rawFields: fields,\n    locationId: input.locationId,\n    pipelineId: input.pipelineId,\n    stageId: input.stageId,\n    firstName: contact.firstName || '',\n    lastName: contact.lastName || '',\n    phone: contact.phone || '',\n    source: body.source || 'visualizer',\n  },\n}];"
+      }
+    },
+    {
+      "id": "search_contact",
+      "name": "Search Contact By Email",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-720, 220],
+      "continueOnFail": true,
+      "onError": "continueRegularOutput",
+      "parameters": {
+        "method": "GET",
+        "url": "https://services.leadconnectorhq.com/contacts/search/duplicate",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            { "name": "locationId", "value": "={{ $json.locationId }}" },
+            { "name": "email", "value": "={{ $json.email }}" }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Version", "value": "2021-07-28" }
+          ]
+        },
+        "options": {
+          "response": { "response": { "neverError": true } }
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": { "id": "", "name": "GHL - Metroplex" }
+      }
+    },
+    {
+      "id": "if_contact_exists",
+      "name": "IF – Contact Exists?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [-480, 220],
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "loose" },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "c1",
+              "leftValue": "={{ $json.contact?.id }}",
+              "rightValue": "",
+              "operator": { "type": "string", "operation": "notEmpty", "singleValue": true }
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "update_contact",
+      "name": "Update Contact (PATCH)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-240, 100],
+      "parameters": {
+        "method": "PATCH",
+        "url": "=https://services.leadconnectorhq.com/contacts/{{ $json.contact.id }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Version", "value": "2021-07-28" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $('Build Contact Payload (Filter Nulls)').item.json.contactPayloadUpdate }}",
+        "options": {}
+      },
+      "credentials": {
+        "httpHeaderAuth": { "id": "", "name": "GHL - Metroplex" }
+      }
+    },
+    {
+      "id": "create_contact",
+      "name": "Create Contact (POST)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-240, 340],
+      "parameters": {
+        "method": "POST",
+        "url": "https://services.leadconnectorhq.com/contacts/",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Version", "value": "2021-07-28" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $('Build Contact Payload (Filter Nulls)').item.json.contactPayloadCreate }}",
+        "options": {}
+      },
+      "credentials": {
+        "httpHeaderAuth": { "id": "", "name": "GHL - Metroplex" }
+      }
+    },
+    {
+      "id": "normalize_contact_result",
+      "name": "Normalize Contact Result",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [0, 220],
+      "parameters": {
+        "mode": "manual",
+        "assignments": {
+          "assignments": [
+            { "id": "a1", "name": "contactId", "type": "string", "value": "={{ $json.contact.id }}" }
+          ]
+        },
+        "options": { "include": "all" }
+      }
+    },
+    {
+      "id": "create_opportunity",
+      "name": "Create Opportunity",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [240, 220],
+      "notes": "pipelineId / stageId come from the Config node.",
+      "parameters": {
+        "method": "POST",
+        "url": "https://services.leadconnectorhq.com/opportunities/",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Version", "value": "2021-07-28" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { \"pipelineId\": $('Build Contact Payload (Filter Nulls)').item.json.pipelineId, \"locationId\": $('Build Contact Payload (Filter Nulls)').item.json.locationId, \"pipelineStageId\": $('Build Contact Payload (Filter Nulls)').item.json.stageId, \"name\": ($('Build Contact Payload (Filter Nulls)').item.json.firstName + ' ' + $('Build Contact Payload (Filter Nulls)').item.json.lastName + ' - Visualizer Lead').trim(), \"status\": \"open\", \"contactId\": $json.contactId, \"source\": \"visualizer\" } }}",
+        "options": {}
+      },
+      "credentials": {
+        "httpHeaderAuth": { "id": "", "name": "GHL - Metroplex" }
+      }
+    },
+    {
+      "id": "if_insurance_tag",
+      "name": "IF – Insurance Claim (not cash)?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [480, 220],
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "loose" },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "c1",
+              "leftValue": "={{ $('Build Contact Payload (Filter Nulls)').item.json.rawFields.insurance_claim_status }}",
+              "rightValue": "",
+              "operator": { "type": "string", "operation": "notEmpty", "singleValue": true }
+            },
+            {
+              "id": "c2",
+              "leftValue": "={{ $('Build Contact Payload (Filter Nulls)').item.json.rawFields.insurance_claim_status }}",
+              "rightValue": "Paying Out of Pocket",
+              "operator": { "type": "string", "operation": "notEquals" }
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "add_insurance_tag",
+      "name": "Add Insurance Claim Tag",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [720, 100],
+      "parameters": {
+        "method": "POST",
+        "url": "=https://services.leadconnectorhq.com/contacts/{{ $json.contactId }}/tags",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Version", "value": "2021-07-28" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { \"tags\": [\"Insurance Claim\"] } }}",
+        "options": {}
+      },
+      "credentials": {
+        "httpHeaderAuth": { "id": "", "name": "GHL - Metroplex" }
+      }
+    },
+    {
+      "id": "execute_sms_alert",
+      "name": "Execute Workflow – New Lead Alert SMS",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [960, 220],
+      "continueOnFail": true,
+      "onError": "continueRegularOutput",
+      "notes": "Workflow 5 (New Lead Alert SMS) is built after Workflows 1-2 per the build order. Set the real workflowId here once it exists. continueOnFail is on so lead intake still succeeds if Workflow 5 isn't built/active yet.",
+      "parameters": {
+        "source": "database",
+        "workflowId": {
+          "__rl": true,
+          "value": "REPLACE_WITH_WORKFLOW_5_ID",
+          "mode": "list",
+          "cachedResultName": "New Lead Alert SMS (Workflow 5)"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "contactId": "={{ $json.contactId }}",
+            "firstName": "={{ $('Build Contact Payload (Filter Nulls)').item.json.firstName }}",
+            "phone": "={{ $('Build Contact Payload (Filter Nulls)').item.json.phone }}",
+            "source": "={{ $('Build Contact Payload (Filter Nulls)').item.json.source }}"
+          }
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "respond_200",
+      "name": "Respond – 200 OK",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [1200, 220],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { \"success\": true, \"contactId\": $json.contactId } }}",
+        "options": { "responseCode": 200 }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook – Lead Intake (Visualizer)": {
+      "main": [[{ "node": "Config – GHL IDs", "type": "main", "index": 0 }]]
+    },
+    "Config – GHL IDs": {
+      "main": [[{ "node": "IF – Required Fields Present?", "type": "main", "index": 0 }]]
+    },
+    "IF – Required Fields Present?": {
+      "main": [
+        [{ "node": "Build Contact Payload (Filter Nulls)", "type": "main", "index": 0 }],
+        [{ "node": "Respond – 400 Missing Fields", "type": "main", "index": 0 }]
+      ]
+    },
+    "Build Contact Payload (Filter Nulls)": {
+      "main": [[{ "node": "Search Contact By Email", "type": "main", "index": 0 }]]
+    },
+    "Search Contact By Email": {
+      "main": [[{ "node": "IF – Contact Exists?", "type": "main", "index": 0 }]]
+    },
+    "IF – Contact Exists?": {
+      "main": [
+        [{ "node": "Update Contact (PATCH)", "type": "main", "index": 0 }],
+        [{ "node": "Create Contact (POST)", "type": "main", "index": 0 }]
+      ]
+    },
+    "Update Contact (PATCH)": {
+      "main": [[{ "node": "Normalize Contact Result", "type": "main", "index": 0 }]]
+    },
+    "Create Contact (POST)": {
+      "main": [[{ "node": "Normalize Contact Result", "type": "main", "index": 0 }]]
+    },
+    "Normalize Contact Result": {
+      "main": [[{ "node": "Create Opportunity", "type": "main", "index": 0 }]]
+    },
+    "Create Opportunity": {
+      "main": [[{ "node": "IF – Insurance Claim (not cash)?", "type": "main", "index": 0 }]]
+    },
+    "IF – Insurance Claim (not cash)?": {
+      "main": [
+        [{ "node": "Add Insurance Claim Tag", "type": "main", "index": 0 }],
+        [{ "node": "Execute Workflow – New Lead Alert SMS", "type": "main", "index": 0 }]
+      ]
+    },
+    "Add Insurance Claim Tag": {
+      "main": [[{ "node": "Execute Workflow – New Lead Alert SMS", "type": "main", "index": 0 }]]
+    },
+    "Execute Workflow – New Lead Alert SMS": {
+      "main": [[{ "node": "Respond – 200 OK", "type": "main", "index": 0 }]]
+    }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "pinData": {}
+}
