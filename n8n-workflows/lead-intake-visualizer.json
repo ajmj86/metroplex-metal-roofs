@@ -74,7 +74,7 @@
           "conditions": [
             {
               "id": "c1",
-              "leftValue": "={{ $json.contact?.email }}",
+              "leftValue": "={{ $('Webhook \\u2013 Lead Intake (Visualizer)').first().json.contact?.email }}",
               "rightValue": "",
               "operator": {
                 "type": "string",
@@ -84,7 +84,7 @@
             },
             {
               "id": "c2",
-              "leftValue": "={{ $json.contact?.phone }}",
+              "leftValue": "={{ $('Webhook \\u2013 Lead Intake (Visualizer)').first().json.contact?.phone }}",
               "rightValue": "",
               "operator": {
                 "type": "string",
