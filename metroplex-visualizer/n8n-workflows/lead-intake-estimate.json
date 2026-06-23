@@ -147,7 +147,7 @@
       "typeVersion": 4.2,
       "position": [-460, 100],
       "parameters": {
-        "method": "PATCH",
+        "method": "PUT",
         "url": "=https://services.leadconnectorhq.com/contacts/{{ $json.contact.id }}",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
@@ -317,7 +317,7 @@
       "typeVersion": 4.2,
       "position": [760, 220],
       "parameters": {
-        "method": "PATCH",
+        "method": "PUT",
         "url": "=https://services.leadconnectorhq.com/opportunities/{{ $json.opportunityId }}",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",

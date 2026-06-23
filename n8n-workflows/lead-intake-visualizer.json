@@ -224,7 +224,7 @@
         100
       ],
       "parameters": {
-        "method": "PATCH",
+        "method": "PUT",
         "url": "=https://services.leadconnectorhq.com/contacts/{{ $json.contact.id }}",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
