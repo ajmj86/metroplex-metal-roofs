@@ -36,16 +36,11 @@ export async function POST(req: NextRequest) {
       tags: ['Estimate Tool'],
     };
 
-    console.log('[estimate] forwarding payload to n8n:', payload);
-
     const n8nRes = await fetch(N8N_WEBHOOK_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     });
-
-    const n8nBody = await n8nRes.text();
-    console.log('[estimate] n8n response status:', n8nRes.status, 'body:', n8nBody);
 
     if (!n8nRes.ok) {
       return NextResponse.json({ error: 'Lead intake workflow failed' }, { status: 502 });
