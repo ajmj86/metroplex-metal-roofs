@@ -21,15 +21,15 @@ interface StepThreeProps {
   leadInfo?: LeadInfo | null;
 }
 
+type EstimateState = 'idle' | 'loading' | 'success' | 'fallback' | 'error';
+
 export function StepThree({ address, selection, image, streetViewAvailable, leadInfo }: StepThreeProps) {
   const roofTypeLabel = getRoofTypeLabel(selection.roofType);
-  const [estimateRequested, setEstimateRequested] = useState(false);
-  const [submittingEstimate, setSubmittingEstimate] = useState(false);
-  const [estimateError, setEstimateError] = useState<string | null>(null);
+  const [estimateState, setEstimateState] = useState<EstimateState>('idle');
+  const [estimateResult, setEstimateResult] = useState<{ estimatedRoofSize: number; estimateRange: string } | null>(null);
 
   const handleGetEstimate = async () => {
-    setSubmittingEstimate(true);
-    setEstimateError(null);
+    setEstimateState('loading');
     try {
       const res = await fetch('/api/estimate', {
         method: 'POST',
@@ -40,14 +40,18 @@ export function StepThree({ address, selection, image, streetViewAvailable, lead
           phone: leadInfo?.phone,
           email: leadInfo?.email,
           address1: address,
+          roofType: selection.roofType,
         }),
       });
-      if (!res.ok) throw new Error('Request failed');
-      setEstimateRequested(true);
+      const data = await res.json();
+      if (res.ok && data.success && data.estimatedRoofSize != null && data.estimateRange) {
+        setEstimateResult({ estimatedRoofSize: data.estimatedRoofSize, estimateRange: data.estimateRange });
+        setEstimateState('success');
+      } else {
+        setEstimateState('fallback');
+      }
     } catch {
-      setEstimateError('Something went wrong. Please try again.');
-    } finally {
-      setSubmittingEstimate(false);
+      setEstimateState('error');
     }
   };
 
@@ -88,10 +92,18 @@ export function StepThree({ address, selection, image, streetViewAvailable, lead
 
       {/* Get Your Estimate CTA */}
       <div className="bg-accent/10 border border-accent/20 rounded-2xl p-6 text-center">
-        {estimateRequested ? (
+        {estimateState === 'success' && estimateResult ? (
+          <>
+            <h3 className="font-heading text-lg font-semibold text-foreground mb-2">Your Estimated Price Range</h3>
+            <p className="font-heading text-2xl font-semibold text-accent mb-2">{estimateResult.estimateRange}</p>
+            <p className="text-muted text-sm">
+              Based on an estimated roof size of {estimateResult.estimatedRoofSize} squares. A team member will follow up to confirm your final price.
+            </p>
+          </>
+        ) : estimateState === 'fallback' ? (
           <>
             <h3 className="font-heading text-lg font-semibold text-foreground mb-2">You're all set!</h3>
-            <p className="text-muted text-sm">A team member will follow up with your estimate shortly.</p>
+            <p className="text-muted text-sm">We weren't able to generate an instant estimate for this address, but a team member will follow up with your price range shortly.</p>
           </>
         ) : (
           <>
@@ -100,12 +112,12 @@ export function StepThree({ address, selection, image, streetViewAvailable, lead
             <button
               type="button"
               onClick={handleGetEstimate}
-              disabled={submittingEstimate}
+              disabled={estimateState === 'loading'}
               className="inline-flex items-center justify-center px-6 py-3 bg-accent text-background font-semibold rounded-lg hover:bg-accent/90 transition-colors disabled:opacity-60"
             >
-              {submittingEstimate ? 'Submitting…' : 'Get Your Estimate →'}
+              {estimateState === 'loading' ? 'Calculating…' : 'Get Your Estimate →'}
             </button>
-            {estimateError && <p className="text-red-500 text-sm mt-3">{estimateError}</p>}
+            {estimateState === 'error' && <p className="text-red-500 text-sm mt-3">Something went wrong. Please try again.</p>}
           </>
         )}
       </div>
