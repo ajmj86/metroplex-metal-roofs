@@ -1,17 +1,7 @@
 'use client';
 
+import { useState } from 'react';
 import { getRoofTypeLabel, type RoofSelection } from '@/lib/roofProducts';
-
-function getMainSiteUrl(): string {
-  const url = process.env.NEXT_PUBLIC_MAIN_SITE_URL;
-  if (!url) {
-    console.warn('[StepThree] NEXT_PUBLIC_MAIN_SITE_URL is not set — falling back to http://localhost:3000');
-    return 'http://localhost:3000';
-  }
-  return url;
-}
-
-const MAIN_SITE_URL = getMainSiteUrl();
 
 export interface LeadInfo {
   firstName?: string;
@@ -31,27 +21,35 @@ interface StepThreeProps {
   leadInfo?: LeadInfo | null;
 }
 
-function buildEstimateUrl(selection: RoofSelection, address: string, leadInfo?: LeadInfo | null): string {
-  const params = new URLSearchParams();
-  params.set('roofType', selection.roofType);
-  if (selection.style) params.set('style', selection.style);
-  if (selection.product) params.set('product', selection.product);
-  if (selection.color) params.set('color', selection.color);
-  if (address) params.set('address', address);
-  if (leadInfo?.firstName) params.set('firstName', leadInfo.firstName);
-  if (leadInfo?.lastName) params.set('lastName', leadInfo.lastName);
-  if (leadInfo?.phone) params.set('phone', leadInfo.phone);
-  if (leadInfo?.email) params.set('email', leadInfo.email);
-  if (leadInfo?.reason) params.set('reason', leadInfo.reason);
-  if (leadInfo?.insuranceClaim) params.set('insuranceClaim', leadInfo.insuranceClaim);
-  if (leadInfo?.timeline) params.set('timeline', leadInfo.timeline);
-  params.set('leadOrigin', 'visualizer');
-  return `${MAIN_SITE_URL}/estimate?${params.toString()}`;
-}
-
 export function StepThree({ address, selection, image, streetViewAvailable, leadInfo }: StepThreeProps) {
   const roofTypeLabel = getRoofTypeLabel(selection.roofType);
-  const estimateUrl = buildEstimateUrl(selection, address, leadInfo);
+  const [estimateRequested, setEstimateRequested] = useState(false);
+  const [submittingEstimate, setSubmittingEstimate] = useState(false);
+  const [estimateError, setEstimateError] = useState<string | null>(null);
+
+  const handleGetEstimate = async () => {
+    setSubmittingEstimate(true);
+    setEstimateError(null);
+    try {
+      const res = await fetch('/api/estimate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstName: leadInfo?.firstName,
+          lastName: leadInfo?.lastName,
+          phone: leadInfo?.phone,
+          email: leadInfo?.email,
+          address1: address,
+        }),
+      });
+      if (!res.ok) throw new Error('Request failed');
+      setEstimateRequested(true);
+    } catch {
+      setEstimateError('Something went wrong. Please try again.');
+    } finally {
+      setSubmittingEstimate(false);
+    }
+  };
 
   const caption =
     selection.productLabel && selection.color
@@ -90,14 +88,26 @@ export function StepThree({ address, selection, image, streetViewAvailable, lead
 
       {/* Get Your Estimate CTA */}
       <div className="bg-accent/10 border border-accent/20 rounded-2xl p-6 text-center">
-        <h3 className="font-heading text-lg font-semibold text-foreground mb-2">Love your new roof?</h3>
-        <p className="text-muted text-sm mb-4">Get a real price estimate for this roof type in just a couple minutes.</p>
-        <a
-          href={estimateUrl}
-          className="inline-flex items-center justify-center px-6 py-3 bg-accent text-background font-semibold rounded-lg hover:bg-accent/90 transition-colors"
-        >
-          Get Your Estimate →
-        </a>
+        {estimateRequested ? (
+          <>
+            <h3 className="font-heading text-lg font-semibold text-foreground mb-2">You're all set!</h3>
+            <p className="text-muted text-sm">A team member will follow up with your estimate shortly.</p>
+          </>
+        ) : (
+          <>
+            <h3 className="font-heading text-lg font-semibold text-foreground mb-2">Love your new roof?</h3>
+            <p className="text-muted text-sm mb-4">Get a real price estimate for this roof type in just a couple minutes.</p>
+            <button
+              type="button"
+              onClick={handleGetEstimate}
+              disabled={submittingEstimate}
+              className="inline-flex items-center justify-center px-6 py-3 bg-accent text-background font-semibold rounded-lg hover:bg-accent/90 transition-colors disabled:opacity-60"
+            >
+              {submittingEstimate ? 'Submitting…' : 'Get Your Estimate →'}
+            </button>
+            {estimateError && <p className="text-red-500 text-sm mt-3">{estimateError}</p>}
+          </>
+        )}
       </div>
     </div>
   );
