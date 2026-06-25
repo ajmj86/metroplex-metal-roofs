@@ -20,9 +20,10 @@ export const globalStyles = `
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
   body { overflow-x: hidden; }
-  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar { width: 10px; }
   ::-webkit-scrollbar-track { background: #09090A; }
-  ::-webkit-scrollbar-thumb { background: #27272A; border-radius: 2px; }
+  ::-webkit-scrollbar-thumb { background: #27272A; border-radius: 4px; }
+  body { scrollbar-width: thin; scrollbar-color: #27272A #09090A; }
   a { color: inherit; text-decoration: none; }
   button { cursor: pointer; border: none; background: none; font-family: inherit; }
   input { font-family: inherit; }
@@ -53,7 +54,7 @@ export const globalStyles = `
     .grid-3 { grid-template-columns: 1fr; }
     .grid-2a { grid-template-columns: 1fr; }
     .section-pad { padding: 56px 24px; }
-    .hero-pad { padding: 160px 24px 56px; }
+    .hero-pad { padding: 200px 24px 56px; }
     .hide-mobile { display: none !important; }
     .nav-links { display: none !important; }
     .stat-border { border-right: none !important; border-bottom: 1px solid #27272A; }

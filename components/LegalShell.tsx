@@ -10,7 +10,12 @@ export const LH = ({children, id}: {children: ReactNode; id?: string}) => (
 
 export const LegalShell = ({title, children}: {title: string; children: ReactNode}) => {
   useEffect(() => {
-    if (!window.location.hash) {
+    if (window.location.hash) {
+      setTimeout(() => {
+        const el = document.getElementById(window.location.hash.slice(1));
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else {
       window.scrollTo(0, 0);
     }
   }, []);
