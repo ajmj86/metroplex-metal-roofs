@@ -1,92 +1,8 @@
 'use client'
 
 import { useState, useEffect, useRef } from "react";
-
-const C = {
-  black:"#09090A", surface:"#111113", card:"#18181B",
-  border:"#27272A", borderLight:"#3F3F46",
-  accent:"#B8935A", accentLight:"#D4AE7A", accentDark:"#8C6A38",
-  white:"#F4F1EB", muted:"#71717A", mutedLight:"#A1A1AA", text:"#E4E0D8",
-};
-
-const LEGAL_ENTITY = "Allied Roofing Partners LLC";
-const DBA_NAME     = "Metroplex Metal Roofs";
-const LEGAL_FULL   = `${DBA_NAME}, a DBA of ${LEGAL_ENTITY}`;
-const PHONE        = "(214) 555-0000";
-const EMAIL        = "info@metroplexmetalroofs.com";
-const WEBSITE      = "www.metroplexmetalroofs.com";
-const YEAR         = "2026";
-const MONTH        = "June";
-
-const fonts = `@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap');`;
-
-const globalStyles = `
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body { overflow-x: hidden; }
-  ::-webkit-scrollbar { width: 4px; }
-  ::-webkit-scrollbar-track { background: #09090A; }
-  ::-webkit-scrollbar-thumb { background: #27272A; border-radius: 2px; }
-  a { color: inherit; text-decoration: none; }
-  button { cursor: pointer; border: none; background: none; font-family: inherit; }
-  input { font-family: inherit; }
-  strong { font-weight: 600; }
-  p { margin-bottom: 16px; }
-  p:last-child { margin-bottom: 0; }
-
-  /* ── Responsive helpers ── */
-  .grid-4 { display: grid; grid-template-columns: repeat(4,1fr); }
-  .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); }
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; }
-  .grid-2a { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; }
-  .flex-row { display: flex; flex-direction: row; }
-  .section-pad { padding: 100px 64px; }
-  .hero-pad { padding: 140px 64px 80px; }
-  .inner { max-width: 1200px; margin: 0 auto; }
-
-  @media (max-width: 1024px) {
-    .grid-4 { grid-template-columns: repeat(2,1fr); }
-    .grid-3 { grid-template-columns: repeat(2,1fr); }
-    .grid-2 { grid-template-columns: 1fr; }
-    .grid-2a { grid-template-columns: 1fr 1fr; }
-    .section-pad { padding: 72px 32px; }
-    .hero-pad { padding: 120px 32px 72px; }
-  }
-  @media (max-width: 640px) {
-    .grid-4 { grid-template-columns: 1fr; }
-    .grid-3 { grid-template-columns: 1fr; }
-    .grid-2a { grid-template-columns: 1fr; }
-    .section-pad { padding: 56px 20px; }
-    .hero-pad { padding: 100px 20px 56px; }
-    .hide-mobile { display: none !important; }
-    .nav-links { display: none !important; }
-    .stat-border { border-right: none !important; border-bottom: 1px solid #27272A; }
-  }
-  @keyframes fadeUp {
-    from { opacity:0; transform:translateY(20px); }
-    to   { opacity:1; transform:translateY(0); }
-  }
-`;
-
-/* ── Logo ── */
-const Logo = ({ size=1, light=false }) => {
-  const fg = light ? C.black : C.white;
-  const gold = C.accent;
-  return (
-    <svg width={240*size} height={66*size} viewBox="0 0 240 66" fill="none" style={{display:"block"}}>
-      <path d="M6 48 L26 14 L40 32 L26 32 Z" fill={gold}/>
-      <path d="M40 32 L54 14 L64 48 L40 48 Z" fill={gold} opacity="0.72"/>
-      <line x1="26" y1="14" x2="54" y2="14" stroke={gold} strokeWidth="2.2" strokeLinecap="round"/>
-      <line x1="6"  y1="48" x2="64" y2="48" stroke={gold} strokeWidth="1.4" strokeLinecap="round"/>
-      <line x1="19" y1="48" x2="33" y2="23" stroke={light?"#FFF":"#000"} strokeWidth="0.7" opacity="0.25" strokeLinecap="round"/>
-      <line x1="52" y1="48" x2="46" y2="23" stroke={light?"#FFF":"#000"} strokeWidth="0.7" opacity="0.25" strokeLinecap="round"/>
-      <text x="76" y="28" fontFamily="'Cormorant Garamond',Georgia,serif" fontSize="16" fontWeight="700" letterSpacing="3" fill={fg}>METROPLEX</text>
-      <text x="76" y="44" fontFamily="'Cormorant Garamond',Georgia,serif" fontSize="11" fontWeight="400" letterSpacing="5" fill={gold}>METAL ROOFS</text>
-      <line x1="76" y1="49" x2="233" y2="49" stroke={gold} strokeWidth="0.4" opacity="0.4"/>
-      <text x="76" y="59" fontFamily="'Outfit',sans-serif" fontSize="7" letterSpacing="2.5" fill={fg} opacity="0.38">DALLAS · FORT WORTH</text>
-    </svg>
-  );
-};
+import Link from "next/link";
+import { C, LEGAL_ENTITY, DBA_NAME, PHONE, YEAR, fonts, globalStyles, Logo } from "./brand";
 
 /* ── Image Placeholder ── */
 const ImgPlaceholder = ({ label, tag, style={} }) => (
@@ -152,27 +68,26 @@ const Counter = ({ to, suffix="" }) => {
 };
 
 /* ── Nav ── */
-const Nav = ({ setPage, scrolled }) => {
+const Nav = ({ scrolled }) => {
   const [mOpen, setMOpen] = useState(false);
   return (
     <>
       <nav style={{
         position:"fixed",top:0,left:0,right:0,zIndex:200,
-        background:scrolled||mOpen?"rgba(9,9,10,0.97)":"transparent",
+        background:"rgba(9,9,10,0.97)",
         backdropFilter:scrolled||mOpen?"blur(14px)":"none",
         borderBottom:scrolled||mOpen?`1px solid ${C.border}`:"1px solid transparent",
         transition:"all 0.35s ease",
-        padding:"0 32px",
+        padding:"14px 32px",
         display:"flex",alignItems:"center",justifyContent:"space-between",
-        height:68,
       }}>
-        <button onClick={()=>{setPage("home");setMOpen(false);window.scrollTo(0,0);}} style={{padding:0,flexShrink:0}}>
-          <Logo size={0.76}/>
+        <button className="nav-logo" onClick={()=>{setMOpen(false);window.scrollTo(0,0);}} style={{padding:0,flexShrink:0}}>
+          <Logo size={1.4}/>
         </button>
         {/* Desktop links */}
         <div className="nav-links" style={{display:"flex",gap:28,alignItems:"center"}}>
-          {["Why Metal","Gallery","Process","Service Areas"].map(l=>(
-            <a key={l} href={`#${l.toLowerCase().replace(" ","-")}`}
+          {[["Why Metal","#why-metal"],["Gallery","#gallery"],["Our Process","#process"],["Service Areas","#service-areas"]].map(([l,href])=>(
+            <a key={l} href={href}
               style={{fontSize:11,letterSpacing:2,textTransform:"uppercase",color:C.mutedLight,fontWeight:500,transition:"color 0.2s"}}
               onMouseEnter={e=>e.currentTarget.style.color=C.accent}
               onMouseLeave={e=>e.currentTarget.style.color=C.mutedLight}
@@ -192,13 +107,13 @@ const Nav = ({ setPage, scrolled }) => {
       </nav>
       {/* Mobile drawer */}
       {mOpen && (
-        <div style={{position:"fixed",top:68,left:0,right:0,bottom:0,zIndex:199,background:"rgba(9,9,10,0.98)",display:"flex",flexDirection:"column",padding:"32px 24px",gap:4,overflowY:"auto"}}>
-          {["Why Metal","Gallery","Process","Service Areas","Reviews"].map(l=>(
-            <a key={l} href={`#${l.toLowerCase().replace(" ","-")}`} onClick={()=>setMOpen(false)}
+        <div style={{position:"fixed",top:120,left:0,right:0,bottom:0,zIndex:199,background:"rgba(9,9,10,0.98)",display:"flex",flexDirection:"column",padding:"32px 24px",gap:4,overflowY:"auto"}}>
+          {[["Why Metal","#why-metal"],["Gallery","#gallery"],["Our Process","#process"],["Service Areas","#service-areas"],["Reviews","#reviews"]].map(([l,href])=>(
+            <a key={l} href={href} onClick={()=>setMOpen(false)}
               style={{padding:"16px 0",fontSize:18,letterSpacing:2,textTransform:"uppercase",color:C.mutedLight,fontFamily:"'Cormorant Garamond',serif",borderBottom:`1px solid ${C.border}`}}
             >{l}</a>
           ))}
-          <a href="#visualizer" onClick={()=>setMOpen(false)} style={{marginTop:24,padding:"16px",background:C.accent,color:C.black,fontSize:12,letterSpacing:2,textTransform:"uppercase",fontWeight:700,borderRadius:4,textAlign:"center"}}>
+          <a href="#visualizer" onClick={()=>setMOpen(false)} className="cta-btn" style={{marginTop:24,padding:"16px",background:C.accent,color:C.black,fontSize:12,letterSpacing:2,textTransform:"uppercase",fontWeight:700,borderRadius:4,textAlign:"center"}}>
             Free Estimate
           </a>
         </div>
@@ -208,29 +123,53 @@ const Nav = ({ setPage, scrolled }) => {
 };
 
 /* ── Footer ── */
-const Footer = ({ setPage }) => (
+const Footer = () => (
   <footer style={{borderTop:`1px solid ${C.border}`,padding:"48px 32px 28px",background:C.black}}>
     <div className="inner">
       <div className="grid-2a" style={{gap:40,marginBottom:48}}>
         <div>
-          <Logo size={0.68}/>
-          <p style={{marginTop:18,fontSize:13,color:C.muted,lineHeight:1.8,maxWidth:260}}>
+          <Logo size={1.1} light={false}/>
+          <p className="muted-body" style={{marginTop:18,fontSize:16,color:C.muted,lineHeight:1.8,maxWidth:260}}>
             Premium metal roofing for DFW homeowners. Licensed partners. Satellite-based estimates. Lifetime results.
           </p>
         </div>
         {[
-          {title:"Services",links:["Standing Seam","Copper Roofing","Stone-Coated Steel","R-Panel","Insurance Claims","Free Visualizer"]},
-          {title:"Service Areas",links:["Southlake","Frisco","Westlake","Prosper","McKinney","All DFW Areas →"]},
-          {title:"Company",links:["About Us","Our Process","Reviews","Contact"]},
+          {title:"Services",links:[
+            ["Standing Seam","#gallery"],
+            ["Copper Roofing","#gallery"],
+            ["Stone-Coated Steel","#gallery"],
+            ["R-Panel","#gallery"],
+            ["Insurance Claims","#why-metal"],
+            ["Free Visualizer","#visualizer"],
+          ]},
+          {title:"Service Areas",links:[
+            // TODO: link to city page
+            ["Southlake","#"],
+            ["Frisco","#"],
+            ["Westlake","#"],
+            ["Prosper","#"],
+            ["McKinney","#"],
+            ["All DFW Areas →","#service-areas"],
+          ]},
+          {title:"Company",links:[
+            ["About Us","#"],
+            ["Our Process","#process"],
+            ["Reviews","#reviews"],
+            ["Contact","/terms#contact"],
+          ]},
         ].map(col=>(
           <div key={col.title}>
             <div style={{fontSize:10,letterSpacing:2.5,color:C.accent,textTransform:"uppercase",marginBottom:18}}>{col.title}</div>
-            {col.links.map(l=>(
-              <a key={l} href="#" style={{display:"block",fontSize:13,color:C.muted,marginBottom:9,lineHeight:1.5,transition:"color 0.2s"}}
-                onMouseEnter={e=>e.currentTarget.style.color=C.white}
-                onMouseLeave={e=>e.currentTarget.style.color=C.muted}
-              >{l}</a>
-            ))}
+            {col.links.map(([l,href])=>{
+              const linkStyle = {display:"block",fontSize:13,color:C.muted,marginBottom:9,lineHeight:1.5,transition:"color 0.2s"};
+              const hoverProps = {
+                onMouseEnter:e=>e.currentTarget.style.color=C.white,
+                onMouseLeave:e=>e.currentTarget.style.color=C.muted,
+              };
+              return href.startsWith("/")
+                ? <Link key={l} href={href} style={linkStyle} {...hoverProps}>{l}</Link>
+                : <a key={l} href={href} style={linkStyle} {...hoverProps}>{l}</a>;
+            })}
           </div>
         ))}
       </div>
@@ -240,12 +179,12 @@ const Footer = ({ setPage }) => (
           <span style={{fontSize:10,opacity:0.6}}>Dallas–Fort Worth, Texas</span>
         </div>
         <div style={{display:"flex",gap:20,flexWrap:"wrap",alignItems:"center"}}>
-          {[["Privacy Policy","privacy"],["Terms of Service","terms"]].map(([label,pg])=>(
-            <a key={label} href="#" onClick={e=>{e.preventDefault();setPage(pg);window.scrollTo(0,0);}}
+          {[["Privacy Policy","/privacy"],["Terms of Service","/terms"]].map(([label,href])=>(
+            <Link key={label} href={href}
               style={{fontSize:11,color:C.muted,transition:"color 0.2s"}}
               onMouseEnter={e=>e.currentTarget.style.color=C.white}
               onMouseLeave={e=>e.currentTarget.style.color=C.muted}
-            >{label}</a>
+            >{label}</Link>
           ))}
         </div>
       </div>
@@ -315,7 +254,7 @@ const VisualizerGate = () => {
             placeholder="Enter your home address…"
             style={{flex:1,background:"none",border:"none",outline:"none",color:C.white,fontSize:14}}/>
         </div>
-        <button onClick={handleVisualize}
+        <button onClick={handleVisualize} className="cta-btn"
           style={{padding:"13px 22px",background:C.accent,color:C.black,fontSize:11,letterSpacing:1.5,textTransform:"uppercase",fontWeight:600,borderRadius:6,transition:"background 0.2s",whiteSpace:"nowrap"}}
           onMouseEnter={e=>e.currentTarget.style.background=C.accentLight}
           onMouseLeave={e=>e.currentTarget.style.background=C.accent}
@@ -355,7 +294,7 @@ const VisualizerGate = () => {
       {/* Gate form */}
       <div style={{background:C.card,border:`1px solid ${C.border}`,borderRadius:8,padding:"clamp(22px,4vw,36px)"}}>
         <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:22,fontWeight:700,color:C.white,marginBottom:6}}>Unlock Your Visualization</div>
-        <p style={{fontSize:13,color:C.muted,marginBottom:22,lineHeight:1.7}}>Enter your details to view your render and receive a free estimate.</p>
+        <p className="muted-body" style={{fontSize:16,color:C.muted,marginBottom:22,lineHeight:1.7}}>Enter your details to view your render and receive a free estimate.</p>
 
         <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:14,marginBottom:14}}>
           <div><Lbl c="Full Name *"/><input value={form.name} onChange={e=>setForm(f=>({...f,name:e.target.value}))} placeholder="Jane Smith" style={iStyle(formErrors.name)}/><FErr m={formErrors.name}/></div>
@@ -373,7 +312,7 @@ const VisualizerGate = () => {
           {/* SMS */}
           <label style={{display:"flex",gap:12,alignItems:"flex-start",cursor:"pointer"}}>
             <Checkbox checked={form.smsConsent} onChange={()=>setForm(f=>({...f,smsConsent:!f.smsConsent}))}/>
-            <div style={{fontSize:12,color:C.mutedLight,lineHeight:1.75}}>
+            <div style={{fontSize:16,color:C.mutedLight,lineHeight:1.75}}>
               I agree to receive SMS text messages from <strong style={{color:C.white}}>Metroplex Metal Roofs</strong> (Allied Roofing Partners LLC) at the number above, including estimate updates, consultation reminders, and project follow-ups. Message frequency varies. Msg &amp; data rates may apply. Reply <strong style={{color:C.white}}>STOP</strong> to cancel, <strong style={{color:C.white}}>HELP</strong> for help.
             </div>
           </label>
@@ -381,7 +320,7 @@ const VisualizerGate = () => {
           {/* Email */}
           <label style={{display:"flex",gap:12,alignItems:"flex-start",cursor:"pointer"}}>
             <Checkbox checked={form.emailConsent} onChange={()=>setForm(f=>({...f,emailConsent:!f.emailConsent}))}/>
-            <div style={{fontSize:12,color:C.mutedLight,lineHeight:1.75}}>
+            <div style={{fontSize:16,color:C.mutedLight,lineHeight:1.75}}>
               I agree to receive emails from <strong style={{color:C.white}}>Metroplex Metal Roofs</strong> (Allied Roofing Partners LLC) regarding my estimate, project updates, and relevant roofing information. Unsubscribe at any time.
             </div>
           </label>
@@ -389,15 +328,15 @@ const VisualizerGate = () => {
 
         {/* Required disclosure box */}
         <div style={{background:C.surface,border:`1px solid ${C.border}`,borderRadius:6,padding:"13px 15px",marginBottom:20}}>
-          <p style={{fontSize:11,color:C.muted,lineHeight:1.8,margin:0}}>
+          <p className="muted-body" style={{fontSize:16,color:C.muted,lineHeight:1.8,margin:0}}>
             <strong style={{color:C.mutedLight}}>Consent to receive SMS or email messages is not required</strong> to obtain a quote or receive services from Metroplex Metal Roofs. Uncheck either box above to opt out. By submitting you agree to our{" "}
             <a href="#" style={{color:C.accent,textDecoration:"underline"}}>Privacy Policy</a> and{" "}
             <a href="#" style={{color:C.accent,textDecoration:"underline"}}>Terms of Service</a>.
           </p>
         </div>
 
-        <button onClick={handleSubmit} disabled={submitting}
-          style={{width:"100%",padding:"15px",background:submitting?C.accentDark:C.accent,color:C.black,fontSize:12,letterSpacing:2,textTransform:"uppercase",fontWeight:700,borderRadius:4,cursor:submitting?"not-allowed":"pointer",transition:"background 0.2s"}}
+        <button onClick={handleSubmit} disabled={submitting} className="cta-btn"
+          style={{width:"100%",minHeight:48,padding:"15px",background:submitting?C.accentDark:C.accent,color:C.black,fontSize:12,letterSpacing:2,textTransform:"uppercase",fontWeight:700,borderRadius:4,cursor:submitting?"not-allowed":"pointer",transition:"background 0.2s"}}
           onMouseEnter={e=>{if(!submitting)e.currentTarget.style.background=C.accentLight;}}
           onMouseLeave={e=>{if(!submitting)e.currentTarget.style.background=C.accent;}}
         >{submitting?"Submitting…":"View My Roof Rendering →"}</button>
@@ -410,10 +349,10 @@ const VisualizerGate = () => {
       <div style={{background:C.card,border:`1px solid ${C.accentDark}`,borderRadius:8,padding:"44px 32px",textAlign:"center"}}>
         <div style={{width:48,height:48,borderRadius:"50%",background:`${C.accentDark}44`,border:`1px solid ${C.accentDark}`,display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto 18px",fontSize:20,color:C.accent}}>✓</div>
         <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:26,color:C.white,fontWeight:700,marginBottom:12}}>You're all set.</div>
-        <p style={{fontSize:14,color:C.mutedLight,lineHeight:1.8,marginBottom:24}}>
+        <p style={{fontSize:16,color:C.mutedLight,lineHeight:1.8,marginBottom:24}}>
           Your visualization is being prepared. Our team will follow up with your full render and free estimate — typically within one business day.
         </p>
-        <div style={{fontSize:12,color:C.muted}}>Questions? <a href="tel:12145550000" style={{color:C.accent}}>{PHONE}</a></div>
+        <div style={{fontSize:12,color:C.muted}}>Questions? <a href="tel:18173823338" style={{color:C.accent}}>{PHONE}</a></div>
       </div>
     </div>
   );
@@ -476,40 +415,37 @@ const HomePage = () => {
     <div>
       {/* ── HERO ── */}
       <section className="hero-pad" style={{minHeight:"100vh",display:"flex",flexDirection:"column",justifyContent:"center",position:"relative",overflow:"hidden"}}>
-        {/* BG gradient — replace div background-image with real photo URL when ready */}
-        <div style={{position:"absolute",inset:0,zIndex:0,background:`linear-gradient(135deg, #0F0D0A 0%, #1A1610 40%, #0D0C0B 100%)`}}>
+        {/* Hero background photo */}
+        <div style={{position:"absolute",inset:0,zIndex:0,backgroundImage:"url('/MMR Hero Pic.png')",backgroundSize:"cover",backgroundPosition:"center",backgroundRepeat:"no-repeat"}}>
           {/* Subtle gold radial glow */}
           <div style={{position:"absolute",top:"35%",right:"30%",width:700,height:700,background:`radial-gradient(circle, ${C.accentDark}18 0%, transparent 65%)`,pointerEvents:"none"}}/>
-          {/* Photo swap note — remove this comment when adding real image:
-              Set background-image: url('/your-hero-image.jpg') on the outer div,
-              add backgroundSize:'cover', backgroundPosition:'center' */}
         </div>
-        {/* Grid overlay */}
-        <div style={{position:"absolute",inset:0,zIndex:1,pointerEvents:"none",backgroundImage:`linear-gradient(${C.border} 1px,transparent 1px),linear-gradient(90deg,${C.border} 1px,transparent 1px)`,backgroundSize:"72px 72px",opacity:0.07}}/>
+        {/* Dark overlay for text legibility */}
+        <div style={{position:"absolute",inset:0,zIndex:1,pointerEvents:"none",background:"linear-gradient(to bottom, rgba(9,9,10,0.88) 0%, rgba(9,9,10,0.78) 50%, rgba(9,9,10,0.90) 100%)"}}/>
 
         <div className="inner" style={{position:"relative",zIndex:2,width:"100%"}}>
           <div style={{display:"inline-flex",alignItems:"center",gap:12,marginBottom:28,animation:"fadeUp 0.8s ease both"}}>
             <div style={{width:28,height:1,background:C.accent,flexShrink:0}}/>
-            <span style={{fontSize:11,letterSpacing:3,color:C.accent,textTransform:"uppercase",fontWeight:500}}>Premium Metal Roofing · Dallas–Fort Worth</span>
+            <span style={{fontSize:"clamp(0.75rem,1.1vw,0.95rem)",letterSpacing:3.5,color:C.accent,textTransform:"uppercase",fontWeight:500}}>Premium Metal Roofing · Dallas–Fort Worth</span>
           </div>
-          <h1 style={{fontFamily:"'Cormorant Garamond',Georgia,serif",fontSize:"clamp(42px,6vw,88px)",fontWeight:700,lineHeight:1.05,color:C.white,marginBottom:24,maxWidth:720,animation:"fadeUp 0.8s ease 0.1s both"}}>
+          <h1 style={{fontFamily:"'Cormorant Garamond',Georgia,serif",fontSize:"clamp(3.5rem,5.5vw,7rem)",fontWeight:700,lineHeight:1.05,color:C.white,marginBottom:24,maxWidth:720,animation:"fadeUp 0.8s ease 0.1s both"}}>
             The Last Roof<br/><span style={{color:C.accent,fontStyle:"italic"}}>You'll Ever Need</span>
           </h1>
-          <p style={{fontSize:"clamp(15px,2vw,17px)",lineHeight:1.8,color:C.mutedLight,maxWidth:480,marginBottom:40,fontWeight:300,animation:"fadeUp 0.8s ease 0.2s both"}}>
+          <p style={{fontSize:"clamp(1.125rem,1.3vw,1.1875rem)",lineHeight:1.8,color:C.mutedLight,maxWidth:480,marginBottom:40,fontWeight:300,animation:"fadeUp 0.8s ease 0.2s both"}}>
             Standing seam metal roofing engineered for North Texas weather. 50-year lifespan. Class 4 hail rating. Up to 35% insurance discount.
           </p>
           <div style={{display:"flex",gap:14,flexWrap:"wrap",alignItems:"center",animation:"fadeUp 0.8s ease 0.3s both"}}>
-            <a href="#visualizer" style={{display:"inline-flex",alignItems:"center",gap:10,padding:"15px 32px",background:C.accent,color:C.black,fontSize:12,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"all 0.2s",whiteSpace:"nowrap"}}
+            <a href="#visualizer" className="cta-btn" style={{display:"inline-flex",alignItems:"center",gap:10,padding:"15px 32px",background:C.accent,color:C.black,fontSize:12,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"all 0.2s",whiteSpace:"nowrap"}}
               onMouseEnter={e=>{e.currentTarget.style.background=C.accentLight;}}
               onMouseLeave={e=>{e.currentTarget.style.background=C.accent;}}
             >See Your Home With Metal →</a>
-            <a href="#process" style={{display:"inline-flex",alignItems:"center",padding:"15px 28px",border:`1px solid ${C.borderLight}`,color:C.mutedLight,fontSize:12,letterSpacing:2,textTransform:"uppercase",fontWeight:500,borderRadius:2,transition:"all 0.2s",whiteSpace:"nowrap"}}
-              onMouseEnter={e=>{e.currentTarget.style.borderColor=C.accent;e.currentTarget.style.color=C.accent;}}
-              onMouseLeave={e=>{e.currentTarget.style.borderColor=C.borderLight;e.currentTarget.style.color=C.mutedLight;}}
+            <a href="#process" className="cta-btn" style={{display:"inline-flex",alignItems:"center",padding:"15px 28px",background:"#1C1C1E",border:`1px solid ${C.accent}`,color:C.accent,fontSize:12,letterSpacing:2,textTransform:"uppercase",fontWeight:500,borderRadius:2,transition:"all 0.2s",whiteSpace:"nowrap"}}
+              onMouseEnter={e=>{e.currentTarget.style.background="#27272A";}}
+              onMouseLeave={e=>{e.currentTarget.style.background="#1C1C1E";}}
             >How It Works</a>
           </div>
           {/* Trust bar */}
-          <div style={{display:"flex",gap:28,marginTop:56,paddingTop:32,borderTop:`1px solid ${C.border}`,flexWrap:"wrap",animation:"fadeUp 0.8s ease 0.4s both"}}>
+          <div className="trust-bar" style={{display:"flex",gap:28,marginTop:48,flexWrap:"wrap",animation:"fadeUp 0.8s ease 0.4s both"}}>
             {["Licensed & Insured Partners","Satellite Imaging Estimates","Class 4 Impact Rating","DFW Local"].map(t=>(
               <div key={t} style={{display:"flex",alignItems:"center",gap:8}}>
                 <div style={{width:5,height:5,borderRadius:"50%",background:C.accent,flexShrink:0}}/>
@@ -537,17 +473,17 @@ const HomePage = () => {
       </section>
 
       {/* ── ECONOMICS ── */}
-      <section className="section-pad" style={{background:C.black,borderTop:`1px solid ${C.border}`,position:"relative",overflow:"hidden"}}>
+      <section id="why-metal" className="section-pad" style={{background:C.black,borderTop:`1px solid ${C.border}`,position:"relative",overflow:"hidden"}}>
         {/* Subtle diagonal texture */}
         <div style={{position:"absolute",inset:0,backgroundImage:`repeating-linear-gradient(135deg,transparent,transparent 48px,${C.border}0A 48px,${C.border}0A 49px)`,pointerEvents:"none"}}/>
         <div className="inner" style={{position:"relative"}}>
           <Reveal>
             <div style={{textAlign:"center",marginBottom:64}}>
-              <div style={{fontSize:10,letterSpacing:3,color:C.accent,textTransform:"uppercase",marginBottom:14}}>The Real Math</div>
-              <h2 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(30px,4.5vw,56px)",fontWeight:700,color:C.white,lineHeight:1.1,marginBottom:20}}>
+              <div style={{fontSize:15,letterSpacing:3,color:C.accent,textTransform:"uppercase",marginBottom:14}}>The Real Math</div>
+              <h2 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(1.875rem,4.8vw,4.5rem)",fontWeight:700,color:C.white,lineHeight:1.1,marginBottom:20}}>
                 Why DFW Homeowners Are<br/><span style={{fontStyle:"italic",color:C.accent}}>Done With Asphalt</span>
               </h2>
-              <p style={{fontSize:15,color:C.mutedLight,lineHeight:1.8,maxWidth:560,margin:"0 auto"}}>
+              <p style={{fontSize:16,color:C.mutedLight,lineHeight:1.8,maxWidth:560,margin:"0 auto"}}>
                 In a hail zone like Dallas–Fort Worth, asphalt roofing isn't a long-term asset — it's a recurring expense. Here's what the numbers actually look like.
               </p>
             </div>
@@ -575,13 +511,13 @@ const HomePage = () => {
                     <div style={{width:28,height:28,borderRadius:"50%",background:C.card,border:`1px solid ${C.border}`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:11,color:C.muted,flexShrink:0,marginTop:2}}>{item.icon}</div>
                     <div>
                       <div style={{fontSize:10,letterSpacing:1.5,textTransform:"uppercase",color:C.muted,marginBottom:4}}>{item.label}</div>
-                      <div style={{fontSize:14,color:C.text,lineHeight:1.6}}>{item.val}</div>
+                      <div style={{fontSize:16,color:C.text,lineHeight:1.6}}>{item.val}</div>
                     </div>
                   </div>
                 ))}
                 {/* Insight callout */}
                 <div style={{marginTop:28,padding:"18px 20px",background:C.card,borderRadius:6,border:`1px solid ${C.border}`}}>
-                  <div style={{fontSize:12,color:C.mutedLight,lineHeight:1.7,fontStyle:"italic"}}>
+                  <div style={{fontSize:16,color:C.mutedLight,lineHeight:1.7,fontStyle:"italic"}}>
                     "When your deductible equals or exceeds what a replacement costs, insurance provides no real benefit for your roof — you're effectively self-insuring either way."
                   </div>
                 </div>
@@ -611,12 +547,12 @@ const HomePage = () => {
                     <div style={{width:28,height:28,borderRadius:"50%",background:item.gold?`${C.accentDark}44`:C.surface,border:`1px solid ${item.gold?C.accentDark:C.border}`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:11,color:item.gold?C.accent:C.muted,flexShrink:0,marginTop:2}}>{item.icon}</div>
                     <div>
                       <div style={{fontSize:10,letterSpacing:1.5,textTransform:"uppercase",color:item.gold?C.accent:C.muted,marginBottom:4}}>{item.label}</div>
-                      <div style={{fontSize:14,color:C.text,lineHeight:1.6}}>{item.val}</div>
+                      <div style={{fontSize:16,color:C.text,lineHeight:1.6}}>{item.val}</div>
                     </div>
                   </div>
                 ))}
                 <div style={{marginTop:28,padding:"18px 20px",background:`${C.accentDark}22`,borderRadius:6,border:`1px solid ${C.accentDark}`}}>
-                  <div style={{fontSize:12,color:C.accentLight,lineHeight:1.7,fontStyle:"italic"}}>
+                  <div style={{fontSize:16,color:C.accentLight,lineHeight:1.7,fontStyle:"italic"}}>
                     "If you're already paying out of pocket every decade, the gap between asphalt and metal is smaller than most homeowners expect — and the gap in outcomes is enormous."
                   </div>
                 </div>
@@ -629,7 +565,7 @@ const HomePage = () => {
             <div style={{background:C.surface,border:`1px solid ${C.border}`,borderRadius:8,overflow:"hidden"}}>
               {/* Social proof bar */}
               <div style={{borderBottom:`1px solid ${C.border}`,padding:"20px clamp(24px,4vw,48px)",display:"flex",alignItems:"center",gap:16,flexWrap:"wrap"}}>
-                <p style={{fontSize:13,color:C.mutedLight,margin:0,lineHeight:1.6,fontStyle:"italic"}}>
+                <p style={{fontSize:16,color:C.mutedLight,margin:0,lineHeight:1.6,fontStyle:"italic"}}>
                   <span style={{display:"inline-block",width:6,height:6,borderRadius:"50%",background:C.accent,marginRight:12,verticalAlign:"middle",flexShrink:0}}/>
                   Metal roofing is now standard on new construction across Prosper, Celina, Westlake, and Southlake. Existing homeowners in these communities are making the same upgrade — and it shows.
                 </p>
@@ -640,11 +576,11 @@ const HomePage = () => {
                   <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(18px,2.5vw,26px)",fontWeight:700,color:C.white,lineHeight:1.3,marginBottom:8}}>
                     The upgrade is smaller than you think.<br/><span style={{color:C.accent,fontStyle:"italic"}}>The difference is permanent.</span>
                   </div>
-                  <p style={{fontSize:13,color:C.muted,lineHeight:1.7,margin:0}}>
+                  <p className="muted-body" style={{fontSize:16,color:C.muted,lineHeight:1.7,margin:0}}>
                     For a home in the $700K–$1M range, the real question isn't whether you can afford metal — it's whether paying for asphalt again makes any sense at all.
                   </p>
                 </div>
-                <a href="#visualizer" style={{display:"inline-flex",alignItems:"center",gap:10,padding:"16px 32px",background:C.accent,color:C.black,fontSize:11,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"all 0.2s",whiteSpace:"nowrap",flexShrink:0}}
+                <a href="#visualizer" className="cta-btn" style={{display:"inline-flex",alignItems:"center",gap:10,padding:"16px 32px",background:C.accent,color:C.black,fontSize:11,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"all 0.2s",whiteSpace:"nowrap",flexShrink:0}}
                   onMouseEnter={e=>e.currentTarget.style.background=C.accentLight}
                   onMouseLeave={e=>e.currentTarget.style.background=C.accent}
                 >Get a Free Estimate →</a>
@@ -659,11 +595,11 @@ const HomePage = () => {
         <div style={{position:"absolute",inset:0,pointerEvents:"none",background:`radial-gradient(ellipse 70% 60% at 50% 50%,${C.accentDark}1A 0%,transparent 70%)`}}/>
         <div style={{maxWidth:740,margin:"0 auto",textAlign:"center",position:"relative"}}>
           <Reveal>
-            <div style={{fontSize:10,letterSpacing:3,color:C.accent,textTransform:"uppercase",marginBottom:18}}>AI Roof Visualizer</div>
-            <h2 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(32px,5vw,60px)",fontWeight:700,color:C.white,lineHeight:1.1,marginBottom:20}}>
+            <div style={{fontSize:15,letterSpacing:3,color:C.accent,textTransform:"uppercase",marginBottom:18}}>AI Roof Visualizer</div>
+            <h2 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(2rem,5.2vw,4.75rem)",fontWeight:700,color:C.white,lineHeight:1.1,marginBottom:20}}>
               See Your Home With<br/><span style={{fontStyle:"italic",color:C.accent}}>a Metal Roof</span>
             </h2>
-            <p style={{fontSize:15,color:C.mutedLight,lineHeight:1.8,maxWidth:500,margin:"0 auto 40px"}}>
+            <p style={{fontSize:16,color:C.mutedLight,lineHeight:1.8,maxWidth:500,margin:"0 auto 40px"}}>
               Enter your address. Our AI pulls a street-level image of your exact home and renders it with your chosen metal roof style and color — no imagination required.
             </p>
           </Reveal>
@@ -679,8 +615,8 @@ const HomePage = () => {
           <Reveal>
             <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end",marginBottom:48,flexWrap:"wrap",gap:20}}>
               <div>
-                <div style={{fontSize:10,letterSpacing:3,color:C.accent,textTransform:"uppercase",marginBottom:10}}>Our Products</div>
-                <h2 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(28px,4vw,48px)",fontWeight:700,color:C.white,lineHeight:1.1}}>
+                <div style={{fontSize:15,letterSpacing:3,color:C.accent,textTransform:"uppercase",marginBottom:10}}>Our Products</div>
+                <h2 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(1.75rem,4.3vw,3.75rem)",fontWeight:700,color:C.white,lineHeight:1.1}}>
                   Four Systems.<br/>One Standard.
                 </h2>
               </div>
@@ -708,7 +644,7 @@ const HomePage = () => {
                   <div>
                     <div style={{fontSize:10,color:C.accent,letterSpacing:2,textTransform:"uppercase",marginBottom:8}}>{badgeMap[activeTab]}</div>
                     <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(26px,3vw,36px)",fontWeight:700,color:C.white,marginBottom:20}}>{activeType.label}</div>
-                    <p style={{fontSize:15,color:C.mutedLight,lineHeight:1.8,marginBottom:28}}>{activeType.desc}</p>
+                    <p style={{fontSize:16,color:C.mutedLight,lineHeight:1.8,marginBottom:28}}>{activeType.desc}</p>
                     <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:0}}>
                       {(specMap[activeTab]||[]).map(item=>(
                         <div key={item.k} style={{padding:"14px 0",borderBottom:`1px solid ${C.border}`}}>
@@ -733,8 +669,8 @@ const HomePage = () => {
         <div className="inner">
           <Reveal>
             <div style={{textAlign:"center",marginBottom:48}}>
-              <div style={{fontSize:10,letterSpacing:3,color:C.accent,textTransform:"uppercase",marginBottom:12}}>Our Work</div>
-              <h2 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(28px,4vw,48px)",fontWeight:700,color:C.white}}>DFW Installations</h2>
+              <div style={{fontSize:15,letterSpacing:3,color:C.accent,textTransform:"uppercase",marginBottom:12}}>Our Work</div>
+              <h2 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(1.75rem,4.3vw,3.75rem)",fontWeight:700,color:C.white}}>DFW Installations</h2>
               <p style={{fontSize:12,color:C.muted,marginTop:10}}>Replace placeholders with licensed stock or job photos before launch</p>
             </div>
           </Reveal>
@@ -753,8 +689,8 @@ const HomePage = () => {
         <div className="inner">
           <Reveal>
             <div style={{textAlign:"center",marginBottom:56}}>
-              <div style={{fontSize:10,letterSpacing:3,color:C.accent,textTransform:"uppercase",marginBottom:14}}>Our Process</div>
-              <h2 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(28px,4vw,48px)",fontWeight:700,color:C.white}}>From Address to Installation</h2>
+              <div style={{fontSize:15,letterSpacing:3,color:C.accent,textTransform:"uppercase",marginBottom:14}}>Our Process</div>
+              <h2 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(1.75rem,4.3vw,3.75rem)",fontWeight:700,color:C.white}}>From Address to Installation</h2>
             </div>
           </Reveal>
           <div className="grid-4" style={{gap:2}}>
@@ -767,7 +703,7 @@ const HomePage = () => {
                   <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:56,fontWeight:700,color:C.border,lineHeight:1,marginBottom:20,userSelect:"none"}}>{step.n}</div>
                   <div style={{width:28,height:2,background:C.accent,marginBottom:16}}/>
                   <h3 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:20,color:C.white,fontWeight:700,marginBottom:12}}>{step.title}</h3>
-                  <p style={{fontSize:13,color:C.mutedLight,lineHeight:1.8,margin:0}}>{step.body}</p>
+                  <p style={{fontSize:16,color:C.mutedLight,lineHeight:1.8,margin:0}}>{step.body}</p>
                 </div>
               </Reveal>
             ))}
@@ -781,8 +717,8 @@ const HomePage = () => {
           <Reveal>
             <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end",marginBottom:48,flexWrap:"wrap",gap:20}}>
               <div>
-                <div style={{fontSize:10,letterSpacing:3,color:C.accent,textTransform:"uppercase",marginBottom:10}}>Reviews</div>
-                <h2 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(26px,4vw,44px)",fontWeight:700,color:C.white}}>What DFW Homeowners Say</h2>
+                <div style={{fontSize:15,letterSpacing:3,color:C.accent,textTransform:"uppercase",marginBottom:10}}>Reviews</div>
+                <h2 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(1.625rem,4.2vw,3.5rem)",fontWeight:700,color:C.white}}>What DFW Homeowners Say</h2>
               </div>
               <div style={{display:"flex",alignItems:"center",gap:6}}>
                 {"★★★★★".split("").map((s,i)=><span key={i} style={{color:C.accent,fontSize:20}}>{s}</span>)}
@@ -795,7 +731,7 @@ const HomePage = () => {
               <Reveal key={r.name} delay={i*0.09}>
                 <div style={{padding:28,background:C.card,border:`1px solid ${C.border}`,borderRadius:6,display:"flex",flexDirection:"column",gap:16,height:"100%"}}>
                   <div style={{display:"flex",gap:2}}>{"★★★★★".split("").map((s,i)=><span key={i} style={{color:C.accent,fontSize:13}}>{s}</span>)}</div>
-                  <p style={{fontSize:14,color:C.mutedLight,lineHeight:1.8,fontStyle:"italic",flex:1,margin:0}}>"{r.text}"</p>
+                  <p style={{fontSize:16,color:C.mutedLight,lineHeight:1.8,fontStyle:"italic",flex:1,margin:0}}>"{r.text}"</p>
                   <div style={{borderTop:`1px solid ${C.border}`,paddingTop:16}}>
                     <div style={{fontSize:14,color:C.white,fontWeight:600}}>{r.name}</div>
                     <div style={{fontSize:11,color:C.muted,letterSpacing:1,marginTop:3}}>{r.area}</div>
@@ -812,8 +748,8 @@ const HomePage = () => {
         <div className="inner">
           <Reveal>
             <div style={{textAlign:"center",marginBottom:48}}>
-              <div style={{fontSize:10,letterSpacing:3,color:C.accent,textTransform:"uppercase",marginBottom:12}}>Service Areas</div>
-              <h2 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(26px,4vw,44px)",fontWeight:700,color:C.white}}>Serving the DFW Metroplex</h2>
+              <div style={{fontSize:15,letterSpacing:3,color:C.accent,textTransform:"uppercase",marginBottom:12}}>Service Areas</div>
+              <h2 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(1.625rem,4.2vw,3.5rem)",fontWeight:700,color:C.white}}>Serving the DFW Metroplex</h2>
             </div>
           </Reveal>
           <Reveal delay={0.1}>
@@ -834,19 +770,19 @@ const HomePage = () => {
         <div style={{position:"absolute",inset:0,backgroundImage:`repeating-linear-gradient(45deg,transparent,transparent 40px,${C.border}14 40px,${C.border}14 41px)`,pointerEvents:"none"}}/>
         <div style={{maxWidth:640,margin:"0 auto",textAlign:"center",position:"relative"}}>
           <Reveal>
-            <div style={{fontSize:10,letterSpacing:3,color:C.accent,textTransform:"uppercase",marginBottom:18}}>Ready to Start?</div>
-            <h2 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(30px,5vw,56px)",fontWeight:700,color:C.white,lineHeight:1.1,marginBottom:20}}>
+            <div style={{fontSize:15,letterSpacing:3,color:C.accent,textTransform:"uppercase",marginBottom:18}}>Ready to Start?</div>
+            <h2 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(1.875rem,5vw,4.5rem)",fontWeight:700,color:C.white,lineHeight:1.1,marginBottom:20}}>
               Get a Precision Estimate<br/><span style={{fontStyle:"italic",color:C.accent}}>Built From Your Actual Roof</span>
             </h2>
-            <p style={{fontSize:15,color:C.mutedLight,lineHeight:1.8,marginBottom:40}}>
+            <p style={{fontSize:16,color:C.mutedLight,lineHeight:1.8,marginBottom:40}}>
               We use satellite imaging to generate precise measurements for your exact roof — not a guess from the driveway. Your estimate reflects the real scope of your project.
             </p>
             <div style={{display:"flex",gap:14,justifyContent:"center",flexWrap:"wrap"}}>
-              <a href="#visualizer" style={{padding:"16px 36px",background:C.accent,color:C.black,fontSize:12,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"all 0.2s"}}
+              <a href="#visualizer" className="cta-btn" style={{padding:"16px 36px",background:C.accent,color:C.black,fontSize:12,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"all 0.2s"}}
                 onMouseEnter={e=>e.currentTarget.style.background=C.accentLight}
                 onMouseLeave={e=>e.currentTarget.style.background=C.accent}
               >Visualize My Roof →</a>
-              <a href={`tel:12145550000`} style={{padding:"16px 28px",border:`1px solid ${C.borderLight}`,color:C.mutedLight,fontSize:12,letterSpacing:2,textTransform:"uppercase",fontWeight:500,borderRadius:2,transition:"all 0.2s"}}
+              <a href={`tel:18173823338`} className="cta-btn" style={{padding:"16px 28px",border:`1px solid ${C.borderLight}`,color:C.mutedLight,fontSize:12,letterSpacing:2,textTransform:"uppercase",fontWeight:500,borderRadius:2,transition:"all 0.2s"}}
                 onMouseEnter={e=>{e.currentTarget.style.borderColor=C.accent;e.currentTarget.style.color=C.accent;}}
                 onMouseLeave={e=>{e.currentTarget.style.borderColor=C.borderLight;e.currentTarget.style.color=C.mutedLight;}}
               >{PHONE}</a>
@@ -859,123 +795,28 @@ const HomePage = () => {
 };
 
 /* ═══════════════════════════════
-   LEGAL SHELL
-═══════════════════════════════ */
-const LH = ({children}) => <h2 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(20px,3vw,26px)",fontWeight:700,color:C.white,marginTop:44,marginBottom:14}}>{children}</h2>;
-
-const LegalShell = ({title,children}) => (
-  <div style={{maxWidth:760,margin:"0 auto",padding:"clamp(100px,12vw,130px) clamp(20px,5vw,48px) 80px"}}>
-    <div style={{fontSize:10,letterSpacing:3,color:C.accent,textTransform:"uppercase",marginBottom:14}}>Legal</div>
-    <h1 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(32px,5vw,48px)",fontWeight:700,color:C.white,marginBottom:10}}>{title}</h1>
-    <p style={{fontSize:12,color:C.muted,marginBottom:48,letterSpacing:0.3}}>{LEGAL_FULL} · Last updated: {MONTH} {YEAR}</p>
-    <div style={{fontSize:14,color:C.mutedLight,lineHeight:1.95}}>{children}</div>
-  </div>
-);
-
-/* ═══════════════════════════════
-   PRIVACY POLICY
-═══════════════════════════════ */
-const PrivacyPage = () => (
-  <LegalShell title="Privacy Policy">
-    <p>This Privacy Policy describes how {LEGAL_FULL} ("Company," "we," "us," or "our") collects, uses, and shares information about you when you visit {WEBSITE} (the "Site") or contact us in connection with our services. By using the Site, you agree to the collection and use of information in accordance with this policy.</p>
-
-    <LH>1. Information We Collect</LH>
-    <p><strong style={{color:C.white}}>Information you provide directly:</strong> When you submit a form, request an estimate, use our roof visualizer, or contact us, we may collect your name, email address, phone number, property address, and any other information you provide.</p>
-    <p><strong style={{color:C.white}}>Information collected automatically:</strong> When you visit our Site we automatically collect certain technical information including your IP address, browser type, referring URL, pages viewed, and time on page. We use cookies and similar technologies for this purpose.</p>
-    <p><strong style={{color:C.white}}>Visualizer tool:</strong> Our AI roof visualizer uses your provided property address to retrieve a publicly available street-level image of your home via third-party mapping services. We do not store retrieved imagery beyond your active session.</p>
-
-    <LH>2. How We Use Your Information</LH>
-    <p>We use collected information to respond to estimate requests and inquiries; provide and improve our services; communicate with you about your project; send service-related updates if you have opted in; comply with legal obligations; and prevent fraud.</p>
-    <p>We do not sell your personal information to third parties.</p>
-
-    <LH>3. How We Share Your Information</LH>
-    <p><strong style={{color:C.white}}>Installation partners:</strong> To fulfill your roofing project, we may share relevant contact and property information with our network of vetted, licensed local roofing professionals. These partners are engaged solely for project execution and are not authorized to use your information for any other purpose.</p>
-    <p><strong style={{color:C.white}}>CRM and marketing platforms:</strong> We use GoHighLevel as our customer relationship management platform. Your contact information may be stored and processed within that system, subject to its own privacy policies.</p>
-    <p><strong style={{color:C.white}}>Legal requirements:</strong> We may disclose your information when required by law or valid legal process.</p>
-
-    <LH>4. Cookies</LH>
-    <p>Our Site uses cookies to enhance your experience and support analytics and marketing. You may disable cookies through your browser; however, some Site features may not function properly without them.</p>
-
-    <LH>5. Data Retention</LH>
-    <p>We retain your information as long as necessary to fulfill the purposes outlined here, comply with legal obligations, and resolve disputes. Project and estimate records are retained for a minimum of four years.</p>
-
-    <LH>6. Your Rights</LH>
-    <p>You may request access to, correction of, or deletion of your personal information by contacting us at {EMAIL}. We will respond to verified requests within 30 days.</p>
-
-    <LH>7. Children's Privacy</LH>
-    <p>Our Site is not directed to individuals under 18. We do not knowingly collect personal information from minors. Contact us immediately if you believe a minor has submitted information through our Site.</p>
-
-    <LH>8. Changes to This Policy</LH>
-    <p>We may update this Privacy Policy periodically. Material changes will be reflected in the "last updated" date at the top of this page.</p>
-
-    <LH>9. Contact</LH>
-    <p><strong style={{color:C.white}}>{LEGAL_FULL}</strong><br/>Dallas–Fort Worth, Texas<br/>Email: {EMAIL}<br/>Phone: {PHONE}</p>
-  </LegalShell>
-);
-
-/* ═══════════════════════════════
-   TERMS OF SERVICE
-═══════════════════════════════ */
-const TermsPage = () => (
-  <LegalShell title="Terms of Service">
-    <p>These Terms of Service ("Terms") govern your access to and use of {WEBSITE}, operated by {LEGAL_FULL} ("Company," "we," "us," or "our"). By accessing or using our Site, you agree to be bound by these Terms.</p>
-
-    <LH>1. Company Identity</LH>
-    <p>{DBA_NAME} is a registered assumed name (DBA) of {LEGAL_ENTITY}, a Texas limited liability company. All agreements entered into through or facilitated by this Site are agreements with {LEGAL_ENTITY}.</p>
-
-    <LH>2. Services</LH>
-    <p>{DBA_NAME} is a premium metal roofing company serving the Dallas–Fort Worth metroplex. We manage your project from initial consultation through completion, coordinating with our network of credentialed local roofing professionals to deliver a finished result that meets our quality standards.</p>
-    <p>Nothing on this Site constitutes a binding contract or guarantee of services. All projects require a signed written agreement executed by an authorized representative of {LEGAL_ENTITY}.</p>
-
-    <LH>3. Roof Visualizer Tool</LH>
-    <p>Our AI-powered roof visualizer is provided for illustrative purposes only. Rendered images are computer-generated approximations and do not represent guaranteed outcomes, exact product appearances, or final installation specifications. Actual results will vary based on product selection, home architecture, lighting, and installation. By using the visualizer, you consent to the use of your property address to retrieve a publicly available street-level image of your home.</p>
-
-    <LH>4. Estimates</LH>
-    <p>Any cost ranges or preliminary figures discussed verbally or via email are non-binding until a formal written estimate is issued and signed by both parties. Written estimates are valid for 30 days from the date of issue unless otherwise stated. Final project costs are determined by confirmed measurements, material selection, and current pricing at the time of contract execution.</p>
-
-    <LH>5. Intellectual Property</LH>
-    <p>All content on this Site — including text, graphics, logos, and software — is the property of {LEGAL_ENTITY} or its licensors and is protected by applicable copyright and trademark law. You may not reproduce or distribute any Site content without our prior written permission.</p>
-
-    <LH>6. Disclaimer of Warranties</LH>
-    <p>THE SITE AND ITS CONTENT ARE PROVIDED "AS IS" WITHOUT WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.</p>
-
-    <LH>7. Limitation of Liability</LH>
-    <p>TO THE FULLEST EXTENT PERMITTED BY APPLICABLE LAW, {LEGAL_ENTITY.toUpperCase()} SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, OR CONSEQUENTIAL DAMAGES ARISING OUT OF YOUR USE OF THE SITE OR OUR SERVICES. OUR TOTAL LIABILITY SHALL NOT EXCEED THE GREATER OF AMOUNTS PAID BY YOU IN THE PRIOR 12 MONTHS OR $100.</p>
-
-    <LH>8. Indemnification</LH>
-    <p>You agree to indemnify and hold harmless {LEGAL_ENTITY} and its members, officers, and agents from claims, damages, and expenses (including attorneys' fees) arising out of your use of the Site or violation of these Terms.</p>
-
-    <LH>9. Governing Law</LH>
-    <p>These Terms are governed by the laws of the State of Texas. Disputes shall be resolved exclusively in the state or federal courts of Dallas County, Texas, and you consent to personal jurisdiction there.</p>
-
-    <LH>10. Changes to Terms</LH>
-    <p>We may modify these Terms at any time. Continued use of the Site after changes are posted constitutes acceptance of the revised Terms.</p>
-
-    <LH>11. Contact</LH>
-    <p><strong style={{color:C.white}}>{LEGAL_FULL}</strong><br/>Dallas–Fort Worth, Texas<br/>Email: {EMAIL}<br/>Phone: {PHONE}</p>
-  </LegalShell>
-);
-
-/* ═══════════════════════════════
    ROOT
 ═══════════════════════════════ */
 export default function App() {
-  const [page, setPage] = useState("home");
   const [scrolled, setScrolled] = useState(false);
   useEffect(()=>{
     const fn=()=>setScrolled(window.scrollY>40);
     window.addEventListener("scroll",fn);
     return ()=>window.removeEventListener("scroll",fn);
   },[]);
+  useEffect(()=>{
+    if (window.location.hash) {
+      window.history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+    window.scrollTo(0, 0);
+  },[]);
 
   return (
     <div style={{background:C.black,color:C.text,fontFamily:"'Outfit',system-ui,sans-serif",overflowX:"hidden",minHeight:"100vh"}}>
-      <style>{fonts}{globalStyles}</style>
-      <Nav setPage={setPage} scrolled={scrolled}/>
-      {page==="home"    && <HomePage/>}
-      {page==="privacy" && <PrivacyPage/>}
-      {page==="terms"   && <TermsPage/>}
-      <Footer setPage={setPage}/>
+      <style>{fonts + globalStyles}</style>
+      <Nav scrolled={scrolled}/>
+      <HomePage/>
+      <Footer/>
     </div>
   );
 }
