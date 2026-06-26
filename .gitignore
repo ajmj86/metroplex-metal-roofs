@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+snapshots/
+*.md
+STYLE*.md
+.vercel.bak*
+metroplex-visualizer-diagnostic*
+metroplex-visualizer/tsconfig.tsbuildinfo
