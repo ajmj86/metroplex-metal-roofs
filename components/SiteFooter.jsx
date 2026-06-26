@@ -3,22 +3,22 @@
 import Link from "next/link";
 import { C, LEGAL_ENTITY, DBA_NAME, YEAR, Logo } from "./brand";
 
-export function SiteFooter({ setActiveTab = () => {} }) {
+export function SiteFooter({ setActiveTab = () => {}, setPage = null }) {
   const footerLinks = {
     "Standing Seam":      {href:"/#products", onClick:(e)=>{e.preventDefault();setActiveTab("standing");setTimeout(()=>{const el=document.getElementById("products");if(el)el.scrollIntoView({behavior:"smooth"});},200);}},
     "Copper Roofing":     {href:"/#products", onClick:(e)=>{e.preventDefault();setActiveTab("copper");setTimeout(()=>{const el=document.getElementById("products");if(el)el.scrollIntoView({behavior:"smooth"});},200);}},
     "Stone-Coated Steel": {href:"/#products", onClick:(e)=>{e.preventDefault();setActiveTab("stone");setTimeout(()=>{const el=document.getElementById("products");if(el)el.scrollIntoView({behavior:"smooth"});},200);}},
     "R-Panel":            {href:"/#products", onClick:(e)=>{e.preventDefault();setActiveTab("rpanel");setTimeout(()=>{const el=document.getElementById("products");if(el)el.scrollIntoView({behavior:"smooth"});},200);}},
     "Free Visualizer":    {href:"/visualizer"},
-    "Southlake":          {href:"/#service-areas", onClick:(e)=>{e.preventDefault();setTimeout(()=>{const el=document.getElementById("service-areas");if(el)el.scrollIntoView({behavior:"smooth"});},150);}},
-    "Frisco":             {href:"/#service-areas", onClick:(e)=>{e.preventDefault();setTimeout(()=>{const el=document.getElementById("service-areas");if(el)el.scrollIntoView({behavior:"smooth"});},150);}},
-    "Westlake":           {href:"/#service-areas", onClick:(e)=>{e.preventDefault();setTimeout(()=>{const el=document.getElementById("service-areas");if(el)el.scrollIntoView({behavior:"smooth"});},150);}},
-    "Prosper":            {href:"/#service-areas", onClick:(e)=>{e.preventDefault();setTimeout(()=>{const el=document.getElementById("service-areas");if(el)el.scrollIntoView({behavior:"smooth"});},150);}},
-    "McKinney":           {href:"/#service-areas", onClick:(e)=>{e.preventDefault();setTimeout(()=>{const el=document.getElementById("service-areas");if(el)el.scrollIntoView({behavior:"smooth"});},150);}},
-    "All DFW Areas →":    {href:"/#service-areas", onClick:(e)=>{e.preventDefault();setTimeout(()=>{const el=document.getElementById("service-areas");if(el)el.scrollIntoView({behavior:"smooth"});},150);}},
-    "About Us":           {href:"/#about", onClick:(e)=>{e.preventDefault();const tryScroll=(attempts)=>{const el=document.getElementById("about");if(el){const offset=el.getBoundingClientRect().top+window.scrollY-100;window.scrollTo({top:offset,behavior:"smooth"});}else if(attempts>0){setTimeout(()=>tryScroll(attempts-1),100);}};setTimeout(()=>tryScroll(10),150);}},
-    "Our Process":        {href:"/#process", onClick:(e)=>{e.preventDefault();const tryScroll=(attempts)=>{const el=document.getElementById("process");if(el){const offset=el.getBoundingClientRect().top+window.scrollY-100;window.scrollTo({top:offset,behavior:"smooth"});}else if(attempts>0){setTimeout(()=>tryScroll(attempts-1),100);}};setTimeout(()=>tryScroll(10),150);}},
-    "Reviews":            {href:"/#reviews", onClick:(e)=>{e.preventDefault();const tryScroll=(attempts)=>{const el=document.getElementById("reviews");if(el){const offset=el.getBoundingClientRect().top+window.scrollY-100;window.scrollTo({top:offset,behavior:"smooth"});}else if(attempts>0){setTimeout(()=>tryScroll(attempts-1),100);}};setTimeout(()=>tryScroll(10),150);}},
+    "Southlake":          {href:"/#service-areas", onClick:(e)=>{e.preventDefault();if(setPage){setPage("home");setTimeout(()=>{const el=document.getElementById("service-areas");if(el)el.scrollIntoView({behavior:"smooth"});},200);}else{window.location.href="/#service-areas";}}},
+    "Frisco":             {href:"/#service-areas", onClick:(e)=>{e.preventDefault();if(setPage){setPage("home");setTimeout(()=>{const el=document.getElementById("service-areas");if(el)el.scrollIntoView({behavior:"smooth"});},200);}else{window.location.href="/#service-areas";}}},
+    "Westlake":           {href:"/#service-areas", onClick:(e)=>{e.preventDefault();if(setPage){setPage("home");setTimeout(()=>{const el=document.getElementById("service-areas");if(el)el.scrollIntoView({behavior:"smooth"});},200);}else{window.location.href="/#service-areas";}}},
+    "Prosper":            {href:"/#service-areas", onClick:(e)=>{e.preventDefault();if(setPage){setPage("home");setTimeout(()=>{const el=document.getElementById("service-areas");if(el)el.scrollIntoView({behavior:"smooth"});},200);}else{window.location.href="/#service-areas";}}},
+    "McKinney":           {href:"/#service-areas", onClick:(e)=>{e.preventDefault();if(setPage){setPage("home");setTimeout(()=>{const el=document.getElementById("service-areas");if(el)el.scrollIntoView({behavior:"smooth"});},200);}else{window.location.href="/#service-areas";}}},
+    "All DFW Areas →":    {href:"/#service-areas", onClick:(e)=>{e.preventDefault();if(setPage){setPage("home");setTimeout(()=>{const el=document.getElementById("service-areas");if(el)el.scrollIntoView({behavior:"smooth"});},200);}else{window.location.href="/#service-areas";}}},
+    "About Us":           {href:"/#about", onClick:(e)=>{e.preventDefault();if(setPage){setPage("home");setTimeout(()=>{const el=document.getElementById("about");if(el){const offset=el.getBoundingClientRect().top+window.scrollY-100;window.scrollTo({top:offset,behavior:"smooth"});}},200);}else{window.location.href="/#about";}}},
+    "Our Process":        {href:"/#process", onClick:(e)=>{e.preventDefault();if(setPage){setPage("home");setTimeout(()=>{const el=document.getElementById("process");if(el){const offset=el.getBoundingClientRect().top+window.scrollY-100;window.scrollTo({top:offset,behavior:"smooth"});}},200);}else{window.location.href="/#process";}}},
+    "Reviews":            {href:"/#reviews", onClick:(e)=>{e.preventDefault();if(setPage){setPage("home");setTimeout(()=>{const el=document.getElementById("reviews");if(el){const offset=el.getBoundingClientRect().top+window.scrollY-100;window.scrollTo({top:offset,behavior:"smooth"});}},200);}else{window.location.href="/#reviews";}}},
     "Contact":            {href:"/terms#contact"},
   };
 

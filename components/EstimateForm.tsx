@@ -2,7 +2,16 @@
 
 import { useState, useEffect, useRef } from 'react'
 import EstimateResult from './EstimateResult'
-import { getProductLabel } from '@/lib/roofProducts'
+import {
+  getProductLabel,
+  ROOF_TYPE_ORDER,
+  getRoofTypeLabel,
+  stylesWithColors,
+  productsForStyle,
+  hasExactlyOneProduct,
+  getAutoSelectedStyleAndProduct,
+  type ColorOption,
+} from '@/lib/roofProducts'
 
 const C = {
   black: '#09090A',
@@ -17,13 +26,6 @@ const C = {
   muted: '#71717A',
   mutedLight: '#A1A1AA',
 }
-
-const ROOF_TYPES = [
-  { id: 'standing_seam',      label: 'Standing Seam',        desc: "The premium choice for DFW's premier homes" },
-  { id: 'copper_standing_seam', label: 'Copper Standing Seam', desc: 'Timeless, maintenance-free luxury' },
-  { id: 'r_panel',            label: 'R-Panel',               desc: 'Commercial-grade durability, residential value' },
-  { id: 'stone_coated_steel', label: 'Stone-Coated Steel',    desc: 'The look of tile or shake, the strength of steel' },
-]
 
 type StoryOption = 'one' | 'two' | 'unknown'
 
@@ -90,7 +92,7 @@ interface EstimateFormProps {
 }
 
 export default function EstimateForm({ initialSelection, leadInfo, leadSource, utmSource, utmMedium, utmCampaign }: EstimateFormProps = {}) {
-  const carriedRoofType = initialSelection?.roofType && ROOF_TYPES.some(rt => rt.id === initialSelection.roofType)
+  const carriedRoofType = initialSelection?.roofType && (ROOF_TYPE_ORDER as readonly string[]).includes(initialSelection.roofType)
     ? initialSelection.roofType
     : null
   const carriedProductLabel = carriedRoofType && initialSelection?.product
@@ -103,6 +105,9 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
   const shouldAutoTrigger = Boolean(carriedRoofType && initialSelection?.address)
 
   const [selectedRoofType, setSelectedRoofType] = useState<string | null>(carriedRoofType)
+  const [selectedStyle, setSelectedStyle]       = useState<string | null>(null)
+  const [selectedProduct, setSelectedProduct]   = useState<string | null>(null)
+  const [selectedColor, setSelectedColor]       = useState<string | null>(null)
   const [address, setAddress]     = useState(initialSelection?.address ?? '')
   const [loading, setLoading]     = useState(shouldAutoTrigger)
   const [showManual, setShowManual] = useState(false)
@@ -278,43 +283,17 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
     )
   }
 
-  // Step 1 — roof type selection
+  // Step 1 — material selector (roof type → style → product → color)
   if (!selectedRoofType) {
-    return (
-      <div style={{ maxWidth: 640, margin: '0 auto' }}>
-        <p style={{ fontSize: 13, color: C.mutedLight, marginBottom: 24, textAlign: 'center', lineHeight: 1.6 }}>
-          Select your preferred roof type to get started.
-        </p>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 12 }}>
-          {ROOF_TYPES.map(rt => (
-            <button
-              key={rt.id}
-              onClick={() => setSelectedRoofType(rt.id)}
-              style={{
-                background: C.card,
-                border: `1px solid ${C.border}`,
-                borderRadius: 6,
-                padding: '24px 20px',
-                textAlign: 'left',
-                cursor: 'pointer',
-                transition: 'border-color 0.2s, background 0.2s',
-              }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = C.accent; e.currentTarget.style.background = C.surface }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = C.border; e.currentTarget.style.background = C.card }}
-            >
-              <div style={{ fontFamily: "'Cormorant Garamond',Georgia,serif", fontSize: 18, fontWeight: 700, color: C.white, marginBottom: 6 }}>
-                {rt.label}
-              </div>
-              <div style={{ fontSize: 12, color: C.muted, lineHeight: 1.6 }}>{rt.desc}</div>
-            </button>
-          ))}
-        </div>
-        <style>{`@media(max-width:480px){.rt-grid{grid-template-columns:1fr!important;}}`}</style>
-      </div>
-    )
+    return <MaterialSelector onSelect={(rt, style, product, color) => {
+      setSelectedRoofType(rt)
+      setSelectedStyle(style)
+      setSelectedProduct(product)
+      setSelectedColor(color)
+    }} />
   }
 
-  const selectedLabel = ROOF_TYPES.find(r => r.id === selectedRoofType)?.label
+  const selectedLabel = getRoofTypeLabel(selectedRoofType)
 
   // Step 2 — address input + optional manual fallback
   return (
@@ -322,22 +301,22 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
       {/* Back + selected type */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 28 }}>
         <button
-          onClick={() => { setSelectedRoofType(null); setShowManual(false); setErrorMsg('') }}
+          onClick={() => { setSelectedRoofType(null); setSelectedStyle(null); setSelectedProduct(null); setSelectedColor(null); setShowManual(false); setErrorMsg('') }}
           style={{ fontSize: 11, color: C.muted, letterSpacing: 1, textTransform: 'uppercase', cursor: 'pointer', background: 'none', border: 'none', padding: 0, textDecoration: 'underline', fontFamily: "'Outfit',sans-serif" }}
         >
           ← Back
         </button>
         <div style={{ fontSize: 11, color: C.accent, letterSpacing: 1.5, textTransform: 'uppercase' }}>
           {selectedLabel}
+          {selectedProduct && selectedColor && (
+            <span style={{ color: C.mutedLight }}> — {getProductLabel(selectedRoofType, selectedProduct)} · {selectedColor}</span>
+          )}
         </div>
       </div>
 
-      {carriedRoofType && selectedRoofType === carriedRoofType && (
+      {carriedRoofType && selectedRoofType === carriedRoofType && carriedProductLabel && carriedColor && (
         <div style={{ fontSize: 12, color: C.mutedLight, marginBottom: 16, lineHeight: 1.6, fontFamily: "'Outfit',sans-serif" }}>
-          Estimating for: {selectedLabel}
-          {carriedProductLabel && carriedColor && (
-            <span> — {carriedProductLabel} in {carriedColor}</span>
-          )}
+          Estimating for: {selectedLabel} — {carriedProductLabel} in {carriedColor}
         </div>
       )}
 
@@ -448,6 +427,146 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
           </button>
         </>
       )}
+    </div>
+  )
+}
+
+// ── Material Selector (Step 1) ────────────────────────────────────────────────
+
+interface MaterialSelectorProps {
+  onSelect: (roofType: string, style: string | null, product: string | null, color: string | null) => void
+}
+
+function MaterialSelector({ onSelect }: MaterialSelectorProps) {
+  const [roofType, setRoofType] = useState<string | null>(null)
+  const [style, setStyle]       = useState<string | null>(null)
+  const [product, setProduct]   = useState<string | null>(null)
+  const [color, setColor]       = useState<string | null>(null)
+
+  const styles   = roofType ? stylesWithColors(roofType) : []
+  const hasStyles = styles.length > 0
+  const products  = roofType && style ? productsForStyle(roofType, style) : []
+  const colors    = roofType && product
+    ? productsForStyle(roofType, style ?? '').find(([k]) => k === product)?.[1].colors ?? []
+    : []
+
+  function selectRoofType(rt: string) {
+    setStyle(null); setProduct(null); setColor(null); setRoofType(rt)
+    if (hasExactlyOneProduct(rt)) {
+      const auto = getAutoSelectedStyleAndProduct(rt)
+      if (auto) {
+        setStyle(auto.style); setProduct(auto.product)
+        const autoColors = productsForStyle(rt, auto.style).find(([k]) => k === auto.product)?.[1].colors ?? []
+        if (autoColors.length === 1) setColor(autoColors[0].name)
+      }
+    }
+  }
+
+  const isComplete = Boolean(roofType && style && product && color)
+
+  const sectionStyle: React.CSSProperties = {
+    background: C.card, border: `1px solid ${C.border}`, borderRadius: 8, padding: '20px 24px', marginBottom: 12,
+  }
+  const tabBtn = (active: boolean): React.CSSProperties => ({
+    padding: '10px 16px', fontSize: 12, letterSpacing: 1, textTransform: 'uppercase' as const,
+    background: active ? C.accent : 'transparent',
+    color: active ? C.black : C.mutedLight,
+    border: `1px solid ${active ? C.accent : C.border}`,
+    borderRadius: 2, cursor: 'pointer', transition: 'all 0.15s', fontFamily: "'Outfit',sans-serif",
+  })
+
+  return (
+    <div style={{ maxWidth: 640, margin: '0 auto' }}>
+      <p style={{ fontSize: 13, color: C.mutedLight, marginBottom: 24, textAlign: 'center', lineHeight: 1.6 }}>
+        Select your material to get started.
+      </p>
+
+      {/* Roof type tabs */}
+      <div style={sectionStyle}>
+        <div style={{ fontSize: 10, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Material</div>
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+          {(ROOF_TYPE_ORDER as readonly string[]).map(rt => (
+            <button key={rt} onClick={() => selectRoofType(rt)} style={tabBtn(roofType === rt)}>
+              {getRoofTypeLabel(rt)}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Style selector (stone-coated only) */}
+      {roofType && hasStyles && !hasExactlyOneProduct(roofType) && (
+        <div style={sectionStyle}>
+          <div style={{ fontSize: 10, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Style</div>
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+            {styles.map(([sk, so]) => (
+              <button key={sk} style={tabBtn(style === sk)} onClick={() => {
+                setProduct(null); setColor(null); setStyle(sk)
+                const sp = productsForStyle(roofType, sk)
+                if (sp.length === 1) {
+                  setProduct(sp[0][0])
+                  if (sp[0][1].colors.length === 1) setColor(sp[0][1].colors[0].name)
+                }
+              }}>{so.label}</button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Product cards (stone-coated styles with multiple products) */}
+      {roofType && hasStyles && style && products.length > 1 && (
+        <div style={sectionStyle}>
+          <div style={{ fontSize: 10, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Product</div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 10 }}>
+            {products.map(([pk, po]) => (
+              <button key={pk} onClick={() => { setColor(null); setProduct(pk) }}
+                style={{ background: product === pk ? `${C.accentDark}33` : C.surface, border: `1px solid ${product === pk ? C.accentDark : C.border}`, borderRadius: 6, padding: '16px', textAlign: 'left', cursor: 'pointer', transition: 'all 0.15s' }}
+              >
+                <div style={{ fontSize: 14, fontWeight: 600, color: product === pk ? C.accent : C.white, marginBottom: 4, fontFamily: "'Outfit',sans-serif" }}>{po.label}</div>
+                <div style={{ fontSize: 11, color: C.muted, lineHeight: 1.5 }}>{po.description}</div>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Color swatches with product images */}
+      {roofType && hasStyles && product && colors.length > 0 && (
+        <div style={sectionStyle}>
+          <div style={{ fontSize: 10, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Color</div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 10 }}>
+            {colors.map((c: ColorOption) => (
+              <button key={c.name} onClick={() => setColor(c.name)}
+                style={{ background: color === c.name ? `${C.accentDark}33` : C.surface, border: `1px solid ${color === c.name ? C.accentDark : C.border}`, borderRadius: 6, overflow: 'hidden', cursor: 'pointer', transition: 'all 0.15s', textAlign: 'left' }}
+              >
+                {c.image1 && (
+                  <div style={{ aspectRatio: '4/3', overflow: 'hidden' }}>
+                    <img src={c.image1} alt={c.name} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                  </div>
+                )}
+                <div style={{ padding: '8px 12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
+                  <span style={{ fontSize: 11, color: color === c.name ? C.accent : C.white, fontFamily: "'Outfit',sans-serif" }}>{c.name}</span>
+                  {c.hex && <span style={{ width: 12, height: 12, borderRadius: '50%', background: c.hex, border: `1px solid ${C.border}`, flexShrink: 0, display: 'inline-block' }}/>}
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <button
+        onClick={() => { if (roofType) onSelect(roofType, style, product, color) }}
+        disabled={!isComplete}
+        style={{ ...btnStyle, opacity: isComplete ? 1 : 0.45, cursor: isComplete ? 'pointer' : 'not-allowed', marginTop: 8 }}
+        onMouseEnter={e => { if (isComplete) e.currentTarget.style.background = C.accentLight }}
+        onMouseLeave={e => { e.currentTarget.style.background = C.accent }}
+      >
+        {!roofType ? 'Select a material to continue' : !isComplete ? 'Select a color to continue' : 'Get My Estimate →'}
+      </button>
+
+      <p style={{ fontSize: 12, color: C.muted, textAlign: 'center', marginTop: 16 }}>
+        Want to see your home with a metal roof first?{' '}
+        <a href="/visualizer" style={{ color: C.accent, textDecoration: 'underline' }}>Try the AI Visualizer →</a>
+      </p>
     </div>
   )
 }
