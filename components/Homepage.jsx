@@ -86,14 +86,14 @@ const Nav = ({ scrolled }) => {
         </button>
         {/* Desktop links */}
         <div className="nav-links" style={{display:"flex",gap:28,alignItems:"center"}}>
-          {[["Why Metal","#why-metal"],["Gallery","#gallery"],["Our Process","#process"],["Service Areas","#service-areas"]].map(([l,href])=>(
+          {[["About Us","#about"],["Why Metal","#why-metal"],["Gallery","#gallery"],["Our Process","#process"],["Service Areas","#service-areas"]].map(([l,href])=>(
             <a key={l} href={href}
               style={{fontSize:11,letterSpacing:2,textTransform:"uppercase",color:C.mutedLight,fontWeight:500,transition:"color 0.2s"}}
               onMouseEnter={e=>e.currentTarget.style.color=C.accent}
               onMouseLeave={e=>e.currentTarget.style.color=C.mutedLight}
             >{l}</a>
           ))}
-          <a href="#visualizer" style={{padding:"9px 22px",background:C.accent,color:C.black,fontSize:11,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"background 0.2s",whiteSpace:"nowrap"}}
+          <a href="/estimate" style={{padding:"9px 22px",background:C.accent,color:C.black,fontSize:11,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"background 0.2s",whiteSpace:"nowrap"}}
             onMouseEnter={e=>e.currentTarget.style.background=C.accentLight}
             onMouseLeave={e=>e.currentTarget.style.background=C.accent}
           >Free Estimate</a>
@@ -108,12 +108,12 @@ const Nav = ({ scrolled }) => {
       {/* Mobile drawer */}
       {mOpen && (
         <div style={{position:"fixed",top:120,left:0,right:0,bottom:0,zIndex:199,background:"rgba(9,9,10,0.98)",display:"flex",flexDirection:"column",padding:"32px 24px",gap:4,overflowY:"auto"}}>
-          {[["Why Metal","#why-metal"],["Gallery","#gallery"],["Our Process","#process"],["Service Areas","#service-areas"],["Reviews","#reviews"]].map(([l,href])=>(
+          {[["About Us","#about"],["Why Metal","#why-metal"],["Gallery","#gallery"],["Our Process","#process"],["Service Areas","#service-areas"],["Reviews","#reviews"]].map(([l,href])=>(
             <a key={l} href={href} onClick={()=>setMOpen(false)}
               style={{padding:"16px 0",fontSize:18,letterSpacing:2,textTransform:"uppercase",color:C.mutedLight,fontFamily:"'Cormorant Garamond',serif",borderBottom:`1px solid ${C.border}`}}
             >{l}</a>
           ))}
-          <a href="#visualizer" onClick={()=>setMOpen(false)} className="cta-btn" style={{marginTop:24,padding:"16px",background:C.accent,color:C.black,fontSize:12,letterSpacing:2,textTransform:"uppercase",fontWeight:700,borderRadius:4,textAlign:"center"}}>
+          <a href="/estimate" onClick={()=>setMOpen(false)} className="cta-btn" style={{marginTop:24,padding:"16px",background:C.accent,color:C.black,fontSize:12,letterSpacing:2,textTransform:"uppercase",fontWeight:700,borderRadius:4,textAlign:"center"}}>
             Free Estimate
           </a>
         </div>
@@ -135,27 +135,25 @@ const Footer = () => (
         </div>
         {[
           {title:"Services",links:[
-            ["Standing Seam","#gallery"],
-            ["Copper Roofing","#gallery"],
-            ["Stone-Coated Steel","#gallery"],
-            ["R-Panel","#gallery"],
-            ["Insurance Claims","#why-metal"],
-            ["Free Visualizer","#visualizer"],
+            ["Standing Seam","/#products"],
+            ["Copper Roofing","/#products"],
+            ["Stone-Coated Steel","/#products"],
+            ["R-Panel","/#products"],
+            ["Free Visualizer","/visualizer"],
           ]},
           {title:"Service Areas",links:[
-            // TODO: link to city page
-            ["Southlake","#"],
-            ["Frisco","#"],
-            ["Westlake","#"],
-            ["Prosper","#"],
-            ["McKinney","#"],
-            ["All DFW Areas →","#service-areas"],
+            ["Southlake","/#service-areas"],
+            ["Frisco","/#service-areas"],
+            ["Westlake","/#service-areas"],
+            ["Prosper","/#service-areas"],
+            ["McKinney","/#service-areas"],
+            ["All DFW Areas →","/#service-areas"],
           ]},
           {title:"Company",links:[
-            ["About Us","#"],
-            ["Our Process","#process"],
-            ["Reviews","#reviews"],
-            ["Contact","/terms#contact"],
+            ["About Us","/#about"],
+            ["Our Process","/#process"],
+            ["Reviews","/#reviews"],
+            ["Contact","/#contact"],
           ]},
         ].map(col=>(
           <div key={col.title}>
@@ -386,9 +384,9 @@ const HomePage = () => {
   ];
 
   const steps = [
-    {n:"01",title:"Visualize Your Roof",   body:"Enter your address. Our AI visualizer pulls a street-level image of your home and renders it with your chosen metal roof style and color — before you commit to anything."},
-    {n:"02",title:"Brief Consultation",    body:"A quick call with our team. We confirm your home's scope, timeline, and whether metal is the right fit. No pressure, no obligation."},
-    {n:"03",title:"Precision Estimate",    body:"We use satellite imaging to generate exact measurements for your roof. Your estimate is built from real data — not a guess from the driveway."},
+    {n:"01",title:"Visualize Your Roof",   href:"/visualizer",body:"Enter your address. Our AI visualizer pulls a street-level image of your home and renders it with your chosen metal roof style and color — before you commit to anything."},
+    {n:"02",title:"Brief Consultation",    href:"https://api.leadconnectorhq.com/widget/booking/gG1ruFfEWkUXO7eIB8NR",body:"A quick call with our team. We confirm your home's scope, timeline, and whether metal is the right fit. No pressure, no obligation."},
+    {n:"03",title:"Precision Estimate",    href:"/estimate",body:"We use satellite imaging to generate exact measurements for your roof. Your estimate is built from real data — not a guess from the driveway."},
     {n:"04",title:"Expert Installation",   body:"Your project is executed by a credentialed local metal roofing specialist — licensed in Texas, fully insured, and selected for their proven expertise."},
   ];
 
@@ -694,9 +692,12 @@ const HomePage = () => {
             </div>
           </Reveal>
           <div className="grid-4" style={{gap:2}}>
-            {steps.map((step,i)=>(
+            {steps.map((step,i)=>{
+              const Tag = step.href ? 'a' : 'div';
+              const linkProps = step.href ? {href:step.href,...(step.href.startsWith('http')?{target:"_blank",rel:"noopener noreferrer"}:{})} : {};
+              return (
               <Reveal key={step.n} delay={i*0.09}>
-                <div style={{padding:"40px 28px",background:C.card,border:`1px solid ${C.border}`,borderRadius:4,height:"100%",transition:"border-color 0.3s"}}
+                <Tag {...linkProps} style={{padding:"40px 28px",background:C.card,border:`1px solid ${C.border}`,borderRadius:4,height:"100%",transition:"border-color 0.3s",...(step.href?{display:"block",textDecoration:"none"}:{})}}
                   onMouseEnter={e=>e.currentTarget.style.borderColor=C.accentDark}
                   onMouseLeave={e=>e.currentTarget.style.borderColor=C.border}
                 >
@@ -704,9 +705,10 @@ const HomePage = () => {
                   <div style={{width:28,height:2,background:C.accent,marginBottom:16}}/>
                   <h3 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:20,color:C.white,fontWeight:700,marginBottom:12}}>{step.title}</h3>
                   <p style={{fontSize:16,color:C.mutedLight,lineHeight:1.8,margin:0}}>{step.body}</p>
-                </div>
+                </Tag>
               </Reveal>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
