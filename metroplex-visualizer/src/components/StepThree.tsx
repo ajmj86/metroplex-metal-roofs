@@ -46,8 +46,13 @@ export function StepThree({ address, selection, image, streetViewAvailable, lead
         }),
       });
       const data = await res.json();
-      if (res.ok && data.success && data.estimatedRoofSize != null && data.estimateRange) {
-        setEstimateResult({ estimatedRoofSize: data.estimatedRoofSize, estimateRange: data.estimateRange });
+      const estimateRange = data.estimateRange
+        ?? (data.estimate?.low && data.estimate?.high
+            ? `${data.estimate.low} – ${data.estimate.high}`
+            : null);
+      const estimatedRoofSize = data.estimatedRoofSize ?? data.squares ?? null;
+      if (res.ok && data.success && estimatedRoofSize != null && estimateRange) {
+        setEstimateResult({ estimatedRoofSize, estimateRange });
         setEstimateState('success');
       } else {
         setEstimateState('fallback');
@@ -73,8 +78,13 @@ export function StepThree({ address, selection, image, streetViewAvailable, lead
         }),
       });
       const data = await res.json();
-      if (res.ok && data.success && data.estimatedRoofSize != null && data.estimateRange) {
-        setEstimateResult({ estimatedRoofSize: data.estimatedRoofSize, estimateRange: data.estimateRange });
+      const estimateRange = data.estimateRange
+        ?? (data.estimate?.low && data.estimate?.high
+            ? `${data.estimate.low} – ${data.estimate.high}`
+            : null);
+      const estimatedRoofSize = data.estimatedRoofSize ?? data.squares ?? null;
+      if (res.ok && data.success && estimatedRoofSize != null && estimateRange) {
+        setEstimateResult({ estimatedRoofSize, estimateRange });
         setEstimateState('success');
       } else {
         setEstimateState('error');
