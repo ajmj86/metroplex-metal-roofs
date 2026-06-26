@@ -67,6 +67,15 @@ const Counter = ({ to, suffix="" }) => {
   return <span ref={ref}>{val.toLocaleString()}{suffix}</span>;
 };
 
+const NAV_LINKS = [
+  {label:"About Us",      href:"#about"},
+  {label:"Why Metal",     href:"#why-metal"},
+  {label:"Gallery",       href:"#gallery"},
+  {label:"Our Process",   href:"#process"},
+  {label:"Service Areas", href:"#service-areas"},
+  {label:"Reviews",       href:"#reviews"},
+];
+
 /* ── Nav ── */
 const Nav = ({ scrolled }) => {
   const [mOpen, setMOpen] = useState(false);
@@ -74,24 +83,25 @@ const Nav = ({ scrolled }) => {
     <>
       <nav style={{
         position:"fixed",top:0,left:0,right:0,zIndex:200,
+        height:84,
         background:"rgba(9,9,10,0.97)",
-        backdropFilter:scrolled||mOpen?"blur(14px)":"none",
-        borderBottom:scrolled||mOpen?`1px solid ${C.border}`:"1px solid transparent",
+        backdropFilter:"blur(14px)",
+        borderBottom:`1px solid ${C.border}`,
         transition:"all 0.35s ease",
-        padding:"14px 32px",
+        padding:"0 32px",
         display:"flex",alignItems:"center",justifyContent:"space-between",
       }}>
-        <button className="nav-logo" onClick={()=>{setMOpen(false);window.scrollTo(0,0);}} style={{padding:0,flexShrink:0}}>
-          <Logo size={1.4}/>
+        <button className="nav-logo" onClick={()=>{setMOpen(false);setTimeout(()=>window.scrollTo({top:0,behavior:"instant"}),50);}} style={{padding:0,flexShrink:0}}>
+          <Logo size={1.25}/>
         </button>
         {/* Desktop links */}
         <div className="nav-links" style={{display:"flex",gap:28,alignItems:"center"}}>
-          {[["About Us","#about"],["Why Metal","#why-metal"],["Gallery","#gallery"],["Our Process","#process"],["Service Areas","#service-areas"]].map(([l,href])=>(
-            <a key={l} href={href}
+          {NAV_LINKS.map(l=>(
+            <a key={l.label} href={l.href}
               style={{fontSize:11,letterSpacing:2,textTransform:"uppercase",color:C.mutedLight,fontWeight:500,transition:"color 0.2s"}}
               onMouseEnter={e=>e.currentTarget.style.color=C.accent}
               onMouseLeave={e=>e.currentTarget.style.color=C.mutedLight}
-            >{l}</a>
+            >{l.label}</a>
           ))}
           <a href="/estimate" style={{padding:"9px 22px",background:C.accent,color:C.black,fontSize:11,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"background 0.2s",whiteSpace:"nowrap"}}
             onMouseEnter={e=>e.currentTarget.style.background=C.accentLight}
@@ -107,11 +117,11 @@ const Nav = ({ scrolled }) => {
       </nav>
       {/* Mobile drawer */}
       {mOpen && (
-        <div style={{position:"fixed",top:120,left:0,right:0,bottom:0,zIndex:199,background:"rgba(9,9,10,0.98)",display:"flex",flexDirection:"column",padding:"32px 24px",gap:4,overflowY:"auto"}}>
-          {[["About Us","#about"],["Why Metal","#why-metal"],["Gallery","#gallery"],["Our Process","#process"],["Service Areas","#service-areas"],["Reviews","#reviews"]].map(([l,href])=>(
-            <a key={l} href={href} onClick={()=>setMOpen(false)}
+        <div style={{position:"fixed",top:84,left:0,right:0,bottom:0,zIndex:199,background:"rgba(9,9,10,0.98)",display:"flex",flexDirection:"column",padding:"32px 24px",gap:4,overflowY:"auto"}}>
+          {NAV_LINKS.map(l=>(
+            <a key={l.label} href={l.href} onClick={()=>setMOpen(false)}
               style={{padding:"16px 0",fontSize:18,letterSpacing:2,textTransform:"uppercase",color:C.mutedLight,fontFamily:"'Cormorant Garamond',serif",borderBottom:`1px solid ${C.border}`}}
-            >{l}</a>
+            >{l.label}</a>
           ))}
           <a href="/estimate" onClick={()=>setMOpen(false)} className="cta-btn" style={{marginTop:24,padding:"16px",background:C.accent,color:C.black,fontSize:12,letterSpacing:2,textTransform:"uppercase",fontWeight:700,borderRadius:4,textAlign:"center"}}>
             Free Estimate
@@ -123,12 +133,30 @@ const Nav = ({ scrolled }) => {
 };
 
 /* ── Footer ── */
-const Footer = () => (
+const Footer = ({ setActiveTab }) => {
+  const footerLinks = {
+    "Standing Seam":      {href:"/#products", onClick:(e)=>{e.preventDefault();setActiveTab("standing");setTimeout(()=>{const el=document.getElementById("products");if(el)el.scrollIntoView({behavior:"smooth"});},200);}},
+    "Copper Roofing":     {href:"/#products", onClick:(e)=>{e.preventDefault();setActiveTab("copper");setTimeout(()=>{const el=document.getElementById("products");if(el)el.scrollIntoView({behavior:"smooth"});},200);}},
+    "Stone-Coated Steel": {href:"/#products", onClick:(e)=>{e.preventDefault();setActiveTab("stone");setTimeout(()=>{const el=document.getElementById("products");if(el)el.scrollIntoView({behavior:"smooth"});},200);}},
+    "R-Panel":            {href:"/#products", onClick:(e)=>{e.preventDefault();setActiveTab("rpanel");setTimeout(()=>{const el=document.getElementById("products");if(el)el.scrollIntoView({behavior:"smooth"});},200);}},
+    "Free Visualizer":    {href:"/visualizer"},
+    "Southlake":          {href:"/#service-areas", onClick:(e)=>{e.preventDefault();setTimeout(()=>{const el=document.getElementById("service-areas");if(el)el.scrollIntoView({behavior:"smooth"});},150);}},
+    "Frisco":             {href:"/#service-areas", onClick:(e)=>{e.preventDefault();setTimeout(()=>{const el=document.getElementById("service-areas");if(el)el.scrollIntoView({behavior:"smooth"});},150);}},
+    "Westlake":           {href:"/#service-areas", onClick:(e)=>{e.preventDefault();setTimeout(()=>{const el=document.getElementById("service-areas");if(el)el.scrollIntoView({behavior:"smooth"});},150);}},
+    "Prosper":            {href:"/#service-areas", onClick:(e)=>{e.preventDefault();setTimeout(()=>{const el=document.getElementById("service-areas");if(el)el.scrollIntoView({behavior:"smooth"});},150);}},
+    "McKinney":           {href:"/#service-areas", onClick:(e)=>{e.preventDefault();setTimeout(()=>{const el=document.getElementById("service-areas");if(el)el.scrollIntoView({behavior:"smooth"});},150);}},
+    "All DFW Areas →":    {href:"/#service-areas", onClick:(e)=>{e.preventDefault();setTimeout(()=>{const el=document.getElementById("service-areas");if(el)el.scrollIntoView({behavior:"smooth"});},150);}},
+    "About Us":           {href:"/#about", onClick:(e)=>{e.preventDefault();const tryScroll=(attempts)=>{const el=document.getElementById("about");if(el){const offset=el.getBoundingClientRect().top+window.scrollY-100;window.scrollTo({top:offset,behavior:"smooth"});}else if(attempts>0){setTimeout(()=>tryScroll(attempts-1),100);}};setTimeout(()=>tryScroll(10),150);}},
+    "Our Process":        {href:"/#process", onClick:(e)=>{e.preventDefault();const tryScroll=(attempts)=>{const el=document.getElementById("process");if(el){const offset=el.getBoundingClientRect().top+window.scrollY-100;window.scrollTo({top:offset,behavior:"smooth"});}else if(attempts>0){setTimeout(()=>tryScroll(attempts-1),100);}};setTimeout(()=>tryScroll(10),150);}},
+    "Reviews":            {href:"/#reviews", onClick:(e)=>{e.preventDefault();const tryScroll=(attempts)=>{const el=document.getElementById("reviews");if(el){const offset=el.getBoundingClientRect().top+window.scrollY-100;window.scrollTo({top:offset,behavior:"smooth"});}else if(attempts>0){setTimeout(()=>tryScroll(attempts-1),100);}};setTimeout(()=>tryScroll(10),150);}},
+    "Contact":            {href:"/terms#contact"},
+  };
+  return (
   <footer style={{borderTop:`1px solid ${C.border}`,padding:"48px 32px 28px",background:C.black}}>
     <div className="inner">
       <div className="grid-2a" style={{gap:40,marginBottom:48}}>
         <div>
-          <Logo size={1.1} light={false}/>
+          <Logo size={1.15} light={false}/>
           <p className="muted-body" style={{marginTop:18,fontSize:16,color:C.muted,lineHeight:1.8,maxWidth:260}}>
             Premium metal roofing for DFW homeowners. Licensed partners. Satellite-based estimates. Lifetime results.
           </p>
@@ -153,20 +181,31 @@ const Footer = () => (
             ["About Us","/#about"],
             ["Our Process","/#process"],
             ["Reviews","/#reviews"],
-            ["Contact","/#contact"],
+            ["Contact","/terms#contact"],
           ]},
         ].map(col=>(
           <div key={col.title}>
             <div style={{fontSize:10,letterSpacing:2.5,color:C.accent,textTransform:"uppercase",marginBottom:18}}>{col.title}</div>
-            {col.links.map(([l,href])=>{
+            {col.links.map(([l])=>{
+              const fl = footerLinks[l];
+              const isExt = fl?.href?.startsWith("http");
               const linkStyle = {display:"block",fontSize:13,color:C.muted,marginBottom:9,lineHeight:1.5,transition:"color 0.2s"};
               const hoverProps = {
                 onMouseEnter:e=>e.currentTarget.style.color=C.white,
                 onMouseLeave:e=>e.currentTarget.style.color=C.muted,
               };
-              return href.startsWith("/")
-                ? <Link key={l} href={href} style={linkStyle} {...hoverProps}>{l}</Link>
-                : <a key={l} href={href} style={linkStyle} {...hoverProps}>{l}</a>;
+              if (fl?.href?.startsWith("/") && !fl.onClick) {
+                return <Link key={l} href={fl.href} style={linkStyle} {...hoverProps}>{l}</Link>;
+              }
+              return (
+                <a key={l} href={fl?.href ?? "#"}
+                  onClick={fl?.onClick}
+                  target={isExt?"_blank":undefined}
+                  rel={isExt?"noopener noreferrer":undefined}
+                  style={linkStyle}
+                  {...hoverProps}
+                >{l}</a>
+              );
             })}
           </div>
         ))}
@@ -188,7 +227,8 @@ const Footer = () => (
       </div>
     </div>
   </footer>
-);
+  );
+};
 
 /* ═══════════════════════════════
    VISUALIZER GATE
@@ -350,7 +390,7 @@ const VisualizerGate = () => {
         <p style={{fontSize:16,color:C.mutedLight,lineHeight:1.8,marginBottom:24}}>
           Your visualization is being prepared. Our team will follow up with your full render and free estimate — typically within one business day.
         </p>
-        <div style={{fontSize:12,color:C.muted}}>Questions? <a href="tel:18173823338" style={{color:C.accent}}>{PHONE}</a></div>
+        <div style={{fontSize:12,color:C.muted}}>Questions? <a href="tel:+18173823338" style={{color:C.accent}}>{PHONE}</a></div>
       </div>
     </div>
   );
@@ -359,8 +399,7 @@ const VisualizerGate = () => {
 /* ═══════════════════════════════
    HOME
 ═══════════════════════════════ */
-const HomePage = () => {
-  const [activeTab, setActiveTab] = useState("standing");
+const HomePage = ({ activeTab, setActiveTab }) => {
 
   const roofTypes = [
     {id:"standing",label:"Standing Seam",   desc:"The gold standard in metal roofing. Hidden fasteners, clean architectural lines, and a 50+ year lifespan. Preferred by luxury homebuilders and architects across DFW."},
@@ -379,7 +418,7 @@ const HomePage = () => {
   const stats = [
     {val:50,suffix:"+ yrs",label:"Roof Lifespan"},
     {val:35,suffix:"%",    label:"Insurance Savings"},
-    {val:15,suffix:"%",    label:"Energy Cost Reduction"},
+    {val:25,suffix:"%",    label:"Energy Cost Reduction"},
     {val:340,suffix:"%",   label:"ROI vs. Asphalt"},
   ];
 
@@ -413,15 +452,9 @@ const HomePage = () => {
     <div>
       {/* ── HERO ── */}
       <section className="hero-pad" style={{minHeight:"100vh",display:"flex",flexDirection:"column",justifyContent:"center",position:"relative",overflow:"hidden"}}>
-        {/* Hero background photo */}
-        <div style={{position:"absolute",inset:0,zIndex:0,backgroundImage:"url('/MMR Hero Pic.png')",backgroundSize:"cover",backgroundPosition:"center",backgroundRepeat:"no-repeat"}}>
-          {/* Subtle gold radial glow */}
-          <div style={{position:"absolute",top:"35%",right:"30%",width:700,height:700,background:`radial-gradient(circle, ${C.accentDark}18 0%, transparent 65%)`,pointerEvents:"none"}}/>
-        </div>
-        {/* Dark overlay for text legibility */}
-        <div style={{position:"absolute",inset:0,zIndex:1,pointerEvents:"none",background:"linear-gradient(to bottom, rgba(9,9,10,0.88) 0%, rgba(9,9,10,0.78) 50%, rgba(9,9,10,0.90) 100%)"}}/>
+        <div style={{position:"absolute",inset:0,zIndex:0,background:`linear-gradient(to bottom, rgba(9,9,10,0.82) 0%, rgba(9,9,10,0.70) 40%, rgba(9,9,10,0.88) 100%), url('/MMR Hero Pic.png') center/cover no-repeat`}}/>
 
-        <div className="inner" style={{position:"relative",zIndex:2,width:"100%"}}>
+        <div className="inner" style={{position:"relative",zIndex:1,width:"100%"}}>
           <div style={{display:"inline-flex",alignItems:"center",gap:12,marginBottom:28,animation:"fadeUp 0.8s ease both"}}>
             <div style={{width:28,height:1,background:C.accent,flexShrink:0}}/>
             <span style={{fontSize:"clamp(0.75rem,1.1vw,0.95rem)",letterSpacing:3.5,color:C.accent,textTransform:"uppercase",fontWeight:500}}>Premium Metal Roofing · Dallas–Fort Worth</span>
@@ -433,14 +466,14 @@ const HomePage = () => {
             Standing seam metal roofing engineered for North Texas weather. 50-year lifespan. Class 4 hail rating. Up to 35% insurance discount.
           </p>
           <div style={{display:"flex",gap:14,flexWrap:"wrap",alignItems:"center",animation:"fadeUp 0.8s ease 0.3s both"}}>
-            <a href="#visualizer" className="cta-btn" style={{display:"inline-flex",alignItems:"center",gap:10,padding:"15px 32px",background:C.accent,color:C.black,fontSize:12,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"all 0.2s",whiteSpace:"nowrap"}}
+            <a href="/visualizer" className="cta-btn" style={{display:"inline-flex",alignItems:"center",gap:10,padding:"15px 32px",background:C.accent,color:C.black,fontSize:12,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"all 0.2s",whiteSpace:"nowrap"}}
               onMouseEnter={e=>{e.currentTarget.style.background=C.accentLight;}}
               onMouseLeave={e=>{e.currentTarget.style.background=C.accent;}}
             >See Your Home With Metal →</a>
-            <a href="#process" className="cta-btn" style={{display:"inline-flex",alignItems:"center",padding:"15px 28px",background:"#1C1C1E",border:`1px solid ${C.accent}`,color:C.accent,fontSize:12,letterSpacing:2,textTransform:"uppercase",fontWeight:500,borderRadius:2,transition:"all 0.2s",whiteSpace:"nowrap"}}
-              onMouseEnter={e=>{e.currentTarget.style.background="#27272A";}}
-              onMouseLeave={e=>{e.currentTarget.style.background="#1C1C1E";}}
-            >How It Works</a>
+            <a href="/estimate" className="cta-btn" style={{display:"inline-flex",alignItems:"center",padding:"15px 28px",background:C.black,color:C.accent,fontSize:12,letterSpacing:2,textTransform:"uppercase",fontWeight:500,borderRadius:2,transition:"all 0.2s",whiteSpace:"nowrap"}}
+              onMouseEnter={e=>{e.currentTarget.style.background=C.accent;e.currentTarget.style.color=C.black;}}
+              onMouseLeave={e=>{e.currentTarget.style.background=C.black;e.currentTarget.style.color=C.accent;}}
+            >Get an Instant Estimate</a>
           </div>
           {/* Trust bar */}
           <div className="trust-bar" style={{display:"flex",gap:28,marginTop:48,flexWrap:"wrap",animation:"fadeUp 0.8s ease 0.4s both"}}>
@@ -451,6 +484,25 @@ const HomePage = () => {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ── ABOUT ── */}
+      <section id="about" className="section-pad" style={{background:C.black,borderTop:`1px solid ${C.border}`}}>
+        <div className="inner">
+          <Reveal>
+            <div style={{maxWidth:680}}>
+              <div style={{marginBottom:20}}>
+                <div style={{fontSize:15,letterSpacing:3,color:C.accent,textTransform:"uppercase"}}>About Metroplex Metal Roofs</div>
+              </div>
+              <h2 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(28px,4vw,48px)",fontWeight:700,color:C.white,lineHeight:1.15,marginBottom:28}}>
+                DFW's Premium Metal<br/><span style={{color:C.accent,fontStyle:"italic"}}>Roofing Specialists</span>
+              </h2>
+              <p style={{fontSize:15,color:C.mutedLight,lineHeight:1.9,marginBottom:16}}>Metroplex Metal Roofs was built for homeowners who believe exceptional homes deserve exceptional craftsmanship. We specialize in premium residential metal roofing for discerning Dallas–Fort Worth homeowners who value quality, longevity, and timeless design over short-term solutions.</p>
+              <p style={{fontSize:15,color:C.mutedLight,lineHeight:1.9,marginBottom:16}}>Every project is carefully planned, precision-measured, and engineered for the unique demands of the North Texas climate. The result is more than a new roof. It's a permanent upgrade that enhances your home's beauty, strengthens its protection, and preserves its value for decades to come.</p>
+              <p style={{fontSize:15,color:C.mutedLight,lineHeight:1.9,marginBottom:0}}>A metal roof isn't just designed to outperform asphalt. It's designed to outlast it. While traditional shingles typically need replacement every 8–10 years in DFW, a properly installed metal roof is built to protect your home for generations. The return is real: lower lifetime ownership costs, greater energy efficiency, enhanced curb appeal, and the peace of mind of knowing you'll likely never think about replacing your roof again.</p>
+            </div>
+          </Reveal>
         </div>
       </section>
 
@@ -608,7 +660,7 @@ const HomePage = () => {
       </section>
 
       {/* ── ROOF TYPES ── */}
-      <section className="section-pad" style={{background:C.surface,borderTop:`1px solid ${C.border}`}}>
+      <section id="products" className="section-pad" style={{background:C.surface,borderTop:`1px solid ${C.border}`}}>
         <div className="inner">
           <Reveal>
             <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end",marginBottom:48,flexWrap:"wrap",gap:20}}>
@@ -784,7 +836,7 @@ const HomePage = () => {
                 onMouseEnter={e=>e.currentTarget.style.background=C.accentLight}
                 onMouseLeave={e=>e.currentTarget.style.background=C.accent}
               >Visualize My Roof →</a>
-              <a href={`tel:18173823338`} className="cta-btn" style={{padding:"16px 28px",border:`1px solid ${C.borderLight}`,color:C.mutedLight,fontSize:12,letterSpacing:2,textTransform:"uppercase",fontWeight:500,borderRadius:2,transition:"all 0.2s"}}
+              <a href={`tel:+18173823338`} className="cta-btn" style={{padding:"16px 28px",border:`1px solid ${C.borderLight}`,color:C.mutedLight,fontSize:12,letterSpacing:2,textTransform:"uppercase",fontWeight:500,borderRadius:2,transition:"all 0.2s"}}
                 onMouseEnter={e=>{e.currentTarget.style.borderColor=C.accent;e.currentTarget.style.color=C.accent;}}
                 onMouseLeave={e=>{e.currentTarget.style.borderColor=C.borderLight;e.currentTarget.style.color=C.mutedLight;}}
               >{PHONE}</a>
@@ -801,6 +853,7 @@ const HomePage = () => {
 ═══════════════════════════════ */
 export default function App() {
   const [scrolled, setScrolled] = useState(false);
+  const [activeTab, setActiveTab] = useState("standing");
   useEffect(()=>{
     const fn=()=>setScrolled(window.scrollY>40);
     window.addEventListener("scroll",fn);
@@ -817,8 +870,8 @@ export default function App() {
     <div style={{background:C.black,color:C.text,fontFamily:"'Outfit',system-ui,sans-serif",overflowX:"hidden",minHeight:"100vh"}}>
       <style>{fonts + globalStyles}</style>
       <Nav scrolled={scrolled}/>
-      <HomePage/>
-      <Footer/>
+      <HomePage activeTab={activeTab} setActiveTab={setActiveTab}/>
+      <Footer setActiveTab={setActiveTab}/>
     </div>
   );
 }

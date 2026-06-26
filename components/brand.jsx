@@ -54,7 +54,7 @@ export const globalStyles = `
     .grid-3 { grid-template-columns: 1fr; }
     .grid-2a { grid-template-columns: 1fr; }
     .section-pad { padding: 56px 24px; }
-    .hero-pad { padding: 200px 24px 56px; }
+    .hero-pad { padding: 188px 24px 56px; }
     .hide-mobile { display: none !important; }
     .nav-links { display: none !important; }
     .stat-border { border-right: none !important; border-bottom: 1px solid #27272A; }
