@@ -378,6 +378,10 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
               Calculate My Estimate →
             </button>
           </div>
+          <p style={{ fontSize: 12, color: C.muted, textAlign: 'center', marginTop: 16 }}>
+            Want to see your home with a metal roof first?{' '}
+            <a href="/visualizer" style={{ color: C.accent, textDecoration: 'underline' }}>Try the AI Visualizer →</a>
+          </p>
         </>
       ) : (
         <>

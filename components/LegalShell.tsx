@@ -3,6 +3,7 @@
 import { useEffect, ReactNode } from "react";
 import Link from "next/link";
 import { C, LEGAL_FULL, MONTH, YEAR, fonts, globalStyles } from "./brand";
+import { SiteFooter } from "./SiteFooter";
 
 export const LH = ({children, id}: {children: ReactNode; id?: string}) => (
   <h2 id={id} style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(20px,3vw,26px)",fontWeight:700,color:C.white,marginTop:44,marginBottom:14}}>{children}</h2>
@@ -33,6 +34,7 @@ export const LegalShell = ({title, children}: {title: string; children: ReactNod
         <p style={{fontSize:12,color:C.muted,marginBottom:48,letterSpacing:0.3}}>{LEGAL_FULL} · Last updated: {MONTH} {YEAR}</p>
         <div style={{fontSize:14,color:C.mutedLight,lineHeight:1.95}}>{children}</div>
       </div>
+      <SiteFooter/>
     </div>
   );
 };

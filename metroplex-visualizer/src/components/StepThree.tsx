@@ -131,6 +131,17 @@ export function StepThree({ address, selection, image, streetViewAvailable, lead
         </p>
       </div>
 
+      {/* Cross-link to main site full estimate */}
+      <div className="text-center">
+        <a
+          href={`${process.env.NEXT_PUBLIC_MAIN_SITE_URL}/estimate?address=${encodeURIComponent(address)}&roofType=${encodeURIComponent(selection.roofType)}&leadOrigin=visualizer`}
+          className="inline-flex items-center gap-2 px-6 py-3 bg-accent text-background font-semibold rounded-lg hover:bg-accent/90 transition-colors text-sm"
+        >
+          Get Your Full Estimate →
+        </a>
+        <p className="text-muted text-xs mt-3">Opens the precision estimate tool on metroplexmetalroofs.com</p>
+      </div>
+
       {/* Get Your Estimate CTA */}
       <div className="bg-accent/10 border border-accent/20 rounded-2xl p-6 text-center">
         {estimateState === 'success' && estimateResult ? (

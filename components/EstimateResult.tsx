@@ -55,7 +55,9 @@ export default function EstimateResult({ roofType, estimate }: EstimateResultPro
       </div>
 
       <a
-        href="#"
+        href="https://api.leadconnectorhq.com/widget/booking/gG1ruFfEWkUXO7eIB8NR"
+        target="_blank"
+        rel="noopener noreferrer"
         style={{
           display: 'block',
           width: '100%',

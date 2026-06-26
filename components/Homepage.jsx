@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { C, LEGAL_ENTITY, DBA_NAME, PHONE, YEAR, fonts, globalStyles, Logo } from "./brand";
+import { SiteFooter } from "./SiteFooter";
 
 /* ── Image Placeholder ── */
 const ImgPlaceholder = ({ label, tag, style={} }) => (
@@ -133,102 +134,7 @@ const Nav = ({ scrolled }) => {
 };
 
 /* ── Footer ── */
-const Footer = ({ setActiveTab }) => {
-  const footerLinks = {
-    "Standing Seam":      {href:"/#products", onClick:(e)=>{e.preventDefault();setActiveTab("standing");setTimeout(()=>{const el=document.getElementById("products");if(el)el.scrollIntoView({behavior:"smooth"});},200);}},
-    "Copper Roofing":     {href:"/#products", onClick:(e)=>{e.preventDefault();setActiveTab("copper");setTimeout(()=>{const el=document.getElementById("products");if(el)el.scrollIntoView({behavior:"smooth"});},200);}},
-    "Stone-Coated Steel": {href:"/#products", onClick:(e)=>{e.preventDefault();setActiveTab("stone");setTimeout(()=>{const el=document.getElementById("products");if(el)el.scrollIntoView({behavior:"smooth"});},200);}},
-    "R-Panel":            {href:"/#products", onClick:(e)=>{e.preventDefault();setActiveTab("rpanel");setTimeout(()=>{const el=document.getElementById("products");if(el)el.scrollIntoView({behavior:"smooth"});},200);}},
-    "Free Visualizer":    {href:"/visualizer"},
-    "Southlake":          {href:"/#service-areas", onClick:(e)=>{e.preventDefault();setTimeout(()=>{const el=document.getElementById("service-areas");if(el)el.scrollIntoView({behavior:"smooth"});},150);}},
-    "Frisco":             {href:"/#service-areas", onClick:(e)=>{e.preventDefault();setTimeout(()=>{const el=document.getElementById("service-areas");if(el)el.scrollIntoView({behavior:"smooth"});},150);}},
-    "Westlake":           {href:"/#service-areas", onClick:(e)=>{e.preventDefault();setTimeout(()=>{const el=document.getElementById("service-areas");if(el)el.scrollIntoView({behavior:"smooth"});},150);}},
-    "Prosper":            {href:"/#service-areas", onClick:(e)=>{e.preventDefault();setTimeout(()=>{const el=document.getElementById("service-areas");if(el)el.scrollIntoView({behavior:"smooth"});},150);}},
-    "McKinney":           {href:"/#service-areas", onClick:(e)=>{e.preventDefault();setTimeout(()=>{const el=document.getElementById("service-areas");if(el)el.scrollIntoView({behavior:"smooth"});},150);}},
-    "All DFW Areas →":    {href:"/#service-areas", onClick:(e)=>{e.preventDefault();setTimeout(()=>{const el=document.getElementById("service-areas");if(el)el.scrollIntoView({behavior:"smooth"});},150);}},
-    "About Us":           {href:"/#about", onClick:(e)=>{e.preventDefault();const tryScroll=(attempts)=>{const el=document.getElementById("about");if(el){const offset=el.getBoundingClientRect().top+window.scrollY-100;window.scrollTo({top:offset,behavior:"smooth"});}else if(attempts>0){setTimeout(()=>tryScroll(attempts-1),100);}};setTimeout(()=>tryScroll(10),150);}},
-    "Our Process":        {href:"/#process", onClick:(e)=>{e.preventDefault();const tryScroll=(attempts)=>{const el=document.getElementById("process");if(el){const offset=el.getBoundingClientRect().top+window.scrollY-100;window.scrollTo({top:offset,behavior:"smooth"});}else if(attempts>0){setTimeout(()=>tryScroll(attempts-1),100);}};setTimeout(()=>tryScroll(10),150);}},
-    "Reviews":            {href:"/#reviews", onClick:(e)=>{e.preventDefault();const tryScroll=(attempts)=>{const el=document.getElementById("reviews");if(el){const offset=el.getBoundingClientRect().top+window.scrollY-100;window.scrollTo({top:offset,behavior:"smooth"});}else if(attempts>0){setTimeout(()=>tryScroll(attempts-1),100);}};setTimeout(()=>tryScroll(10),150);}},
-    "Contact":            {href:"/terms#contact"},
-  };
-  return (
-  <footer style={{borderTop:`1px solid ${C.border}`,padding:"48px 32px 28px",background:C.black}}>
-    <div className="inner">
-      <div className="grid-2a" style={{gap:40,marginBottom:48}}>
-        <div>
-          <Logo size={1.15} light={false}/>
-          <p className="muted-body" style={{marginTop:18,fontSize:16,color:C.muted,lineHeight:1.8,maxWidth:260}}>
-            Premium metal roofing for DFW homeowners. Licensed partners. Satellite-based estimates. Lifetime results.
-          </p>
-        </div>
-        {[
-          {title:"Services",links:[
-            ["Standing Seam","/#products"],
-            ["Copper Roofing","/#products"],
-            ["Stone-Coated Steel","/#products"],
-            ["R-Panel","/#products"],
-            ["Free Visualizer","/visualizer"],
-          ]},
-          {title:"Service Areas",links:[
-            ["Southlake","/#service-areas"],
-            ["Frisco","/#service-areas"],
-            ["Westlake","/#service-areas"],
-            ["Prosper","/#service-areas"],
-            ["McKinney","/#service-areas"],
-            ["All DFW Areas →","/#service-areas"],
-          ]},
-          {title:"Company",links:[
-            ["About Us","/#about"],
-            ["Our Process","/#process"],
-            ["Reviews","/#reviews"],
-            ["Contact","/terms#contact"],
-          ]},
-        ].map(col=>(
-          <div key={col.title}>
-            <div style={{fontSize:10,letterSpacing:2.5,color:C.accent,textTransform:"uppercase",marginBottom:18}}>{col.title}</div>
-            {col.links.map(([l])=>{
-              const fl = footerLinks[l];
-              const isExt = fl?.href?.startsWith("http");
-              const linkStyle = {display:"block",fontSize:13,color:C.muted,marginBottom:9,lineHeight:1.5,transition:"color 0.2s"};
-              const hoverProps = {
-                onMouseEnter:e=>e.currentTarget.style.color=C.white,
-                onMouseLeave:e=>e.currentTarget.style.color=C.muted,
-              };
-              if (fl?.href?.startsWith("/") && !fl.onClick) {
-                return <Link key={l} href={fl.href} style={linkStyle} {...hoverProps}>{l}</Link>;
-              }
-              return (
-                <a key={l} href={fl?.href ?? "#"}
-                  onClick={fl?.onClick}
-                  target={isExt?"_blank":undefined}
-                  rel={isExt?"noopener noreferrer":undefined}
-                  style={linkStyle}
-                  {...hoverProps}
-                >{l}</a>
-              );
-            })}
-          </div>
-        ))}
-      </div>
-      <div style={{borderTop:`1px solid ${C.border}`,paddingTop:22,display:"flex",justifyContent:"space-between",flexWrap:"wrap",gap:12}}>
-        <div style={{fontSize:11,color:C.muted,lineHeight:1.7}}>
-          © {YEAR} {DBA_NAME} · A DBA of {LEGAL_ENTITY}<br/>
-          <span style={{fontSize:10,opacity:0.6}}>Dallas–Fort Worth, Texas</span>
-        </div>
-        <div style={{display:"flex",gap:20,flexWrap:"wrap",alignItems:"center"}}>
-          {[["Privacy Policy","/privacy"],["Terms of Service","/terms"]].map(([label,href])=>(
-            <Link key={label} href={href}
-              style={{fontSize:11,color:C.muted,transition:"color 0.2s"}}
-              onMouseEnter={e=>e.currentTarget.style.color=C.white}
-              onMouseLeave={e=>e.currentTarget.style.color=C.muted}
-            >{label}</Link>
-          ))}
-        </div>
-      </div>
-    </div>
-  </footer>
-  );
-};
+const Footer = ({ setActiveTab }) => <SiteFooter setActiveTab={setActiveTab}/>;
 
 /* ═══════════════════════════════
    VISUALIZER GATE
@@ -630,31 +536,12 @@ const HomePage = ({ activeTab, setActiveTab }) => {
                     For a home in the $700K–$1M range, the real question isn't whether you can afford metal — it's whether paying for asphalt again makes any sense at all.
                   </p>
                 </div>
-                <a href="#visualizer" className="cta-btn" style={{display:"inline-flex",alignItems:"center",gap:10,padding:"16px 32px",background:C.accent,color:C.black,fontSize:11,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"all 0.2s",whiteSpace:"nowrap",flexShrink:0}}
+                <a href="/estimate" className="cta-btn" style={{display:"inline-flex",alignItems:"center",gap:10,padding:"16px 32px",background:C.accent,color:C.black,fontSize:11,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"all 0.2s",whiteSpace:"nowrap",flexShrink:0}}
                   onMouseEnter={e=>e.currentTarget.style.background=C.accentLight}
                   onMouseLeave={e=>e.currentTarget.style.background=C.accent}
                 >Get a Free Estimate →</a>
               </div>
             </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ── VISUALIZER CTA ── */}
-      <section id="visualizer" className="section-pad" style={{position:"relative",overflow:"hidden"}}>
-        <div style={{position:"absolute",inset:0,pointerEvents:"none",background:`radial-gradient(ellipse 70% 60% at 50% 50%,${C.accentDark}1A 0%,transparent 70%)`}}/>
-        <div style={{maxWidth:740,margin:"0 auto",textAlign:"center",position:"relative"}}>
-          <Reveal>
-            <div style={{fontSize:15,letterSpacing:3,color:C.accent,textTransform:"uppercase",marginBottom:18}}>AI Roof Visualizer</div>
-            <h2 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(2rem,5.2vw,4.75rem)",fontWeight:700,color:C.white,lineHeight:1.1,marginBottom:20}}>
-              See Your Home With<br/><span style={{fontStyle:"italic",color:C.accent}}>a Metal Roof</span>
-            </h2>
-            <p style={{fontSize:16,color:C.mutedLight,lineHeight:1.8,maxWidth:500,margin:"0 auto 40px"}}>
-              Enter your address. Our AI pulls a street-level image of your exact home and renders it with your chosen metal roof style and color — no imagination required.
-            </p>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <VisualizerGate/>
           </Reveal>
         </div>
       </section>
@@ -704,7 +591,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
                       ))}
                     </div>
                   </div>
-                  <a href="#visualizer" style={{display:"inline-flex",alignItems:"center",gap:8,fontSize:11,letterSpacing:2,textTransform:"uppercase",color:C.accent,fontWeight:600,borderBottom:`1px solid ${C.accentDark}`,paddingBottom:4,width:"fit-content",transition:"color 0.2s"}}>
+                  <a href="/estimate" style={{display:"inline-flex",alignItems:"center",gap:8,fontSize:11,letterSpacing:2,textTransform:"uppercase",color:C.accent,fontWeight:600,borderBottom:`1px solid ${C.accentDark}`,paddingBottom:4,width:"fit-content",transition:"color 0.2s"}}>
                     Get a Free Estimate →
                   </a>
                 </div>
@@ -832,7 +719,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
               We use satellite imaging to generate precise measurements for your exact roof — not a guess from the driveway. Your estimate reflects the real scope of your project.
             </p>
             <div style={{display:"flex",gap:14,justifyContent:"center",flexWrap:"wrap"}}>
-              <a href="#visualizer" className="cta-btn" style={{padding:"16px 36px",background:C.accent,color:C.black,fontSize:12,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"all 0.2s"}}
+              <a href="/visualizer" className="cta-btn" style={{padding:"16px 36px",background:C.accent,color:C.black,fontSize:12,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"all 0.2s"}}
                 onMouseEnter={e=>e.currentTarget.style.background=C.accentLight}
                 onMouseLeave={e=>e.currentTarget.style.background=C.accent}
               >Visualize My Roof →</a>
