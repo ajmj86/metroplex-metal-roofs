@@ -27,6 +27,8 @@ export function StepThree({ address, selection, image, streetViewAvailable, lead
   const roofTypeLabel = getRoofTypeLabel(selection.roofType);
   const [estimateState, setEstimateState] = useState<EstimateState>('idle');
   const [estimateResult, setEstimateResult] = useState<{ estimatedRoofSize: number; estimateRange: string } | null>(null);
+  const [manualSqFt, setManualSqFt] = useState<string>('');
+  const [manualSubmitting, setManualSubmitting] = useState(false);
 
   const handleGetEstimate = async () => {
     setEstimateState('loading');
@@ -52,6 +54,35 @@ export function StepThree({ address, selection, image, streetViewAvailable, lead
       }
     } catch {
       setEstimateState('error');
+    }
+  };
+
+  const handleManualEstimate = async () => {
+    const sqft = parseInt(manualSqFt, 10);
+    if (!sqft || sqft < 500 || sqft > 10000) return;
+    setManualSubmitting(true);
+    try {
+      const res = await fetch('/api/estimate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstName: leadInfo?.firstName,
+          address1: address,
+          roofType: selection.roofType,
+          manualSqFt: sqft,
+        }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success && data.estimatedRoofSize != null && data.estimateRange) {
+        setEstimateResult({ estimatedRoofSize: data.estimatedRoofSize, estimateRange: data.estimateRange });
+        setEstimateState('success');
+      } else {
+        setEstimateState('error');
+      }
+    } catch {
+      setEstimateState('error');
+    } finally {
+      setManualSubmitting(false);
     }
   };
 
@@ -102,8 +133,32 @@ export function StepThree({ address, selection, image, streetViewAvailable, lead
           </>
         ) : estimateState === 'fallback' ? (
           <>
-            <h3 className="font-heading text-lg font-semibold text-foreground mb-2">You're all set!</h3>
-            <p className="text-muted text-sm">We weren't able to generate an instant estimate for this address, but a team member will follow up with your price range shortly.</p>
+            <h3 className="font-heading text-lg font-semibold text-foreground mb-2">
+              One more step
+            </h3>
+            <p className="text-muted text-sm mb-4">
+              We couldn&apos;t pull your roof size automatically. Enter your home&apos;s square footage
+              and we&apos;ll calculate your estimate instantly.
+            </p>
+            <div className="flex gap-3 items-center">
+              <input
+                type="number"
+                min={500}
+                max={10000}
+                placeholder="e.g. 2400"
+                value={manualSqFt}
+                onChange={(e) => setManualSqFt(e.target.value)}
+                className="flex-1 px-4 py-2 rounded-lg bg-background border border-border text-foreground text-sm focus:outline-none focus:border-accent"
+              />
+              <button
+                type="button"
+                onClick={handleManualEstimate}
+                disabled={manualSubmitting || !manualSqFt}
+                className="px-5 py-2 bg-accent text-background font-semibold rounded-lg hover:bg-accent/90 transition-colors disabled:opacity-60 text-sm"
+              >
+                {manualSubmitting ? 'Calculating…' : 'Calculate →'}
+              </button>
+            </div>
           </>
         ) : (
           <>

@@ -95,9 +95,44 @@ export async function POST(req: NextRequest) {
 
     const config = pricingConfig.roofTypes[roofType as RoofTypeKey] as RoofTypeConfig;
 
+    // Manual sqft bypass — skips Solar API entirely
+    if (body.manualSqFt && typeof body.manualSqFt === 'number' && body.manualSqFt > 0) {
+      const squares = body.manualSqFt / 100;
+      const estimate = calculateEstimate(squares, config, 0, fullAddress);
+      const estimatedRoofSize = Math.round(squares);
+      const estimateRange = `${estimate.low} - ${estimate.high}`;
+
+      await postToN8n({
+        source: 'estimate',
+        timestamp: new Date().toISOString(),
+        contact: {
+          firstName: firstName || '',
+          lastName: lastName || '',
+          email: email || '',
+          phone: phone || '',
+          address1: fullAddress,
+        },
+        fields: {
+          lead_source: 'Estimate Tool',
+          property_address: fullAddress,
+          estimated_roof_size: estimatedRoofSize,
+          estimate_range: estimateRange,
+        },
+        tags: ['Estimate Tool'],
+      });
+
+      return NextResponse.json({ success: true, estimatedRoofSize, estimateRange });
+    }
+
     // Geocode address
     const geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(fullAddress)}&key=${process.env.GOOGLE_MAPS_API_KEY}`;
     const geoRes = await fetch(geocodeUrl);
+    if (!geoRes.ok) {
+      return NextResponse.json(
+        { success: false, error: 'Could not locate address' },
+        { status: 422 }
+      );
+    }
     const geoData = await geoRes.json();
 
     if (geoData.status !== 'OK' || !geoData.results?.[0]) {
@@ -116,6 +151,14 @@ export async function POST(req: NextRequest) {
     // Solar API
     const solarUrl = `https://solar.googleapis.com/v1/buildingInsights:findClosest?location.latitude=${lat}&location.longitude=${lng}&requiredQuality=HIGH&key=${process.env.GOOGLE_SOLAR_API_KEY}`;
     const solarRes = await fetch(solarUrl);
+    if (!solarRes.ok) {
+      const errText = await solarRes.text();
+      console.error('[estimate] Solar API error:', solarRes.status, errText);
+      return NextResponse.json(
+        { success: false, error: 'No roof data available for this address' },
+        { status: 422 }
+      );
+    }
     const solarData = await solarRes.json();
 
     if (!solarData.solarPotential?.roofSegmentStats?.length) {
