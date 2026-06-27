@@ -1,5 +1,6 @@
 'use client'
 
+import React from 'react'
 import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import { C, fonts, globalStyles } from '@/components/brand'
@@ -16,6 +17,9 @@ import {
 } from '@/lib/roofProducts'
 
 type Step = 'address' | 'select' | 'gate' | 'loading' | 'results'
+
+const STEP_LABELS = ['Address', 'Roof Type', 'About You', 'Rendering', 'Results']
+const STEP_KEYS: Step[] = ['address', 'select', 'gate', 'loading', 'results']
 
 const LOADING_PHRASES = [
   'Pulling satellite imagery for your property…',
@@ -202,6 +206,24 @@ export default function VisualizerPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step])
 
+  // ── Pre-fill from estimate page query params ───────────────────────────────
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const params = new URLSearchParams(window.location.search)
+    if (!params.get('prefilled')) return
+    const fn = params.get('firstName') || ''
+    const ln = params.get('lastName') || ''
+    const ph = params.get('phone') || ''
+    const em = params.get('email') || ''
+    const addr = params.get('address') || ''
+    const rt = params.get('roofType') || ''
+    if (fn || ph) {
+      setGateData(d => ({ ...d, firstName: fn, lastName: ln, phone: ph, email: em }))
+    }
+    if (addr) setAddress(addr)
+    if (rt) setSelType(rt)
+  }, [])
+
   // ── Handlers ───────────────────────────────────────────────────────────────
   async function handleVisualize() {
     if (!address.trim()) { setAddrError('Please enter your home address.'); return }
@@ -325,6 +347,57 @@ export default function VisualizerPage() {
         <SiteNav/>
 
         <div style={{ maxWidth: 700, margin: '0 auto', padding: 'clamp(40px,6vw,72px) clamp(20px,5vw,48px) 120px', paddingTop: 'clamp(108px,12vw,140px)' }}>
+
+          {/* ── step indicator ── */}
+          {step !== 'loading' && step !== 'results' && (
+            <div style={{ textAlign: 'center', marginBottom: 40 }}>
+              <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 'clamp(1.4rem,3vw,2rem)', fontWeight: 700, color: C.white, marginBottom: 24 }}>
+                Metal Roof Visualizer
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 0, maxWidth: 400, margin: '0 auto' }}>
+                {STEP_KEYS.map((s, i) => {
+                  const currentIdx = STEP_KEYS.indexOf(step)
+                  const isComplete = i < currentIdx
+                  const isActive = i === currentIdx
+                  return (
+                    <React.Fragment key={s}>
+                      <div style={{
+                        width: 32, height: 32, borderRadius: '50%', flexShrink: 0,
+                        background: isComplete || isActive ? C.accent : C.surface,
+                        border: `2px solid ${isComplete || isActive ? C.accent : C.border}`,
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        fontSize: 12, fontWeight: 700,
+                        color: isComplete || isActive ? C.black : C.muted,
+                        transition: 'all 0.3s',
+                      }}>
+                        {isComplete ? '✓' : i + 1}
+                      </div>
+                      {i < STEP_KEYS.length - 1 && (
+                        <div style={{
+                          flex: 1, height: 2,
+                          background: i < currentIdx ? C.accent : C.border,
+                          transition: 'background 0.3s',
+                        }} />
+                      )}
+                    </React.Fragment>
+                  )
+                })}
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', maxWidth: 400, margin: '8px auto 0', padding: '0 4px' }}>
+                {STEP_LABELS.map((label, i) => {
+                  const currentIdx = STEP_KEYS.indexOf(step)
+                  return (
+                    <div key={label} style={{
+                      fontSize: 9, letterSpacing: 1, textTransform: 'uppercase',
+                      color: i <= currentIdx ? C.accent : C.muted,
+                      width: 32, textAlign: 'center', lineHeight: 1.3,
+                      fontFamily: "'Outfit',sans-serif",
+                    }}>{label}</div>
+                  )
+                })}
+              </div>
+            </div>
+          )}
 
           {/* ── address ── */}
           {step === 'address' && (
