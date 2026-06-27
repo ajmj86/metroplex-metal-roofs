@@ -412,6 +412,14 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
 
               {/* Address field */}
               <div style={{ marginBottom: 24 }}>
+                <div style={{ marginBottom: 16 }}>
+                  <div style={{ fontFamily: "'Cormorant Garamond',Georgia,serif", fontSize: 20, fontWeight: 700, color: C.white, marginBottom: 6 }}>
+                    Enter your property address
+                  </div>
+                  <p style={{ fontSize: 13, color: C.muted, lineHeight: 1.6, margin: 0 }}>
+                    We&apos;ll use satellite data to calculate your exact roof size.
+                  </p>
+                </div>
                 <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 6, padding: 6, display: 'flex', gap: 6, alignItems: 'center', flexWrap: 'wrap' }}>
                   <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', minWidth: 160 }}>
                     <svg width="14" height="14" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0 }}>
@@ -433,7 +441,7 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
               <div style={{ marginBottom: 24 }}>
                 {/* Roof type tabs */}
                 <div style={cardStyle}>
-                  <div style={{ fontSize: 10, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Material</div>
+                  <div style={{ fontSize: 13, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Material</div>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 10 }}>
                     {(ROOF_TYPE_ORDER as readonly string[]).map(rt => (
                       <button key={rt} onClick={() => pickType(rt)} style={{
@@ -462,7 +470,7 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
                 {/* Style tabs (stone-coated only) */}
                 {standaloneType && selStyles.length > 1 && !hasExactlyOneProduct(standaloneType) && (
                   <div style={cardStyle}>
-                    <div style={{ fontSize: 10, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Style</div>
+                    <div style={{ fontSize: 13, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Style</div>
                     <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                       {selStyles.map(([sk, so]) => (
                         <button key={sk} style={tabBtn(standaloneStyle === sk)} onClick={() => {
@@ -478,7 +486,7 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
                 {/* Product grid */}
                 {standaloneType && standaloneStyle && selProducts.length > 1 && (
                   <div style={cardStyle}>
-                    <div style={{ fontSize: 10, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Product</div>
+                    <div style={{ fontSize: 13, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Product</div>
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 10 }}>
                       {selProducts.map(([pk, po]) => (
                         <button key={pk} onClick={() => { setStandaloneColor(null); setStandaloneProduct(pk) }}
@@ -495,7 +503,7 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
                 {/* Color swatches */}
                 {standaloneType && standaloneProduct && selColors.length > 0 && (
                   <div style={cardStyle}>
-                    <div style={{ fontSize: 10, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Color</div>
+                    <div style={{ fontSize: 13, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Color</div>
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 10 }}>
                       {selColors.map((c: ColorOption) => (
                         <button key={c.name} onClick={() => setStandaloneColor(c.name)}
@@ -517,7 +525,7 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
                               background: standaloneColor === c.name ? `${C.accentDark}33` : C.card,
                               display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 6
                             }}>
-                              <span style={{ fontSize: 12, color: standaloneColor === c.name ? C.accent : C.mutedLight, fontFamily: "'Outfit',sans-serif", lineHeight: 1.3 }}>{c.name}</span>
+                              <span style={{ fontSize: 13, color: standaloneColor === c.name ? C.accent : C.mutedLight, fontFamily: "'Outfit',sans-serif", lineHeight: 1.3 }}>{c.name}</span>
                               {standaloneColor === c.name && <span style={{ fontSize: 11, color: C.accent, fontWeight: 700 }}>✓</span>}
                             </div>
                           </div>

@@ -425,7 +425,7 @@ export default function VisualizerPage() {
 
               {/* Roof type tabs */}
               <div style={sectionCard}>
-                <div style={{ fontSize: 10, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Choose Your Material</div>
+                <div style={{ fontSize: 13, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Choose Your Material</div>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 10 }}>
                   {(ROOF_TYPE_ORDER as readonly string[]).map(rt => (
                     <button key={rt} onClick={() => pickType(rt)} style={{
@@ -454,7 +454,7 @@ export default function VisualizerPage() {
               {/* Style tabs */}
               {selType && selStyles.length > 1 && !hasExactlyOneProduct(selType) && (
                 <div style={sectionCard}>
-                  <div style={{ fontSize: 10, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Style</div>
+                  <div style={{ fontSize: 13, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Style</div>
                   <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                     {selStyles.map(([sk, so]) => (
                       <button key={sk} style={tabBtn(selStyle === sk)} onClick={() => {
@@ -470,7 +470,7 @@ export default function VisualizerPage() {
               {/* Product grid */}
               {selType && selStyle && selProducts.length > 1 && (
                 <div style={sectionCard}>
-                  <div style={{ fontSize: 10, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Product</div>
+                  <div style={{ fontSize: 13, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Product</div>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 10 }}>
                     {selProducts.map(([pk, po]) => (
                       <button key={pk} onClick={() => { setSelColor(null); setSelProduct(pk) }}
@@ -487,7 +487,7 @@ export default function VisualizerPage() {
               {/* Color swatches */}
               {selType && selProduct && selColors.length > 0 && (
                 <div style={sectionCard}>
-                  <div style={{ fontSize: 10, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Color</div>
+                  <div style={{ fontSize: 13, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Color</div>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 10 }}>
                     {selColors.map((c: ColorOption) => (
                       <button key={c.name} onClick={() => setSelColor(c.name)}
@@ -509,7 +509,7 @@ export default function VisualizerPage() {
                             background: selColor === c.name ? `${C.accentDark}33` : C.card,
                             display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 6
                           }}>
-                            <span style={{ fontSize: 12, color: selColor === c.name ? C.accent : C.mutedLight, fontFamily: "'Outfit',sans-serif", lineHeight: 1.3 }}>{c.name}</span>
+                            <span style={{ fontSize: 13, color: selColor === c.name ? C.accent : C.mutedLight, fontFamily: "'Outfit',sans-serif", lineHeight: 1.3 }}>{c.name}</span>
                             {selColor === c.name && <span style={{ fontSize: 11, color: C.accent, fontWeight: 700 }}>✓</span>}
                           </div>
                         </div>
