@@ -2,7 +2,8 @@
 
 import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
-import { C, Logo, fonts, globalStyles } from '@/components/brand'
+import { C, fonts, globalStyles } from '@/components/brand'
+import SiteNav from '@/components/SiteNav'
 import {
   ROOF_TYPE_ORDER,
   getRoofTypeLabel,
@@ -43,7 +44,11 @@ interface GateData {
   insuranceClaim: string
   timeline: string
   firstName: string
+  lastName: string
   phone: string
+  email: string
+  smsConsent: boolean
+  emailConsent: boolean
 }
 
 const GATE_SCREENS: GateScreen[] = [
@@ -116,7 +121,8 @@ export default function VisualizerPage() {
   const [gateScreen, setGateScreen] = useState(0)
   const [gateData, setGateData] = useState<GateData>({
     currentRoofType: '', reason: '', insuranceClaim: '', timeline: '',
-    firstName: '', phone: '',
+    firstName: '', lastName: '', phone: '', email: '',
+    smsConsent: false, emailConsent: false,
   })
   const [contactErrors, setContactErrors] = useState<Record<string, string>>({})
   const [gateLoading, setGateLoading] = useState(false)
@@ -227,8 +233,11 @@ export default function VisualizerPage() {
   function validateContact() {
     const e: Record<string, string> = {}
     if (!gateData.firstName.trim()) e.firstName = 'Required'
+    if (!gateData.lastName.trim()) e.lastName = 'Required'
     if (!gateData.phone.trim()) e.phone = 'Required'
     else if (!/^\(?\d{3}\)?[\s\-]?\d{3}[\s\-]?\d{4}$/.test(gateData.phone.replace(/\s/g, ''))) e.phone = 'Enter a valid 10-digit number'
+    if (!gateData.email.trim()) e.email = 'Required'
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(gateData.email)) e.email = 'Invalid email'
     return e
   }
 
@@ -241,7 +250,11 @@ export default function VisualizerPage() {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           firstName: gateData.firstName,
+          lastName: gateData.lastName,
           phone: gateData.phone,
+          email: gateData.email,
+          smsConsent: gateData.smsConsent,
+          emailConsent: gateData.emailConsent,
           address,
           currentRoofType: gateData.currentRoofType,
           reason: gateData.reason,
@@ -308,13 +321,9 @@ export default function VisualizerPage() {
       `}</style>
       <div style={{ background: C.black, minHeight: '100vh', color: C.white, fontFamily: "'Outfit',system-ui,sans-serif" }}>
 
-        {/* Nav */}
-        <div style={{ borderBottom: `1px solid ${C.border}`, padding: '20px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'sticky', top: 0, background: 'rgba(9,9,10,0.97)', backdropFilter: 'blur(14px)', zIndex: 100 }}>
-          <Link href="/" style={{ display: 'block', textDecoration: 'none' }}><Logo size={0.75} /></Link>
-          <Link href="/estimate" style={{ padding: '9px 20px', background: C.accent, color: C.black, fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 600, borderRadius: 2, textDecoration: 'none', whiteSpace: 'nowrap', fontFamily: "'Outfit',sans-serif" }}>Get Estimate</Link>
-        </div>
+        <SiteNav/>
 
-        <div style={{ maxWidth: 700, margin: '0 auto', padding: 'clamp(40px,6vw,72px) clamp(20px,5vw,48px)' }}>
+        <div style={{ maxWidth: 700, margin: '0 auto', padding: 'clamp(40px,6vw,72px) clamp(20px,5vw,48px)', paddingTop: 84 }}>
 
           {/* ── address ── */}
           {step === 'address' && (
@@ -372,21 +381,19 @@ export default function VisualizerPage() {
               <button onClick={() => setStep('address')} style={{ fontSize: 11, color: C.muted, letterSpacing: 1, textTransform: 'uppercase', cursor: 'pointer', background: 'none', border: 'none', padding: 0, textDecoration: 'underline', fontFamily: "'Outfit',sans-serif", marginBottom: 28 }}>← Back</button>
 
               {/* Satellite confirmation card */}
-              <div style={{ ...sectionCard, display: 'flex', alignItems: 'center', gap: 16, marginBottom: 20 }}>
+              <div style={{ ...sectionCard, marginBottom: 20 }}>
                 {satelliteUrl ? (
                   <>
-                    <div style={{ position: 'relative', flexShrink: 0 }}>
-                      <img src={satelliteUrl} alt="Satellite view" style={{ width: 100, height: 72, objectFit: 'cover', borderRadius: 4, display: 'block' }} />
-                      <div style={{ position: 'absolute', top: -8, right: -8, width: 22, height: 22, borderRadius: '50%', background: '#22C55E', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, color: '#fff', fontWeight: 700 }}>✓</div>
-                    </div>
-                    <div>
-                      <div style={{ fontSize: 13, color: C.white, fontWeight: 500, marginBottom: 4 }}>{address}</div>
+                    <img src={satelliteUrl} alt="Satellite view" style={{ width: '100%', maxWidth: 480, height: 260, objectFit: 'cover', borderRadius: 8, display: 'block', marginBottom: 12 }} />
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                      <div style={{ width: 22, height: 22, borderRadius: '50%', background: '#22C55E', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, color: '#fff', fontWeight: 700, flexShrink: 0 }}>✓</div>
                       <div style={{ fontSize: 11, color: C.muted }}>Satellite image confirmed</div>
+                      <div style={{ fontSize: 13, color: C.white, fontWeight: 500 }}>{address}</div>
                     </div>
                   </>
                 ) : (
                   <>
-                    <div style={{ width: 100, height: 72, borderRadius: 4, background: C.surface, border: `1px solid ${C.border}`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: 24 }}>🛰</div>
+                    <div style={{ width: '100%', maxWidth: 480, height: 260, borderRadius: 8, background: C.surface, border: `1px solid ${C.border}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 40, marginBottom: 12 }}>🛰</div>
                     <div>
                       <div style={{ fontSize: 13, color: C.white, fontWeight: 500, marginBottom: 4 }}>{address}</div>
                       <div style={{ fontSize: 11, color: C.muted, fontStyle: 'italic' }}>Satellite image unavailable — your render will be based on your address</div>
@@ -562,49 +569,76 @@ export default function VisualizerPage() {
                   })()}
 
                   {/* Screen 4: contact form */}
-                  {gateScreen === 4 && (
-                    <>
-                      <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 'clamp(20px,3.5vw,26px)', fontWeight: 700, color: C.white, lineHeight: 1.25, marginBottom: 8 }}>
-                        Almost there. How do we reach you?
-                      </h2>
-                      <p style={{ fontSize: 13, color: C.muted, lineHeight: 1.65, marginBottom: 24 }}>
-                        We&apos;ll send your AI-rendered roof design to this number — no spam, ever.
-                      </p>
-                      <div style={{ marginBottom: 16 }}>
-                        <div style={{ fontSize: 10, letterSpacing: 2, textTransform: 'uppercase', color: C.muted, marginBottom: 8 }}>First Name *</div>
-                        <input
-                          value={gateData.firstName}
-                          onChange={e => setGateData(d => ({ ...d, firstName: e.target.value }))}
-                          onKeyDown={e => e.key === 'Enter' && handleContactSubmit()}
-                          placeholder="Jane"
-                          style={iStyle}
-                        />
-                        {contactErrors.firstName && <div style={{ fontSize: 11, color: '#F87171', marginTop: 4 }}>{contactErrors.firstName}</div>}
-                      </div>
-                      <div style={{ marginBottom: 20 }}>
-                        <div style={{ fontSize: 10, letterSpacing: 2, textTransform: 'uppercase', color: C.muted, marginBottom: 8 }}>Phone *</div>
-                        <input
-                          value={gateData.phone}
-                          onChange={e => setGateData(d => ({ ...d, phone: e.target.value }))}
-                          onKeyDown={e => e.key === 'Enter' && handleContactSubmit()}
-                          placeholder="(214) 555-0000"
-                          type="tel"
-                          style={iStyle}
-                        />
-                        {contactErrors.phone && <div style={{ fontSize: 11, color: '#F87171', marginTop: 4 }}>{contactErrors.phone}</div>}
-                      </div>
-                      <div style={{ fontSize: 10, color: C.muted, lineHeight: 1.7, marginBottom: 20 }}>
-                        By continuing, you consent to receive SMS/calls about your project. Msg &amp; data rates may apply. Reply STOP to opt out.
-                      </div>
-                      <button
-                        onClick={handleContactSubmit}
-                        disabled={gateLoading}
-                        style={{ width: '100%', padding: '15px', background: gateLoading ? C.accentDark : C.accent, color: C.black, fontSize: 12, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 700, borderRadius: 6, cursor: gateLoading ? 'not-allowed' : 'pointer', border: 'none', fontFamily: "'Outfit',sans-serif", transition: 'background 0.2s' }}
-                        onMouseEnter={e => { if (!gateLoading) e.currentTarget.style.background = C.accentLight }}
-                        onMouseLeave={e => { e.currentTarget.style.background = gateLoading ? C.accentDark : C.accent }}
-                      >{gateLoading ? 'Submitting…' : 'Generate My Visualization →'}</button>
-                    </>
-                  )}
+                  {gateScreen === 4 && (() => {
+                    const labelStyle = { fontSize: 10, letterSpacing: 2, textTransform: 'uppercase' as const, color: C.muted, marginBottom: 6 }
+                    const errStyle = { fontSize: 11, color: '#F87171', marginTop: 4 }
+                    return (
+                      <>
+                        <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 'clamp(20px,3.5vw,26px)', fontWeight: 700, color: C.white, lineHeight: 1.25, marginBottom: 8 }}>
+                          Almost there. How do we reach you?
+                        </h2>
+                        <p style={{ fontSize: 13, color: C.muted, lineHeight: 1.65, marginBottom: 24 }}>
+                          We&apos;ll send your AI-rendered roof design to this number — no spam, ever.
+                        </p>
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 12 }}>
+                          <div>
+                            <div style={labelStyle}>First Name *</div>
+                            <input value={gateData.firstName}
+                              onChange={e => setGateData(d => ({ ...d, firstName: e.target.value }))}
+                              placeholder="Jane" style={iStyle} />
+                            {contactErrors.firstName && <div style={errStyle}>{contactErrors.firstName}</div>}
+                          </div>
+                          <div>
+                            <div style={labelStyle}>Last Name *</div>
+                            <input value={gateData.lastName}
+                              onChange={e => setGateData(d => ({ ...d, lastName: e.target.value }))}
+                              placeholder="Smith" style={iStyle} />
+                            {contactErrors.lastName && <div style={errStyle}>{contactErrors.lastName}</div>}
+                          </div>
+                        </div>
+                        <div style={{ marginBottom: 12 }}>
+                          <div style={labelStyle}>Phone *</div>
+                          <input value={gateData.phone} type="tel"
+                            onChange={e => setGateData(d => ({ ...d, phone: e.target.value }))}
+                            placeholder="(817) 555-0100" style={iStyle} />
+                          {contactErrors.phone && <div style={errStyle}>{contactErrors.phone}</div>}
+                        </div>
+                        <div style={{ marginBottom: 16 }}>
+                          <div style={labelStyle}>Email *</div>
+                          <input value={gateData.email} type="email"
+                            onChange={e => setGateData(d => ({ ...d, email: e.target.value }))}
+                            placeholder="jane@email.com" style={iStyle} />
+                          {contactErrors.email && <div style={errStyle}>{contactErrors.email}</div>}
+                        </div>
+                        <label style={{ display: 'flex', gap: 10, alignItems: 'flex-start', marginBottom: 10, cursor: 'pointer' }}>
+                          <input type="checkbox" checked={gateData.smsConsent}
+                            onChange={e => setGateData(d => ({ ...d, smsConsent: e.target.checked }))}
+                            style={{ marginTop: 2, accentColor: C.accent, width: 15, height: 15, flexShrink: 0 }} />
+                          <span style={{ fontSize: 11, color: C.muted, lineHeight: 1.6 }}>
+                            I agree to receive SMS messages about my roof visualization and estimate. Message &amp; data rates may apply. Reply STOP to opt out.
+                          </span>
+                        </label>
+                        <label style={{ display: 'flex', gap: 10, alignItems: 'flex-start', marginBottom: 16, cursor: 'pointer' }}>
+                          <input type="checkbox" checked={gateData.emailConsent}
+                            onChange={e => setGateData(d => ({ ...d, emailConsent: e.target.checked }))}
+                            style={{ marginTop: 2, accentColor: C.accent, width: 15, height: 15, flexShrink: 0 }} />
+                          <span style={{ fontSize: 11, color: C.muted, lineHeight: 1.6 }}>
+                            I agree to receive email updates about my estimate and Metroplex Metal Roofs promotions.
+                          </span>
+                        </label>
+                        <div style={{ fontSize: 10, color: C.muted, lineHeight: 1.7, marginBottom: 16, padding: '10px 12px', background: C.surface, borderRadius: 4, border: `1px solid ${C.border}` }}>
+                          By submitting, you consent to being contacted by Metroplex Metal Roofs regarding your inquiry. Your information is never sold or shared with third parties.
+                        </div>
+                        <button
+                          onClick={handleContactSubmit}
+                          disabled={gateLoading}
+                          style={{ width: '100%', padding: '15px', background: gateLoading ? C.accentDark : C.accent, color: C.black, fontSize: 12, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 700, borderRadius: 6, cursor: gateLoading ? 'not-allowed' : 'pointer', border: 'none', fontFamily: "'Outfit',sans-serif", transition: 'background 0.2s' }}
+                          onMouseEnter={e => { if (!gateLoading) e.currentTarget.style.background = C.accentLight }}
+                          onMouseLeave={e => { e.currentTarget.style.background = gateLoading ? C.accentDark : C.accent }}
+                        >{gateLoading ? 'Submitting…' : 'Generate My Visualization →'}</button>
+                      </>
+                    )
+                  })()}
 
                 </div>
               </div>
