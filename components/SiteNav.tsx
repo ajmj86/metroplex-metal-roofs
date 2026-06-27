@@ -38,7 +38,9 @@ export default function SiteNav() {
         height:84,
       }}>
         <Link href="/" style={{padding:0,flexShrink:0,display:"block",textDecoration:"none"}}>
-          <Logo size={1.25}/>
+          <div style={{ paddingBottom: 6 }}>
+            <Logo size={1.25}/>
+          </div>
         </Link>
         <div className="sitenav-links" style={{display:"flex",gap:28,alignItems:"center"}}>
           {NAV_LINKS.map(l=>(

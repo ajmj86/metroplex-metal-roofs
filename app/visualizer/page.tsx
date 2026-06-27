@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import { C, fonts, globalStyles } from '@/components/brand'
 import SiteNav from '@/components/SiteNav'
+import { SiteFooter } from '@/components/SiteFooter'
 import {
   ROOF_TYPE_ORDER,
   getRoofTypeLabel,
@@ -323,7 +324,7 @@ export default function VisualizerPage() {
 
         <SiteNav/>
 
-        <div style={{ maxWidth: 700, margin: '0 auto', padding: 'clamp(40px,6vw,72px) clamp(20px,5vw,48px)', paddingTop: 'clamp(108px,12vw,140px)' }}>
+        <div style={{ maxWidth: 700, margin: '0 auto', padding: 'clamp(40px,6vw,72px) clamp(20px,5vw,48px) 120px', paddingTop: 'clamp(108px,12vw,140px)' }}>
 
           {/* ── address ── */}
           {step === 'address' && (
@@ -487,7 +488,7 @@ export default function VisualizerPage() {
               {selType && selProduct && selColors.length > 0 && (
                 <div style={sectionCard}>
                   <div style={{ fontSize: 10, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Color</div>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 10 }}>
                     {selColors.map((c: ColorOption) => (
                       <button key={c.name} onClick={() => setSelColor(c.name)}
                         style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
@@ -499,9 +500,9 @@ export default function VisualizerPage() {
                           transition: 'all 0.15s',
                         }}>
                           {c.image1 ? (
-                            <img src={c.image1} alt={c.name} style={{ width: '100%', height: 90, objectFit: 'cover', display: 'block' }} />
+                            <img src={c.image1} alt={c.name} style={{ width: '100%', height: 120, objectFit: 'cover', display: 'block' }} />
                           ) : (
-                            <div style={{ width: '100%', height: 90, background: c.hex ?? C.surface }} />
+                            <div style={{ width: '100%', height: 120, background: c.hex ?? C.surface }} />
                           )}
                           <div style={{
                             padding: '8px 10px',
@@ -762,6 +763,7 @@ export default function VisualizerPage() {
           )}
 
         </div>
+        <SiteFooter/>
       </div>
     </>
   )

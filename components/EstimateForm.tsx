@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import EstimateResult from './EstimateResult'
 import SiteNav from '@/components/SiteNav'
+import { SiteFooter } from '@/components/SiteFooter'
 import {
   getProductLabel,
   ROOF_TYPE_ORDER,
@@ -330,8 +331,9 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
     return (
       <>
         <SiteNav/>
-        <div style={{ paddingTop: 84 }}>
+        <div style={{ paddingTop: 84, paddingBottom: 120 }}>
           <EstimateResult roofType={result.roofType} estimate={result.estimate} />
+          <SiteFooter/>
         </div>
       </>
     )
@@ -341,7 +343,7 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
     return (
       <>
         <SiteNav/>
-        <div style={{ paddingTop: 84 }}>
+        <div style={{ paddingTop: 84, paddingBottom: 120 }}>
           <div style={{ maxWidth: 520, margin: '0 auto' }}>
             <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 8, padding: '48px 32px', textAlign: 'center' }}>
               <svg width="44" height="44" viewBox="0 0 44 44" style={{ animation: 'espin 1.1s linear infinite', display: 'inline-block', marginBottom: 20 }}>
@@ -352,6 +354,7 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
               <div style={{ fontFamily: "'Outfit',sans-serif", fontSize: 18, color: C.white }}>Calculating your estimate…</div>
             </div>
           </div>
+          <SiteFooter/>
         </div>
       </>
     )
@@ -398,7 +401,7 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
     <>
       <SiteNav/>
       <div style={{ paddingTop: 84 }}>
-        <div style={{ maxWidth: 560, margin: '0 auto' }}>
+        <div style={{ maxWidth: 560, margin: '0 auto', paddingBottom: 120 }}>
           {!showManual ? (
             <>
               {errorMsg && (
@@ -499,7 +502,7 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
                 {standaloneType && standaloneProduct && selColors.length > 0 && (
                   <div style={cardStyle}>
                     <div style={{ fontSize: 10, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Color</div>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 10 }}>
                       {selColors.map((c: ColorOption) => (
                         <button key={c.name} onClick={() => setStandaloneColor(c.name)}
                           style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
@@ -511,9 +514,9 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
                             transition: 'all 0.15s',
                           }}>
                             {c.image1 ? (
-                              <img src={c.image1} alt={c.name} style={{ width: '100%', height: 90, objectFit: 'cover', display: 'block' }} />
+                              <img src={c.image1} alt={c.name} style={{ width: '100%', height: 120, objectFit: 'cover', display: 'block' }} />
                             ) : (
-                              <div style={{ width: '100%', height: 90, background: c.hex ?? C.surface }} />
+                              <div style={{ width: '100%', height: 120, background: c.hex ?? C.surface }} />
                             )}
                             <div style={{
                               padding: '8px 10px',
@@ -677,6 +680,7 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
             </>
           )}
         </div>
+        <SiteFooter/>
       </div>
     </>
   )
