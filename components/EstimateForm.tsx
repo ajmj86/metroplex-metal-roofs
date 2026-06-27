@@ -100,31 +100,27 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
     : null
   const carriedColor = carriedProductLabel ? initialSelection?.color ?? null : null
 
-  // Address arrived pre-confirmed via the visualizer's own Places Autocomplete
-  // step, so this path skips the redundant re-confirmation click entirely.
   const shouldAutoTrigger = Boolean(carriedRoofType && initialSelection?.address)
 
-  const [selectedRoofType, setSelectedRoofType] = useState<string | null>(carriedRoofType)
-  const [selectedStyle, setSelectedStyle]       = useState<string | null>(null)
-  const [selectedProduct, setSelectedProduct]   = useState<string | null>(null)
-  const [selectedColor, setSelectedColor]       = useState<string | null>(null)
-  const [address, setAddress]     = useState(initialSelection?.address ?? '')
-  const [loading, setLoading]     = useState(shouldAutoTrigger)
-  const [showManual, setShowManual] = useState(false)
-  const [errorMsg, setErrorMsg]   = useState('')
-  const [manualSqFt, setManualSqFt] = useState('')
-  const [stories, setStories]     = useState<StoryOption>('one')
-  const [result, setResult]       = useState<EstimateData | null>(null)
-  const addressInputRef = useRef<HTMLInputElement>(null)
-  const autocompleteAttachedRef = useRef(false)
-  const autoTriggeredRef = useRef(false)
+  // Material selection state (replaces selectedRoofType/selectedProduct)
+  const [standaloneType, setStandaloneType]       = useState<string | null>(carriedRoofType)
+  const [standaloneStyle, setStandaloneStyle]     = useState<string | null>(null)
+  const [standaloneProduct, setStandaloneProduct] = useState<string | null>(null)
+  const [standaloneColor, setStandaloneColor]     = useState<string | null>(null)
 
-  // Load Google Maps API and initialize Places Autocomplete.
-  // The address input only exists in the DOM once selectedRoofType is set
-  // AND loading is false (Step 2's loading branch pre-empts it on the
-  // auto-trigger path), so this must re-run on either changing — not just
-  // on mount — otherwise neither the cold-visit path nor the auto-trigger
-  // failure fallback ever attaches it.
+  const [address, setAddress]       = useState(initialSelection?.address ?? '')
+  const [loading, setLoading]       = useState(shouldAutoTrigger)
+  const [showManual, setShowManual] = useState(false)
+  const [errorMsg, setErrorMsg]     = useState('')
+  const [manualSqFt, setManualSqFt] = useState('')
+  const [stories, setStories]       = useState<StoryOption>('one')
+  const [result, setResult]         = useState<EstimateData | null>(null)
+  const addressInputRef       = useRef<HTMLInputElement>(null)
+  const autocompleteAttachedRef = useRef(false)
+  const autoTriggeredRef      = useRef(false)
+
+  // Google Places Autocomplete — same script-loading pattern, re-runs when
+  // standaloneType or loading changes so autocomplete attaches after render.
   useEffect(() => {
     if (typeof window === 'undefined' || !addressInputRef.current) {
       autocompleteAttachedRef.current = false
@@ -155,7 +151,7 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
     script.dataset.googleMapsPlaces = 'true'
     script.addEventListener('load', tryAttach)
     document.head.appendChild(script)
-  }, [selectedRoofType, loading])
+  }, [standaloneType, loading])
 
   function initializeAutocomplete() {
     if (!addressInputRef.current || !(window as any).google) return
@@ -176,8 +172,6 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
     })
   }
 
-  // Passed through silently (no UI) so route.ts can forward identity/qualifying
-  // data and lead source to the GHL webhook on both submission paths.
   function leadFields() {
     return {
       firstName: leadInfo?.firstName,
@@ -204,7 +198,7 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
       const res = await fetch('/api/estimate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ address, roofType: selectedRoofType, ...leadFields() }),
+        body: JSON.stringify({ address, roofType: standaloneType, ...leadFields() }),
       })
       const data = await res.json()
       if (data.success && data.estimate && data.roofType) {
@@ -224,10 +218,6 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
     }
   }
 
-  // Auto-trigger the calculation once on mount when arriving from the
-  // visualizer with a pre-confirmed address. On failure, drop back to the
-  // plain editable address screen (not the sqft fallback) so the user can
-  // simply retry the same address rather than re-explaining their home.
   useEffect(() => {
     if (autoTriggeredRef.current || !shouldAutoTrigger) return
     autoTriggeredRef.current = true
@@ -249,7 +239,7 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
       const res = await fetch('/api/estimate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ manualSqFt: sqFt, stories, roofType: selectedRoofType, ...leadFields() }),
+        body: JSON.stringify({ manualSqFt: sqFt, stories, roofType: standaloneType, ...leadFields() }),
       })
       const data = await res.json()
       if (data.success && data.estimate && data.roofType) {
@@ -283,43 +273,42 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
     )
   }
 
-  // Step 1 — material selector (roof type → style → product → color)
-  if (!selectedRoofType) {
-    return <MaterialSelector onSelect={(rt, style, product, color) => {
-      setSelectedRoofType(rt)
-      setSelectedStyle(style)
-      setSelectedProduct(product)
-      setSelectedColor(color)
-    }} />
+  // ── Material selector helpers ──────────────────────────────────────────────
+  const selStyles   = standaloneType ? stylesWithColors(standaloneType) : []
+  const selProducts = standaloneType && standaloneStyle ? productsForStyle(standaloneType, standaloneStyle) : []
+  const selColors: ColorOption[] = standaloneType && standaloneProduct
+    ? (productsForStyle(standaloneType, standaloneStyle ?? '').find(([k]) => k === standaloneProduct)?.[1].colors ?? [])
+    : []
+
+  function pickType(rt: string) {
+    setStandaloneStyle(null); setStandaloneProduct(null); setStandaloneColor(null); setStandaloneType(rt)
+    if (hasExactlyOneProduct(rt)) {
+      const auto = getAutoSelectedStyleAndProduct(rt)
+      if (auto) {
+        setStandaloneStyle(auto.style); setStandaloneProduct(auto.product)
+        const autoColors = productsForStyle(rt, auto.style).find(([k]) => k === auto.product)?.[1].colors ?? []
+        if (autoColors.length === 1) setStandaloneColor(autoColors[0].name)
+      }
+    }
   }
 
-  const selectedLabel = getRoofTypeLabel(selectedRoofType)
+  const canSubmit = Boolean(address.trim() && standaloneColor)
 
-  // Step 2 — address input + optional manual fallback
+  const tabBtn = (active: boolean): React.CSSProperties => ({
+    padding: '9px 16px', fontSize: 11, letterSpacing: 1.5, textTransform: 'uppercase' as const,
+    background: active ? C.accent : 'transparent',
+    color: active ? C.black : C.mutedLight,
+    border: `1px solid ${active ? C.accent : C.border}`,
+    borderRadius: 2, cursor: 'pointer', transition: 'all 0.15s',
+    fontFamily: "'Outfit',sans-serif", fontWeight: 500,
+  })
+
+  const cardStyle: React.CSSProperties = {
+    background: C.card, border: `1px solid ${C.border}`, borderRadius: 8, padding: '20px 24px', marginBottom: 12,
+  }
+
   return (
     <div style={{ maxWidth: 560, margin: '0 auto' }}>
-      {/* Back + selected type */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 28 }}>
-        <button
-          onClick={() => { setSelectedRoofType(null); setSelectedStyle(null); setSelectedProduct(null); setSelectedColor(null); setShowManual(false); setErrorMsg('') }}
-          style={{ fontSize: 11, color: C.muted, letterSpacing: 1, textTransform: 'uppercase', cursor: 'pointer', background: 'none', border: 'none', padding: 0, textDecoration: 'underline', fontFamily: "'Outfit',sans-serif" }}
-        >
-          ← Back
-        </button>
-        <div style={{ fontSize: 11, color: C.accent, letterSpacing: 1.5, textTransform: 'uppercase' }}>
-          {selectedLabel}
-          {selectedProduct && selectedColor && (
-            <span style={{ color: C.mutedLight }}> — {getProductLabel(selectedRoofType, selectedProduct)} · {selectedColor}</span>
-          )}
-        </div>
-      </div>
-
-      {carriedRoofType && selectedRoofType === carriedRoofType && carriedProductLabel && carriedColor && (
-        <div style={{ fontSize: 12, color: C.mutedLight, marginBottom: 16, lineHeight: 1.6, fontFamily: "'Outfit',sans-serif" }}>
-          Estimating for: {selectedLabel} — {carriedProductLabel} in {carriedColor}
-        </div>
-      )}
-
       {!showManual ? (
         <>
           {errorMsg && (
@@ -328,35 +317,121 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
             </div>
           )}
 
-          <div style={{ fontFamily: "'Cormorant Garamond',Georgia,serif", fontSize: 22, fontWeight: 700, color: C.white, marginBottom: 8 }}>
-            Enter your property address
-          </div>
-          <p style={{ fontSize: 13, color: C.muted, lineHeight: 1.7, marginBottom: 20 }}>
-            We&apos;ll use satellite data to calculate your exact roof size.
-          </p>
-          <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 6, padding: 6, display: 'flex', gap: 6, alignItems: 'center', flexWrap: 'wrap' }}>
-            <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', minWidth: 160 }}>
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0 }}>
-                <path d="M8 1.5C5.51 1.5 3.5 3.51 3.5 6c0 3.75 4.5 8.5 4.5 8.5S12.5 9.75 12.5 6c0-2.49-2.01-4.5-4.5-4.5zm0 6.1c-.94 0-1.7-.76-1.7-1.7S7.06 4.2 8 4.2s1.7.76 1.7 1.7S8.94 7.6 8 7.6z" fill={C.muted} />
-              </svg>
-              <input
-                ref={addressInputRef}
-                value={address}
-                onChange={e => setAddress(e.target.value)}
-                onKeyDown={e => e.key === 'Enter' && handleAddressSubmit()}
-                placeholder="123 Main St, Southlake, TX"
-                style={{ flex: 1, background: 'none', border: 'none', outline: 'none', color: C.white, fontSize: 14, fontFamily: "'Outfit',sans-serif" }}
-              />
+          {/* Address field */}
+          <div style={{ marginBottom: 24 }}>
+            <div style={{ fontFamily: "'Cormorant Garamond',Georgia,serif", fontSize: 22, fontWeight: 700, color: C.white, marginBottom: 8 }}>
+              Enter your property address
             </div>
-            <button
-              onClick={handleAddressSubmit}
-              style={{ padding: '13px 20px', background: C.accent, color: C.black, fontSize: 11, letterSpacing: 1.5, textTransform: 'uppercase', fontWeight: 600, borderRadius: 4, whiteSpace: 'nowrap', transition: 'background 0.2s', cursor: 'pointer', border: 'none', fontFamily: "'Outfit',sans-serif" }}
-              onMouseEnter={e => { e.currentTarget.style.background = C.accentLight }}
-              onMouseLeave={e => { e.currentTarget.style.background = C.accent }}
-            >
-              Calculate My Estimate →
-            </button>
+            <p style={{ fontSize: 13, color: C.muted, lineHeight: 1.7, marginBottom: 16 }}>
+              We&apos;ll use satellite data to calculate your exact roof size.
+            </p>
+            <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 6, padding: 6, display: 'flex', gap: 6, alignItems: 'center', flexWrap: 'wrap' }}>
+              <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', minWidth: 160 }}>
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0 }}>
+                  <path d="M8 1.5C5.51 1.5 3.5 3.51 3.5 6c0 3.75 4.5 8.5 4.5 8.5S12.5 9.75 12.5 6c0-2.49-2.01-4.5-4.5-4.5zm0 6.1c-.94 0-1.7-.76-1.7-1.7S7.06 4.2 8 4.2s1.7.76 1.7 1.7S8.94 7.6 8 7.6z" fill={C.muted} />
+                </svg>
+                <input
+                  ref={addressInputRef}
+                  value={address}
+                  onChange={e => setAddress(e.target.value)}
+                  onKeyDown={e => e.key === 'Enter' && canSubmit && handleAddressSubmit()}
+                  placeholder="123 Main St, Southlake, TX"
+                  style={{ flex: 1, background: 'none', border: 'none', outline: 'none', color: C.white, fontSize: 14, fontFamily: "'Outfit',sans-serif" }}
+                />
+              </div>
+            </div>
           </div>
+
+          {/* Inline material selector */}
+          <div style={{ marginBottom: 24 }}>
+            {/* Roof type tabs */}
+            <div style={cardStyle}>
+              <div style={{ fontSize: 10, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Material</div>
+              <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                {(ROOF_TYPE_ORDER as readonly string[]).map(rt => (
+                  <button key={rt} onClick={() => pickType(rt)} style={tabBtn(standaloneType === rt)}>
+                    {getRoofTypeLabel(rt)}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Style tabs (stone-coated only) */}
+            {standaloneType && selStyles.length > 1 && !hasExactlyOneProduct(standaloneType) && (
+              <div style={cardStyle}>
+                <div style={{ fontSize: 10, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Style</div>
+                <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                  {selStyles.map(([sk, so]) => (
+                    <button key={sk} style={tabBtn(standaloneStyle === sk)} onClick={() => {
+                      setStandaloneProduct(null); setStandaloneColor(null); setStandaloneStyle(sk)
+                      const sp = productsForStyle(standaloneType, sk)
+                      if (sp.length === 1) { setStandaloneProduct(sp[0][0]); if (sp[0][1].colors.length === 1) setStandaloneColor(sp[0][1].colors[0].name) }
+                    }}>{so.label}</button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Product grid */}
+            {standaloneType && standaloneStyle && selProducts.length > 1 && (
+              <div style={cardStyle}>
+                <div style={{ fontSize: 10, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Product</div>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 10 }}>
+                  {selProducts.map(([pk, po]) => (
+                    <button key={pk} onClick={() => { setStandaloneColor(null); setStandaloneProduct(pk) }}
+                      style={{ background: standaloneProduct === pk ? `${C.accentDark}33` : C.surface, border: `1px solid ${standaloneProduct === pk ? C.accentDark : C.border}`, borderRadius: 6, padding: '14px 16px', textAlign: 'left', cursor: 'pointer', transition: 'all 0.15s' }}
+                    >
+                      <div style={{ fontSize: 13, fontWeight: 600, color: standaloneProduct === pk ? C.accent : C.white, marginBottom: 4, fontFamily: "'Outfit',sans-serif" }}>{po.label}</div>
+                      <div style={{ fontSize: 11, color: C.muted, lineHeight: 1.5 }}>{po.description}</div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Circular color swatches */}
+            {standaloneType && standaloneProduct && selColors.length > 0 && (
+              <div style={cardStyle}>
+                <div style={{ fontSize: 10, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Color</div>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16 }}>
+                  {selColors.map((c: ColorOption) => (
+                    <button key={c.name} onClick={() => setStandaloneColor(c.name)}
+                      style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}
+                    >
+                      <div style={{
+                        width: 52, height: 52, borderRadius: '50%', overflow: 'hidden',
+                        border: `2px solid ${standaloneColor === c.name ? C.accent : C.border}`,
+                        boxShadow: standaloneColor === c.name ? `0 0 0 2px ${C.accent}` : 'none',
+                        background: c.hex ?? C.surface, transition: 'all 0.15s',
+                      }}>
+                        {c.image1 && <img src={c.image1} alt={c.name} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />}
+                      </div>
+                      <span style={{ fontSize: 10, color: standaloneColor === c.name ? C.accent : C.muted, textAlign: 'center', lineHeight: 1.3, fontFamily: "'Outfit',sans-serif", maxWidth: 60 }}>{c.name}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Submit button */}
+          <button
+            onClick={handleAddressSubmit}
+            disabled={!canSubmit}
+            style={{ ...btnStyle, opacity: canSubmit ? 1 : 0.45, cursor: canSubmit ? 'pointer' : 'not-allowed' }}
+            onMouseEnter={e => { if (canSubmit) e.currentTarget.style.background = C.accentLight }}
+            onMouseLeave={e => { e.currentTarget.style.background = C.accent }}
+          >
+            {!address.trim() && !standaloneColor
+              ? 'Enter address & select material'
+              : !standaloneColor
+              ? 'Select a color to continue'
+              : !address.trim()
+              ? 'Enter your address to continue'
+              : 'Get My Estimate →'}
+          </button>
+
+          {/* Cross-link to visualizer */}
           <p style={{ fontSize: 12, color: C.muted, textAlign: 'center', marginTop: 16 }}>
             Want to see your home with a metal roof first?{' '}
             <a href="/visualizer" style={{ color: C.accent, textDecoration: 'underline' }}>Try the AI Visualizer →</a>
@@ -396,18 +471,13 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
                 <label
                   key={val}
                   style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 8,
-                    cursor: 'pointer',
+                    display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer',
                     padding: '10px 16px',
                     background: stories === val ? `${C.accentDark}33` : C.card,
                     border: `1px solid ${stories === val ? C.accentDark : C.border}`,
-                    borderRadius: 4,
-                    fontSize: 13,
+                    borderRadius: 4, fontSize: 13,
                     color: stories === val ? C.accent : C.mutedLight,
-                    transition: 'all 0.15s',
-                    fontFamily: "'Outfit',sans-serif",
+                    transition: 'all 0.15s', fontFamily: "'Outfit',sans-serif",
                   }}
                 >
                   <input type="radio" name="stories" value={val} checked={stories === val} onChange={() => setStories(val)} style={{ display: 'none' }} />
@@ -427,146 +497,6 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
           </button>
         </>
       )}
-    </div>
-  )
-}
-
-// ── Material Selector (Step 1) ────────────────────────────────────────────────
-
-interface MaterialSelectorProps {
-  onSelect: (roofType: string, style: string | null, product: string | null, color: string | null) => void
-}
-
-function MaterialSelector({ onSelect }: MaterialSelectorProps) {
-  const [roofType, setRoofType] = useState<string | null>(null)
-  const [style, setStyle]       = useState<string | null>(null)
-  const [product, setProduct]   = useState<string | null>(null)
-  const [color, setColor]       = useState<string | null>(null)
-
-  const styles   = roofType ? stylesWithColors(roofType) : []
-  const hasStyles = styles.length > 0
-  const products  = roofType && style ? productsForStyle(roofType, style) : []
-  const colors    = roofType && product
-    ? productsForStyle(roofType, style ?? '').find(([k]) => k === product)?.[1].colors ?? []
-    : []
-
-  function selectRoofType(rt: string) {
-    setStyle(null); setProduct(null); setColor(null); setRoofType(rt)
-    if (hasExactlyOneProduct(rt)) {
-      const auto = getAutoSelectedStyleAndProduct(rt)
-      if (auto) {
-        setStyle(auto.style); setProduct(auto.product)
-        const autoColors = productsForStyle(rt, auto.style).find(([k]) => k === auto.product)?.[1].colors ?? []
-        if (autoColors.length === 1) setColor(autoColors[0].name)
-      }
-    }
-  }
-
-  const isComplete = Boolean(roofType && style && product && color)
-
-  const sectionStyle: React.CSSProperties = {
-    background: C.card, border: `1px solid ${C.border}`, borderRadius: 8, padding: '20px 24px', marginBottom: 12,
-  }
-  const tabBtn = (active: boolean): React.CSSProperties => ({
-    padding: '10px 16px', fontSize: 12, letterSpacing: 1, textTransform: 'uppercase' as const,
-    background: active ? C.accent : 'transparent',
-    color: active ? C.black : C.mutedLight,
-    border: `1px solid ${active ? C.accent : C.border}`,
-    borderRadius: 2, cursor: 'pointer', transition: 'all 0.15s', fontFamily: "'Outfit',sans-serif",
-  })
-
-  return (
-    <div style={{ maxWidth: 640, margin: '0 auto' }}>
-      <p style={{ fontSize: 13, color: C.mutedLight, marginBottom: 24, textAlign: 'center', lineHeight: 1.6 }}>
-        Select your material to get started.
-      </p>
-
-      {/* Roof type tabs */}
-      <div style={sectionStyle}>
-        <div style={{ fontSize: 10, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Material</div>
-        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-          {(ROOF_TYPE_ORDER as readonly string[]).map(rt => (
-            <button key={rt} onClick={() => selectRoofType(rt)} style={tabBtn(roofType === rt)}>
-              {getRoofTypeLabel(rt)}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Style selector (stone-coated only) */}
-      {roofType && hasStyles && !hasExactlyOneProduct(roofType) && (
-        <div style={sectionStyle}>
-          <div style={{ fontSize: 10, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Style</div>
-          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-            {styles.map(([sk, so]) => (
-              <button key={sk} style={tabBtn(style === sk)} onClick={() => {
-                setProduct(null); setColor(null); setStyle(sk)
-                const sp = productsForStyle(roofType, sk)
-                if (sp.length === 1) {
-                  setProduct(sp[0][0])
-                  if (sp[0][1].colors.length === 1) setColor(sp[0][1].colors[0].name)
-                }
-              }}>{so.label}</button>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Product cards (stone-coated styles with multiple products) */}
-      {roofType && hasStyles && style && products.length > 1 && (
-        <div style={sectionStyle}>
-          <div style={{ fontSize: 10, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Product</div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 10 }}>
-            {products.map(([pk, po]) => (
-              <button key={pk} onClick={() => { setColor(null); setProduct(pk) }}
-                style={{ background: product === pk ? `${C.accentDark}33` : C.surface, border: `1px solid ${product === pk ? C.accentDark : C.border}`, borderRadius: 6, padding: '16px', textAlign: 'left', cursor: 'pointer', transition: 'all 0.15s' }}
-              >
-                <div style={{ fontSize: 14, fontWeight: 600, color: product === pk ? C.accent : C.white, marginBottom: 4, fontFamily: "'Outfit',sans-serif" }}>{po.label}</div>
-                <div style={{ fontSize: 11, color: C.muted, lineHeight: 1.5 }}>{po.description}</div>
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Color swatches with product images */}
-      {roofType && hasStyles && product && colors.length > 0 && (
-        <div style={sectionStyle}>
-          <div style={{ fontSize: 10, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Color</div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 10 }}>
-            {colors.map((c: ColorOption) => (
-              <button key={c.name} onClick={() => setColor(c.name)}
-                style={{ background: color === c.name ? `${C.accentDark}33` : C.surface, border: `1px solid ${color === c.name ? C.accentDark : C.border}`, borderRadius: 6, overflow: 'hidden', cursor: 'pointer', transition: 'all 0.15s', textAlign: 'left' }}
-              >
-                {c.image1 && (
-                  <div style={{ aspectRatio: '4/3', overflow: 'hidden' }}>
-                    <img src={c.image1} alt={c.name} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-                  </div>
-                )}
-                <div style={{ padding: '8px 12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
-                  <span style={{ fontSize: 11, color: color === c.name ? C.accent : C.white, fontFamily: "'Outfit',sans-serif" }}>{c.name}</span>
-                  {c.hex && <span style={{ width: 12, height: 12, borderRadius: '50%', background: c.hex, border: `1px solid ${C.border}`, flexShrink: 0, display: 'inline-block' }}/>}
-                </div>
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-
-      <button
-        onClick={() => { if (roofType) onSelect(roofType, style, product, color) }}
-        disabled={!isComplete}
-        style={{ ...btnStyle, opacity: isComplete ? 1 : 0.45, cursor: isComplete ? 'pointer' : 'not-allowed', marginTop: 8 }}
-        onMouseEnter={e => { if (isComplete) e.currentTarget.style.background = C.accentLight }}
-        onMouseLeave={e => { e.currentTarget.style.background = C.accent }}
-      >
-        {!roofType ? 'Select a material to continue' : !isComplete ? 'Select a color to continue' : 'Get My Estimate →'}
-      </button>
-
-      <p style={{ fontSize: 12, color: C.muted, textAlign: 'center', marginTop: 16 }}>
-        Want to see your home with a metal roof first?{' '}
-        <a href="/visualizer" style={{ color: C.accent, textDecoration: 'underline' }}>Try the AI Visualizer →</a>
-      </p>
     </div>
   )
 }
