@@ -74,3 +74,33 @@ export function getAutoSelectedStyleAndProduct(roofType: string): { style: strin
   if (products.length !== 1) return null;
   return { style: styleKey, product: products[0][0] };
 }
+
+export interface RoofSelection {
+  roofType: string;
+  style: string | null;
+  product: string | null;
+  productLabel: string | null;
+  color: string | null;
+  colorImagePath: string | null;
+}
+
+export function resolveSelection(
+  roofType: string,
+  style: string | null,
+  product: string | null,
+  colorName: string | null
+): RoofSelection {
+  const entry = roofProducts[roofType];
+  const productEntry = product && entry ? entry.products[product] : undefined;
+  const colorEntry = productEntry && colorName
+    ? productEntry.colors.find((c) => c.name === colorName)
+    : undefined;
+  return {
+    roofType,
+    style: style ?? null,
+    product: product ?? null,
+    productLabel: productEntry?.label ?? null,
+    color: colorEntry?.name ?? null,
+    colorImagePath: colorEntry?.image1 ?? null,
+  };
+}

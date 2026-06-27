@@ -28,9 +28,72 @@ const TX_BOUNDS = { north: 36.5, south: 25.8, east: -93.5, west: -106.6 }
 
 const iStyle: React.CSSProperties = {
   width: '100%', background: C.surface, border: `1px solid ${C.border}`,
-  borderRadius: 4, padding: '12px 14px', color: C.white, fontSize: 14,
+  borderRadius: 4, padding: '14px 16px', color: C.white, fontSize: 15,
   outline: 'none', fontFamily: "'Outfit',sans-serif", boxSizing: 'border-box',
 }
+
+// ── Gate screen definitions ────────────────────────────────────────────────────
+
+interface GateChoice { value: string; label: string; icon: string }
+interface GateScreen { field: keyof GateData; headline: string; subtext: string; choices: GateChoice[] }
+
+interface GateData {
+  currentRoofType: string
+  reason: string
+  insuranceClaim: string
+  timeline: string
+  firstName: string
+  phone: string
+}
+
+const GATE_SCREENS: GateScreen[] = [
+  {
+    field: 'currentRoofType',
+    headline: "What's your roof looking like right now?",
+    subtext: "No judgment — we're just figuring out your starting point.",
+    choices: [
+      { value: 'asphalt_shingles',  label: 'Asphalt Shingles',    icon: '🏠' },
+      { value: 'metal_old',         label: 'Old Metal / Tin',      icon: '🔩' },
+      { value: 'tile',              label: 'Tile or Clay',          icon: '🏛️' },
+      { value: 'flat',              label: 'Flat / TPO',            icon: '▬' },
+      { value: 'unknown',           label: 'Not Sure',              icon: '🤷' },
+    ],
+  },
+  {
+    field: 'reason',
+    headline: "What's driving this project?",
+    subtext: "This helps us tailor your options and pricing approach.",
+    choices: [
+      { value: 'hail_damage',   label: 'Hail or Storm Damage',     icon: '⛈️' },
+      { value: 'age_replace',   label: 'Aging Roof / End of Life', icon: '📅' },
+      { value: 'upgrade',       label: 'Upgrading for Longevity',  icon: '💎' },
+      { value: 'selling',       label: 'Selling the Home',         icon: '🏷️' },
+      { value: 'new_build',     label: 'New Construction',         icon: '🏗️' },
+    ],
+  },
+  {
+    field: 'insuranceClaim',
+    headline: "Have you filed an insurance claim yet?",
+    subtext: "If damage is involved, we can walk you through the upgrade pathway.",
+    choices: [
+      { value: 'yes_approved',         label: 'Yes — Claim Approved',       icon: '✅' },
+      { value: 'yes_pending',          label: 'Yes — Still Pending',        icon: '⏳' },
+      { value: 'no_but_considering',   label: 'No — But Considering It',    icon: '🤔' },
+      { value: 'no_cash',              label: 'No — Paying Out of Pocket',  icon: '💵' },
+    ],
+  },
+  {
+    field: 'timeline',
+    headline: "When are you looking to get this done?",
+    subtext: "We work on your timeline — not ours.",
+    choices: [
+      { value: 'asap',             label: 'As Soon as Possible',    icon: '🔥' },
+      { value: '1_3_months',       label: 'Within 1–3 Months',     icon: '📆' },
+      { value: '3_6_months',       label: '3–6 Months Out',        icon: '🗓️' },
+      { value: 'just_researching', label: 'Just Researching for Now', icon: '📚' },
+    ],
+  },
+]
 
 export default function VisualizerPage() {
   const [step, setStep] = useState<Step>('address')
@@ -50,9 +113,15 @@ export default function VisualizerPage() {
   const [selColor, setSelColor] = useState<string | null>(null)
 
   // gate step
-  const [form, setForm] = useState({ firstName: '', lastName: '', phone: '', email: '', smsConsent: false, emailConsent: false })
-  const [formErrors, setFormErrors] = useState<Record<string, string>>({})
+  const [gateScreen, setGateScreen] = useState(0)
+  const [gateData, setGateData] = useState<GateData>({
+    currentRoofType: '', reason: '', insuranceClaim: '', timeline: '',
+    firstName: '', phone: '',
+  })
+  const [contactErrors, setContactErrors] = useState<Record<string, string>>({})
   const [gateLoading, setGateLoading] = useState(false)
+  // tracks which choice was just selected (for animation flash)
+  const [pendingChoice, setPendingChoice] = useState<string | null>(null)
 
   // loading / results
   const [phraseIdx, setPhraseIdx] = useState(0)
@@ -103,12 +172,21 @@ export default function VisualizerPage() {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            address, satelliteUrl, roofType: selType,
-            product: selProduct, color: selColor, firstName: form.firstName,
+            address,
+            satelliteImageUrl: satelliteUrl,  // field name the render route expects
+            roofType: selType,
+            style: selStyle,
+            product: selProduct,
+            color: selColor,
+            firstName: gateData.firstName,
           }),
         })
         const data = await res.json()
-        if (!cancelled) { setRenderUrl(data.renderUrl ?? null); setStep('results') }
+        if (!cancelled) {
+          // render route returns data.image (not data.renderUrl)
+          setRenderUrl(data.image ?? null)
+          setStep('results')
+        }
       } catch {
         if (!cancelled) { setRenderUrl(null); setStep('results') }
       }
@@ -127,7 +205,8 @@ export default function VisualizerPage() {
         body: JSON.stringify({ address }),
       })
       const data = await res.json()
-      setSatelliteUrl(data.satelliteUrl ?? null)
+      // resolve-image returns { address, satellite: { imageUrl } }
+      setSatelliteUrl(data.satellite?.imageUrl ?? null)
     } catch {
       setSatelliteUrl(null)
     } finally {
@@ -136,29 +215,41 @@ export default function VisualizerPage() {
     }
   }
 
-  function validateGate() {
+  function handleChoice(field: keyof GateData, value: string) {
+    setPendingChoice(value)
+    setGateData(d => ({ ...d, [field]: value }))
+    setTimeout(() => {
+      setPendingChoice(null)
+      setGateScreen(s => s + 1)
+    }, 220)
+  }
+
+  function validateContact() {
     const e: Record<string, string> = {}
-    if (!form.firstName.trim()) e.firstName = 'Required'
-    if (!form.lastName.trim())  e.lastName  = 'Required'
-    if (!form.phone.trim()) e.phone = 'Required'
-    else if (!/^\(?\d{3}\)?[\s\-]?\d{3}[\s\-]?\d{4}$/.test(form.phone.replace(/\s/g, ''))) e.phone = 'Invalid number'
-    if (!form.email.trim()) e.email = 'Required'
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = 'Invalid email'
+    if (!gateData.firstName.trim()) e.firstName = 'Required'
+    if (!gateData.phone.trim()) e.phone = 'Required'
+    else if (!/^\(?\d{3}\)?[\s\-]?\d{3}[\s\-]?\d{4}$/.test(gateData.phone.replace(/\s/g, ''))) e.phone = 'Enter a valid 10-digit number'
     return e
   }
 
-  async function handleGateSubmit() {
-    const e = validateGate()
-    if (Object.keys(e).length) { setFormErrors(e); return }
+  async function handleContactSubmit() {
+    const e = validateContact()
+    if (Object.keys(e).length) { setContactErrors(e); return }
     setGateLoading(true)
     try {
       await fetch('/api/lead-intake', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          firstName: form.firstName, lastName: form.lastName,
-          phone: form.phone, email: form.email,
-          address, roofType: selType, product: selProduct, color: selColor,
-          smsConsent: form.smsConsent, emailConsent: form.emailConsent,
+          firstName: gateData.firstName,
+          phone: gateData.phone,
+          address,
+          currentRoofType: gateData.currentRoofType,
+          reason: gateData.reason,
+          insuranceClaim: gateData.insuranceClaim,
+          timeline: gateData.timeline,
+          selectedRoofType: selType,
+          product: selProduct,
+          color: selColor,
           leadOrigin: 'visualizer',
         }),
       })
@@ -191,7 +282,7 @@ export default function VisualizerPage() {
 
   const canProceed = Boolean(selType && selColor)
 
-  // ── Tab button style ───────────────────────────────────────────────────────
+  // ── Shared style helpers ───────────────────────────────────────────────────
   const tabBtn = (active: boolean): React.CSSProperties => ({
     padding: '9px 16px', fontSize: 11, letterSpacing: 1.5, textTransform: 'uppercase' as const,
     background: active ? C.accent : 'transparent',
@@ -201,17 +292,19 @@ export default function VisualizerPage() {
     fontFamily: "'Outfit',sans-serif", fontWeight: 500,
   })
 
-  const cardStyle: React.CSSProperties = {
-    background: C.card, border: `1px solid ${C.border}`, borderRadius: 8, padding: '20px 24px', marginBottom: 12,
+  const sectionCard: React.CSSProperties = {
+    background: C.card, border: `1px solid ${C.border}`, borderRadius: 8,
+    padding: '20px 24px', marginBottom: 12,
   }
 
-  const estimateHref = `/estimate?address=${encodeURIComponent(address)}&roofType=${encodeURIComponent(selType ?? '')}&product=${encodeURIComponent(selProduct ?? '')}&color=${encodeURIComponent(selColor ?? '')}&firstName=${encodeURIComponent(form.firstName)}&lastName=${encodeURIComponent(form.lastName)}&phone=${encodeURIComponent(form.phone)}&email=${encodeURIComponent(form.email)}&leadOrigin=visualizer`
+  const estimateHref = `/estimate?address=${encodeURIComponent(address)}&roofType=${encodeURIComponent(selType ?? '')}&product=${encodeURIComponent(selProduct ?? '')}&color=${encodeURIComponent(selColor ?? '')}&firstName=${encodeURIComponent(gateData.firstName)}&phone=${encodeURIComponent(gateData.phone)}&leadOrigin=visualizer`
 
   return (
     <>
       <style>{fonts + globalStyles + `
         @keyframes vspin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
         @keyframes vfade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes vchoice{0%{transform:scale(1)}50%{transform:scale(0.97)}100%{transform:scale(1)}}
       `}</style>
       <div style={{ background: C.black, minHeight: '100vh', color: C.white, fontFamily: "'Outfit',system-ui,sans-serif" }}>
 
@@ -279,7 +372,7 @@ export default function VisualizerPage() {
               <button onClick={() => setStep('address')} style={{ fontSize: 11, color: C.muted, letterSpacing: 1, textTransform: 'uppercase', cursor: 'pointer', background: 'none', border: 'none', padding: 0, textDecoration: 'underline', fontFamily: "'Outfit',sans-serif", marginBottom: 28 }}>← Back</button>
 
               {/* Satellite confirmation card */}
-              <div style={{ ...cardStyle, display: 'flex', alignItems: 'center', gap: 16, marginBottom: 20 }}>
+              <div style={{ ...sectionCard, display: 'flex', alignItems: 'center', gap: 16, marginBottom: 20 }}>
                 {satelliteUrl ? (
                   <>
                     <div style={{ position: 'relative', flexShrink: 0 }}>
@@ -303,7 +396,7 @@ export default function VisualizerPage() {
               </div>
 
               {/* Roof type tabs */}
-              <div style={cardStyle}>
+              <div style={sectionCard}>
                 <div style={{ fontSize: 10, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Choose Your Material</div>
                 <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                   {(ROOF_TYPE_ORDER as readonly string[]).map(rt => (
@@ -314,7 +407,7 @@ export default function VisualizerPage() {
 
               {/* Style tabs */}
               {selType && selStyles.length > 1 && !hasExactlyOneProduct(selType) && (
-                <div style={cardStyle}>
+                <div style={sectionCard}>
                   <div style={{ fontSize: 10, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Style</div>
                   <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                     {selStyles.map(([sk, so]) => (
@@ -330,7 +423,7 @@ export default function VisualizerPage() {
 
               {/* Product grid */}
               {selType && selStyle && selProducts.length > 1 && (
-                <div style={cardStyle}>
+                <div style={sectionCard}>
                   <div style={{ fontSize: 10, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Product</div>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 10 }}>
                     {selProducts.map(([pk, po]) => (
@@ -347,7 +440,7 @@ export default function VisualizerPage() {
 
               {/* Circular color swatches */}
               {selType && selProduct && selColors.length > 0 && (
-                <div style={cardStyle}>
+                <div style={sectionCard}>
                   <div style={{ fontSize: 10, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Color</div>
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16 }}>
                     {selColors.map((c: ColorOption) => (
@@ -383,53 +476,157 @@ export default function VisualizerPage() {
 
           {/* ── gate ── */}
           {step === 'gate' && (
-            <div style={{ animation: 'vfade 0.3s ease', maxWidth: 520, margin: '0 auto' }}>
-              <button onClick={() => setStep('select')} style={{ fontSize: 11, color: C.muted, letterSpacing: 1, textTransform: 'uppercase', cursor: 'pointer', background: 'none', border: 'none', padding: 0, textDecoration: 'underline', fontFamily: "'Outfit',sans-serif", marginBottom: 24 }}>← Back</button>
-              <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 'clamp(22px,4vw,30px)', fontWeight: 700, color: C.white, marginBottom: 8 }}>Almost there</h2>
-              <p style={{ fontSize: 14, color: C.muted, lineHeight: 1.7, marginBottom: 28 }}>Enter your details to receive your AI roof visualization and a free estimate.</p>
+            <div style={{ animation: 'vfade 0.3s ease', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
 
-              <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 8, padding: 'clamp(20px,4vw,36px)' }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14, marginBottom: 14 }}>
-                  <div>
-                    <div style={{ fontSize: 10, letterSpacing: 2, textTransform: 'uppercase', color: C.muted, marginBottom: 6 }}>First Name *</div>
-                    <input value={form.firstName} onChange={e => setForm(f => ({ ...f, firstName: e.target.value }))} placeholder="Jane" style={iStyle} />
-                    {formErrors.firstName && <div style={{ fontSize: 11, color: '#F87171', marginTop: 4 }}>{formErrors.firstName}</div>}
+              {/* Card container */}
+              <div style={{
+                width: '100%', maxWidth: 460,
+                background: C.surface,
+                border: `1px solid ${C.border}`,
+                borderRadius: 20,
+                boxShadow: '0 8px 40px rgba(0,0,0,0.4)',
+                overflow: 'hidden',
+              }}>
+
+                {/* Progress bar */}
+                <div style={{ height: 3, background: C.card }}>
+                  <div style={{
+                    height: '100%',
+                    width: `${((gateScreen + 1) / 5) * 100}%`,
+                    background: C.accent,
+                    transition: 'width 0.35s ease',
+                  }} />
+                </div>
+
+                <div style={{ padding: 'clamp(24px,4vw,36px)' }}>
+
+                  {/* Step label */}
+                  <div style={{ fontSize: 10, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 16 }}>
+                    Step {gateScreen + 1} of 5
                   </div>
-                  <div>
-                    <div style={{ fontSize: 10, letterSpacing: 2, textTransform: 'uppercase', color: C.muted, marginBottom: 6 }}>Last Name *</div>
-                    <input value={form.lastName} onChange={e => setForm(f => ({ ...f, lastName: e.target.value }))} placeholder="Smith" style={iStyle} />
-                    {formErrors.lastName && <div style={{ fontSize: 11, color: '#F87171', marginTop: 4 }}>{formErrors.lastName}</div>}
-                  </div>
+
+                  {/* Screens 0–3: choice cards */}
+                  {gateScreen < 4 && (() => {
+                    const screen = GATE_SCREENS[gateScreen]
+                    return (
+                      <>
+                        <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 'clamp(20px,3.5vw,26px)', fontWeight: 700, color: C.white, lineHeight: 1.25, marginBottom: 8 }}>
+                          {screen.headline}
+                        </h2>
+                        <p style={{ fontSize: 13, color: C.muted, lineHeight: 1.65, marginBottom: 24 }}>
+                          {screen.subtext}
+                        </p>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                          {screen.choices.map(choice => {
+                            const isSelected = gateData[screen.field] === choice.value
+                            const isPending  = pendingChoice === choice.value
+                            return (
+                              <button
+                                key={choice.value}
+                                onClick={() => handleChoice(screen.field, choice.value)}
+                                style={{
+                                  display: 'flex', alignItems: 'center', gap: 14,
+                                  background: isSelected || isPending ? `${C.accentDark}22` : C.card,
+                                  border: `1.5px solid ${isSelected || isPending ? C.accent : C.border}`,
+                                  borderRadius: 12,
+                                  padding: '14px 18px',
+                                  cursor: 'pointer',
+                                  textAlign: 'left',
+                                  transition: 'all 0.18s',
+                                  boxShadow: isSelected || isPending ? `0 0 0 1px ${C.accentDark}, 0 0 12px ${C.accentDark}55` : 'none',
+                                  animation: isPending ? 'vchoice 0.22s ease' : 'none',
+                                }}
+                                onMouseEnter={e => {
+                                  if (!isSelected) {
+                                    e.currentTarget.style.borderColor = C.accentDark
+                                    e.currentTarget.style.background = `${C.accentDark}11`
+                                  }
+                                }}
+                                onMouseLeave={e => {
+                                  if (!isSelected) {
+                                    e.currentTarget.style.borderColor = C.border
+                                    e.currentTarget.style.background = C.card
+                                  }
+                                }}
+                              >
+                                <span style={{ fontSize: 24, lineHeight: 1, flexShrink: 0 }}>{choice.icon}</span>
+                                <span style={{ fontSize: 14, color: isSelected || isPending ? C.accent : C.white, fontFamily: "'Outfit',sans-serif", fontWeight: 500, lineHeight: 1.3 }}>
+                                  {choice.label}
+                                </span>
+                              </button>
+                            )
+                          })}
+                        </div>
+                      </>
+                    )
+                  })()}
+
+                  {/* Screen 4: contact form */}
+                  {gateScreen === 4 && (
+                    <>
+                      <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 'clamp(20px,3.5vw,26px)', fontWeight: 700, color: C.white, lineHeight: 1.25, marginBottom: 8 }}>
+                        Almost there. How do we reach you?
+                      </h2>
+                      <p style={{ fontSize: 13, color: C.muted, lineHeight: 1.65, marginBottom: 24 }}>
+                        We&apos;ll send your AI-rendered roof design to this number — no spam, ever.
+                      </p>
+                      <div style={{ marginBottom: 16 }}>
+                        <div style={{ fontSize: 10, letterSpacing: 2, textTransform: 'uppercase', color: C.muted, marginBottom: 8 }}>First Name *</div>
+                        <input
+                          value={gateData.firstName}
+                          onChange={e => setGateData(d => ({ ...d, firstName: e.target.value }))}
+                          onKeyDown={e => e.key === 'Enter' && handleContactSubmit()}
+                          placeholder="Jane"
+                          style={iStyle}
+                        />
+                        {contactErrors.firstName && <div style={{ fontSize: 11, color: '#F87171', marginTop: 4 }}>{contactErrors.firstName}</div>}
+                      </div>
+                      <div style={{ marginBottom: 20 }}>
+                        <div style={{ fontSize: 10, letterSpacing: 2, textTransform: 'uppercase', color: C.muted, marginBottom: 8 }}>Phone *</div>
+                        <input
+                          value={gateData.phone}
+                          onChange={e => setGateData(d => ({ ...d, phone: e.target.value }))}
+                          onKeyDown={e => e.key === 'Enter' && handleContactSubmit()}
+                          placeholder="(214) 555-0000"
+                          type="tel"
+                          style={iStyle}
+                        />
+                        {contactErrors.phone && <div style={{ fontSize: 11, color: '#F87171', marginTop: 4 }}>{contactErrors.phone}</div>}
+                      </div>
+                      <div style={{ fontSize: 10, color: C.muted, lineHeight: 1.7, marginBottom: 20 }}>
+                        By continuing, you consent to receive SMS/calls about your project. Msg &amp; data rates may apply. Reply STOP to opt out.
+                      </div>
+                      <button
+                        onClick={handleContactSubmit}
+                        disabled={gateLoading}
+                        style={{ width: '100%', padding: '15px', background: gateLoading ? C.accentDark : C.accent, color: C.black, fontSize: 12, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 700, borderRadius: 6, cursor: gateLoading ? 'not-allowed' : 'pointer', border: 'none', fontFamily: "'Outfit',sans-serif", transition: 'background 0.2s' }}
+                        onMouseEnter={e => { if (!gateLoading) e.currentTarget.style.background = C.accentLight }}
+                        onMouseLeave={e => { e.currentTarget.style.background = gateLoading ? C.accentDark : C.accent }}
+                      >{gateLoading ? 'Submitting…' : 'Generate My Visualization →'}</button>
+                    </>
+                  )}
+
                 </div>
-                <div style={{ marginBottom: 14 }}>
-                  <div style={{ fontSize: 10, letterSpacing: 2, textTransform: 'uppercase', color: C.muted, marginBottom: 6 }}>Phone *</div>
-                  <input value={form.phone} onChange={e => setForm(f => ({ ...f, phone: e.target.value }))} placeholder="(214) 555-0000" type="tel" style={iStyle} />
-                  {formErrors.phone && <div style={{ fontSize: 11, color: '#F87171', marginTop: 4 }}>{formErrors.phone}</div>}
-                </div>
-                <div style={{ marginBottom: 24 }}>
-                  <div style={{ fontSize: 10, letterSpacing: 2, textTransform: 'uppercase', color: C.muted, marginBottom: 6 }}>Email *</div>
-                  <input value={form.email} onChange={e => setForm(f => ({ ...f, email: e.target.value }))} placeholder="jane@email.com" type="email" style={iStyle} />
-                  {formErrors.email && <div style={{ fontSize: 11, color: '#F87171', marginTop: 4 }}>{formErrors.email}</div>}
-                </div>
-                <label htmlFor="vis-sms" style={{ display: 'flex', gap: 10, alignItems: 'flex-start', marginBottom: 12, cursor: 'pointer' }}>
-                  <input type="checkbox" id="vis-sms" checked={form.smsConsent} onChange={e => setForm(f => ({ ...f, smsConsent: e.target.checked }))} style={{ marginTop: 2, accentColor: C.accent, width: 15, height: 15, flexShrink: 0 }} />
-                  <span style={{ fontSize: 11, color: C.muted, lineHeight: 1.6 }}>I agree to receive SMS messages about my roof visualization and estimate. Message & data rates may apply. Reply STOP to opt out.</span>
-                </label>
-                <label htmlFor="vis-email" style={{ display: 'flex', gap: 10, alignItems: 'flex-start', marginBottom: 20, cursor: 'pointer' }}>
-                  <input type="checkbox" id="vis-email" checked={form.emailConsent} onChange={e => setForm(f => ({ ...f, emailConsent: e.target.checked }))} style={{ marginTop: 2, accentColor: C.accent, width: 15, height: 15, flexShrink: 0 }} />
-                  <span style={{ fontSize: 11, color: C.muted, lineHeight: 1.6 }}>I agree to receive email updates about my estimate and Metroplex Metal Roofs promotions.</span>
-                </label>
-                <div style={{ fontSize: 10, color: C.muted, lineHeight: 1.7, marginBottom: 20, padding: '12px 14px', background: C.surface, borderRadius: 4, border: `1px solid ${C.border}` }}>
-                  By submitting, you consent to being contacted by Metroplex Metal Roofs regarding your inquiry. Your information is never sold or shared with third parties.
-                </div>
-                <button
-                  onClick={handleGateSubmit}
-                  disabled={gateLoading}
-                  style={{ width: '100%', padding: '15px', background: gateLoading ? C.accentDark : C.accent, color: C.black, fontSize: 12, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 700, borderRadius: 4, cursor: gateLoading ? 'not-allowed' : 'pointer', border: 'none', fontFamily: "'Outfit',sans-serif", transition: 'background 0.2s' }}
-                  onMouseEnter={e => { if (!gateLoading) e.currentTarget.style.background = C.accentLight }}
-                  onMouseLeave={e => { e.currentTarget.style.background = gateLoading ? C.accentDark : C.accent }}
-                >{gateLoading ? 'Submitting…' : 'Generate My Visualization →'}</button>
               </div>
+
+              {/* Back button (below card, screens 1–4) */}
+              {gateScreen > 0 && (
+                <button
+                  onClick={() => setGateScreen(s => s - 1)}
+                  style={{ marginTop: 16, fontSize: 11, color: C.muted, letterSpacing: 1, textTransform: 'uppercase', cursor: 'pointer', background: 'none', border: 'none', padding: '8px 0', textDecoration: 'underline', fontFamily: "'Outfit',sans-serif" }}
+                >
+                  ← Back
+                </button>
+              )}
+              {gateScreen === 0 && (
+                <button
+                  onClick={() => setStep('select')}
+                  style={{ marginTop: 16, fontSize: 11, color: C.muted, letterSpacing: 1, textTransform: 'uppercase', cursor: 'pointer', background: 'none', border: 'none', padding: '8px 0', textDecoration: 'underline', fontFamily: "'Outfit',sans-serif" }}
+                >
+                  ← Back to material selection
+                </button>
+              )}
+
             </div>
           )}
 
@@ -444,7 +641,8 @@ export default function VisualizerPage() {
                 {LOADING_PHRASES[phraseIdx]}
               </div>
               <div style={{ fontSize: 13, color: C.muted }}>
-                Rendering <span style={{ color: C.accentLight }}>{selColor} {getRoofTypeLabel(selType ?? '')}</span> for {form.firstName || 'you'}
+                Rendering <span style={{ color: C.accentLight }}>{selColor} {getRoofTypeLabel(selType ?? '')}</span>
+                {gateData.firstName ? ` for ${gateData.firstName}` : ''}
               </div>
             </div>
           )}
