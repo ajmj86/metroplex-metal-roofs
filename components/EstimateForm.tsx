@@ -437,11 +437,27 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
                 {/* Roof type tabs */}
                 <div style={cardStyle}>
                   <div style={{ fontSize: 10, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Material</div>
-                  <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 10 }}>
                     {(ROOF_TYPE_ORDER as readonly string[]).map(rt => (
-                      <button key={rt} onClick={() => pickType(rt)} style={tabBtn(standaloneType === rt)}>
-                        {getRoofTypeLabel(rt)}
-                      </button>
+                      <button key={rt} onClick={() => pickType(rt)} style={{
+                        padding: '16px 20px',
+                        fontSize: 12,
+                        letterSpacing: 2,
+                        textTransform: 'uppercase' as const,
+                        background: standaloneType === rt ? C.accent : C.surface,
+                        color: standaloneType === rt ? C.black : C.mutedLight,
+                        border: `1.5px solid ${standaloneType === rt ? C.accent : C.border}`,
+                        borderRadius: 6,
+                        cursor: 'pointer',
+                        transition: 'all 0.15s',
+                        fontFamily: "'Outfit',sans-serif",
+                        fontWeight: standaloneType === rt ? 700 : 500,
+                        boxShadow: standaloneType === rt ? `0 0 12px ${C.accentDark}44` : 'none',
+                        textAlign: 'center' as const,
+                      }}
+                      onMouseEnter={e => { if (standaloneType !== rt) { e.currentTarget.style.borderColor = C.accentDark; e.currentTarget.style.color = C.white; }}}
+                      onMouseLeave={e => { if (standaloneType !== rt) { e.currentTarget.style.borderColor = C.border; e.currentTarget.style.color = C.mutedLight; }}}
+                      >{getRoofTypeLabel(rt)}</button>
                     ))}
                   </div>
                 </div>
@@ -479,24 +495,35 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
                   </div>
                 )}
 
-                {/* Circular color swatches */}
+                {/* Color swatches */}
                 {standaloneType && standaloneProduct && selColors.length > 0 && (
                   <div style={cardStyle}>
                     <div style={{ fontSize: 10, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Color</div>
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16 }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }}>
                       {selColors.map((c: ColorOption) => (
                         <button key={c.name} onClick={() => setStandaloneColor(c.name)}
-                          style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}
+                          style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
                         >
                           <div style={{
-                            width: 52, height: 52, borderRadius: '50%', overflow: 'hidden',
+                            borderRadius: 8, overflow: 'hidden',
                             border: `2px solid ${standaloneColor === c.name ? C.accent : C.border}`,
-                            boxShadow: standaloneColor === c.name ? `0 0 0 2px ${C.accent}` : 'none',
-                            background: c.hex ?? C.surface, transition: 'all 0.15s',
+                            boxShadow: standaloneColor === c.name ? `0 0 0 1px ${C.accent}, 0 0 12px ${C.accentDark}44` : 'none',
+                            transition: 'all 0.15s',
                           }}>
-                            {c.image1 && <img src={c.image1} alt={c.name} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />}
+                            {c.image1 ? (
+                              <img src={c.image1} alt={c.name} style={{ width: '100%', height: 90, objectFit: 'cover', display: 'block' }} />
+                            ) : (
+                              <div style={{ width: '100%', height: 90, background: c.hex ?? C.surface }} />
+                            )}
+                            <div style={{
+                              padding: '8px 10px',
+                              background: standaloneColor === c.name ? `${C.accentDark}33` : C.card,
+                              display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 6
+                            }}>
+                              <span style={{ fontSize: 10, color: standaloneColor === c.name ? C.accent : C.mutedLight, fontFamily: "'Outfit',sans-serif", lineHeight: 1.3 }}>{c.name}</span>
+                              {standaloneColor === c.name && <span style={{ fontSize: 11, color: C.accent, fontWeight: 700 }}>✓</span>}
+                            </div>
                           </div>
-                          <span style={{ fontSize: 10, color: standaloneColor === c.name ? C.accent : C.muted, textAlign: 'center', lineHeight: 1.3, fontFamily: "'Outfit',sans-serif", maxWidth: 60 }}>{c.name}</span>
                         </button>
                       ))}
                     </div>
@@ -514,7 +541,7 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
                   <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 20, fontWeight: 700, color: C.white, marginBottom: 16 }}>
                     Your Contact Info
                   </div>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 12 }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 12 }}>
                     <div>
                       <div style={labelStyle}>First Name *</div>
                       <input value={contactFields.firstName}
@@ -549,7 +576,7 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
                       onChange={e => setContactFields(f => ({ ...f, smsConsent: e.target.checked }))}
                       style={{ marginTop: 2, accentColor: '#B8935A', width: 15, height: 15, flexShrink: 0 }} />
                     <span style={{ fontSize: 11, color: '#71717A', lineHeight: 1.6 }}>
-                      I agree to receive SMS messages about my estimate. Message &amp; data rates may apply. Reply STOP to opt out.
+                      By checking this box, I consent to receive automated SMS text messages from Metroplex Metal Roofs at the number provided regarding my estimate inquiry. Message frequency varies. Message &amp; data rates may apply. Text STOP to cancel, HELP for help. Consent is not a condition of purchase.
                     </span>
                   </label>
                   <label style={{ display: 'flex', gap: 10, alignItems: 'flex-start', marginBottom: 16, cursor: 'pointer' }}>

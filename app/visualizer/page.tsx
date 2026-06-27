@@ -323,13 +323,13 @@ export default function VisualizerPage() {
 
         <SiteNav/>
 
-        <div style={{ maxWidth: 700, margin: '0 auto', padding: 'clamp(40px,6vw,72px) clamp(20px,5vw,48px)', paddingTop: 84 }}>
+        <div style={{ maxWidth: 700, margin: '0 auto', padding: 'clamp(40px,6vw,72px) clamp(20px,5vw,48px)', paddingTop: 'clamp(108px,12vw,140px)' }}>
 
           {/* ── address ── */}
           {step === 'address' && (
             <div style={{ animation: 'vfade 0.3s ease' }}>
-              <div style={{ textAlign: 'center', marginBottom: 48 }}>
-                <div style={{ fontSize: 11, letterSpacing: 3, color: C.accent, textTransform: 'uppercase', marginBottom: 16 }}>AI Roof Visualizer</div>
+              <div style={{ textAlign: 'center', marginBottom: 64 }}>
+                <div style={{ fontSize: 13, letterSpacing: 4, color: C.accent, textTransform: 'uppercase', marginBottom: 20, fontWeight: 600 }}>AI Roof Visualizer</div>
                 <h1 style={{ fontFamily: "'Cormorant Garamond',Georgia,serif", fontSize: 'clamp(2rem,5vw,3.2rem)', fontWeight: 700, color: C.white, lineHeight: 1.1, marginBottom: 16 }}>
                   See Your Home With<br /><span style={{ color: C.accent, fontStyle: 'italic' }}>a Metal Roof</span>
                 </h1>
@@ -378,36 +378,74 @@ export default function VisualizerPage() {
           {/* ── select ── */}
           {step === 'select' && (
             <div style={{ animation: 'vfade 0.3s ease' }}>
-              <button onClick={() => setStep('address')} style={{ fontSize: 11, color: C.muted, letterSpacing: 1, textTransform: 'uppercase', cursor: 'pointer', background: 'none', border: 'none', padding: 0, textDecoration: 'underline', fontFamily: "'Outfit',sans-serif", marginBottom: 28 }}>← Back</button>
+              <button onClick={() => setStep('address')} style={{ fontSize: 11, color: C.muted, letterSpacing: 1, textTransform: 'uppercase', cursor: 'pointer', background: 'none', border: 'none', padding: 0, textDecoration: 'underline', fontFamily: "'Outfit',sans-serif", marginBottom: 28, marginTop: 24 }}>← Back</button>
 
               {/* Satellite confirmation card */}
-              <div style={{ ...sectionCard, marginBottom: 20 }}>
+              <div style={{ ...sectionCard, padding: 0, overflow: 'hidden', marginBottom: 20 }}>
                 {satelliteUrl ? (
                   <>
-                    <img src={satelliteUrl} alt="Satellite view" style={{ width: '100%', maxWidth: 480, height: 260, objectFit: 'cover', borderRadius: 8, display: 'block', marginBottom: 12 }} />
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                      <div style={{ width: 22, height: 22, borderRadius: '50%', background: '#22C55E', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, color: '#fff', fontWeight: 700, flexShrink: 0 }}>✓</div>
-                      <div style={{ fontSize: 11, color: C.muted }}>Satellite image confirmed</div>
-                      <div style={{ fontSize: 13, color: C.white, fontWeight: 500 }}>{address}</div>
+                    <img src={satelliteUrl} alt="Satellite view" style={{
+                      width: '100%', height: 220, objectFit: 'cover',
+                      borderRadius: '6px 6px 0 0', display: 'block'
+                    }} />
+                    <div style={{
+                      padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 10,
+                      borderTop: `1px solid ${C.border}`
+                    }}>
+                      <div style={{
+                        width: 22, height: 22, borderRadius: '50%', background: '#16A34A',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        fontSize: 12, color: '#fff', fontWeight: 700, flexShrink: 0
+                      }}>✓</div>
+                      <div>
+                        <div style={{ fontSize: 11, color: '#4ADE80', fontWeight: 600, marginBottom: 2 }}>
+                          Satellite image confirmed
+                        </div>
+                        <div style={{ fontSize: 12, color: C.mutedLight }}>{address}</div>
+                      </div>
                     </div>
                   </>
                 ) : (
-                  <>
-                    <div style={{ width: '100%', maxWidth: 480, height: 260, borderRadius: 8, background: C.surface, border: `1px solid ${C.border}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 40, marginBottom: 12 }}>🛰</div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '20px 24px' }}>
+                    <div style={{
+                      width: 52, height: 52, borderRadius: 8, background: C.surface,
+                      border: `1px solid ${C.border}`, display: 'flex', alignItems: 'center',
+                      justifyContent: 'center', fontSize: 24, flexShrink: 0
+                    }}>🛰</div>
                     <div>
                       <div style={{ fontSize: 13, color: C.white, fontWeight: 500, marginBottom: 4 }}>{address}</div>
-                      <div style={{ fontSize: 11, color: C.muted, fontStyle: 'italic' }}>Satellite image unavailable — your render will be based on your address</div>
+                      <div style={{ fontSize: 11, color: C.muted, fontStyle: 'italic', lineHeight: 1.5 }}>
+                        No satellite image found — your render will use your address and selected style.
+                      </div>
                     </div>
-                  </>
+                  </div>
                 )}
               </div>
 
               {/* Roof type tabs */}
               <div style={sectionCard}>
                 <div style={{ fontSize: 10, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Choose Your Material</div>
-                <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 10 }}>
                   {(ROOF_TYPE_ORDER as readonly string[]).map(rt => (
-                    <button key={rt} onClick={() => pickType(rt)} style={tabBtn(selType === rt)}>{getRoofTypeLabel(rt)}</button>
+                    <button key={rt} onClick={() => pickType(rt)} style={{
+                      padding: '16px 20px',
+                      fontSize: 12,
+                      letterSpacing: 2,
+                      textTransform: 'uppercase' as const,
+                      background: selType === rt ? C.accent : C.surface,
+                      color: selType === rt ? C.black : C.mutedLight,
+                      border: `1.5px solid ${selType === rt ? C.accent : C.border}`,
+                      borderRadius: 6,
+                      cursor: 'pointer',
+                      transition: 'all 0.15s',
+                      fontFamily: "'Outfit',sans-serif",
+                      fontWeight: selType === rt ? 700 : 500,
+                      boxShadow: selType === rt ? `0 0 12px ${C.accentDark}44` : 'none',
+                      textAlign: 'center' as const,
+                    }}
+                    onMouseEnter={e => { if (selType !== rt) { e.currentTarget.style.borderColor = C.accentDark; e.currentTarget.style.color = C.white; }}}
+                    onMouseLeave={e => { if (selType !== rt) { e.currentTarget.style.borderColor = C.border; e.currentTarget.style.color = C.mutedLight; }}}
+                    >{getRoofTypeLabel(rt)}</button>
                   ))}
                 </div>
               </div>
@@ -445,24 +483,35 @@ export default function VisualizerPage() {
                 </div>
               )}
 
-              {/* Circular color swatches */}
+              {/* Color swatches */}
               {selType && selProduct && selColors.length > 0 && (
                 <div style={sectionCard}>
                   <div style={{ fontSize: 10, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Color</div>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16 }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }}>
                     {selColors.map((c: ColorOption) => (
                       <button key={c.name} onClick={() => setSelColor(c.name)}
-                        style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}
+                        style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
                       >
                         <div style={{
-                          width: 52, height: 52, borderRadius: '50%', overflow: 'hidden',
+                          borderRadius: 8, overflow: 'hidden',
                           border: `2px solid ${selColor === c.name ? C.accent : C.border}`,
-                          boxShadow: selColor === c.name ? `0 0 0 2px ${C.accent}` : 'none',
-                          background: c.hex ?? C.surface, transition: 'all 0.15s',
+                          boxShadow: selColor === c.name ? `0 0 0 1px ${C.accent}, 0 0 12px ${C.accentDark}44` : 'none',
+                          transition: 'all 0.15s',
                         }}>
-                          {c.image1 && <img src={c.image1} alt={c.name} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />}
+                          {c.image1 ? (
+                            <img src={c.image1} alt={c.name} style={{ width: '100%', height: 90, objectFit: 'cover', display: 'block' }} />
+                          ) : (
+                            <div style={{ width: '100%', height: 90, background: c.hex ?? C.surface }} />
+                          )}
+                          <div style={{
+                            padding: '8px 10px',
+                            background: selColor === c.name ? `${C.accentDark}33` : C.card,
+                            display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 6
+                          }}>
+                            <span style={{ fontSize: 10, color: selColor === c.name ? C.accent : C.mutedLight, fontFamily: "'Outfit',sans-serif", lineHeight: 1.3 }}>{c.name}</span>
+                            {selColor === c.name && <span style={{ fontSize: 11, color: C.accent, fontWeight: 700 }}>✓</span>}
+                          </div>
                         </div>
-                        <span style={{ fontSize: 10, color: selColor === c.name ? C.accent : C.muted, textAlign: 'center', lineHeight: 1.3, fontFamily: "'Outfit',sans-serif", maxWidth: 60 }}>{c.name}</span>
                       </button>
                     ))}
                   </div>
@@ -483,7 +532,7 @@ export default function VisualizerPage() {
 
           {/* ── gate ── */}
           {step === 'gate' && (
-            <div style={{ animation: 'vfade 0.3s ease', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <div style={{ animation: 'vfade 0.3s ease', display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: 24 }}>
 
               {/* Card container */}
               <div style={{
@@ -580,7 +629,7 @@ export default function VisualizerPage() {
                         <p style={{ fontSize: 13, color: C.muted, lineHeight: 1.65, marginBottom: 24 }}>
                           We&apos;ll send your AI-rendered roof design to this number — no spam, ever.
                         </p>
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 12 }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 12 }}>
                           <div>
                             <div style={labelStyle}>First Name *</div>
                             <input value={gateData.firstName}
@@ -615,7 +664,7 @@ export default function VisualizerPage() {
                             onChange={e => setGateData(d => ({ ...d, smsConsent: e.target.checked }))}
                             style={{ marginTop: 2, accentColor: C.accent, width: 15, height: 15, flexShrink: 0 }} />
                           <span style={{ fontSize: 11, color: C.muted, lineHeight: 1.6 }}>
-                            I agree to receive SMS messages about my roof visualization and estimate. Message &amp; data rates may apply. Reply STOP to opt out.
+                            By checking this box, I consent to receive automated SMS text messages from Metroplex Metal Roofs at the number provided regarding my roofing inquiry and estimate. Message frequency varies. Message &amp; data rates may apply. Text STOP to cancel, HELP for help. Consent is not a condition of purchase.
                           </span>
                         </label>
                         <label style={{ display: 'flex', gap: 10, alignItems: 'flex-start', marginBottom: 16, cursor: 'pointer' }}>
@@ -684,10 +733,15 @@ export default function VisualizerPage() {
           {/* ── results ── */}
           {step === 'results' && (
             <div style={{ animation: 'vfade 0.3s ease' }}>
-              <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 'clamp(22px,4vw,32px)', fontWeight: 700, color: C.white, marginBottom: 8, textAlign: 'center' }}>Your Roof Visualization</div>
-              <p style={{ fontSize: 14, color: C.muted, textAlign: 'center', marginBottom: 24 }}>
-                {selColor} {getRoofTypeLabel(selType ?? '')} · {address}
-              </p>
+              <div style={{ textAlign: 'center', marginBottom: 28 }}>
+                <div style={{ fontSize: 11, letterSpacing: 3, color: C.accent, textTransform: 'uppercase', marginBottom: 10, fontWeight: 600 }}>
+                  Your Roof Visualization
+                </div>
+                <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 'clamp(1.8rem,4vw,2.8rem)', fontWeight: 700, color: C.white, lineHeight: 1.1, marginBottom: 8 }}>
+                  {selColor} {getRoofTypeLabel(selType ?? '')}
+                </h2>
+                <p style={{ fontSize: 13, color: C.muted }}>{address}</p>
+              </div>
               {renderUrl ? (
                 <img src={renderUrl} alt="AI roof visualization" style={{ width: '100%', borderRadius: 8, display: 'block', marginBottom: 16, border: `1px solid ${C.border}` }} />
               ) : (
