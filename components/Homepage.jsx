@@ -92,11 +92,11 @@ const Nav = ({ scrolled }) => {
         padding:"0 32px",
         display:"flex",alignItems:"center",justifyContent:"space-between",
       }}>
-        <button className="nav-logo" onClick={()=>{setMOpen(false);setTimeout(()=>window.scrollTo({top:0,behavior:"instant"}),50);}} style={{padding:0,flexShrink:0}}>
+        <div className="nav-logo" onClick={()=>{setMOpen(false);setTimeout(()=>window.scrollTo({top:0,behavior:"instant"}),50);}} style={{padding:0,flexShrink:0,cursor:"pointer"}}>
           <div style={{ paddingBottom: 6 }}>
             <Logo size={1.25}/>
           </div>
-        </button>
+        </div>
         {/* Desktop links */}
         <div className="nav-links" style={{display:"flex",gap:28,alignItems:"center"}}>
           {NAV_LINKS.map(l=>(

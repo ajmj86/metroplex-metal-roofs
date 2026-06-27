@@ -72,7 +72,7 @@ export default async function EstimatePage({ searchParams }: EstimatePageProps) 
         color: C.white,
         fontFamily: "'Outfit',system-ui,sans-serif",
       }}>
-        <div style={{ maxWidth: 760, margin: '0 auto', padding: 'clamp(40px,5vw,60px) clamp(20px,5vw,48px)' }}>
+        <div style={{ maxWidth: 700, margin: '0 auto', padding: 'clamp(40px,5vw,60px) clamp(20px,5vw,48px)' }}>
           {/* Heading */}
           <div style={{ textAlign: 'center', marginBottom: 16 }}>
             <div style={{ fontSize: 13, letterSpacing: 4, color: C.accent, textTransform: 'uppercase', marginBottom: 20, fontWeight: 600, fontFamily: "'Outfit',sans-serif" }}>

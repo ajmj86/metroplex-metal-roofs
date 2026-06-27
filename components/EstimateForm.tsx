@@ -344,7 +344,7 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
       <>
         <SiteNav/>
         <div style={{ paddingTop: 84, paddingBottom: 120 }}>
-          <div style={{ maxWidth: 520, margin: '0 auto' }}>
+          <div style={{ maxWidth: 700, margin: '0 auto' }}>
             <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 8, padding: '48px 32px', textAlign: 'center' }}>
               <svg width="44" height="44" viewBox="0 0 44 44" style={{ animation: 'espin 1.1s linear infinite', display: 'inline-block', marginBottom: 20 }}>
                 <circle cx="22" cy="22" r="18" stroke={C.border} strokeWidth="3" fill="none" />
@@ -401,7 +401,7 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
     <>
       <SiteNav/>
       <div style={{ paddingTop: 84 }}>
-        <div style={{ maxWidth: 560, margin: '0 auto', paddingBottom: 120 }}>
+        <div style={{ maxWidth: 700, margin: '0 auto', paddingBottom: 120 }}>
           {!showManual ? (
             <>
               {errorMsg && (
