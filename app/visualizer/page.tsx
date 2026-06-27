@@ -509,7 +509,7 @@ export default function VisualizerPage() {
                             background: selColor === c.name ? `${C.accentDark}33` : C.card,
                             display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 6
                           }}>
-                            <span style={{ fontSize: 10, color: selColor === c.name ? C.accent : C.mutedLight, fontFamily: "'Outfit',sans-serif", lineHeight: 1.3 }}>{c.name}</span>
+                            <span style={{ fontSize: 12, color: selColor === c.name ? C.accent : C.mutedLight, fontFamily: "'Outfit',sans-serif", lineHeight: 1.3 }}>{c.name}</span>
                             {selColor === c.name && <span style={{ fontSize: 11, color: C.accent, fontWeight: 700 }}>✓</span>}
                           </div>
                         </div>

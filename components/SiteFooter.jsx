@@ -24,8 +24,8 @@ export function SiteFooter({ setActiveTab = () => {}, setPage = null }) {
 
   return (
     <footer style={{borderTop:`1px solid ${C.border}`,padding:"48px 32px 28px",background:C.black}}>
-      <div className="inner">
-        <div className="grid-2a" style={{gap:40,marginBottom:48}}>
+      <div style={{maxWidth:1200,margin:"0 auto",padding:"0 clamp(20px,5vw,48px)"}}>
+        <div className="sfooter-grid" style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr 1fr",gap:40,marginBottom:48}}>
           <div>
             <Logo size={1.15} light={false}/>
             <p style={{marginTop:18,fontSize:16,color:C.muted,lineHeight:1.8,maxWidth:260}}>
@@ -97,6 +97,14 @@ export function SiteFooter({ setActiveTab = () => {}, setPage = null }) {
           </div>
         </div>
       </div>
+      <style>{`
+        @media (max-width: 768px) {
+          .sfooter-grid { grid-template-columns: 1fr 1fr !important; }
+        }
+        @media (max-width: 480px) {
+          .sfooter-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
     </footer>
   );
 }

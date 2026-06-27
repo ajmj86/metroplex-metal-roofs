@@ -93,7 +93,9 @@ const Nav = ({ scrolled }) => {
         display:"flex",alignItems:"center",justifyContent:"space-between",
       }}>
         <button className="nav-logo" onClick={()=>{setMOpen(false);setTimeout(()=>window.scrollTo({top:0,behavior:"instant"}),50);}} style={{padding:0,flexShrink:0}}>
-          <Logo size={1.25}/>
+          <div style={{ paddingBottom: 6 }}>
+            <Logo size={1.25}/>
+          </div>
         </button>
         {/* Desktop links */}
         <div className="nav-links" style={{display:"flex",gap:28,alignItems:"center"}}>

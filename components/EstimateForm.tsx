@@ -412,12 +412,6 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
 
               {/* Address field */}
               <div style={{ marginBottom: 24 }}>
-                <div style={{ fontFamily: "'Cormorant Garamond',Georgia,serif", fontSize: 22, fontWeight: 700, color: C.white, marginBottom: 8 }}>
-                  Enter your property address
-                </div>
-                <p style={{ fontSize: 13, color: C.muted, lineHeight: 1.7, marginBottom: 16 }}>
-                  We&apos;ll use satellite data to calculate your exact roof size.
-                </p>
                 <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 6, padding: 6, display: 'flex', gap: 6, alignItems: 'center', flexWrap: 'wrap' }}>
                   <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', minWidth: 160 }}>
                     <svg width="14" height="14" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0 }}>
@@ -523,7 +517,7 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
                               background: standaloneColor === c.name ? `${C.accentDark}33` : C.card,
                               display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 6
                             }}>
-                              <span style={{ fontSize: 10, color: standaloneColor === c.name ? C.accent : C.mutedLight, fontFamily: "'Outfit',sans-serif", lineHeight: 1.3 }}>{c.name}</span>
+                              <span style={{ fontSize: 12, color: standaloneColor === c.name ? C.accent : C.mutedLight, fontFamily: "'Outfit',sans-serif", lineHeight: 1.3 }}>{c.name}</span>
                               {standaloneColor === c.name && <span style={{ fontSize: 11, color: C.accent, fontWeight: 700 }}>✓</span>}
                             </div>
                           </div>
