@@ -364,7 +364,6 @@ export default function VisualizerPage() {
         @keyframes vspin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
         @keyframes vfade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
         @keyframes vchoice{0%{transform:scale(1)}50%{transform:scale(0.97)}100%{transform:scale(1)}}
-        html { overflow-y: scroll; }
       `}</style>
       <div style={{ background: C.black, minHeight: '100vh', color: C.white, fontFamily: "'Outfit',system-ui,sans-serif" }}>
 

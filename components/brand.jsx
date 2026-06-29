@@ -19,11 +19,6 @@ export const fonts = `@import url('https://fonts.googleapis.com/css2?family=Corm
 export const globalStyles = `
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
-  body { overflow-x: hidden; }
-  ::-webkit-scrollbar { width: 10px; }
-  ::-webkit-scrollbar-track { background: #09090A; }
-  ::-webkit-scrollbar-thumb { background: #27272A; border-radius: 4px; }
-  body { scrollbar-width: thin; scrollbar-color: #27272A #09090A; }
   a { color: inherit; text-decoration: none; }
   button { cursor: pointer; border: none; background: none; font-family: inherit; }
   input { font-family: inherit; }
