@@ -464,7 +464,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
               <div style={{background:C.surface,border:`1px solid ${C.border}`,borderRadius:8,padding:"clamp(28px,4vw,48px)",height:"100%"}}>
                 <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:32}}>
                   <div style={{width:10,height:10,borderRadius:"50%",background:"#52525B",flexShrink:0}}/>
-                  <div style={{fontSize:11,letterSpacing:2.5,textTransform:"uppercase",color:C.muted}}>Asphalt Shingle Roof</div>
+                  <div style={{fontSize:14,letterSpacing:2.5,textTransform:"uppercase",color:C.muted}}>Asphalt Shingle Roof</div>
                 </div>
                 <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(22px,3vw,32px)",fontWeight:700,color:C.white,marginBottom:32,lineHeight:1.2}}>
                   A cost you keep<br/>paying — forever.
@@ -476,9 +476,9 @@ const HomePage = ({ activeTab, setActiveTab }) => {
                   {icon:"↑", label:"Trajectory",           val:"Deductibles and home values both trending up — your exposure grows every year"},
                 ].map(item=>(
                   <div key={item.label} style={{display:"flex",gap:16,padding:"18px 0",borderBottom:`1px solid ${C.border}`,alignItems:"flex-start"}}>
-                    <div style={{width:28,height:28,borderRadius:"50%",background:C.card,border:`1px solid ${C.border}`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:11,color:C.muted,flexShrink:0,marginTop:2}}>{item.icon}</div>
+                    <div style={{width:28,height:28,borderRadius:"50%",background:C.card,border:`1px solid ${C.border}`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:13,color:C.muted,flexShrink:0,marginTop:2}}>{item.icon}</div>
                     <div>
-                      <div style={{fontSize:10,letterSpacing:1.5,textTransform:"uppercase",color:C.muted,marginBottom:4}}>{item.label}</div>
+                      <div style={{fontSize:12,letterSpacing:1.5,textTransform:"uppercase",color:C.muted,marginBottom:4}}>{item.label}</div>
                       <div style={{fontSize:16,color:C.text,lineHeight:1.6}}>{item.val}</div>
                     </div>
                   </div>
@@ -499,7 +499,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
                 <div style={{position:"absolute",top:0,left:0,right:0,height:3,background:`linear-gradient(90deg,${C.accentDark},${C.accent},${C.accentDark})`}}/>
                 <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:32}}>
                   <div style={{width:10,height:10,borderRadius:"50%",background:C.accent,flexShrink:0}}/>
-                  <div style={{fontSize:11,letterSpacing:2.5,textTransform:"uppercase",color:C.accent}}>Metal Roof</div>
+                  <div style={{fontSize:14,letterSpacing:2.5,textTransform:"uppercase",color:C.accent}}>Metal Roof</div>
                 </div>
                 <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(22px,3vw,32px)",fontWeight:700,color:C.white,marginBottom:32,lineHeight:1.2}}>
                   One investment.<br/>Decades of returns.
@@ -507,14 +507,14 @@ const HomePage = ({ activeTab, setActiveTab }) => {
                 {[
                   {icon:"∞", label:"Replacement cycle",     val:"Once. A quality metal roof outlasts the mortgage — and then some.", gold:true},
                   {icon:"▼", label:"Insurance premiums",    val:"Metal roofs qualify for significant carrier discounts in Texas hail zones.", gold:true},
-                  {icon:"❄", label:"Energy savings",        val:"Metal's thermal properties reduce cooling costs — a real line item in DFW summers.", gold:false},
+                  {icon:"❄", label:"Energy savings",        val:"Metal's thermal properties reduce cooling costs — a real line item in DFW summers.", gold:true},
                   {icon:"◆", label:"Curb appeal & value",   val:"Clean lines, premium materials, and a profile that reads as intentional — not default. Metal roofing has become the standard on new construction across DFW's most sought-after communities.", gold:true},
                   {icon:"✓", label:"The 20–30 year picture", val:"When you account for avoided replacements, insurance premium savings, and energy reduction, metal typically pays for itself within the life of your home.", gold:true},
                 ].map(item=>(
                   <div key={item.label} style={{display:"flex",gap:16,padding:"18px 0",borderBottom:`1px solid ${C.border}`,alignItems:"flex-start"}}>
-                    <div style={{width:28,height:28,borderRadius:"50%",background:item.gold?`${C.accentDark}44`:C.surface,border:`1px solid ${item.gold?C.accentDark:C.border}`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:11,color:item.gold?C.accent:C.muted,flexShrink:0,marginTop:2}}>{item.icon}</div>
+                    <div style={{width:28,height:28,borderRadius:"50%",background:item.gold?`${C.accentDark}44`:C.surface,border:`1px solid ${item.gold?C.accentDark:C.border}`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:13,color:item.gold?C.accent:C.muted,flexShrink:0,marginTop:2}}>{item.icon}</div>
                     <div>
-                      <div style={{fontSize:10,letterSpacing:1.5,textTransform:"uppercase",color:item.gold?C.accent:C.muted,marginBottom:4}}>{item.label}</div>
+                      <div style={{fontSize:12,letterSpacing:1.5,textTransform:"uppercase",color:item.gold?C.accent:C.muted,marginBottom:4}}>{item.label}</div>
                       <div style={{fontSize:16,color:C.text,lineHeight:1.6}}>{item.val}</div>
                     </div>
                   </div>
