@@ -464,7 +464,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
               <div style={{background:C.surface,border:`1px solid ${C.border}`,borderRadius:8,padding:"clamp(28px,4vw,48px)",height:"100%"}}>
                 <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:32}}>
                   <div style={{width:10,height:10,borderRadius:"50%",background:"#52525B",flexShrink:0}}/>
-                  <div style={{fontSize:14,letterSpacing:2.5,textTransform:"uppercase",color:C.muted}}>Asphalt Shingle Roof</div>
+                  <div style={{fontSize:17,letterSpacing:2.5,textTransform:"uppercase",color:C.muted}}>Asphalt Shingle Roof</div>
                 </div>
                 <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(22px,3vw,32px)",fontWeight:700,color:C.white,marginBottom:32,lineHeight:1.2}}>
                   A cost you keep<br/>paying — forever.
@@ -499,7 +499,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
                 <div style={{position:"absolute",top:0,left:0,right:0,height:3,background:`linear-gradient(90deg,${C.accentDark},${C.accent},${C.accentDark})`}}/>
                 <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:32}}>
                   <div style={{width:10,height:10,borderRadius:"50%",background:C.accent,flexShrink:0}}/>
-                  <div style={{fontSize:14,letterSpacing:2.5,textTransform:"uppercase",color:C.accent}}>Metal Roof</div>
+                  <div style={{fontSize:17,letterSpacing:2.5,textTransform:"uppercase",color:C.accent}}>Metal Roof</div>
                 </div>
                 <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(22px,3vw,32px)",fontWeight:700,color:C.white,marginBottom:32,lineHeight:1.2}}>
                   One investment.<br/>Decades of returns.
@@ -512,7 +512,24 @@ const HomePage = ({ activeTab, setActiveTab }) => {
                   {icon:"✓", label:"The 20–30 year picture", val:"When you account for avoided replacements, insurance premium savings, and energy reduction, metal typically pays for itself within the life of your home.", gold:true},
                 ].map(item=>(
                   <div key={item.label} style={{display:"flex",gap:16,padding:"18px 0",borderBottom:`1px solid ${C.border}`,alignItems:"flex-start"}}>
-                    <div style={{width:28,height:28,borderRadius:"50%",background:item.gold?`${C.accentDark}44`:C.surface,border:`1px solid ${item.gold?C.accentDark:C.border}`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:13,color:item.gold?C.accent:C.muted,flexShrink:0,marginTop:2}}>{item.icon}</div>
+                    <div style={{width:28,height:28,borderRadius:"50%",background:item.gold?`${C.accentDark}44`:C.surface,border:`1px solid ${item.gold?C.accentDark:C.border}`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:13,color:item.gold?C.accent:C.muted,flexShrink:0,marginTop:2}}>
+                      {item.icon === '❄' ? (
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <line x1="12" y1="2" x2="12" y2="22"/>
+                          <line x1="2" y1="12" x2="22" y2="12"/>
+                          <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>
+                          <line x1="19.07" y1="4.93" x2="4.93" y2="19.07"/>
+                          <line x1="12" y1="2" x2="9" y2="5"/>
+                          <line x1="12" y1="2" x2="15" y2="5"/>
+                          <line x1="12" y1="22" x2="9" y2="19"/>
+                          <line x1="12" y1="22" x2="15" y2="19"/>
+                          <line x1="2" y1="12" x2="5" y2="9"/>
+                          <line x1="2" y1="12" x2="5" y2="15"/>
+                          <line x1="22" y1="12" x2="19" y2="9"/>
+                          <line x1="22" y1="12" x2="19" y2="15"/>
+                        </svg>
+                      ) : item.icon}
+                    </div>
                     <div>
                       <div style={{fontSize:12,letterSpacing:1.5,textTransform:"uppercase",color:item.gold?C.accent:C.muted,marginBottom:4}}>{item.label}</div>
                       <div style={{fontSize:16,color:C.text,lineHeight:1.6}}>{item.val}</div>
