@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { C, LEGAL_ENTITY, DBA_NAME, PHONE, YEAR, fonts, globalStyles, Logo } from "./brand";
 import { SiteFooter } from "./SiteFooter";
+import Counter from '@/components/Counter'
 
 /* ── Image Placeholder ── */
 const ImgPlaceholder = ({ label, tag, style={} }) => (
@@ -49,24 +50,7 @@ const Reveal = ({ children, delay=0 }) => {
   );
 };
 
-/* ── Animated counter ── */
-const Counter = ({ to, suffix="" }) => {
-  const [val,setVal] = useState(0);
-  const ref = useRef(null);
-  const started = useRef(false);
-  useEffect(()=>{
-    const obs = new IntersectionObserver(([e])=>{
-      if(e.isIntersecting && !started.current){
-        started.current=true;
-        let s=0; const step=to/60;
-        const t=setInterval(()=>{ s+=step; if(s>=to){setVal(to);clearInterval(t);}else setVal(Math.floor(s)); },16);
-      }
-    },{threshold:0.5});
-    if(ref.current) obs.observe(ref.current);
-    return ()=>obs.disconnect();
-  },[to]);
-  return <span ref={ref}>{val.toLocaleString()}{suffix}</span>;
-};
+
 
 const NAV_LINKS = [
   {label:"About Us",      href:"/about"},
@@ -706,7 +690,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
           <Reveal delay={0.1}>
             <div style={{display:"flex",flexWrap:"wrap",gap:9,justifyContent:"center"}}>
               {cities.map(city=>(
-                <a key={city} href="#" style={{padding:"9px 18px",border:`1px solid ${C.border}`,borderRadius:2,fontSize:12,color:C.mutedLight,letterSpacing:1,transition:"all 0.2s"}}
+                <a key={city} href={city==="Southlake"?"/metal-roofing-southlake-tx":"#"} style={{padding:"9px 18px",border:`1px solid ${C.border}`,borderRadius:2,fontSize:12,color:C.mutedLight,letterSpacing:1,transition:"all 0.2s"}}
                   onMouseEnter={e=>{e.currentTarget.style.borderColor=C.accent;e.currentTarget.style.color=C.accent;}}
                   onMouseLeave={e=>{e.currentTarget.style.borderColor=C.border;e.currentTarget.style.color=C.mutedLight;}}
                 >{city}</a>

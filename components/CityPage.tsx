@@ -5,6 +5,7 @@ import Link from 'next/link'
 import SiteNav from '@/components/SiteNav'
 import { SiteFooter } from '@/components/SiteFooter'
 import { C, fonts, globalStyles } from '@/components/brand'
+import Counter from '@/components/Counter'
 
 /*
   ══════════════════════════════════════
@@ -175,7 +176,7 @@ export default function CityPage({ city }: { city: CityData }) {
                 <div style={{ background: C.card, border: `1px solid ${C.accentDark}`, borderRadius: 8, padding: '40px 48px', textAlign: 'center', minWidth: 220, position: 'relative', overflow: 'hidden' }}>
                   <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg,${C.accentDark},${C.accent},${C.accentDark})` }}/>
                   <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 52, fontWeight: 700, color: C.accent, lineHeight: 1, marginBottom: 8 }}>
-                    {city.localStat.val}
+                    $<Counter to={parseFloat(city.localStat.val.replace(/[^0-9.]/g, ''))} suffix={city.localStat.val.replace(/[0-9.]/g, '').replace('$', '')} />
                   </div>
                   <div style={{ fontSize: 10, letterSpacing: 2, textTransform: 'uppercase', color: C.muted, marginBottom: 4 }}>{city.localStat.label}</div>
                   <div style={{ fontSize: 9, color: C.muted, opacity: 0.6 }}>{city.localStat.source}</div>

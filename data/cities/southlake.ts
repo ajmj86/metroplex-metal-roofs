@@ -57,7 +57,7 @@ export const SOUTHLAKE_DATA: CityData = {
   faqs: [
     {
       q: 'How much does a standing seam metal roof cost in Southlake, TX?',
-      a: 'Standing seam metal roofing in Southlake typically ranges from $18,000 to $45,000 depending on roof size, pitch, and complexity. We provide satellite-based estimates built from actual roof measurements — no guesswork, no in-person visit required before you have a number.',
+      a: 'Standing seam metal roofing in Southlake typically ranges from $18,000 to $72,000 depending on roof size, pitch, and complexity — with most homes in the 20 to 40 square range. We provide satellite-based estimates built from actual roof measurements so you have a real number before any conversation begins.',
     },
     {
       q: 'Will my Southlake HOA approve a metal roof?',
@@ -69,7 +69,7 @@ export const SOUTHLAKE_DATA: CityData = {
     },
     {
       q: 'How long does metal roof installation take in Southlake?',
-      a: 'Most residential metal roofing installations in Southlake are completed in two to four days depending on roof size and complexity. Standing seam typically takes longer than stone-coated steel due to the on-site forming process. We provide a timeline estimate specific to your home before any work begins.',
+      a: 'Most residential metal roofing installations in Southlake are completed in one to three days depending on roof size and complexity. Standing seam typically takes longer than stone-coated steel due to the on-site forming process. We provide a timeline estimate specific to your home before any work begins.',
     },
     {
       q: 'Is a metal roof worth it on a home in the Carroll ISD area?',
