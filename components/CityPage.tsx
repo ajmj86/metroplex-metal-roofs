@@ -88,10 +88,10 @@ export default function CityPage({ city }: { city: CityData }) {
   ]
 
   const whyMetal = [
-    { n: '50+',     unit: 'Years',   label: 'Lifespan vs. 8–15 for asphalt' },
-    { n: '35',      unit: '%',       label: 'Insurance premium discount' },
-    { n: '15',      unit: '%',       label: 'Cooling cost reduction' },
-    { n: 'Class 4', unit: '',        label: 'Highest hail impact rating' },
+    { val: 50,  suffix: '+ yrs', label: 'Roof Lifespan' },
+    { val: 35,  suffix: '%',     label: 'Insurance Savings' },
+    { val: 25,  suffix: '%',     label: 'Energy Cost Reduction' },
+    { val: 340, suffix: '%',     label: 'ROI vs. Asphalt' },
   ]
 
   const steps = [
@@ -226,17 +226,24 @@ export default function CityPage({ city }: { city: CityData }) {
                 center
               />
             </Reveal>
-            <div className="g4" style={{ gap: 2, marginBottom: 56 }}>
-              {whyMetal.map((s, i) => (
-                <Reveal key={s.label} delay={i * 0.08}>
-                  <div style={{ padding: '40px 28px', background: C.card, border: `1px solid ${C.border}`, borderRadius: 4, textAlign: 'center', height: '100%' }}>
-                    <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 'clamp(36px,4vw,52px)', fontWeight: 700, color: C.accent, lineHeight: 1, marginBottom: 4 }}>
-                      {s.n}<span style={{ fontSize: '0.5em', color: C.accentDark }}>{s.unit}</span>
+            <div style={{ borderTop: `1px solid ${C.border}`, borderBottom: `1px solid ${C.border}`, background: C.surface, marginBottom: 48 }}>
+              <div className="inner grid-4" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)' }}>
+                {whyMetal.map((s, i) => (
+                  <Reveal key={s.label} delay={i * 0.07}>
+                    <div style={{ padding: '44px 32px', borderRight: i < 3 ? `1px solid ${C.border}` : 'none', textAlign: 'center' }}>
+                      <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 'clamp(40px,4vw,52px)', fontWeight: 700, color: C.accent, lineHeight: 1, marginBottom: 8 }}>
+                        <Counter to={s.val} suffix={s.suffix}/>
+                      </div>
+                      <div style={{ fontSize: 10, letterSpacing: 2, textTransform: 'uppercase', color: C.muted }}>{s.label}</div>
                     </div>
-                    <div style={{ fontSize: 11, color: C.muted, lineHeight: 1.6, marginTop: 8 }}>{s.label}</div>
-                  </div>
-                </Reveal>
-              ))}
+                  </Reveal>
+                ))}
+              </div>
+              <div style={{ borderTop: `1px solid ${C.border}`, padding: '8px 24px', textAlign: 'center' }}>
+                <p style={{ fontSize: 12, color: C.muted, maxWidth: 640, margin: '8px auto', lineHeight: 1.6, fontFamily: "'Outfit',sans-serif" }}>
+                  Figures represent industry estimates and vary by home, carrier, and installation. Consult your insurance provider for personalized savings.
+                </p>
+              </div>
             </div>
 
             {/* Economics comparison */}
