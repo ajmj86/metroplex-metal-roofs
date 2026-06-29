@@ -368,24 +368,20 @@ const HomePage = ({ activeTab, setActiveTab }) => {
             <span style={{fontSize:"clamp(0.75rem,1.1vw,0.95rem)",letterSpacing:3.5,color:C.accent,textTransform:"uppercase",fontWeight:500}}>Premium Metal Roofing · Dallas–Fort Worth</span>
           </div>
           <h1 style={{fontFamily:"'Cormorant Garamond',Georgia,serif",fontSize:"clamp(3.5rem,5.5vw,7rem)",fontWeight:700,lineHeight:1.05,color:C.white,marginBottom:24,maxWidth:720,animation:"fadeUp 0.8s ease 0.1s both"}}>
-            The Last Roof<br/><span style={{color:C.accent,fontStyle:"italic"}}>You'll Ever Need</span>
+            The Last Roof<br/><span style={{color:C.accent,fontStyle:"italic"}}>You'll Ever Put On This House</span>
           </h1>
           <p style={{fontSize:"clamp(1.125rem,1.3vw,1.1875rem)",lineHeight:1.8,color:C.mutedLight,maxWidth:480,marginBottom:40,fontWeight:300,animation:"fadeUp 0.8s ease 0.2s both"}}>
-            Standing seam metal roofing engineered for North Texas weather. 50-year lifespan. Class 4 hail rating. Up to 35% insurance discount.
+            For DFW homeowners done replacing their asphalt roof every decade.
           </p>
           <div style={{display:"flex",gap:14,flexWrap:"wrap",alignItems:"center",animation:"fadeUp 0.8s ease 0.3s both"}}>
             <a href="/visualizer" className="cta-btn" style={{display:"inline-flex",alignItems:"center",gap:10,padding:"15px 32px",background:C.accent,color:C.black,fontSize:12,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"all 0.2s",whiteSpace:"nowrap"}}
               onMouseEnter={e=>{e.currentTarget.style.background=C.accentLight;}}
               onMouseLeave={e=>{e.currentTarget.style.background=C.accent;}}
             >See Your Home With Metal →</a>
-            <a href="/estimate" className="cta-btn" style={{display:"inline-flex",alignItems:"center",padding:"15px 28px",background:C.black,color:C.accent,fontSize:12,letterSpacing:2,textTransform:"uppercase",fontWeight:500,borderRadius:2,transition:"all 0.2s",whiteSpace:"nowrap"}}
-              onMouseEnter={e=>{e.currentTarget.style.background=C.accent;e.currentTarget.style.color=C.black;}}
-              onMouseLeave={e=>{e.currentTarget.style.background=C.black;e.currentTarget.style.color=C.accent;}}
-            >Get an Instant Estimate</a>
           </div>
           {/* Trust bar */}
           <div className="trust-bar" style={{display:"flex",gap:28,marginTop:48,flexWrap:"wrap",animation:"fadeUp 0.8s ease 0.4s both"}}>
-            {["Licensed & Insured Partners","Satellite Imaging Estimates","Class 4 Impact Rating","DFW Local"].map(t=>(
+            {["50-Year Lifespan","Up to 35% Insurance Discount","AI Render Before You Commit"].map(t=>(
               <div key={t} style={{display:"flex",alignItems:"center",gap:8}}>
                 <div style={{width:5,height:5,borderRadius:"50%",background:C.accent,flexShrink:0}}/>
                 <span style={{fontSize:12,color:C.muted}}>{t}</span>
@@ -394,6 +390,38 @@ const HomePage = ({ activeTab, setActiveTab }) => {
           </div>
         </div>
       </section>
+
+      {/* ── DAVID K. PULL QUOTE ── */}
+      <div style={{background:C.card,borderTop:`1px solid ${C.border}`,padding:"clamp(40px,5vw,64px) 24px",textAlign:"center"}}>
+        <div style={{maxWidth:640,margin:"0 auto"}}>
+          <div style={{color:"#B8935A",fontSize:20,marginBottom:20,letterSpacing:2}}>★★★★★</div>
+          <p style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(1.125rem,1.5vw,1.375rem)",fontStyle:"italic",color:C.white,lineHeight:1.8,marginBottom:20}}>
+            "Metroplex showed me a rendering of my actual house with a metal roof before we even talked numbers. Completely different level of professionalism."
+          </p>
+          <div style={{fontSize:13,color:C.muted,fontFamily:"'Outfit',sans-serif"}}>— David K., Westlake TX</div>
+        </div>
+      </div>
+
+      {/* ── STATS ── */}
+      <section style={{borderTop:`1px solid ${C.border}`,background:C.surface}}>
+        <div className="inner grid-4">
+          {stats.map((s,i)=>(
+            <Reveal key={s.label} delay={i*0.07}>
+              <div className="stat-border" style={{padding:"44px 32px",borderRight:i<3?`1px solid ${C.border}`:"none",textAlign:"center"}}>
+                <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(40px,4vw,52px)",fontWeight:700,color:C.accent,lineHeight:1,marginBottom:8}}>
+                  <Counter to={s.val} suffix={s.suffix}/>
+                </div>
+                <div style={{fontSize:10,letterSpacing:2,textTransform:"uppercase",color:C.muted}}>{s.label}</div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+      <div style={{borderTop:`1px solid ${C.border}`,borderBottom:`1px solid ${C.border}`,background:C.surface,padding:"8px 24px",textAlign:"center"}}>
+        <p style={{fontFamily:"'Outfit',sans-serif",fontSize:12,color:C.muted,maxWidth:640,margin:"8px auto",lineHeight:1.6}}>
+          Figures represent industry estimates and vary by home, carrier, and installation. Consult your insurance provider for personalized savings.
+        </p>
+      </div>
 
       {/* ── ABOUT ── */}
       <section id="about" className="section-pad" style={{background:C.black,borderTop:`1px solid ${C.border}`}}>
@@ -411,22 +439,6 @@ const HomePage = ({ activeTab, setActiveTab }) => {
               <p style={{fontSize:15,color:C.mutedLight,lineHeight:1.9,marginBottom:0}}>A metal roof isn't just designed to outperform asphalt. It's designed to outlast it. While traditional shingles typically need replacement every 8–10 years in DFW, a properly installed metal roof is built to protect your home for generations. The return is real: lower lifetime ownership costs, greater energy efficiency, enhanced curb appeal, and the peace of mind of knowing you'll likely never think about replacing your roof again.</p>
             </div>
           </Reveal>
-        </div>
-      </section>
-
-      {/* ── STATS ── */}
-      <section style={{borderTop:`1px solid ${C.border}`,borderBottom:`1px solid ${C.border}`,background:C.surface}}>
-        <div className="inner grid-4">
-          {stats.map((s,i)=>(
-            <Reveal key={s.label} delay={i*0.07}>
-              <div className="stat-border" style={{padding:"44px 32px",borderRight:i<3?`1px solid ${C.border}`:"none",textAlign:"center"}}>
-                <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(40px,4vw,52px)",fontWeight:700,color:C.accent,lineHeight:1,marginBottom:8}}>
-                  <Counter to={s.val} suffix={s.suffix}/>
-                </div>
-                <div style={{fontSize:10,letterSpacing:2,textTransform:"uppercase",color:C.muted}}>{s.label}</div>
-              </div>
-            </Reveal>
-          ))}
         </div>
       </section>
 
