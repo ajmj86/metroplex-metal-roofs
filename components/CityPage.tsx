@@ -386,7 +386,6 @@ export default function CityPage({ city }: { city: CityData }) {
                     <div style={{ fontSize: 14, color: C.white, fontWeight: 600 }}>{city.review.name}</div>
                     <div style={{ fontSize: 11, color: C.muted, marginTop: 3, letterSpacing: 1 }}>{city.review.neighborhood} · {city.name}, TX</div>
                   </div>
-                  <div style={{ fontSize: 10, color: C.muted, letterSpacing: 1.5, textTransform: 'uppercase' }}>Verified Google Review</div>
                 </div>
               </div>
             </Reveal>

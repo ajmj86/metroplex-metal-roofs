@@ -50,7 +50,7 @@ export const SOUTHLAKE_DATA: CityData = {
   review: {
     name: 'Robert M.',
     neighborhood: 'Timarron',
-    text: "Our HOA was the main concern — we weren't sure metal would be approved. The team provided everything we needed for the submission, and it sailed through. The standing seam looks better than anything else on the street.",
+    text: "Our HOA was the main concern, we weren't sure metal would be approved. The team provided everything we needed for the submission and it sailed through. The standing seam looks better than anything else on the street.",
     rating: 5,
   },
 
