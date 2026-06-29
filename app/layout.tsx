@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Metroplex Metal Roofs | Premium Metal Roofing Dallas–Fort Worth',
-  description: 'Standing seam metal roofing for DFW homeowners. 50-year lifespan, Class 4 hail rating, up to 35% insurance discount. Licensed & insured installers.',
+  title: 'Metroplex Metal Roofs | Luxury Metal Roofing Dallas–Fort Worth',
+  description: 'Standing seam and stone-coated steel for DFW homeowners ready to stop replacing their roof. Satellite estimates. Credentialed installers. The last roof you\'ll ever need.',
 };
 
 export default function RootLayout({

@@ -2,7 +2,8 @@ import type { Metadata } from 'next'
 import EstimateForm from '@/components/EstimateForm'
 
 export const metadata: Metadata = {
-  title: 'Get Your Metal Roof Estimate | Metroplex Metal Roofs',
+  title: 'Free Metal Roof Estimate | Satellite-Based Pricing | Metroplex Metal Roofs',
+  description: 'Get a precision metal roof estimate built from satellite measurements of your actual roof — not a guess from the driveway. Serving DFW homeowners across 15+ suburbs.',
 }
 
 const C = {
