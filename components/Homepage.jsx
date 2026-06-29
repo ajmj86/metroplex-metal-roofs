@@ -421,25 +421,6 @@ const HomePage = ({ activeTab, setActiveTab }) => {
         </p>
       </div>
 
-      {/* ── ABOUT ── */}
-      <section id="about" className="section-pad" style={{background:C.black,borderTop:`1px solid ${C.border}`}}>
-        <div className="inner">
-          <Reveal>
-            <div style={{maxWidth:680}}>
-              <div style={{marginBottom:20}}>
-                <div style={{fontSize:15,letterSpacing:3,color:C.accent,textTransform:"uppercase"}}>About Metroplex Metal Roofs</div>
-              </div>
-              <h2 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(28px,4vw,48px)",fontWeight:700,color:C.white,lineHeight:1.15,marginBottom:28}}>
-                DFW's Premium Metal<br/><span style={{color:C.accent,fontStyle:"italic"}}>Roofing Specialists</span>
-              </h2>
-              <p style={{fontSize:15,color:C.mutedLight,lineHeight:1.9,marginBottom:16}}>Metroplex Metal Roofs was built for homeowners who believe exceptional homes deserve exceptional craftsmanship. We specialize in premium residential metal roofing for discerning Dallas–Fort Worth homeowners who value quality, longevity, and timeless design over short-term solutions.</p>
-              <p style={{fontSize:15,color:C.mutedLight,lineHeight:1.9,marginBottom:16}}>Every project is carefully planned, precision-measured, and engineered for the unique demands of the North Texas climate. The result is more than a new roof. It's a permanent upgrade that enhances your home's beauty, strengthens its protection, and preserves its value for decades to come.</p>
-              <p style={{fontSize:15,color:C.mutedLight,lineHeight:1.9,marginBottom:0}}>A metal roof isn't just designed to outperform asphalt. It's designed to outlast it. While traditional shingles typically need replacement every 8–10 years in DFW, a properly installed metal roof is built to protect your home for generations. The return is real: lower lifetime ownership costs, greater energy efficiency, enhanced curb appeal, and the peace of mind of knowing you'll likely never think about replacing your roof again.</p>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
       {/* ── ECONOMICS ── */}
       <section id="why-metal" className="section-pad" style={{background:C.black,borderTop:`1px solid ${C.border}`,position:"relative",overflow:"hidden"}}>
         {/* Subtle diagonal texture */}
