@@ -69,7 +69,7 @@ const Counter = ({ to, suffix="" }) => {
 };
 
 const NAV_LINKS = [
-  {label:"About Us",      href:"#about"},
+  {label:"About Us",      href:"/about"},
   {label:"Why Metal",     href:"#why-metal"},
   {label:"Gallery",       href:"#gallery"},
   {label:"Our Process",   href:"#process"},

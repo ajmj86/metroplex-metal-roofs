@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react'
 import { C, Logo } from './brand'
 
 const NAV_LINKS = [
-  {label:"About Us",      href:"/#about"},
+  {label:"About Us",      href:"/about"},
   {label:"Why Metal",     href:"/#why-metal"},
   {label:"Gallery",       href:"/#gallery"},
   {label:"Our Process",   href:"/#process"},
