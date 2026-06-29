@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import EstimateForm from '@/components/EstimateForm'
-import { SiteFooter } from '@/components/SiteFooter'
 
 export const metadata: Metadata = {
   title: 'Get Your Metal Roof Estimate | Metroplex Metal Roofs',
@@ -104,7 +103,6 @@ export default async function EstimatePage({ searchParams }: EstimatePageProps) 
             utmCampaign={utmCampaign}
           />
         </div>
-        <SiteFooter/>
       </div>
     </>
   )

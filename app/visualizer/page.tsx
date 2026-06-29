@@ -100,7 +100,7 @@ const GATE_SCREENS: GateScreen[] = [
       { value: 'asap',             label: 'As Soon as Possible',    icon: '🔥' },
       { value: '1_3_months',       label: 'Within 1–3 Months',     icon: '📆' },
       { value: '3_6_months',       label: '3–6 Months Out',        icon: '🗓️' },
-      { value: 'just_researching', label: 'Just Researching for Now', icon: '📚' },
+      { value: 'just_researching', label: 'Still Exploring My Options', icon: '📚' },
     ],
   },
 ]
@@ -250,17 +250,40 @@ export default function VisualizerPage() {
     setTimeout(() => {
       setPendingChoice(null)
       setGateScreen(s => s + 1)
+      setTimeout(() => window.scrollTo(0, 0), 0)
     }, 220)
+  }
+
+  function formatPhone(raw: string): string {
+    const digits = raw.replace(/\D/g, '').slice(0, 10)
+    if (digits.length < 4) return digits
+    if (digits.length < 7) return `(${digits.slice(0,3)}) ${digits.slice(3)}`
+    return `(${digits.slice(0,3)}) ${digits.slice(3,6)}-${digits.slice(6)}`
   }
 
   function validateContact() {
     const e: Record<string, string> = {}
-    if (!gateData.firstName.trim()) e.firstName = 'Required'
-    if (!gateData.lastName.trim()) e.lastName = 'Required'
-    if (!gateData.phone.trim()) e.phone = 'Required'
-    else if (!/^\(?\d{3}\)?[\s\-]?\d{3}[\s\-]?\d{4}$/.test(gateData.phone.replace(/\s/g, ''))) e.phone = 'Enter a valid 10-digit number'
-    if (!gateData.email.trim()) e.email = 'Required'
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(gateData.email)) e.email = 'Invalid email'
+
+    if (!gateData.firstName.trim())
+      e.firstName = 'Required'
+
+    const digits = gateData.phone.replace(/\D/g, '')
+    if (!gateData.phone.trim())
+      e.phone = 'Required'
+    else if (digits.length !== 10)
+      e.phone = 'Enter a valid 10-digit phone number'
+
+    if (!gateData.email.trim())
+      e.email = 'Required'
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(gateData.email.trim()))
+      e.email = 'Enter a valid email address'
+
+    if (!gateData.smsConsent)
+      e.smsConsent = 'You must consent to SMS to receive your visualization'
+
+    if (!gateData.emailConsent)
+      e.emailConsent = 'You must agree to receive email updates'
+
     return e
   }
 
@@ -341,15 +364,16 @@ export default function VisualizerPage() {
         @keyframes vspin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
         @keyframes vfade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
         @keyframes vchoice{0%{transform:scale(1)}50%{transform:scale(0.97)}100%{transform:scale(1)}}
+        html { overflow-y: scroll; }
       `}</style>
       <div style={{ background: C.black, minHeight: '100vh', color: C.white, fontFamily: "'Outfit',system-ui,sans-serif" }}>
 
-        <SiteNav/>
+        {(step === 'address' || step === 'results') && <SiteNav/>}
 
-        <div style={{ maxWidth: 700, margin: '0 auto', padding: 'clamp(40px,6vw,72px) clamp(20px,5vw,48px) 120px', paddingTop: 'clamp(108px,12vw,140px)' }}>
+        <div style={{ maxWidth: 700, margin: '0 auto', padding: 'clamp(40px,6vw,72px) clamp(20px,5vw,48px) 120px', paddingTop: step === 'address' || step === 'results' ? 'clamp(108px,12vw,140px)' : 40 }}>
 
           {/* ── step indicator ── */}
-          {step !== 'loading' && step !== 'results' && (
+          {step !== 'loading' && (
             <div style={{ textAlign: 'center', marginBottom: 40 }}>
               <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 'clamp(1.4rem,3vw,2rem)', fontWeight: 700, color: C.white, marginBottom: 24 }}>
                 Metal Roof Visualizer
@@ -593,7 +617,22 @@ export default function VisualizerPage() {
               )}
 
               <button
-                onClick={() => setStep('gate')}
+                onClick={() => {
+                  fetch('/api/lead-intake', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                      partial: true,
+                      leadOrigin: 'visualizer_partial',
+                      address,
+                      roofType: selType,
+                      colorSelected: selColor,
+                      timestamp: new Date().toISOString(),
+                    }),
+                  }).catch(() => {})
+                  window.scrollTo(0, 0)
+                  setStep('gate')
+                }}
                 disabled={!canProceed}
                 style={{ width: '100%', padding: '16px', background: canProceed ? C.accent : C.border, color: canProceed ? C.black : C.muted, fontSize: 12, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 700, borderRadius: 4, cursor: canProceed ? 'pointer' : 'not-allowed', border: 'none', fontFamily: "'Outfit',sans-serif", transition: 'all 0.2s', marginTop: 4 }}
                 onMouseEnter={e => { if (canProceed) e.currentTarget.style.background = C.accentLight }}
@@ -606,7 +645,7 @@ export default function VisualizerPage() {
 
           {/* ── gate ── */}
           {step === 'gate' && (
-            <div style={{ animation: 'vfade 0.3s ease', display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: 24 }}>
+            <div style={{ animation: 'vfade 0.3s ease', display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: 0 }}>
 
               {/* Card container */}
               <div style={{
@@ -630,17 +669,12 @@ export default function VisualizerPage() {
 
                 <div style={{ padding: 'clamp(24px,4vw,36px)' }}>
 
-                  {/* Step label */}
-                  <div style={{ fontSize: 10, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 16 }}>
-                    Step {gateScreen + 1} of 5
-                  </div>
-
                   {/* Screens 0–3: choice cards */}
                   {gateScreen < 4 && (() => {
                     const screen = GATE_SCREENS[gateScreen]
                     return (
                       <>
-                        <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 'clamp(20px,3.5vw,26px)', fontWeight: 700, color: C.white, lineHeight: 1.25, marginBottom: 8 }}>
+                        <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 26, fontWeight: 700, color: C.white, lineHeight: 1.25, marginBottom: 8 }}>
                           {screen.headline}
                         </h2>
                         <p style={{ fontSize: 13, color: C.muted, lineHeight: 1.65, marginBottom: 24 }}>
@@ -695,13 +729,21 @@ export default function VisualizerPage() {
                   {gateScreen === 4 && (() => {
                     const labelStyle = { fontSize: 10, letterSpacing: 2, textTransform: 'uppercase' as const, color: C.muted, marginBottom: 6 }
                     const errStyle = { fontSize: 11, color: '#F87171', marginTop: 4 }
+                    const formReady =
+                      gateData.firstName.trim().length > 0 &&
+                      gateData.phone.replace(/\D/g, '').length === 10 &&
+                      /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(gateData.email.trim()) &&
+                      gateData.smsConsent &&
+                      gateData.emailConsent
                     return (
                       <>
-                        <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 'clamp(20px,3.5vw,26px)', fontWeight: 700, color: C.white, lineHeight: 1.25, marginBottom: 8 }}>
+                        <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 26, fontWeight: 700, color: C.white, lineHeight: 1.25, marginBottom: 8 }}>
                           Almost there. How do we reach you?
                         </h2>
                         <p style={{ fontSize: 13, color: C.muted, lineHeight: 1.65, marginBottom: 24 }}>
-                          We&apos;ll send your AI-rendered roof design to this number — no spam, ever.
+                          {gateData.timeline === 'just_researching'
+                            ? "We'll send your render and some real numbers so you have everything you need when you're ready."
+                            : "We'll send your AI-rendered roof design to this number — no spam, ever."}
                         </p>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 12 }}>
                           <div>
@@ -711,18 +753,11 @@ export default function VisualizerPage() {
                               placeholder="Jane" style={iStyle} />
                             {contactErrors.firstName && <div style={errStyle}>{contactErrors.firstName}</div>}
                           </div>
-                          <div>
-                            <div style={labelStyle}>Last Name *</div>
-                            <input value={gateData.lastName}
-                              onChange={e => setGateData(d => ({ ...d, lastName: e.target.value }))}
-                              placeholder="Smith" style={iStyle} />
-                            {contactErrors.lastName && <div style={errStyle}>{contactErrors.lastName}</div>}
-                          </div>
                         </div>
                         <div style={{ marginBottom: 12 }}>
                           <div style={labelStyle}>Phone *</div>
                           <input value={gateData.phone} type="tel"
-                            onChange={e => setGateData(d => ({ ...d, phone: e.target.value }))}
+                            onChange={e => setGateData(d => ({ ...d, phone: formatPhone(e.target.value) }))}
                             placeholder="(817) 555-0100" style={iStyle} />
                           {contactErrors.phone && <div style={errStyle}>{contactErrors.phone}</div>}
                         </div>
@@ -741,6 +776,7 @@ export default function VisualizerPage() {
                             By checking this box, I consent to receive automated SMS text messages from Metroplex Metal Roofs at the number provided regarding my roofing inquiry and estimate. Message frequency varies. Message &amp; data rates may apply. Text STOP to cancel, HELP for help. Consent is not a condition of purchase.
                           </span>
                         </label>
+                        {contactErrors.smsConsent && <div style={{ fontSize: 11, color: '#F87171', marginTop: -6, marginBottom: 8 }}>{contactErrors.smsConsent}</div>}
                         <label style={{ display: 'flex', gap: 10, alignItems: 'flex-start', marginBottom: 16, cursor: 'pointer' }}>
                           <input type="checkbox" checked={gateData.emailConsent}
                             onChange={e => setGateData(d => ({ ...d, emailConsent: e.target.checked }))}
@@ -749,15 +785,24 @@ export default function VisualizerPage() {
                             I agree to receive email updates about my estimate and Metroplex Metal Roofs promotions.
                           </span>
                         </label>
+                        {contactErrors.emailConsent && <div style={{ fontSize: 11, color: '#F87171', marginTop: -6, marginBottom: 8 }}>{contactErrors.emailConsent}</div>}
                         <div style={{ fontSize: 10, color: C.muted, lineHeight: 1.7, marginBottom: 16, padding: '10px 12px', background: C.surface, borderRadius: 4, border: `1px solid ${C.border}` }}>
                           By submitting, you consent to being contacted by Metroplex Metal Roofs regarding your inquiry. Your information is never sold or shared with third parties.
                         </div>
                         <button
                           onClick={handleContactSubmit}
-                          disabled={gateLoading}
-                          style={{ width: '100%', padding: '15px', background: gateLoading ? C.accentDark : C.accent, color: C.black, fontSize: 12, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 700, borderRadius: 6, cursor: gateLoading ? 'not-allowed' : 'pointer', border: 'none', fontFamily: "'Outfit',sans-serif", transition: 'background 0.2s' }}
-                          onMouseEnter={e => { if (!gateLoading) e.currentTarget.style.background = C.accentLight }}
-                          onMouseLeave={e => { e.currentTarget.style.background = gateLoading ? C.accentDark : C.accent }}
+                          disabled={gateLoading || !formReady}
+                          style={{
+                            width: '100%', padding: '15px',
+                            background: gateLoading || !formReady ? C.border : C.accent,
+                            color: gateLoading || !formReady ? C.muted : C.black,
+                            fontSize: 12, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 700,
+                            borderRadius: 6,
+                            cursor: gateLoading || !formReady ? 'not-allowed' : 'pointer',
+                            border: 'none', fontFamily: "'Outfit',sans-serif", transition: 'all 0.2s'
+                          }}
+                          onMouseEnter={e => { if (!gateLoading && formReady) e.currentTarget.style.background = C.accentLight }}
+                          onMouseLeave={e => { e.currentTarget.style.background = gateLoading || !formReady ? C.border : C.accent }}
                         >{gateLoading ? 'Submitting…' : 'Generate My Visualization →'}</button>
                       </>
                     )
@@ -801,6 +846,9 @@ export default function VisualizerPage() {
                 Rendering <span style={{ color: C.accentLight }}>{selColor} {getRoofTypeLabel(selType ?? '')}</span>
                 {gateData.firstName ? ` for ${gateData.firstName}` : ''}
               </div>
+              <div style={{ fontSize: 12, color: C.muted, marginTop: 12, fontStyle: 'italic' }}>
+                Your render takes about 60 seconds — worth the wait.
+              </div>
             </div>
           )}
 
@@ -836,7 +884,7 @@ export default function VisualizerPage() {
           )}
 
         </div>
-        <SiteFooter/>
+        {step === 'address' && <SiteFooter/>}
       </div>
     </>
   )
