@@ -549,7 +549,9 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
   return (
     <>
       <SiteNav/>
-      <style>{`@keyframes efade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}`}</style>
+      <style>{`@keyframes efade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.nav-logo svg{transform:scale(1.143);transform-origin:left center;}
+@media(max-width:1440px){.nav-logo svg{transform:none;}}`}</style>
       <div style={{ paddingTop: 84 }}>
         <div style={{ maxWidth: 700, margin: '0 auto', paddingBottom: 120 }}>
 

@@ -93,9 +93,7 @@ const Nav = ({ scrolled }) => {
         display:"flex",alignItems:"center",justifyContent:"space-between",
       }}>
         <div className="nav-logo" onClick={()=>{setMOpen(false);setTimeout(()=>window.scrollTo({top:0,behavior:"instant"}),50);}} style={{padding:0,flexShrink:0,cursor:"pointer"}}>
-          <div style={{ paddingBottom: 6 }}>
-            <Logo size={1.25}/>
-          </div>
+          <Logo size={1.25}/>
         </div>
         {/* Desktop links */}
         <div className="nav-links" style={{display:"flex",gap:28,alignItems:"center"}}>
@@ -368,9 +366,9 @@ const HomePage = ({ activeTab, setActiveTab }) => {
             <span style={{fontSize:"clamp(0.75rem,1.1vw,0.95rem)",letterSpacing:3.5,color:C.accent,textTransform:"uppercase",fontWeight:500}}>Premium Metal Roofing · Dallas–Fort Worth</span>
           </div>
           <h1 style={{fontFamily:"'Cormorant Garamond',Georgia,serif",fontSize:"clamp(3.5rem,5.5vw,7rem)",fontWeight:700,lineHeight:1.05,color:C.white,marginBottom:24,maxWidth:720,animation:"fadeUp 0.8s ease 0.1s both"}}>
-            The Last Roof<br/><span style={{color:C.accent,fontStyle:"italic"}}>You'll Ever Put On This House</span>
+            The Last Roof<br/><span style={{color:C.accent,fontStyle:"italic"}}>You'll Ever Put On Your House</span>
           </h1>
-          <p style={{fontSize:"clamp(1.125rem,1.3vw,1.1875rem)",lineHeight:1.8,color:C.mutedLight,maxWidth:480,marginBottom:40,fontWeight:300,animation:"fadeUp 0.8s ease 0.2s both"}}>
+          <p style={{fontSize:"clamp(1.125rem,1.3vw,1.1875rem)",lineHeight:1.8,color:C.mutedLight,maxWidth:480,marginBottom:40,fontWeight:500,animation:"fadeUp 0.8s ease 0.2s both"}}>
             For DFW homeowners done replacing their asphalt roof every decade.
           </p>
           <div style={{display:"flex",gap:14,flexWrap:"wrap",alignItems:"center",animation:"fadeUp 0.8s ease 0.3s both"}}>
@@ -488,7 +486,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
                 {/* Insight callout */}
                 <div style={{marginTop:28,padding:"18px 20px",background:C.card,borderRadius:6,border:`1px solid ${C.border}`}}>
                   <div style={{fontSize:16,color:C.mutedLight,lineHeight:1.7,fontStyle:"italic"}}>
-                    "When your deductible equals or exceeds what a replacement costs, insurance provides no real benefit for your roof — you're effectively self-insuring either way."
+                    When your deductible equals or exceeds what a replacement costs, insurance provides no real benefit for your roof — you're effectively self-insuring either way.
                   </div>
                 </div>
               </div>
@@ -523,7 +521,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
                 ))}
                 <div style={{marginTop:28,padding:"18px 20px",background:`${C.accentDark}22`,borderRadius:6,border:`1px solid ${C.accentDark}`}}>
                   <div style={{fontSize:16,color:C.accentLight,lineHeight:1.7,fontStyle:"italic"}}>
-                    "If you're already paying out of pocket every decade, the gap between asphalt and metal is smaller than most homeowners expect — and the gap in outcomes is enormous."
+                    If you're already paying out of pocket every decade, the gap between asphalt and metal is smaller than most homeowners expect — and the gap in outcomes is enormous.
                   </div>
                 </div>
               </div>
