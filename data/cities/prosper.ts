@@ -49,8 +49,8 @@ export const PROSPER_DATA: CityData = {
 
   review: {
     name: 'Michelle T.',
-    neighborhood: 'Windsong Ranch',
-    text: "A few of our neighbors in Windsong had already switched to metal so we started asking questions. After seeing the render of our own house and getting the satellite estimate the decision was pretty easy. The stone-coated steel looks like it was always there.",
+    neighborhood: '',
+    text: "A few of our neighbors had already switched to metal so we started asking questions. After seeing the render of our own house and getting the satellite estimate the decision was pretty easy. The stone-coated steel looks like it was always there.",
     rating: 5,
   },
 

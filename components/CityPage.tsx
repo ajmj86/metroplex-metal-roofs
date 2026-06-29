@@ -384,7 +384,7 @@ export default function CityPage({ city }: { city: CityData }) {
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12, borderTop: `1px solid ${C.border}`, paddingTop: 20 }}>
                   <div>
                     <div style={{ fontSize: 14, color: C.white, fontWeight: 600 }}>{city.review.name}</div>
-                    <div style={{ fontSize: 11, color: C.muted, marginTop: 3, letterSpacing: 1 }}>{city.review.neighborhood} · {city.name}, TX</div>
+                    <div style={{ fontSize: 11, color: C.muted, marginTop: 3, letterSpacing: 1 }}>{city.name}, TX</div>
                   </div>
                 </div>
               </div>

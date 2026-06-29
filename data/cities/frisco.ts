@@ -49,7 +49,7 @@ export const FRISCO_DATA: CityData = {
 
   review: {
     name: 'Jason W.',
-    neighborhood: 'Phillips Creek Ranch',
+    neighborhood: '',
     text: "We had been putting it off for two years after getting a bad experience with a storm chaser after the last hail event. These guys were completely different. They showed us what the roof would look like on our actual house before we signed anything. The standing seam install was done in two days and it looks incredible.",
     rating: 5,
   },
