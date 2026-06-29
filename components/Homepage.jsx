@@ -690,7 +690,12 @@ const HomePage = ({ activeTab, setActiveTab }) => {
           <Reveal delay={0.1}>
             <div style={{display:"flex",flexWrap:"wrap",gap:9,justifyContent:"center"}}>
               {cities.map(city=>(
-                <a key={city} href={city==="Southlake"?"/metal-roofing-southlake-tx":"#"} style={{padding:"9px 18px",border:`1px solid ${C.border}`,borderRadius:2,fontSize:12,color:C.mutedLight,letterSpacing:1,transition:"all 0.2s"}}
+                <a key={city} href={
+                  city === "Southlake" ? "/metal-roofing-southlake-tx" :
+                  city === "Frisco"    ? "/metal-roofing-frisco-tx" :
+                  city === "Prosper"   ? "/metal-roofing-prosper-tx" :
+                  "#"
+                } style={{padding:"9px 18px",border:`1px solid ${C.border}`,borderRadius:2,fontSize:12,color:C.mutedLight,letterSpacing:1,transition:"all 0.2s"}}
                   onMouseEnter={e=>{e.currentTarget.style.borderColor=C.accent;e.currentTarget.style.color=C.accent;}}
                   onMouseLeave={e=>{e.currentTarget.style.borderColor=C.border;e.currentTarget.style.color=C.mutedLight;}}
                 >{city}</a>
