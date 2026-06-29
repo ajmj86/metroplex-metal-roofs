@@ -36,6 +36,26 @@ export const globalStyles = `
   .hero-pad { padding: 140px 64px 80px; }
   .inner { max-width: 1200px; margin: 0 auto; }
 
+  .sp     { padding: 96px 64px; }
+  .sp-sm  { padding: 64px 64px; }
+  .g2     { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .g3     { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+  .g4     { display: grid; grid-template-columns: repeat(4,1fr); }
+
+  @media (max-width: 1024px) {
+    .sp    { padding: 72px 32px; }
+    .sp-sm { padding: 48px 32px; }
+    .g3    { grid-template-columns: 1fr 1fr; }
+    .g4    { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 640px) {
+    .sp    { padding: 56px 20px; }
+    .sp-sm { padding: 40px 20px; }
+    .g2    { grid-template-columns: 1fr; }
+    .g3    { grid-template-columns: 1fr; }
+    .g4    { grid-template-columns: 1fr 1fr; }
+  }
+
   @media (max-width: 1024px) {
     .grid-4 { grid-template-columns: repeat(2,1fr); }
     .grid-3 { grid-template-columns: repeat(2,1fr); }
