@@ -29,7 +29,9 @@ const C = {
   mutedLight: '#A1A1AA',
 }
 
-const EST_STEPS = ['Your Home', 'Your Details', 'Your Estimate']
+const EST_STEPS = ['Address', 'Roof Type', 'About You', 'Your Estimate']
+const EST_STEP_KEYS = ['address', 'material', 'qualifier', 'estimate'] as const
+type EstStep = typeof EST_STEP_KEYS[number]
 
 type QualData = { currentRoofType: string; reason: string; insuranceClaim: string; timeline: string }
 interface QualScreen { field: keyof QualData; headline: string; subtext: string; choices: { value: string; label: string; icon: string }[] }
@@ -217,6 +219,9 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
     currentRoofType: '', reason: '', insuranceClaim: '', timeline: '',
   })
   const [pendingQual, setPendingQual] = useState<string | null>(null)
+  const [estStep, setEstStep] = useState<EstStep>(
+    shouldAutoTrigger ? 'estimate' : 'address'
+  )
 
   // Google Places Autocomplete
   useEffect(() => {
@@ -254,11 +259,17 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
   function initializeAutocomplete() {
     if (!addressInputRef.current || !(window as any).google) return
 
+    const dfwBounds = new (window as any).google.maps.LatLngBounds(
+      { lat: 32.5, lng: -97.8 },
+      { lat: 33.4, lng: -96.5 }
+    )
     const autocomplete = new (window as any).google.maps.places.Autocomplete(
       addressInputRef.current,
       {
         types: ['address'],
         componentRestrictions: { country: 'us' },
+        bounds: dfwBounds,
+        strictBounds: false,
       }
     )
 
@@ -272,12 +283,20 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
 
   function validateContactFields() {
     const e: Record<string, string> = {}
-    if (!contactFields.firstName.trim()) e.firstName = 'Required'
-    if (!contactFields.lastName.trim()) e.lastName = 'Required'
-    if (!contactFields.phone.trim()) e.phone = 'Required'
-    else if (!/^\(?\d{3}\)?[\s\-]?\d{3}[\s\-]?\d{4}$/.test(contactFields.phone.replace(/\s/g, ''))) e.phone = 'Enter a valid 10-digit number'
-    if (!contactFields.email.trim()) e.email = 'Required'
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contactFields.email)) e.email = 'Invalid email'
+    if (!contactFields.firstName.trim())
+      e.firstName = 'Required'
+    if (!contactFields.phone.trim())
+      e.phone = 'Required'
+    else if (contactFields.phone.replace(/\D/g, '').length !== 10)
+      e.phone = 'Enter a valid 10-digit phone number'
+    if (!contactFields.email.trim())
+      e.email = 'Required'
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(contactFields.email.trim()))
+      e.email = 'Enter a valid email address'
+    if (!contactFields.smsConsent)
+      e.smsConsent = 'You must consent to SMS to receive your estimate'
+    if (!contactFields.emailConsent)
+      e.emailConsent = 'You must agree to receive email updates'
     return e
   }
 
@@ -288,8 +307,10 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
       setPendingQual(null)
       if (qualScreen < QUAL_SCREENS.length - 1) {
         setQualScreen(s => s + 1)
+        setTimeout(() => window.scrollTo(0, 0), 0)
       } else {
         setShowQualifier(false)
+        setTimeout(() => window.scrollTo(0, 0), 0)
       }
     }, 220)
   }
@@ -406,8 +427,39 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
   if (result) {
     return (
       <>
-        <SiteNav/>
-        <div style={{ paddingTop: 84, paddingBottom: 120 }}>
+        <div style={{ maxWidth: 700, margin: '0 auto', padding: '40px clamp(20px,5vw,48px) 120px' }}>
+          {/* 4-step indicator — step 4 active */}
+          <div style={{ textAlign: 'center', marginBottom: 32 }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 0, maxWidth: 380, margin: '0 auto 8px' }}>
+              {EST_STEPS.map((label, i) => (
+                <React.Fragment key={label}>
+                  <div style={{
+                    width: 28, height: 28, borderRadius: '50%', flexShrink: 0,
+                    background: C.accent,
+                    border: `2px solid ${C.accent}`,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    fontSize: 11, fontWeight: 700,
+                    color: C.black,
+                  }}>
+                    {i < 3 ? '✓' : '4'}
+                  </div>
+                  {i < EST_STEPS.length - 1 && (
+                    <div style={{ flex: 1, height: 2, background: C.accent }} />
+                  )}
+                </React.Fragment>
+              ))}
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', maxWidth: 380, margin: '0 auto', padding: '0 2px' }}>
+              {EST_STEPS.map((label, i) => (
+                <div key={label} style={{
+                  fontSize: 9, letterSpacing: 1, textTransform: 'uppercase',
+                  color: C.accent,
+                  width: 28, textAlign: 'center', lineHeight: 1.3,
+                  fontFamily: "'Outfit',sans-serif",
+                }}>{label}</div>
+              ))}
+            </div>
+          </div>
           <EstimateResult roofType={result.roofType} estimate={result.estimate} />
         </div>
       </>
@@ -417,8 +469,7 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
   if (loading) {
     return (
       <>
-        <SiteNav/>
-        <div style={{ paddingTop: 84, paddingBottom: 120 }}>
+        <div style={{ paddingTop: 40, paddingBottom: 120 }}>
           <div style={{ maxWidth: 700, margin: '0 auto' }}>
             <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 8, padding: '48px 32px', textAlign: 'center' }}>
               <svg width="44" height="44" viewBox="0 0 44 44" style={{ animation: 'espin 1.1s linear infinite', display: 'inline-block', marginBottom: 20 }}>
@@ -453,9 +504,23 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
     }
   }
 
+  function formatPhone(raw: string): string {
+    const digits = raw.replace(/\D/g, '').slice(0, 10)
+    if (digits.length < 4) return digits
+    if (digits.length < 7) return `(${digits.slice(0,3)}) ${digits.slice(3)}`
+    return `(${digits.slice(0,3)}) ${digits.slice(3,6)}-${digits.slice(6)}`
+  }
+
   const canSubmit = Boolean(
-    address.trim() && standaloneColor &&
-    (skipContactForm || (contactFields.firstName.trim() && contactFields.phone.trim()))
+    address.trim() &&
+    standaloneColor &&
+    (skipContactForm || (
+      contactFields.firstName.trim() &&
+      contactFields.phone.replace(/\D/g, '').length === 10 &&
+      /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(contactFields.email.trim()) &&
+      contactFields.smsConsent &&
+      contactFields.emailConsent
+    ))
   )
 
   const tabBtn = (active: boolean): React.CSSProperties => ({
@@ -471,17 +536,26 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
     background: C.card, border: `1px solid ${C.border}`, borderRadius: 8, padding: '20px 24px', marginBottom: 12,
   }
 
-  const estStepIdx = 0
+  const estStepIdx = result
+    ? 3
+    : estStep === 'estimate'
+    ? 3
+    : estStep === 'qualifier'
+    ? 2
+    : estStep === 'material'
+    ? 1
+    : 0
 
   return (
     <>
       <SiteNav/>
+      <style>{`@keyframes efade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}`}</style>
       <div style={{ paddingTop: 84 }}>
         <div style={{ maxWidth: 700, margin: '0 auto', paddingBottom: 120 }}>
 
-          {/* 3-step indicator */}
+          {/* 4-step indicator */}
           <div style={{ textAlign: 'center', marginBottom: 32 }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 0, maxWidth: 280, margin: '0 auto 8px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 0, maxWidth: 380, margin: '0 auto 8px' }}>
               {EST_STEPS.map((label, i) => (
                 <React.Fragment key={label}>
                   <div style={{
@@ -500,7 +574,7 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
                 </React.Fragment>
               ))}
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', maxWidth: 280, margin: '0 auto', padding: '0 2px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', maxWidth: 380, margin: '0 auto', padding: '0 2px' }}>
               {EST_STEPS.map((label, i) => (
                 <div key={label} style={{
                   fontSize: 9, letterSpacing: 1, textTransform: 'uppercase',
@@ -512,8 +586,160 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
             </div>
           </div>
 
-          {showQualifier ? (
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: 8 }}>
+          {/* ── STEP: address ── */}
+          {estStep === 'address' && !showManual && (
+            <div style={{ animation: 'efade 0.3s ease' }}>
+              <div style={{ fontFamily: "'Cormorant Garamond',Georgia,serif", fontSize: 20, fontWeight: 700, color: C.white, marginBottom: 6 }}>
+                Enter your property address
+              </div>
+              <p style={{ fontSize: 13, color: C.muted, lineHeight: 1.6, marginBottom: 16 }}>
+                We&apos;ll use satellite data to calculate your exact roof size.
+              </p>
+              <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 6, padding: 6, display: 'flex', gap: 6, alignItems: 'center', flexWrap: 'wrap', marginBottom: 24 }}>
+                <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', minWidth: 160 }}>
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0 }}>
+                    <path d="M8 1.5C5.51 1.5 3.5 3.51 3.5 6c0 3.75 4.5 8.5 4.5 8.5S12.5 9.75 12.5 6c0-2.49-2.01-4.5-4.5-4.5zm0 6.1c-.94 0-1.7-.76-1.7-1.7S7.06 4.2 8 4.2s1.7.76 1.7 1.7S8.94 7.6 8 7.6z" fill={C.muted} />
+                  </svg>
+                  <input
+                    ref={addressInputRef}
+                    value={address}
+                    onChange={e => setAddress(e.target.value)}
+                    onKeyDown={e => { if (e.key === 'Enter' && address.trim()) { window.scrollTo(0, 0); setEstStep('material') } }}
+                    placeholder="123 Main St, Southlake, TX"
+                    style={{ flex: 1, background: 'none', border: 'none', outline: 'none', color: C.white, fontSize: 14, fontFamily: "'Outfit',sans-serif" }}
+                  />
+                </div>
+              </div>
+              <button
+                onClick={() => { if (address.trim()) { window.scrollTo(0, 0); setEstStep('material') } }}
+                disabled={!address.trim()}
+                style={{ ...btnStyle, opacity: address.trim() ? 1 : 0.45, cursor: address.trim() ? 'pointer' : 'not-allowed' }}
+                onMouseEnter={e => { if (address.trim()) e.currentTarget.style.background = C.accentLight }}
+                onMouseLeave={e => { e.currentTarget.style.background = C.accent }}
+              >
+                Next: Choose Your Material →
+              </button>
+            </div>
+          )}
+
+          {/* ── STEP: material ── */}
+          {estStep === 'material' && !showManual && (
+            <div style={{ animation: 'efade 0.3s ease' }}>
+              {/* Roof type tabs */}
+              <div style={cardStyle}>
+                <div style={{ fontSize: 13, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Material</div>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 10 }}>
+                  {(ROOF_TYPE_ORDER as readonly string[]).map(rt => (
+                    <button key={rt} onClick={() => pickType(rt)} style={{
+                      padding: '16px 20px',
+                      fontSize: 12,
+                      letterSpacing: 2,
+                      textTransform: 'uppercase' as const,
+                      background: standaloneType === rt ? C.accent : C.surface,
+                      color: standaloneType === rt ? C.black : C.mutedLight,
+                      border: `1.5px solid ${standaloneType === rt ? C.accent : C.border}`,
+                      borderRadius: 6,
+                      cursor: 'pointer',
+                      transition: 'all 0.15s',
+                      fontFamily: "'Outfit',sans-serif",
+                      fontWeight: standaloneType === rt ? 700 : 500,
+                      boxShadow: standaloneType === rt ? `0 0 12px ${C.accentDark}44` : 'none',
+                      textAlign: 'center' as const,
+                    }}
+                    onMouseEnter={e => { if (standaloneType !== rt) { e.currentTarget.style.borderColor = C.accentDark; e.currentTarget.style.color = C.white; }}}
+                    onMouseLeave={e => { if (standaloneType !== rt) { e.currentTarget.style.borderColor = C.border; e.currentTarget.style.color = C.mutedLight; }}}
+                    >{getRoofTypeLabel(rt)}</button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Style tabs (stone-coated only) */}
+              {standaloneType && selStyles.length > 1 && !hasExactlyOneProduct(standaloneType) && (
+                <div style={cardStyle}>
+                  <div style={{ fontSize: 13, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Style</div>
+                  <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                    {selStyles.map(([sk, so]) => (
+                      <button key={sk} style={tabBtn(standaloneStyle === sk)} onClick={() => {
+                        setStandaloneProduct(null); setStandaloneColor(null); setStandaloneStyle(sk)
+                        const sp = productsForStyle(standaloneType, sk)
+                        if (sp.length === 1) { setStandaloneProduct(sp[0][0]); if (sp[0][1].colors.length === 1) setStandaloneColor(sp[0][1].colors[0].name) }
+                      }}>{so.label}</button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Product grid */}
+              {standaloneType && standaloneStyle && selProducts.length > 1 && (
+                <div style={cardStyle}>
+                  <div style={{ fontSize: 13, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Product</div>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 10 }}>
+                    {selProducts.map(([pk, po]) => (
+                      <button key={pk} onClick={() => { setStandaloneColor(null); setStandaloneProduct(pk) }}
+                        style={{ background: standaloneProduct === pk ? `${C.accentDark}33` : C.surface, border: `1px solid ${standaloneProduct === pk ? C.accentDark : C.border}`, borderRadius: 6, padding: '14px 16px', textAlign: 'left', cursor: 'pointer', transition: 'all 0.15s' }}
+                      >
+                        <div style={{ fontSize: 13, fontWeight: 600, color: standaloneProduct === pk ? C.accent : C.white, marginBottom: 4, fontFamily: "'Outfit',sans-serif" }}>{po.label}</div>
+                        <div style={{ fontSize: 11, color: C.muted, lineHeight: 1.5 }}>{po.description}</div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Color swatches */}
+              {standaloneType && standaloneProduct && selColors.length > 0 && (
+                <div style={cardStyle}>
+                  <div style={{ fontSize: 13, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Color</div>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 10 }}>
+                    {selColors.map((c: ColorOption) => (
+                      <button key={c.name} onClick={() => setStandaloneColor(c.name)}
+                        style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
+                      >
+                        <div style={{
+                          borderRadius: 8, overflow: 'hidden',
+                          border: `2px solid ${standaloneColor === c.name ? C.accent : C.border}`,
+                          boxShadow: standaloneColor === c.name ? `0 0 0 1px ${C.accent}, 0 0 12px ${C.accentDark}44` : 'none',
+                          transition: 'all 0.15s',
+                        }}>
+                          {c.image1 ? (
+                            <img src={c.image1} alt={c.name} style={{ width: '100%', height: 120, objectFit: 'cover', display: 'block' }} />
+                          ) : (
+                            <div style={{ width: '100%', height: 120, background: c.hex ?? C.surface }} />
+                          )}
+                          <div style={{
+                            padding: '8px 10px',
+                            background: standaloneColor === c.name ? `${C.accentDark}33` : C.card,
+                            display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 6
+                          }}>
+                            <span style={{ fontSize: 13, color: standaloneColor === c.name ? C.accent : C.mutedLight, fontFamily: "'Outfit',sans-serif", lineHeight: 1.3 }}>{c.name}</span>
+                            {standaloneColor === c.name && <span style={{ fontSize: 11, color: C.accent, fontWeight: 700 }}>✓</span>}
+                          </div>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <button
+                onClick={() => { if (standaloneColor) { window.scrollTo(0, 0); setEstStep('qualifier') } }}
+                disabled={!standaloneColor}
+                style={{ ...btnStyle, marginTop: 8, opacity: standaloneColor ? 1 : 0.45, cursor: standaloneColor ? 'pointer' : 'not-allowed' }}
+                onMouseEnter={e => { if (standaloneColor) e.currentTarget.style.background = C.accentLight }}
+                onMouseLeave={e => { e.currentTarget.style.background = C.accent }}
+              >
+                {!standaloneColor ? 'Select a color to continue' : 'Next: About You →'}
+              </button>
+              <button
+                onClick={() => { window.scrollTo(0, 0); setEstStep('address') }}
+                style={{ display: 'block', margin: '12px auto 0', fontSize: 11, color: C.muted, letterSpacing: 1, textTransform: 'uppercase', cursor: 'pointer', background: 'none', border: 'none', textDecoration: 'underline', fontFamily: "'Outfit',sans-serif" }}
+              >← Back</button>
+            </div>
+          )}
+
+          {/* ── STEP: qualifier ── */}
+          {estStep === 'qualifier' && showQualifier && (
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
               <div style={{
                 width: '100%', maxWidth: 460,
                 background: C.surface,
@@ -584,299 +810,168 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
                   })()}
                 </div>
               </div>
-              {qualScreen > 0 && (
-                <button
-                  onClick={() => setQualScreen(s => s - 1)}
-                  style={{ marginTop: 16, fontSize: 11, color: C.muted, letterSpacing: 1, textTransform: 'uppercase', cursor: 'pointer', background: 'none', border: 'none', padding: '8px 0', textDecoration: 'underline', fontFamily: "'Outfit',sans-serif" }}
-                >← Back</button>
-              )}
+              <button
+                onClick={() => { if (qualScreen === 0) { window.scrollTo(0, 0); setEstStep('material') } else setQualScreen(s => s - 1) }}
+                style={{ marginTop: 16, fontSize: 11, color: C.muted, letterSpacing: 1, textTransform: 'uppercase', cursor: 'pointer', background: 'none', border: 'none', padding: '8px 0', textDecoration: 'underline', fontFamily: "'Outfit',sans-serif" }}
+              >← Back</button>
             </div>
-          ) : (
-            <>
-              {!showManual ? (
-                <>
-                  {errorMsg && (
-                    <div style={{ background: C.surface, border: `1px solid ${C.borderLight}`, borderRadius: 6, padding: '14px 16px', marginBottom: 20, fontSize: 13, color: C.mutedLight, lineHeight: 1.7 }}>
-                      {errorMsg}
-                    </div>
-                  )}
+          )}
 
-                  {/* Address field */}
-                  <div style={{ marginBottom: 24 }}>
-                    <div style={{ marginBottom: 16 }}>
-                      <div style={{ fontFamily: "'Cormorant Garamond',Georgia,serif", fontSize: 20, fontWeight: 700, color: C.white, marginBottom: 6 }}>
-                        Enter your property address
-                      </div>
-                      <p style={{ fontSize: 13, color: C.muted, lineHeight: 1.6, margin: 0 }}>
-                        We&apos;ll use satellite data to calculate your exact roof size.
-                      </p>
-                    </div>
-                    <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 6, padding: 6, display: 'flex', gap: 6, alignItems: 'center', flexWrap: 'wrap' }}>
-                      <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', minWidth: 160 }}>
-                        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0 }}>
-                          <path d="M8 1.5C5.51 1.5 3.5 3.51 3.5 6c0 3.75 4.5 8.5 4.5 8.5S12.5 9.75 12.5 6c0-2.49-2.01-4.5-4.5-4.5zm0 6.1c-.94 0-1.7-.76-1.7-1.7S7.06 4.2 8 4.2s1.7.76 1.7 1.7S8.94 7.6 8 7.6z" fill={C.muted} />
-                        </svg>
-                        <input
-                          ref={addressInputRef}
-                          value={address}
-                          onChange={e => setAddress(e.target.value)}
-                          onKeyDown={e => e.key === 'Enter' && canSubmit && handleAddressSubmit()}
-                          placeholder="123 Main St, Southlake, TX"
-                          style={{ flex: 1, background: 'none', border: 'none', outline: 'none', color: C.white, fontSize: 14, fontFamily: "'Outfit',sans-serif" }}
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Inline material selector */}
-                  <div style={{ marginBottom: 24 }}>
-                    {/* Roof type tabs */}
-                    <div style={cardStyle}>
-                      <div style={{ fontSize: 13, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Material</div>
-                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 10 }}>
-                        {(ROOF_TYPE_ORDER as readonly string[]).map(rt => (
-                          <button key={rt} onClick={() => pickType(rt)} style={{
-                            padding: '16px 20px',
-                            fontSize: 12,
-                            letterSpacing: 2,
-                            textTransform: 'uppercase' as const,
-                            background: standaloneType === rt ? C.accent : C.surface,
-                            color: standaloneType === rt ? C.black : C.mutedLight,
-                            border: `1.5px solid ${standaloneType === rt ? C.accent : C.border}`,
-                            borderRadius: 6,
-                            cursor: 'pointer',
-                            transition: 'all 0.15s',
-                            fontFamily: "'Outfit',sans-serif",
-                            fontWeight: standaloneType === rt ? 700 : 500,
-                            boxShadow: standaloneType === rt ? `0 0 12px ${C.accentDark}44` : 'none',
-                            textAlign: 'center' as const,
-                          }}
-                          onMouseEnter={e => { if (standaloneType !== rt) { e.currentTarget.style.borderColor = C.accentDark; e.currentTarget.style.color = C.white; }}}
-                          onMouseLeave={e => { if (standaloneType !== rt) { e.currentTarget.style.borderColor = C.border; e.currentTarget.style.color = C.mutedLight; }}}
-                          >{getRoofTypeLabel(rt)}</button>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Style tabs (stone-coated only) */}
-                    {standaloneType && selStyles.length > 1 && !hasExactlyOneProduct(standaloneType) && (
-                      <div style={cardStyle}>
-                        <div style={{ fontSize: 13, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Style</div>
-                        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-                          {selStyles.map(([sk, so]) => (
-                            <button key={sk} style={tabBtn(standaloneStyle === sk)} onClick={() => {
-                              setStandaloneProduct(null); setStandaloneColor(null); setStandaloneStyle(sk)
-                              const sp = productsForStyle(standaloneType, sk)
-                              if (sp.length === 1) { setStandaloneProduct(sp[0][0]); if (sp[0][1].colors.length === 1) setStandaloneColor(sp[0][1].colors[0].name) }
-                            }}>{so.label}</button>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Product grid */}
-                    {standaloneType && standaloneStyle && selProducts.length > 1 && (
-                      <div style={cardStyle}>
-                        <div style={{ fontSize: 13, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Product</div>
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 10 }}>
-                          {selProducts.map(([pk, po]) => (
-                            <button key={pk} onClick={() => { setStandaloneColor(null); setStandaloneProduct(pk) }}
-                              style={{ background: standaloneProduct === pk ? `${C.accentDark}33` : C.surface, border: `1px solid ${standaloneProduct === pk ? C.accentDark : C.border}`, borderRadius: 6, padding: '14px 16px', textAlign: 'left', cursor: 'pointer', transition: 'all 0.15s' }}
-                            >
-                              <div style={{ fontSize: 13, fontWeight: 600, color: standaloneProduct === pk ? C.accent : C.white, marginBottom: 4, fontFamily: "'Outfit',sans-serif" }}>{po.label}</div>
-                              <div style={{ fontSize: 11, color: C.muted, lineHeight: 1.5 }}>{po.description}</div>
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Color swatches */}
-                    {standaloneType && standaloneProduct && selColors.length > 0 && (
-                      <div style={cardStyle}>
-                        <div style={{ fontSize: 13, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Color</div>
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 10 }}>
-                          {selColors.map((c: ColorOption) => (
-                            <button key={c.name} onClick={() => setStandaloneColor(c.name)}
-                              style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
-                            >
-                              <div style={{
-                                borderRadius: 8, overflow: 'hidden',
-                                border: `2px solid ${standaloneColor === c.name ? C.accent : C.border}`,
-                                boxShadow: standaloneColor === c.name ? `0 0 0 1px ${C.accent}, 0 0 12px ${C.accentDark}44` : 'none',
-                                transition: 'all 0.15s',
-                              }}>
-                                {c.image1 ? (
-                                  <img src={c.image1} alt={c.name} style={{ width: '100%', height: 120, objectFit: 'cover', display: 'block' }} />
-                                ) : (
-                                  <div style={{ width: '100%', height: 120, background: c.hex ?? C.surface }} />
-                                )}
-                                <div style={{
-                                  padding: '8px 10px',
-                                  background: standaloneColor === c.name ? `${C.accentDark}33` : C.card,
-                                  display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 6
-                                }}>
-                                  <span style={{ fontSize: 13, color: standaloneColor === c.name ? C.accent : C.mutedLight, fontFamily: "'Outfit',sans-serif", lineHeight: 1.3 }}>{c.name}</span>
-                                  {standaloneColor === c.name && <span style={{ fontSize: 11, color: C.accent, fontWeight: 700 }}>✓</span>}
-                                </div>
-                              </div>
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Contact section */}
-                  {skipContactForm ? (
-                    <div style={{ marginBottom: 20, padding: '12px 16px', background: C.card, border: `1px solid ${C.border}`, borderRadius: 6, fontSize: 13, color: C.mutedLight }}>
-                      Estimating for: {leadInfo?.firstName} {leadInfo?.lastName} · {leadInfo?.phone}
-                    </div>
-                  ) : (
-                    <div style={{ marginTop: 32, borderTop: `1px solid ${C.border}`, paddingTop: 24, marginBottom: 24 }}>
-                      <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 20, fontWeight: 700, color: C.white, marginBottom: 16 }}>
-                        Your Contact Info
-                      </div>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 12 }}>
-                        <div>
-                          <div style={labelStyle}>First Name *</div>
-                          <input value={contactFields.firstName}
-                            onChange={e => setContactFields(f => ({ ...f, firstName: e.target.value }))}
-                            placeholder="Jane" style={inputFieldStyle} />
-                          {contactErrors.firstName && <div style={errStyle}>{contactErrors.firstName}</div>}
-                        </div>
-                        <div>
-                          <div style={labelStyle}>Last Name *</div>
-                          <input value={contactFields.lastName}
-                            onChange={e => setContactFields(f => ({ ...f, lastName: e.target.value }))}
-                            placeholder="Smith" style={inputFieldStyle} />
-                          {contactErrors.lastName && <div style={errStyle}>{contactErrors.lastName}</div>}
-                        </div>
-                      </div>
-                      <div style={{ marginBottom: 12 }}>
-                        <div style={labelStyle}>Phone *</div>
-                        <input value={contactFields.phone} type="tel"
-                          onChange={e => setContactFields(f => ({ ...f, phone: e.target.value }))}
-                          placeholder="(817) 555-0100" style={inputFieldStyle} />
-                        {contactErrors.phone && <div style={errStyle}>{contactErrors.phone}</div>}
-                      </div>
-                      <div style={{ marginBottom: 16 }}>
-                        <div style={labelStyle}>Email *</div>
-                        <input value={contactFields.email} type="email"
-                          onChange={e => setContactFields(f => ({ ...f, email: e.target.value }))}
-                          placeholder="jane@email.com" style={inputFieldStyle} />
-                        {contactErrors.email && <div style={errStyle}>{contactErrors.email}</div>}
-                      </div>
-                      <label style={{ display: 'flex', gap: 10, alignItems: 'flex-start', marginBottom: 10, cursor: 'pointer' }}>
-                        <input type="checkbox" checked={contactFields.smsConsent}
-                          onChange={e => setContactFields(f => ({ ...f, smsConsent: e.target.checked }))}
-                          style={{ marginTop: 2, accentColor: '#B8935A', width: 15, height: 15, flexShrink: 0 }} />
-                        <span style={{ fontSize: 11, color: '#71717A', lineHeight: 1.6 }}>
-                          By checking this box, I consent to receive automated SMS text messages from Metroplex Metal Roofs at the number provided regarding my estimate inquiry. Message frequency varies. Message &amp; data rates may apply. Text STOP to cancel, HELP for help. Consent is not a condition of purchase.
-                        </span>
-                      </label>
-                      <label style={{ display: 'flex', gap: 10, alignItems: 'flex-start', marginBottom: 16, cursor: 'pointer' }}>
-                        <input type="checkbox" checked={contactFields.emailConsent}
-                          onChange={e => setContactFields(f => ({ ...f, emailConsent: e.target.checked }))}
-                          style={{ marginTop: 2, accentColor: '#B8935A', width: 15, height: 15, flexShrink: 0 }} />
-                        <span style={{ fontSize: 11, color: '#71717A', lineHeight: 1.6 }}>
-                          I agree to receive email updates from Metroplex Metal Roofs.
-                        </span>
-                      </label>
-                      <div style={{ fontSize: 10, color: '#71717A', lineHeight: 1.7, marginBottom: 16, padding: '10px 12px', background: '#111113', borderRadius: 4, border: '1px solid #27272A' }}>
-                        By submitting, you consent to being contacted by Metroplex Metal Roofs regarding your inquiry. Your information is never sold or shared with third parties.
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Submit button */}
-                  <button
-                    onClick={handleAddressSubmit}
-                    disabled={!canSubmit}
-                    style={{ ...btnStyle, opacity: canSubmit ? 1 : 0.45, cursor: canSubmit ? 'pointer' : 'not-allowed' }}
-                    onMouseEnter={e => { if (canSubmit) e.currentTarget.style.background = C.accentLight }}
-                    onMouseLeave={e => { e.currentTarget.style.background = C.accent }}
-                  >
-                    {!address.trim() && !standaloneColor
-                      ? 'Enter address & select material'
-                      : !standaloneColor
-                      ? 'Select a color to continue'
-                      : !address.trim()
-                      ? 'Enter your address to continue'
-                      : 'Get My Estimate →'}
-                  </button>
-
-                  {/* Cross-link to visualizer */}
-                  <p style={{ fontSize: 12, color: C.muted, textAlign: 'center', marginTop: 16 }}>
-                    Want to see your home with a metal roof first?{' '}
-                    <a
-                      href={`/visualizer?firstName=${encodeURIComponent(contactFields.firstName || '')}&lastName=${encodeURIComponent(contactFields.lastName || '')}&phone=${encodeURIComponent(contactFields.phone || '')}&email=${encodeURIComponent(contactFields.email || '')}&address=${encodeURIComponent(address || '')}&roofType=${encodeURIComponent(standaloneType || '')}&prefilled=true`}
-                      style={{ color: C.accent, textDecoration: 'underline' }}
-                    >Try the AI Visualizer →</a>
-                  </p>
-                </>
+          {/* ── STEP: contact (after qualifier completes) ── */}
+          {estStep === 'qualifier' && !showQualifier && !result && (
+            <div style={{ animation: 'efade 0.3s ease' }}>
+              {skipContactForm ? (
+                <div style={{ marginBottom: 20, padding: '12px 16px', background: C.card, border: `1px solid ${C.border}`, borderRadius: 6, fontSize: 13, color: C.mutedLight }}>
+                  Estimating for: {leadInfo?.firstName} {leadInfo?.lastName} · {leadInfo?.phone}
+                </div>
               ) : (
-                <>
-                  {errorMsg && (
-                    <div style={{ background: C.surface, border: `1px solid ${C.borderLight}`, borderRadius: 6, padding: '14px 16px', marginBottom: 20, fontSize: 13, color: C.mutedLight, lineHeight: 1.7 }}>
-                      {errorMsg}
-                    </div>
-                  )}
-
-                  <div style={{ fontFamily: "'Cormorant Garamond',Georgia,serif", fontSize: 20, fontWeight: 700, color: C.white, marginBottom: 20 }}>
-                    Enter your home&apos;s details
+                <div style={{ borderTop: `1px solid ${C.border}`, paddingTop: 24, marginBottom: 24 }}>
+                  <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 20, fontWeight: 700, color: C.white, marginBottom: 16 }}>
+                    Your Contact Info
                   </div>
-
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 12 }}>
+                    <div>
+                      <div style={labelStyle}>First Name *</div>
+                      <input value={contactFields.firstName}
+                        onChange={e => setContactFields(f => ({ ...f, firstName: e.target.value }))}
+                        placeholder="Jane" style={inputFieldStyle} />
+                      {contactErrors.firstName && <div style={errStyle}>{contactErrors.firstName}</div>}
+                    </div>
+                  </div>
+                  <div style={{ marginBottom: 12 }}>
+                    <div style={labelStyle}>Phone *</div>
+                    <input value={contactFields.phone} type="tel"
+                      onChange={e => setContactFields(f => ({ ...f, phone: formatPhone(e.target.value) }))}
+                      placeholder="(817) 555-0100" style={inputFieldStyle} />
+                    {contactErrors.phone && <div style={errStyle}>{contactErrors.phone}</div>}
+                  </div>
                   <div style={{ marginBottom: 16 }}>
-                    <div style={{ fontSize: 10, letterSpacing: 2, textTransform: 'uppercase', color: C.muted, marginBottom: 6 }}>
-                      Approximate square footage of your home
-                    </div>
-                    <input
-                      type="number"
-                      value={manualSqFt}
-                      onChange={e => setManualSqFt(e.target.value)}
-                      placeholder="e.g. 2400"
-                      style={inputStyle}
-                    />
+                    <div style={labelStyle}>Email *</div>
+                    <input value={contactFields.email} type="email"
+                      onChange={e => setContactFields(f => ({ ...f, email: e.target.value }))}
+                      placeholder="jane@email.com" style={inputFieldStyle} />
+                    {contactErrors.email && <div style={errStyle}>{contactErrors.email}</div>}
                   </div>
-
-                  <div style={{ marginBottom: 24 }}>
-                    <div style={{ fontSize: 10, letterSpacing: 2, textTransform: 'uppercase', color: C.muted, marginBottom: 10 }}>
-                      How many stories?
-                    </div>
-                    <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-                      {([['one', 'One story'], ['two', 'Two stories'], ['unknown', 'Not sure']] as [StoryOption, string][]).map(([val, label]) => (
-                        <label
-                          key={val}
-                          style={{
-                            display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer',
-                            padding: '10px 16px',
-                            background: stories === val ? `${C.accentDark}33` : C.card,
-                            border: `1px solid ${stories === val ? C.accentDark : C.border}`,
-                            borderRadius: 4, fontSize: 13,
-                            color: stories === val ? C.accent : C.mutedLight,
-                            transition: 'all 0.15s', fontFamily: "'Outfit',sans-serif",
-                          }}
-                        >
-                          <input type="radio" name="stories" value={val} checked={stories === val} onChange={() => setStories(val)} style={{ display: 'none' }} />
-                          {label}
-                        </label>
-                      ))}
-                    </div>
+                  <label style={{ display: 'flex', gap: 10, alignItems: 'flex-start', marginBottom: 10, cursor: 'pointer' }}>
+                    <input type="checkbox" checked={contactFields.smsConsent}
+                      onChange={e => setContactFields(f => ({ ...f, smsConsent: e.target.checked }))}
+                      style={{ marginTop: 2, accentColor: '#B8935A', width: 15, height: 15, flexShrink: 0 }} />
+                    <span style={{ fontSize: 11, color: '#71717A', lineHeight: 1.6 }}>
+                      By checking this box, I consent to receive automated SMS text messages from Metroplex Metal Roofs at the number provided regarding my estimate inquiry. Message frequency varies. Message &amp; data rates may apply. Text STOP to cancel, HELP for help. Consent is not a condition of purchase.
+                    </span>
+                  </label>
+                  {contactErrors.smsConsent && <div style={{ fontSize: 11, color: '#F87171', marginTop: -6, marginBottom: 8 }}>{contactErrors.smsConsent}</div>}
+                  <label style={{ display: 'flex', gap: 10, alignItems: 'flex-start', marginBottom: 16, cursor: 'pointer' }}>
+                    <input type="checkbox" checked={contactFields.emailConsent}
+                      onChange={e => setContactFields(f => ({ ...f, emailConsent: e.target.checked }))}
+                      style={{ marginTop: 2, accentColor: '#B8935A', width: 15, height: 15, flexShrink: 0 }} />
+                    <span style={{ fontSize: 11, color: '#71717A', lineHeight: 1.6 }}>
+                      I agree to receive email updates from Metroplex Metal Roofs.
+                    </span>
+                  </label>
+                  {contactErrors.emailConsent && <div style={{ fontSize: 11, color: '#F87171', marginTop: -6, marginBottom: 8 }}>{contactErrors.emailConsent}</div>}
+                  <div style={{ fontSize: 10, color: '#71717A', lineHeight: 1.7, marginBottom: 16, padding: '10px 12px', background: '#111113', borderRadius: 4, border: '1px solid #27272A' }}>
+                    By submitting, you consent to being contacted by Metroplex Metal Roofs regarding your inquiry. Your information is never sold or shared with third parties.
                   </div>
-
-                  <button
-                    onClick={handleManualSubmit}
-                    style={btnStyle}
-                    onMouseEnter={e => { e.currentTarget.style.background = C.accentLight }}
-                    onMouseLeave={e => { e.currentTarget.style.background = C.accent }}
-                  >
-                    Calculate Anyway →
-                  </button>
-                </>
+                </div>
               )}
+
+              <button
+                onClick={handleAddressSubmit}
+                disabled={!canSubmit}
+                style={{ ...btnStyle, opacity: canSubmit ? 1 : 0.45, cursor: canSubmit ? 'pointer' : 'not-allowed' }}
+                onMouseEnter={e => { if (canSubmit) e.currentTarget.style.background = C.accentLight }}
+                onMouseLeave={e => { e.currentTarget.style.background = C.accent }}
+              >
+                {!standaloneColor && !address.trim()
+                  ? 'Choose a material to get started'
+                  : !standaloneColor
+                  ? 'Select a color to continue'
+                  : !address.trim()
+                  ? 'Enter your address to continue'
+                  : !skipContactForm && !contactFields.smsConsent
+                  ? 'Agree to terms to continue'
+                  : 'Get My Estimate →'}
+              </button>
+
+              {/* Cross-link to visualizer */}
+              <p style={{ fontSize: 12, color: C.muted, textAlign: 'center', marginTop: 16 }}>
+                Want to see your home with a metal roof first?{' '}
+                <a
+                  href={`/visualizer?firstName=${encodeURIComponent(contactFields.firstName || '')}&lastName=${encodeURIComponent(contactFields.lastName || '')}&phone=${encodeURIComponent(contactFields.phone || '')}&email=${encodeURIComponent(contactFields.email || '')}&address=${encodeURIComponent(address || '')}&roofType=${encodeURIComponent(standaloneType || '')}&prefilled=true`}
+                  style={{ color: C.accent, textDecoration: 'underline' }}
+                >Try the AI Visualizer →</a>
+              </p>
+
+              <button
+                onClick={() => { setShowQualifier(true); setQualScreen(3); window.scrollTo(0, 0) }}
+                style={{ display: 'block', margin: '12px auto 0', fontSize: 11, color: C.muted, letterSpacing: 1, textTransform: 'uppercase', cursor: 'pointer', background: 'none', border: 'none', textDecoration: 'underline', fontFamily: "'Outfit',sans-serif" }}
+              >← Back</button>
+            </div>
+          )}
+
+          {/* Manual fallback form */}
+          {showManual && (
+            <>
+              {errorMsg && (
+                <div style={{ background: C.surface, border: `1px solid ${C.borderLight}`, borderRadius: 6, padding: '14px 16px', marginBottom: 20, fontSize: 13, color: C.mutedLight, lineHeight: 1.7 }}>
+                  {errorMsg}
+                </div>
+              )}
+
+              <div style={{ fontFamily: "'Cormorant Garamond',Georgia,serif", fontSize: 20, fontWeight: 700, color: C.white, marginBottom: 20 }}>
+                Enter your home&apos;s details
+              </div>
+
+              <div style={{ marginBottom: 16 }}>
+                <div style={{ fontSize: 10, letterSpacing: 2, textTransform: 'uppercase', color: C.muted, marginBottom: 6 }}>
+                  Approximate square footage of your home
+                </div>
+                <input
+                  type="number"
+                  value={manualSqFt}
+                  onChange={e => setManualSqFt(e.target.value)}
+                  placeholder="e.g. 2400"
+                  style={inputStyle}
+                />
+              </div>
+
+              <div style={{ marginBottom: 24 }}>
+                <div style={{ fontSize: 10, letterSpacing: 2, textTransform: 'uppercase', color: C.muted, marginBottom: 10 }}>
+                  How many stories?
+                </div>
+                <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+                  {([['one', 'One story'], ['two', 'Two stories'], ['unknown', 'Not sure']] as [StoryOption, string][]).map(([val, label]) => (
+                    <label
+                      key={val}
+                      style={{
+                        display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer',
+                        padding: '10px 16px',
+                        background: stories === val ? `${C.accentDark}33` : C.card,
+                        border: `1px solid ${stories === val ? C.accentDark : C.border}`,
+                        borderRadius: 4, fontSize: 13,
+                        color: stories === val ? C.accent : C.mutedLight,
+                        transition: 'all 0.15s', fontFamily: "'Outfit',sans-serif",
+                      }}
+                    >
+                      <input type="radio" name="stories" value={val} checked={stories === val} onChange={() => setStories(val)} style={{ display: 'none' }} />
+                      {label}
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              <button
+                onClick={handleManualSubmit}
+                style={btnStyle}
+                onMouseEnter={e => { e.currentTarget.style.background = C.accentLight }}
+                onMouseLeave={e => { e.currentTarget.style.background = C.accent }}
+              >
+                Calculate Anyway →
+              </button>
             </>
           )}
+
         </div>
       </div>
     </>
