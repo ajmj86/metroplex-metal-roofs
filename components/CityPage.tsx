@@ -95,10 +95,30 @@ export default function CityPage({ city }: { city: CityData }) {
   ]
 
   const steps = [
-    { n: '01', title: 'See Your Home',        body: 'Enter your address in our AI visualizer and see your exact home rendered with your chosen metal roof style and color — before committing to anything.' },
-    { n: '02', title: 'Free Estimate',        body: 'We generate precise measurements using satellite imaging — no ladder, no clipboard, no obligation. Estimates typically ready within one business day.' },
-    { n: '03', title: 'Project Placement',    body: 'Your project is assigned to a credentialed local installer — licensed in Texas, fully insured, metal-specific experience verified.' },
-    { n: '04', title: 'Expert Installation',  body: 'Your new roof is installed to manufacturer specifications, with full documentation for your insurance carrier.' },
+    {
+      n: '01',
+      title: 'Visualize Your Roof',
+      href: '/visualizer',
+      body: 'Enter your address. Our AI visualizer pulls a satellite image of your home and renders it with your chosen metal roof style and color — before you commit to anything.',
+    },
+    {
+      n: '02',
+      title: 'Brief Consultation',
+      href: 'https://api.leadconnectorhq.com/widget/booking/gG1ruFfEWkUXO7eIB8NR',
+      body: "A quick call with our team. We confirm your home's scope, timeline, and whether metal is the right fit. No pressure, no obligation.",
+    },
+    {
+      n: '03',
+      title: 'Precision Estimate',
+      href: '/estimate',
+      body: 'We use satellite imaging to generate exact measurements for your roof. Your estimate is built from real data — not a guess from the driveway.',
+    },
+    {
+      n: '04',
+      title: 'Expert Installation',
+      href: undefined,
+      body: 'Your project is executed by a credentialed local metal roofing specialist — licensed in Texas, fully insured, and selected for their proven expertise.',
+    },
   ]
 
   return (
@@ -154,11 +174,6 @@ export default function CityPage({ city }: { city: CityData }) {
                     onMouseEnter={e => (e.currentTarget.style.background = C.accentLight)}
                     onMouseLeave={e => (e.currentTarget.style.background = C.accent)}
                   >See Your Home With Metal →</a>
-                  <a href="/estimate"
-                    style={{ padding: '15px 24px', border: `1px solid ${C.borderLight}`, color: C.mutedLight, fontSize: 12, letterSpacing: 2, textTransform: 'uppercase', borderRadius: 2, transition: 'all 0.2s', whiteSpace: 'nowrap', textDecoration: 'none' }}
-                    onMouseEnter={e => { e.currentTarget.style.borderColor = C.accent; e.currentTarget.style.color = C.accent }}
-                    onMouseLeave={e => { e.currentTarget.style.borderColor = C.borderLight; e.currentTarget.style.color = C.mutedLight }}
-                  >Get a Free Estimate</a>
                 </div>
                 {/* Trust row */}
                 <div style={{ display: 'flex', gap: 24, marginTop: 48, paddingTop: 32, borderTop: `1px solid ${C.border}`, flexWrap: 'wrap', animation: 'fadeUp 0.7s ease 0.4s both' }}>
@@ -172,7 +187,7 @@ export default function CityPage({ city }: { city: CityData }) {
               </div>
 
               {/* Hero stat card */}
-              <Reveal style={{ display: 'flex', justifyContent: 'center' }}>
+              <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <div style={{ background: C.card, border: `1px solid ${C.accentDark}`, borderRadius: 8, padding: '40px 48px', textAlign: 'center', minWidth: 220, position: 'relative', overflow: 'hidden' }}>
                   <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg,${C.accentDark},${C.accent},${C.accentDark})` }}/>
                   <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 52, fontWeight: 700, color: C.accent, lineHeight: 1, marginBottom: 8 }}>
@@ -181,7 +196,7 @@ export default function CityPage({ city }: { city: CityData }) {
                   <div style={{ fontSize: 10, letterSpacing: 2, textTransform: 'uppercase', color: C.muted, marginBottom: 4 }}>{city.localStat.label}</div>
                   <div style={{ fontSize: 9, color: C.muted, opacity: 0.6 }}>{city.localStat.source}</div>
                 </div>
-              </Reveal>
+              </div>
             </div>
           </div>
         </section>
@@ -253,15 +268,27 @@ export default function CityPage({ city }: { city: CityData }) {
             <div className="g2" style={{ gap: 3 }}>
               {products.map((p, i) => (
                 <Reveal key={p.id} delay={i * 0.07}>
-                  <div style={{ background: C.black, border: `1px solid ${C.border}`, borderRadius: 6, overflow: 'hidden', height: '100%', transition: 'border-color 0.3s' }}
-                    onMouseEnter={e => (e.currentTarget.style.borderColor = C.accentDark)}
-                    onMouseLeave={e => (e.currentTarget.style.borderColor = C.border)}
+                  <a href={`/visualizer?roofType=${
+                    p.id === 'standing' ? 'standing_seam' :
+                    p.id === 'copper'   ? 'copper_standing_seam' :
+                    p.id === 'stone'    ? 'stone_coated_steel' :
+                    'r_panel'
+                  }`}
+                    style={{ textDecoration: 'none', display: 'block', height: '100%' }}
                   >
-                    <div style={{ padding: '28px 28px 24px' }}>
-                      <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 22, fontWeight: 700, color: C.white, marginBottom: 10 }}>{p.label}</div>
-                      <p style={{ fontSize: 13, color: C.mutedLight, lineHeight: 1.8, margin: 0 }}>{p.desc}</p>
+                    <div style={{ background: C.black, border: `1px solid ${C.border}`, borderRadius: 6, overflow: 'hidden', height: '100%', transition: 'border-color 0.3s', cursor: 'pointer' }}
+                      onMouseEnter={e => (e.currentTarget.style.borderColor = C.accentDark)}
+                      onMouseLeave={e => (e.currentTarget.style.borderColor = C.border)}
+                    >
+                      <div style={{ padding: '28px 28px 24px' }}>
+                        <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 22, fontWeight: 700, color: C.white, marginBottom: 10 }}>{p.label}</div>
+                        <p style={{ fontSize: 13, color: C.mutedLight, lineHeight: 1.8, margin: 0 }}>{p.desc}</p>
+                        <div style={{ fontSize: 11, color: C.accent, letterSpacing: 1.5, textTransform: 'uppercase', marginTop: 16, fontFamily: "'Outfit',sans-serif" }}>
+                          Visualize this roof →
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                  </a>
                 </Reveal>
               ))}
             </div>
@@ -307,15 +334,28 @@ export default function CityPage({ city }: { city: CityData }) {
             <div className="g4" style={{ gap: 2 }}>
               {steps.map((s, i) => (
                 <Reveal key={s.n} delay={i * 0.09}>
-                  <div style={{ padding: '36px 28px', background: C.card, border: `1px solid ${C.border}`, borderRadius: 4, height: '100%', transition: 'border-color 0.3s' }}
-                    onMouseEnter={e => (e.currentTarget.style.borderColor = C.accentDark)}
-                    onMouseLeave={e => (e.currentTarget.style.borderColor = C.border)}
-                  >
-                    <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 52, fontWeight: 700, color: C.border, lineHeight: 1, marginBottom: 18, userSelect: 'none' }}>{s.n}</div>
-                    <div style={{ width: 24, height: 2, background: C.accent, marginBottom: 14 }}/>
-                    <h3 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 19, color: C.white, fontWeight: 700, marginBottom: 10 }}>{s.title}</h3>
-                    <p style={{ fontSize: 13, color: C.mutedLight, lineHeight: 1.8, margin: 0 }}>{s.body}</p>
-                  </div>
+                  {(() => {
+                    const isExternal = s.href?.startsWith('http')
+                    const Tag = s.href ? 'a' : 'div'
+                    const linkProps = s.href ? {
+                      href: s.href,
+                      ...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {}),
+                      style: { textDecoration: 'none', display: 'block', height: '100%' },
+                    } : { style: { height: '100%' } }
+                    return (
+                      <Tag {...(linkProps as any)}>
+                        <div style={{ padding: '36px 28px', background: C.card, border: `1px solid ${C.border}`, borderRadius: 4, height: '100%', transition: 'border-color 0.3s', cursor: s.href ? 'pointer' : 'default' }}
+                          onMouseEnter={e => (e.currentTarget.style.borderColor = C.accentDark)}
+                          onMouseLeave={e => (e.currentTarget.style.borderColor = C.border)}
+                        >
+                          <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 52, fontWeight: 700, color: C.border, lineHeight: 1, marginBottom: 18, userSelect: 'none' }}>{s.n}</div>
+                          <div style={{ width: 24, height: 2, background: C.accent, marginBottom: 14 }}/>
+                          <h3 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 19, color: C.white, fontWeight: 700, marginBottom: 10 }}>{s.title}</h3>
+                          <p style={{ fontSize: 13, color: C.mutedLight, lineHeight: 1.8, margin: 0 }}>{s.body}</p>
+                        </div>
+                      </Tag>
+                    )
+                  })()}
                 </Reveal>
               ))}
             </div>

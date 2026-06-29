@@ -15,12 +15,12 @@ export default function Counter({ to, suffix = '' }: { to: number; suffix?: stri
         const t = setInterval(() => {
           s += step
           if (s >= to) { setVal(to); clearInterval(t) }
-          else setVal(Math.floor(s))
+          else setVal(Math.round(s * 10) / 10)
         }, 16)
       }
     }, { threshold: 0.5 })
     if (ref.current) obs.observe(ref.current)
     return () => obs.disconnect()
   }, [to])
-  return <span ref={ref}>{val.toLocaleString()}{suffix}</span>
+  return <span ref={ref}>{Number.isInteger(val) ? val.toLocaleString() : val.toFixed(1)}{suffix}</span>
 }
