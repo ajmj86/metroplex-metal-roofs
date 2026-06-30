@@ -691,9 +691,21 @@ const HomePage = ({ activeTab, setActiveTab }) => {
             <div style={{display:"flex",flexWrap:"wrap",gap:9,justifyContent:"center"}}>
               {cities.map(city=>(
                 <a key={city} href={
-                  city === "Southlake" ? "/metal-roofing-southlake-tx" :
-                  city === "Frisco"    ? "/metal-roofing-frisco-tx" :
-                  city === "Prosper"   ? "/metal-roofing-prosper-tx" :
+                  city === "Southlake"    ? "/metal-roofing-southlake-tx" :
+                  city === "Frisco"       ? "/metal-roofing-frisco-tx" :
+                  city === "Prosper"      ? "/metal-roofing-prosper-tx" :
+                  city === "Westlake"     ? "/metal-roofing-westlake-tx" :
+                  city === "Celina"       ? "/metal-roofing-celina-tx" :
+                  city === "McKinney"     ? "/metal-roofing-mckinney-tx" :
+                  city === "Allen"        ? "/metal-roofing-allen-tx" :
+                  city === "Plano"        ? "/metal-roofing-plano-tx" :
+                  city === "Colleyville"  ? "/metal-roofing-colleyville-tx" :
+                  city === "Keller"       ? "/metal-roofing-keller-tx" :
+                  city === "Trophy Club"  ? "/metal-roofing-trophy-club-tx" :
+                  city === "Flower Mound" ? "/metal-roofing-flower-mound-tx" :
+                  city === "Mansfield"    ? "/metal-roofing-mansfield-tx" :
+                  city === "Forney"       ? "/metal-roofing-forney-tx" :
+                  city === "Rockwall"     ? "/metal-roofing-rockwall-tx" :
                   "#"
                 } style={{padding:"9px 18px",border:`1px solid ${C.border}`,borderRadius:2,fontSize:12,color:C.mutedLight,letterSpacing:1,transition:"all 0.2s"}}
                   onMouseEnter={e=>{e.currentTarget.style.borderColor=C.accent;e.currentTarget.style.color=C.accent;}}
