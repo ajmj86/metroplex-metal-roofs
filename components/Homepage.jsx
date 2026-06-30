@@ -340,15 +340,27 @@ const HomePage = ({ activeTab, setActiveTab }) => {
   ];
 
   const galleryItems = [
-    {label:"Standing Seam · Luxury Residence", tag:'Shutterstock: "standing seam metal roof luxury home"'},
-    {label:"Copper Roof · Estate Home",         tag:'Shutterstock: "copper roof luxury estate"'},
-    {label:"Stone-Coated · Suburban Home",      tag:'Shutterstock: "stone coated steel roof residential"'},
-    {label:"R-Panel · Modern Farmhouse",        tag:'Shutterstock: "metal panel roof farmhouse"'},
-    {label:"Standing Seam · Wide Exterior Shot",  tag:'Shutterstock: "standing seam metal roof luxury home wide"'},
-    {label:"Detail · Seam & Ridge Cap",         tag:'Shutterstock: "standing seam metal roof detail"'},
+    { src: "/Installation Pics/Standing-Seam-Steel-True-Black.PNG",                 label: "Standing Seam Metal - True Black" },
+    { src: "/Installation Pics/Standing-Seam-Copper.PNG",                           label: "Standing Seam Copper" },
+    { src: "/Installation Pics/Stone-Coated-Steel-Pacific-Tile-Timberwood.jpg",     label: "Stone-Coated Steel - Pacific Tile, Timberwood" },
+    { src: "/Installation Pics/Stone-Coated-Steel-Pine-Crest Shake-Timberwood.PNG", label: "Stone-Coated Steel - Pine-Crest Shake, Timberwood" },
+    { src: "/Installation Pics/Standing-Seam-Steel-Natural-Metal.jpg",              label: "Standing Seam Metal - Natural Metal" },
+    { src: "/Installation Pics/Stone-Coated-Steel-Barrel-Vault-Tile-Barclay.PNG",   label: "Stone-Coated Steel - Barrel-Vault Tile, Barclay" },
   ];
 
   const activeType = roofTypes.find(t=>t.id===activeTab);
+  const [lightboxIndex, setLightboxIndex] = useState(null);
+
+  useEffect(() => {
+    if (lightboxIndex === null) return;
+    function handleKey(e) {
+      if (e.key === "Escape") setLightboxIndex(null);
+      if (e.key === "ArrowLeft" && lightboxIndex > 0) setLightboxIndex(lightboxIndex - 1);
+      if (e.key === "ArrowRight" && lightboxIndex < galleryItems.length - 1) setLightboxIndex(lightboxIndex + 1);
+    }
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [lightboxIndex]);
 
   return (
     <div>
@@ -619,18 +631,106 @@ const HomePage = ({ activeTab, setActiveTab }) => {
             <div style={{textAlign:"center",marginBottom:48}}>
               <div style={{fontSize:15,letterSpacing:3,color:C.accent,textTransform:"uppercase",marginBottom:12}}>Our Work</div>
               <h2 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(1.75rem,4.3vw,3.75rem)",fontWeight:700,color:C.white}}>DFW Installations</h2>
-              <p style={{fontSize:12,color:C.muted,marginTop:10}}>Replace placeholders with licensed stock or job photos before launch</p>
             </div>
           </Reveal>
           <div className="grid-3" style={{gap:14}}>
             {galleryItems.map((item,i)=>(
               <Reveal key={item.label} delay={i*0.06}>
-                <ImgPlaceholder label={item.label} tag={item.tag} style={{minHeight:220}}/>
+                <div
+                  onClick={() => setLightboxIndex(i)}
+                  style={{ cursor: "pointer", height: 260, overflow: "hidden", borderRadius: 4, position: "relative" }}
+                >
+                  <img
+                    src={item.src}
+                    alt={item.label}
+                    draggable={false}
+                    style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: item.label.includes("Copper") ? "center 75%" : "center center", display: "block", transition: "transform 0.3s ease", pointerEvents: "auto" }}
+                    onMouseEnter={e => e.currentTarget.style.transform = "scale(1.04)"}
+                    onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}
+                  />
+                </div>
               </Reveal>
             ))}
           </div>
         </div>
       </section>
+
+      {lightboxIndex !== null && (
+        <div
+          onClick={() => setLightboxIndex(null)}
+          style={{
+            position: "fixed", inset: 0, zIndex: 999,
+            background: "rgba(9,9,10,0.95)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            padding: "40px 20px", cursor: "zoom-out",
+          }}
+        >
+          <button
+            onClick={() => setLightboxIndex(null)}
+            style={{
+              position: "absolute", top: 24, right: 24,
+              background: "none", border: "none", color: "#F4F1EB",
+              fontSize: 28, cursor: "pointer", lineHeight: 1,
+              padding: 8,
+            }}
+            aria-label="Close"
+          >×</button>
+
+          {lightboxIndex > 0 && (
+            <button
+              onClick={e => { e.stopPropagation(); setLightboxIndex(lightboxIndex - 1); }}
+              style={{
+                position: "absolute", left: "calc(50% - min(37.5vw, 380px) - 22px)", top: "calc(50% - 20px)",
+                background: "#18181B", border: "none", color: "#B8935A", borderRadius: "50%",
+                width: 44, height: 44, display: "flex", alignItems: "center", justifyContent: "center",
+                fontSize: 22, fontWeight: 700, cursor: "pointer", opacity: 1,
+                boxShadow: "0 2px 12px rgba(0,0,0,0.4)", transition: "background 0.2s", zIndex: 2,
+              }}
+              onMouseEnter={e => e.currentTarget.style.color = "#D4AE7A"}
+              onMouseLeave={e => e.currentTarget.style.color = "#B8935A"}
+              aria-label="Previous"
+            >‹</button>
+          )}
+
+          {lightboxIndex < galleryItems.length - 1 && (
+            <button
+              onClick={e => { e.stopPropagation(); setLightboxIndex(lightboxIndex + 1); }}
+              style={{
+                position: "absolute", right: "calc(50% - min(37.5vw, 380px) - 22px)", top: "calc(50% - 20px)",
+                background: "#18181B", border: "none", color: "#B8935A", borderRadius: "50%",
+                width: 44, height: 44, display: "flex", alignItems: "center", justifyContent: "center",
+                fontSize: 22, fontWeight: 700, cursor: "pointer", opacity: 1,
+                boxShadow: "0 2px 12px rgba(0,0,0,0.4)", transition: "background 0.2s", zIndex: 2,
+              }}
+              onMouseEnter={e => e.currentTarget.style.color = "#D4AE7A"}
+              onMouseLeave={e => e.currentTarget.style.color = "#B8935A"}
+              aria-label="Next"
+            >›</button>
+          )}
+
+          <div onClick={() => setLightboxIndex(null)} style={{ width: "min(75vw, 760px)", height: "min(70vh, 580px)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center" }}>
+            <div style={{ width: "100%", height: "calc(100% - 40px)", borderRadius: 4, overflow: "hidden", position: "relative" }}>
+              <img
+                src={galleryItems[lightboxIndex].src}
+                alt={galleryItems[lightboxIndex].label}
+                draggable={false}
+                style={{
+                  width: "100%", height: "100%",
+                  objectFit: "cover",
+                  objectPosition: galleryItems[lightboxIndex].label.includes("Copper") ? "center 75%" : "center center",
+                  display: "block",
+                  WebkitUserSelect: "none", userSelect: "none",
+                  WebkitTouchCallout: "none",
+                  pointerEvents: "none"
+                }}
+              />
+            </div>
+            <div style={{ color: "#A1A1AA", fontSize: 13, height: 40, display: "flex", alignItems: "center", justifyContent: "center", letterSpacing: 1 }}>
+              {galleryItems[lightboxIndex].label}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* ── PROCESS ── */}
       <section id="process" className="section-pad" style={{background:C.surface,borderTop:`1px solid ${C.border}`}}>
