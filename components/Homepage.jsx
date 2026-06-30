@@ -304,6 +304,12 @@ const HomePage = ({ activeTab, setActiveTab }) => {
     rpanel:  [{k:"Lifespan",v:"40–60 yrs"},{k:"Hail Rating",v:"Class 4"},{k:"Wind",v:"120 mph"},{k:"Fastener",v:"Exposed"}],
   };
   const badgeMap = {standing:"Most Popular",copper:"Ultra Premium",stone:"HOA Friendly",rpanel:"Best Value"};
+  const collageMap = {
+    standing: "/products/collages/standing-seam-collage.jpg",
+    copper:   "/products/collages/copper-collage.jpg",
+    stone:    "/products/collages/stone-coated-steel-collage.jpg",
+    rpanel:   "/products/collages/r-panel-collage.jpg",
+  };
 
   const stats = [
     {val:50,  suffix:"+ yrs", label:"Roof Lifespan"},
@@ -576,10 +582,10 @@ const HomePage = ({ activeTab, setActiveTab }) => {
             <Reveal key={activeTab}>
               <div className="grid-2" style={{border:`1px solid ${C.border}`,borderRadius:8,overflow:"hidden"}}>
                 {/* Image panel */}
-                <ImgPlaceholder
-                  label={`${activeType.label} — product photo`}
-                  tag={`Shutterstock: "${activeType.label.toLowerCase()} metal roof luxury home"`}
-                  style={{minHeight:320,borderRadius:0,border:"none",position:"relative"}}
+                <img
+                  src={collageMap[activeTab]}
+                  alt={`${activeType.label} metal roof`}
+                  style={{width:"100%",height:"100%",objectFit:"cover",minHeight:320,display:"block"}}
                 />
                 {/* Info panel */}
                 <div style={{background:C.black,padding:"clamp(28px,4vw,52px)",display:"flex",flexDirection:"column",justifyContent:"space-between",gap:32}}>

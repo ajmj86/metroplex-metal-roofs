@@ -122,7 +122,7 @@
         "placeholder": false,
         "description": "Timeless, maintenance-free luxury that develops a natural patina over time.",
         "colors": [
-          { "name": "Natural Copper", "slug": "natural-copper", "sku": null, "hex": "#A0644D", "image1": "/products/copper_standing_seam/natural-copper.jpg", "image2": null }
+          { "name": "Natural Copper", "slug": "natural-copper", "sku": null, "hex": "#A0644D", "image1": "/products/copper_standing_seam/natural-copper.jpg", "image2": "/products/copper_standing_seam/copper-standing-seam-2.jpg", "image3": "/products/copper_standing_seam/copper-standing-seam-3.jpg", "image4": "/products/copper_standing_seam/copper-standing-seam-4.jpg" }
         ]
       }
     }
