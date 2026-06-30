@@ -594,11 +594,23 @@ const HomePage = ({ activeTab, setActiveTab }) => {
             <Reveal key={activeTab}>
               <div className="grid-2" style={{border:`1px solid ${C.border}`,borderRadius:8,overflow:"hidden"}}>
                 {/* Image panel */}
-                <img
-                  src={collageMap[activeTab]}
-                  alt={`${activeType.label} metal roof`}
-                  style={{width:"100%",height:"100%",objectFit:"cover",minHeight:320,display:"block"}}
-                />
+                <a
+                  href={`/visualizer?roofType=${
+                    activeTab === 'standing' ? 'standing_seam' :
+                    activeTab === 'copper'   ? 'copper_standing_seam' :
+                    activeTab === 'stone'    ? 'stone_coated_steel' :
+                    'r_panel'
+                  }`}
+                  style={{display:"block",height:"100%",overflow:"hidden",cursor:"pointer"}}
+                >
+                  <img
+                    src={collageMap[activeTab]}
+                    alt={`${activeType.label} metal roof`}
+                    style={{width:"100%",height:"100%",objectFit:"cover",minHeight:320,display:"block",transition:"transform 0.3s ease"}}
+                    onMouseEnter={e => e.currentTarget.style.transform = "scale(1.02)"}
+                    onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}
+                  />
+                </a>
                 {/* Info panel */}
                 <div style={{background:C.black,padding:"clamp(28px,4vw,52px)",display:"flex",flexDirection:"column",justifyContent:"space-between",gap:32}}>
                   <div>

@@ -220,7 +220,16 @@ export default function VisualizerPage() {
     if (fn || ph) {
       setGateData(d => ({ ...d, firstName: fn, lastName: ln, phone: ph, email: em }))
     }
-    if (addr) setAddress(addr)
+    if (addr) { setAddress(addr); if (addrRef.current) addrRef.current.value = addr }
+    if (rt) setSelType(rt)
+  }, [])
+
+  // ── Lightweight roofType-only prefill (homepage collage links) ──────────────
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const params = new URLSearchParams(window.location.search)
+    if (params.get('prefilled')) return // already handled by the block above
+    const rt = params.get('roofType')
     if (rt) setSelType(rt)
   }, [])
 
