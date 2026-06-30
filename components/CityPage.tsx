@@ -91,7 +91,7 @@ export default function CityPage({ city }: { city: CityData }) {
     { val: 50,  suffix: '+ yrs', label: 'Roof Lifespan' },
     { val: 35,  suffix: '%',     label: 'Insurance Savings' },
     { val: 25,  suffix: '%',     label: 'Energy Cost Reduction' },
-    { val: 340, suffix: '%',     label: 'ROI vs. Asphalt' },
+    { val: 137, suffix: '%',     label: 'ROI vs. Asphalt', note: 'Based on 20-yr cost comparison: avoided replacement, insurance, and energy savings vs. upfront investment' },
   ]
 
   const steps = [
@@ -235,6 +235,11 @@ export default function CityPage({ city }: { city: CityData }) {
                         <Counter to={s.val} suffix={s.suffix}/>
                       </div>
                       <div style={{ fontSize: 10, letterSpacing: 2, textTransform: 'uppercase', color: C.muted }}>{s.label}</div>
+                      {s.note && (
+                        <div style={{ fontSize: 9, color: C.muted, opacity: 0.55, lineHeight: 1.5, marginTop: 8, maxWidth: 170, marginLeft: 'auto', marginRight: 'auto' }}>
+                          *{s.note}
+                        </div>
+                      )}
                     </div>
                   </Reveal>
                 ))}
