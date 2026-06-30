@@ -55,6 +55,7 @@ const Reveal = ({ children, delay=0 }) => {
 const NAV_LINKS = [
   {label:"About Us",      href:"/about"},
   {label:"Why Metal",     href:"#why-metal"},
+  {label:"Our Products",  href:"#products"},
   {label:"Gallery",       href:"#gallery"},
   {label:"Our Process",   href:"#process"},
   {label:"Service Areas", href:"#service-areas"},
