@@ -58,8 +58,8 @@ const NAV_LINKS = [
   {label:"Our Products",  href:"#products"},
   {label:"Gallery",       href:"#gallery"},
   {label:"Our Process",   href:"#process"},
-  {label:"Service Areas", href:"#service-areas"},
   {label:"Reviews",       href:"#reviews"},
+  {label:"Service Areas", href:"#service-areas"},
 ];
 
 /* ── Nav ── */
