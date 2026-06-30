@@ -287,67 +287,63 @@ const VisualizerGate = () => {
   );
 };
 
+/* ── Static data (module scope — no props/state dependency) ── */
+const roofTypes = [
+  {id:"standing",label:"Standing Seam",   desc:"The gold standard in metal roofing. Hidden fasteners, clean architectural lines, and a 50+ year lifespan. Preferred by luxury homebuilders and architects across DFW."},
+  {id:"copper",  label:"Copper",           desc:"The most premium material in residential roofing. Develops a natural patina over decades, lasts 100+ years, and signals enduring quality. Ideal for estate-level homes or architectural accents."},
+  {id:"stone",   label:"Stone-Coated Steel",desc:"The look of architectural shingles with the strength of steel. Class 4 hail rating — ideal for HOA-governed DFW communities that require traditional aesthetics."},
+  {id:"rpanel",  label:"R-Panel",          desc:"A proven exposed-fastener metal panel system offering exceptional durability and longevity. A straightforward entry into metal roofing without sacrificing long-term performance."},
+];
+const specMap = {
+  standing:[{k:"Lifespan",v:"50–70 yrs"},{k:"Hail Rating",v:"Class 4"},{k:"Wind",v:"160 mph"},{k:"Fastener",v:"Hidden"}],
+  copper:  [{k:"Lifespan",v:"100+ yrs"}, {k:"Patina",v:"Natural"},{k:"Wind",v:"160 mph"},{k:"Maintenance",v:"Near zero"}],
+  stone:   [{k:"Lifespan",v:"40–70 yrs"},{k:"Hail Rating",v:"Class 4"},{k:"Wind",v:"120 mph"},{k:"Profile",v:"Shingle-style"}],
+  rpanel:  [{k:"Lifespan",v:"40–60 yrs"},{k:"Hail Rating",v:"Class 4"},{k:"Wind",v:"120 mph"},{k:"Fastener",v:"Exposed"}],
+};
+const badgeMap = {standing:"Most Popular",copper:"Ultra Premium",stone:"HOA Friendly",rpanel:"Best Value"};
+const collageMap = {
+  standing: "/products/collages/standing-seam-collage.jpg",
+  copper:   "/products/collages/copper-collage.jpg",
+  stone:    "/products/collages/stone-coated-steel-collage.jpg",
+  rpanel:   "/products/collages/r-panel-collage.jpg",
+};
+const stats = [
+  {val:50,  suffix:"+ yrs", label:"Roof Lifespan"},
+  {val:35,  suffix:"%",     label:"Insurance Savings"},
+  {val:25,  suffix:"%",     label:"Energy Cost Reduction"},
+  {val:137, suffix:"%",     label:"ROI vs. Asphalt", note:"Based on 20-yr cost comparison: avoided replacement, insurance, and energy savings vs. upfront investment"},
+];
+const steps = [
+  {n:"01",title:"Visualize Your Roof",   href:"/visualizer",body:"Enter your address. Our AI visualizer pulls a street-level image of your home and renders it with your chosen metal roof style and color — before you commit to anything."},
+  {n:"02",title:"Brief Consultation",    href:"https://api.leadconnectorhq.com/widget/booking/gG1ruFfEWkUXO7eIB8NR",body:"A quick call with our team. We confirm your home's scope, timeline, and whether metal is the right fit. No pressure, no obligation."},
+  {n:"03",title:"Precision Estimate",    href:"/estimate",body:"We use satellite imaging to generate exact measurements for your roof. Your estimate is built from real data — not a guess from the driveway."},
+  {n:"04",title:"Expert Installation",   body:"Your project is executed by a credentialed local metal roofing specialist — licensed in Texas, fully insured, and selected for their proven expertise."},
+];
+const reviews = [
+  {name:"Michael T.",area:"Southlake, TX",text:"We've replaced two asphalt roofs on this house in 22 years. After last spring's hail we finally switched to standing seam. The process was completely different — they actually knew what they were talking about."},
+  {name:"Jennifer R.",area:"Frisco, TX",  text:"I was skeptical about the cost at first. Then they walked me through the insurance discount and the 50-year math. This is the last roof I'll ever put on this house."},
+  {name:"David K.",  area:"Westlake, TX", text:"Most roofing companies send a guy with a clipboard. Metroplex showed me a rendering of my actual house with a metal roof before we even talked numbers. Completely different level of professionalism."},
+];
+const cities = [
+  "Southlake","Frisco","Westlake","Prosper","Celina",
+  "McKinney","Allen","Plano","Colleyville","Keller",
+  "Trophy Club","Flower Mound","Mansfield","Forney","Rockwall",
+  "Midlothian","Waxahachie","Burleson","Lewisville","Coppell",
+  "Richardson","Highland Village","Argyle","Northlake","Roanoke",
+];
+const galleryItems = [
+  { src: "/Installation Pics/Standing-Seam-Steel-True-Black.PNG",                 label: "Standing Seam Metal - True Black" },
+  { src: "/Installation Pics/Standing-Seam-Copper.PNG",                           label: "Standing Seam Copper" },
+  { src: "/Installation Pics/Stone-Coated-Steel-Pacific-Tile-Timberwood.jpg",     label: "Stone-Coated Steel - Pacific Tile, Timberwood" },
+  { src: "/Installation Pics/Stone-Coated-Steel-Pine-Crest Shake-Timberwood.PNG", label: "Stone-Coated Steel - Pine-Crest Shake, Timberwood" },
+  { src: "/Installation Pics/Standing-Seam-Steel-Natural-Metal.jpg",              label: "Standing Seam Metal - Natural Metal" },
+  { src: "/Installation Pics/Stone-Coated-Steel-Barrel-Vault-Tile-Barclay.PNG",   label: "Stone-Coated Steel - Barrel-Vault Tile, Barclay" },
+];
+
 /* ═══════════════════════════════
    HOME
 ═══════════════════════════════ */
 const HomePage = ({ activeTab, setActiveTab }) => {
-
-  const roofTypes = [
-    {id:"standing",label:"Standing Seam",   desc:"The gold standard in metal roofing. Hidden fasteners, clean architectural lines, and a 50+ year lifespan. Preferred by luxury homebuilders and architects across DFW."},
-    {id:"copper",  label:"Copper",           desc:"The most premium material in residential roofing. Develops a natural patina over decades, lasts 100+ years, and signals enduring quality. Ideal for estate-level homes or architectural accents."},
-    {id:"stone",   label:"Stone-Coated Steel",desc:"The look of architectural shingles with the strength of steel. Class 4 hail rating — ideal for HOA-governed DFW communities that require traditional aesthetics."},
-    {id:"rpanel",  label:"R-Panel",          desc:"A proven exposed-fastener metal panel system offering exceptional durability and longevity. A straightforward entry into metal roofing without sacrificing long-term performance."},
-  ];
-  const specMap = {
-    standing:[{k:"Lifespan",v:"50–70 yrs"},{k:"Hail Rating",v:"Class 4"},{k:"Wind",v:"160 mph"},{k:"Fastener",v:"Hidden"}],
-    copper:  [{k:"Lifespan",v:"100+ yrs"}, {k:"Patina",v:"Natural"},{k:"Wind",v:"160 mph"},{k:"Maintenance",v:"Near zero"}],
-    stone:   [{k:"Lifespan",v:"40–70 yrs"},{k:"Hail Rating",v:"Class 4"},{k:"Wind",v:"120 mph"},{k:"Profile",v:"Shingle-style"}],
-    rpanel:  [{k:"Lifespan",v:"40–60 yrs"},{k:"Hail Rating",v:"Class 4"},{k:"Wind",v:"120 mph"},{k:"Fastener",v:"Exposed"}],
-  };
-  const badgeMap = {standing:"Most Popular",copper:"Ultra Premium",stone:"HOA Friendly",rpanel:"Best Value"};
-  const collageMap = {
-    standing: "/products/collages/standing-seam-collage.jpg",
-    copper:   "/products/collages/copper-collage.jpg",
-    stone:    "/products/collages/stone-coated-steel-collage.jpg",
-    rpanel:   "/products/collages/r-panel-collage.jpg",
-  };
-
-  const stats = [
-    {val:50,  suffix:"+ yrs", label:"Roof Lifespan"},
-    {val:35,  suffix:"%",     label:"Insurance Savings"},
-    {val:25,  suffix:"%",     label:"Energy Cost Reduction"},
-    {val:137, suffix:"%",     label:"ROI vs. Asphalt", note:"Based on 20-yr cost comparison: avoided replacement, insurance, and energy savings vs. upfront investment"},
-  ];
-
-  const steps = [
-    {n:"01",title:"Visualize Your Roof",   href:"/visualizer",body:"Enter your address. Our AI visualizer pulls a street-level image of your home and renders it with your chosen metal roof style and color — before you commit to anything."},
-    {n:"02",title:"Brief Consultation",    href:"https://api.leadconnectorhq.com/widget/booking/gG1ruFfEWkUXO7eIB8NR",body:"A quick call with our team. We confirm your home's scope, timeline, and whether metal is the right fit. No pressure, no obligation."},
-    {n:"03",title:"Precision Estimate",    href:"/estimate",body:"We use satellite imaging to generate exact measurements for your roof. Your estimate is built from real data — not a guess from the driveway."},
-    {n:"04",title:"Expert Installation",   body:"Your project is executed by a credentialed local metal roofing specialist — licensed in Texas, fully insured, and selected for their proven expertise."},
-  ];
-
-  const reviews = [
-    {name:"Michael T.",area:"Southlake, TX",text:"We've replaced two asphalt roofs on this house in 22 years. After last spring's hail we finally switched to standing seam. The process was completely different — they actually knew what they were talking about."},
-    {name:"Jennifer R.",area:"Frisco, TX",  text:"I was skeptical about the cost at first. Then they walked me through the insurance discount and the 50-year math. This is the last roof I'll ever put on this house."},
-    {name:"David K.",  area:"Westlake, TX", text:"Most roofing companies send a guy with a clipboard. Metroplex showed me a rendering of my actual house with a metal roof before we even talked numbers. Completely different level of professionalism."},
-  ];
-
-  const cities = [
-    "Southlake","Frisco","Westlake","Prosper","Celina",
-    "McKinney","Allen","Plano","Colleyville","Keller",
-    "Trophy Club","Flower Mound","Mansfield","Forney","Rockwall",
-    "Midlothian","Waxahachie","Burleson","Lewisville","Coppell",
-    "Richardson","Highland Village","Argyle","Northlake","Roanoke",
-  ];
-
-  const galleryItems = [
-    { src: "/Installation Pics/Standing-Seam-Steel-True-Black.PNG",                 label: "Standing Seam Metal - True Black" },
-    { src: "/Installation Pics/Standing-Seam-Copper.PNG",                           label: "Standing Seam Copper" },
-    { src: "/Installation Pics/Stone-Coated-Steel-Pacific-Tile-Timberwood.jpg",     label: "Stone-Coated Steel - Pacific Tile, Timberwood" },
-    { src: "/Installation Pics/Stone-Coated-Steel-Pine-Crest Shake-Timberwood.PNG", label: "Stone-Coated Steel - Pine-Crest Shake, Timberwood" },
-    { src: "/Installation Pics/Standing-Seam-Steel-Natural-Metal.jpg",              label: "Standing Seam Metal - Natural Metal" },
-    { src: "/Installation Pics/Stone-Coated-Steel-Barrel-Vault-Tile-Barclay.PNG",   label: "Stone-Coated Steel - Barrel-Vault Tile, Barclay" },
-  ];
 
   const activeType = roofTypes.find(t=>t.id===activeTab);
   const [lightboxIndex, setLightboxIndex] = useState(null);
@@ -607,6 +603,8 @@ const HomePage = ({ activeTab, setActiveTab }) => {
                   <img
                     src={collageMap[activeTab]}
                     alt={`${activeType.label} metal roof`}
+                    loading="lazy"
+                    decoding="async"
                     style={{width:"100%",height:"100%",objectFit:"cover",minHeight:320,display:"block",transition:"transform 0.3s ease"}}
                     onMouseEnter={e => e.currentTarget.style.transform = "scale(1.02)"}
                     onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}
@@ -656,6 +654,8 @@ const HomePage = ({ activeTab, setActiveTab }) => {
                   <img
                     src={item.src}
                     alt={item.label}
+                    loading="lazy"
+                    decoding="async"
                     draggable={false}
                     style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: item.label.includes("Copper") ? "center 75%" : "center center", display: "block", transition: "transform 0.3s ease", pointerEvents: "auto" }}
                     onMouseEnter={e => e.currentTarget.style.transform = "scale(1.04)"}
