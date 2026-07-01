@@ -314,10 +314,7 @@ export default function VisualizerPage() {
       e.email = 'Enter a valid email address'
 
     if (!gateData.smsConsent)
-      e.smsConsent = 'You must consent to SMS to receive your visualization'
-
-    if (!gateData.emailConsent)
-      e.emailConsent = 'You must agree to receive email updates'
+      e.smsConsent = 'You must agree to be contacted to receive your visualization'
 
     return e
   }
@@ -760,8 +757,7 @@ export default function VisualizerPage() {
                       gateData.firstName.trim().length > 0 &&
                       gateData.phone.replace(/\D/g, '').length === 10 &&
                       /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(gateData.email.trim()) &&
-                      gateData.smsConsent &&
-                      gateData.emailConsent
+                      gateData.smsConsent
                     return (
                       <>
                         <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 26, fontWeight: 700, color: C.white, lineHeight: 1.25, marginBottom: 8 }}>
@@ -800,19 +796,10 @@ export default function VisualizerPage() {
                             onChange={e => setGateData(d => ({ ...d, smsConsent: e.target.checked }))}
                             style={{ marginTop: 2, accentColor: C.accent, width: 15, height: 15, flexShrink: 0 }} />
                           <span style={{ fontSize: 13, color: C.muted, lineHeight: 1.6 }}>
-                            By checking this box, I consent to receive automated SMS text messages from Metroplex Metal Roofs at the number provided regarding my roofing inquiry and estimate. Message frequency varies. Message &amp; data rates may apply. Text STOP to cancel, HELP for help. Consent is not a condition of purchase.
+                            By checking this box, I agree to be contacted by Metroplex Metal Roofs regarding my roofing inquiry via phone, email, or text message. Message frequency varies. Msg &amp; data rates may apply. Reply STOP to opt out. Reply HELP for help.
                           </span>
                         </label>
                         {contactErrors.smsConsent && <div style={{ fontSize: 11, color: '#F87171', marginTop: -6, marginBottom: 8 }}>{contactErrors.smsConsent}</div>}
-                        <label style={{ display: 'flex', gap: 10, alignItems: 'flex-start', marginBottom: 16, cursor: 'pointer' }}>
-                          <input type="checkbox" checked={gateData.emailConsent}
-                            onChange={e => setGateData(d => ({ ...d, emailConsent: e.target.checked }))}
-                            style={{ marginTop: 2, accentColor: C.accent, width: 15, height: 15, flexShrink: 0 }} />
-                          <span style={{ fontSize: 13, color: C.muted, lineHeight: 1.6 }}>
-                            I agree to receive email updates about my estimate and Metroplex Metal Roofs promotions.
-                          </span>
-                        </label>
-                        {contactErrors.emailConsent && <div style={{ fontSize: 11, color: '#F87171', marginTop: -6, marginBottom: 8 }}>{contactErrors.emailConsent}</div>}
                         <div style={{ fontSize: 13, color: C.muted, lineHeight: 1.7, marginBottom: 16, padding: '10px 12px', background: C.surface, borderRadius: 4, border: `1px solid ${C.border}` }}>
                           By submitting, you consent to being contacted by Metroplex Metal Roofs regarding your inquiry. Your information is never sold or shared with third parties.
                         </div>
