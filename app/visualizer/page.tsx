@@ -301,6 +301,9 @@ export default function VisualizerPage() {
     if (Object.keys(e).length) { setContactErrors(e); return }
     setGateLoading(true)
     try {
+      const utmSource = sessionStorage.getItem('utm_source') || ''
+      const utmMedium = sessionStorage.getItem('utm_medium') || ''
+      const utmCampaign = sessionStorage.getItem('utm_campaign') || ''
       await fetch('/api/lead-intake', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -319,6 +322,7 @@ export default function VisualizerPage() {
           product: selProduct,
           color: selColor,
           leadOrigin: 'visualizer',
+          utm: { source: utmSource, medium: utmMedium, campaign: utmCampaign },
         }),
       })
     } catch { /* advance anyway */ }

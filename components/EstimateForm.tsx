@@ -173,6 +173,10 @@ interface EstimateFormProps {
 }
 
 export default function EstimateForm({ initialSelection, leadInfo, leadSource, utmSource, utmMedium, utmCampaign }: EstimateFormProps = {}) {
+  const resolvedUtmSource = utmSource || (typeof window !== 'undefined' ? sessionStorage.getItem('utm_source') || '' : '')
+  const resolvedUtmMedium = utmMedium || (typeof window !== 'undefined' ? sessionStorage.getItem('utm_medium') || '' : '')
+  const resolvedUtmCampaign = utmCampaign || (typeof window !== 'undefined' ? sessionStorage.getItem('utm_campaign') || '' : '')
+
   const carriedRoofType = initialSelection?.roofType && (ROOF_TYPE_ORDER as readonly string[]).includes(initialSelection.roofType)
     ? initialSelection.roofType
     : null
@@ -329,9 +333,9 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
       timeline: qualData.timeline || leadInfo?.timeline,
       leadOrigin: leadInfo?.leadOrigin,
       leadSource,
-      utmSource,
-      utmMedium,
-      utmCampaign,
+      utmSource: resolvedUtmSource,
+      utmMedium: resolvedUtmMedium,
+      utmCampaign: resolvedUtmCampaign,
       productLabel: carriedProductLabel ?? undefined,
     }
   }

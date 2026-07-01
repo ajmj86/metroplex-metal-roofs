@@ -53,18 +53,9 @@ function calculateEstimate(
   return { low: formatUSD(low), high: formatUSD(high) }
 }
 
-function utmCustomFields(utmSource?: string, utmMedium?: string, utmCampaign?: string) {
-  const fields: { id: string; value: string }[] = []
-  if (utmSource) fields.push({ id: 'NNZiielScQomx8VDF7q8', value: utmSource })
-  if (utmMedium) fields.push({ id: 'ELW45zGCkwQkpUV2TnEW', value: utmMedium })
-  if (utmCampaign) fields.push({ id: 'VrI3HZtaymdTdf0lggfD', value: utmCampaign })
-  return fields
-}
-
-function fireGHLWebhook(payload: Record<string, unknown>): void {
-  const url = process.env.GHL_ESTIMATE_WEBHOOK_URL
-  console.log('GHL webhook payload (estimate):', JSON.stringify(payload, null, 2))
-  if (!url) return
+function fireN8nWebhook(payload: Record<string, unknown>): void {
+  const url = process.env.N8N_WEBHOOK_ESTIMATE
+  if (!url) { console.warn('[estimate] N8N_WEBHOOK_ESTIMATE not set'); return }
   fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -103,37 +94,32 @@ export async function POST(request: NextRequest) {
     const squares = (sqFt * multiplier) / 100
     const estimate = calculateEstimate(squares, config, 0, `manual-${sqFt}`)
 
-    fireGHLWebhook({
-      estimateRoofType: roofTypeLabel,
-      estimateLow: estimate.low,
-      estimateHigh: estimate.high,
-      estimateSquares: Math.round(squares),
-      estimateSource: 'manual',
-      estimateTimestamp: new Date().toISOString(),
-      firstName,
-      lastName,
-      phone,
-      email,
+    fireN8nWebhook({
       contact: {
+        firstName,
+        lastName,
+        phone,
+        email,
+        address1: address,
+      },
+      fields: {
+        lead_source: leadSource,
         property_address: address,
+        estimated_roof_size: String(Math.round(squares)),
+        estimate_range: `${estimate.low} - ${estimate.high}`,
         project_reason: formatFormValue('reason', reason),
         insurance_claim_status: formatFormValue('insuranceClaim', insuranceClaim),
         homeowner_timeline: formatFormValue('timeline', timeline),
-        lead_source: leadSource,
-        estimated_roof_size: Math.round(squares),
-        estimate_range: `${estimate.low} - ${estimate.high}`,
       },
-      customField: [
-        { id: 'pOqyjdxOHg67C4JWdkaG', value: leadSource },
-        { id: 'prLMUoMzKClcfmBzDH3R', value: formatFormValue('reason', reason) },
-        { id: 'tpAq0AZMqWJZeTy3dPsS', value: formatFormValue('insuranceClaim', insuranceClaim) },
-        { id: '7F3CKSSVRj7jdHKoq87X', value: formatFormValue('timeline', timeline) },
-        { id: 'acFCeylcy8uhep3stymL', value: address },
-        { id: 'S3E1cQMFQ2vD2Ec1nSAR', value: Math.round(squares) },
-        { id: 'cEjn1x0nid6taqIaQxKt', value: `${estimate.low} - ${estimate.high}` },
-        ...utmCustomFields(utmSource, utmMedium, utmCampaign),
-        ...(selectedRoofLabel ? [{ id: 'ooxcklKOKGrDCRunZnh3', value: selectedRoofLabel }] : []),
-      ],
+      utm: {
+        source: utmSource || '',
+        medium: utmMedium || '',
+        campaign: utmCampaign || '',
+      },
+      tags: insuranceClaim && insuranceClaim !== 'Paying Out of Pocket'
+        ? ['Insurance Claim']
+        : [],
+      source: 'estimate',
     })
 
     return NextResponse.json({
@@ -191,37 +177,32 @@ export async function POST(request: NextRequest) {
 
     const estimate = calculateEstimate(squares, config, pitchLevel, address)
 
-    fireGHLWebhook({
-      estimateRoofType: roofTypeLabel,
-      estimateLow: estimate.low,
-      estimateHigh: estimate.high,
-      estimateSquares: Math.round(squares),
-      estimateSource: 'solar_api',
-      estimateTimestamp: new Date().toISOString(),
-      firstName,
-      lastName,
-      phone,
-      email,
+    fireN8nWebhook({
       contact: {
+        firstName,
+        lastName,
+        phone,
+        email,
+        address1: address,
+      },
+      fields: {
+        lead_source: leadSource,
         property_address: address,
+        estimated_roof_size: String(Math.round(squares)),
+        estimate_range: `${estimate.low} - ${estimate.high}`,
         project_reason: formatFormValue('reason', reason),
         insurance_claim_status: formatFormValue('insuranceClaim', insuranceClaim),
         homeowner_timeline: formatFormValue('timeline', timeline),
-        lead_source: leadSource,
-        estimated_roof_size: Math.round(squares),
-        estimate_range: `${estimate.low} - ${estimate.high}`,
       },
-      customField: [
-        { id: 'pOqyjdxOHg67C4JWdkaG', value: leadSource },
-        { id: 'prLMUoMzKClcfmBzDH3R', value: formatFormValue('reason', reason) },
-        { id: 'tpAq0AZMqWJZeTy3dPsS', value: formatFormValue('insuranceClaim', insuranceClaim) },
-        { id: '7F3CKSSVRj7jdHKoq87X', value: formatFormValue('timeline', timeline) },
-        { id: 'acFCeylcy8uhep3stymL', value: address },
-        { id: 'S3E1cQMFQ2vD2Ec1nSAR', value: Math.round(squares) },
-        { id: 'cEjn1x0nid6taqIaQxKt', value: `${estimate.low} - ${estimate.high}` },
-        ...utmCustomFields(utmSource, utmMedium, utmCampaign),
-        ...(selectedRoofLabel ? [{ id: 'ooxcklKOKGrDCRunZnh3', value: selectedRoofLabel }] : []),
-      ],
+      utm: {
+        source: utmSource || '',
+        medium: utmMedium || '',
+        campaign: utmCampaign || '',
+      },
+      tags: insuranceClaim && insuranceClaim !== 'Paying Out of Pocket'
+        ? ['Insurance Claim']
+        : [],
+      source: 'estimate',
     })
 
     return NextResponse.json({

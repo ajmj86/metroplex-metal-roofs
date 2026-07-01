@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 import ScrollReset from "@/components/ScrollReset";
+import UTMCapture from "@/components/UTMCapture";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -37,6 +39,9 @@ export default function RootLayout({
      ::-webkit-scrollbar-thumb { background: #27272A; border-radius: 3px; }
    `}</style>
         <ScrollReset />
+        <Suspense fallback={null}>
+          <UTMCapture />
+        </Suspense>
         {children}
       </body>
     </html>

@@ -13,7 +13,33 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Server configuration error' }, { status: 500 });
     }
 
-    const payload = await req.json();
+    const body = await req.json();
+
+    const payload = body.partial === true ? body : {
+      contact: {
+        firstName: body.firstName || '',
+        lastName: body.lastName || '',
+        phone: body.phone || '',
+        email: body.email || '',
+        address1: body.address || '',
+      },
+      fields: {
+        current_roof_type: body.currentRoofType || '',
+        project_reason: body.reason || '',
+        insurance_claim_status: body.insuranceClaim || '',
+        homeowner_timeline: body.timeline || '',
+        selected_roof_type: body.selectedRoofType || '',
+      },
+      utm: {
+        source: body.utm?.source || '',
+        medium: body.utm?.medium || '',
+        campaign: body.utm?.campaign || '',
+      },
+      tags: body.insuranceClaim && body.insuranceClaim !== 'Paying Out of Pocket'
+        ? ['Insurance Claim']
+        : [],
+      source: 'visualizer',
+    };
 
     console.log('[lead-intake] forwarding payload to n8n:', payload);
 
