@@ -862,7 +862,7 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
                     <input type="checkbox" checked={contactFields.smsConsent}
                       onChange={e => setContactFields(f => ({ ...f, smsConsent: e.target.checked }))}
                       style={{ marginTop: 2, accentColor: '#B8935A', width: 15, height: 15, flexShrink: 0 }} />
-                    <span style={{ fontSize: 11, color: '#71717A', lineHeight: 1.6 }}>
+                    <span style={{ fontSize: 13, color: '#71717A', lineHeight: 1.6 }}>
                       By checking this box, I consent to receive automated SMS text messages from Metroplex Metal Roofs at the number provided regarding my estimate inquiry. Message frequency varies. Message &amp; data rates may apply. Text STOP to cancel, HELP for help. Consent is not a condition of purchase.
                     </span>
                   </label>
@@ -871,12 +871,12 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
                     <input type="checkbox" checked={contactFields.emailConsent}
                       onChange={e => setContactFields(f => ({ ...f, emailConsent: e.target.checked }))}
                       style={{ marginTop: 2, accentColor: '#B8935A', width: 15, height: 15, flexShrink: 0 }} />
-                    <span style={{ fontSize: 11, color: '#71717A', lineHeight: 1.6 }}>
+                    <span style={{ fontSize: 13, color: '#71717A', lineHeight: 1.6 }}>
                       I agree to receive email updates from Metroplex Metal Roofs.
                     </span>
                   </label>
                   {contactErrors.emailConsent && <div style={{ fontSize: 11, color: '#F87171', marginTop: -6, marginBottom: 8 }}>{contactErrors.emailConsent}</div>}
-                  <div style={{ fontSize: 10, color: '#71717A', lineHeight: 1.7, marginBottom: 16, padding: '10px 12px', background: '#111113', borderRadius: 4, border: '1px solid #27272A' }}>
+                  <div style={{ fontSize: 13, color: '#71717A', lineHeight: 1.7, marginBottom: 16, padding: '10px 12px', background: '#111113', borderRadius: 4, border: '1px solid #27272A' }}>
                     By submitting, you consent to being contacted by Metroplex Metal Roofs regarding your inquiry. Your information is never sold or shared with third parties.
                   </div>
                 </div>

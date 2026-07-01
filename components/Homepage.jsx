@@ -416,7 +416,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
                 </div>
                 <div style={{fontSize:10,letterSpacing:2,textTransform:"uppercase",color:C.muted}}>{s.label}</div>
                 {s.note && (
-                  <div style={{fontSize:9,color:C.muted,opacity:0.55,lineHeight:1.5,marginTop:8,maxWidth:170,marginLeft:"auto",marginRight:"auto"}}>
+                  <div style={{fontSize:13,color:C.muted,opacity:0.55,lineHeight:1.5,marginTop:8,maxWidth:170,marginLeft:"auto",marginRight:"auto"}}>
                     *{s.note}
                   </div>
                 )}
@@ -426,7 +426,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
         </div>
       </section>
       <div style={{borderTop:`1px solid ${C.border}`,borderBottom:`1px solid ${C.border}`,background:C.surface,padding:"8px 24px",textAlign:"center"}}>
-        <p style={{fontFamily:"'Outfit',sans-serif",fontSize:12,color:C.muted,maxWidth:640,margin:"8px auto",lineHeight:1.6}}>
+        <p style={{fontFamily:"'Outfit',sans-serif",fontSize:13,color:C.muted,maxWidth:640,margin:"8px auto",lineHeight:1.6}}>
           Figures represent industry estimates and vary by home, carrier, and installation. Consult your insurance provider for personalized savings.
         </p>
       </div>

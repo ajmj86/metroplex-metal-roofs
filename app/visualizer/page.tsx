@@ -799,7 +799,7 @@ export default function VisualizerPage() {
                           <input type="checkbox" checked={gateData.smsConsent}
                             onChange={e => setGateData(d => ({ ...d, smsConsent: e.target.checked }))}
                             style={{ marginTop: 2, accentColor: C.accent, width: 15, height: 15, flexShrink: 0 }} />
-                          <span style={{ fontSize: 11, color: C.muted, lineHeight: 1.6 }}>
+                          <span style={{ fontSize: 13, color: C.muted, lineHeight: 1.6 }}>
                             By checking this box, I consent to receive automated SMS text messages from Metroplex Metal Roofs at the number provided regarding my roofing inquiry and estimate. Message frequency varies. Message &amp; data rates may apply. Text STOP to cancel, HELP for help. Consent is not a condition of purchase.
                           </span>
                         </label>
@@ -808,12 +808,12 @@ export default function VisualizerPage() {
                           <input type="checkbox" checked={gateData.emailConsent}
                             onChange={e => setGateData(d => ({ ...d, emailConsent: e.target.checked }))}
                             style={{ marginTop: 2, accentColor: C.accent, width: 15, height: 15, flexShrink: 0 }} />
-                          <span style={{ fontSize: 11, color: C.muted, lineHeight: 1.6 }}>
+                          <span style={{ fontSize: 13, color: C.muted, lineHeight: 1.6 }}>
                             I agree to receive email updates about my estimate and Metroplex Metal Roofs promotions.
                           </span>
                         </label>
                         {contactErrors.emailConsent && <div style={{ fontSize: 11, color: '#F87171', marginTop: -6, marginBottom: 8 }}>{contactErrors.emailConsent}</div>}
-                        <div style={{ fontSize: 10, color: C.muted, lineHeight: 1.7, marginBottom: 16, padding: '10px 12px', background: C.surface, borderRadius: 4, border: `1px solid ${C.border}` }}>
+                        <div style={{ fontSize: 13, color: C.muted, lineHeight: 1.7, marginBottom: 16, padding: '10px 12px', background: C.surface, borderRadius: 4, border: `1px solid ${C.border}` }}>
                           By submitting, you consent to being contacted by Metroplex Metal Roofs regarding your inquiry. Your information is never sold or shared with third parties.
                         </div>
                         <button
