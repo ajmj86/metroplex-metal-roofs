@@ -114,6 +114,7 @@ export default function VisualizerPage() {
   const [addrError, setAddrError] = useState('')
   const addrRef = useRef<HTMLInputElement>(null)
   const acAttached = useRef(false)
+  const gateSubmittedRef = useRef(false)
 
   // select step
   const [satelliteUrl, setSatelliteUrl] = useState<string | null>(null)
@@ -233,6 +234,31 @@ export default function VisualizerPage() {
     if (rt) setSelType(rt)
   }, [])
 
+  // ── Partial lead capture on tab close / navigation away during gate ────────
+  useEffect(() => {
+    if (step !== 'gate') return
+
+    function handleUnload() {
+      if (gateSubmittedRef.current) return
+      fetch('/api/lead-intake', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        keepalive: true,
+        body: JSON.stringify({
+          partial: true,
+          leadOrigin: 'visualizer_partial',
+          address,
+          roofType: selType,
+          colorSelected: selColor,
+          timestamp: new Date().toISOString(),
+        }),
+      }).catch(() => {})
+    }
+
+    window.addEventListener('beforeunload', handleUnload)
+    return () => window.removeEventListener('beforeunload', handleUnload)
+  }, [step, address, selType, selColor])
+
   // ── Handlers ───────────────────────────────────────────────────────────────
   async function handleVisualize() {
     if (!address.trim()) { setAddrError('Please enter your home address.'); return }
@@ -297,6 +323,7 @@ export default function VisualizerPage() {
   }
 
   async function handleContactSubmit() {
+    gateSubmittedRef.current = true
     const e = validateContact()
     if (Object.keys(e).length) { setContactErrors(e); return }
     setGateLoading(true)
@@ -630,18 +657,6 @@ export default function VisualizerPage() {
 
               <button
                 onClick={() => {
-                  fetch('/api/lead-intake', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                      partial: true,
-                      leadOrigin: 'visualizer_partial',
-                      address,
-                      roofType: selType,
-                      colorSelected: selColor,
-                      timestamp: new Date().toISOString(),
-                    }),
-                  }).catch(() => {})
                   window.scrollTo(0, 0)
                   setStep('gate')
                 }}
