@@ -12,7 +12,7 @@ export const PHONE        = "(817) 382-3338";
 export const EMAIL        = "help@metroplexmetalroofs.com";
 export const WEBSITE      = "www.metroplexmetalroofs.com";
 export const YEAR         = "2026";
-export const MONTH        = "June";
+export const MONTH        = "July";
 
 export const fonts = `@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap');`;
 

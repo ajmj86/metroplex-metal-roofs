@@ -22,22 +22,29 @@ export default function PrivacyPage() {
       <p><strong style={{color:C.white}}>CRM and marketing platforms:</strong> We use GoHighLevel as our customer relationship management platform. Your contact information may be stored and processed within that system, subject to its own privacy policies.</p>
       <p><strong style={{color:C.white}}>Legal requirements:</strong> We may disclose your information when required by law or valid legal process.</p>
 
-      <LH>4. Cookies</LH>
+      <LH id="sms">4. SMS Messaging & Opt-In</LH>
+      <p>When you submit a form on our website and check the consent checkbox, you agree to receive SMS text messages from Metroplex Metal Roofs regarding your roofing inquiry, estimate, appointment confirmations, and project updates. Message frequency varies based on your inquiry and project status. Message and data rates may apply. Reply <strong>STOP</strong> to opt out at any time. Reply <strong>HELP</strong> for assistance. You may also contact us at {EMAIL} or {PHONE} to opt out.</p>
+      <p style={{marginTop:12}}>We do not sell, rent, share, or disclose your SMS opt-in consent or phone number to any third party or affiliate for marketing purposes. SMS consent is not shared with third parties.</p>
+
+      <LH id="security">5. Data Security</LH>
+      <p>We implement reasonable administrative, technical, and physical safeguards to protect your personal information from unauthorized access, disclosure, alteration, or destruction. No method of transmission over the internet or electronic storage is 100% secure. While we strive to protect your information, we cannot guarantee absolute security. If you believe your information has been compromised, contact us immediately at {EMAIL}.</p>
+
+      <LH>6. Cookies</LH>
       <p>Our Site uses cookies to enhance your experience and support analytics and marketing. You may disable cookies through your browser; however, some Site features may not function properly without them.</p>
 
-      <LH>5. Data Retention</LH>
+      <LH>7. Data Retention</LH>
       <p>We retain your information as long as necessary to fulfill the purposes outlined here, comply with legal obligations, and resolve disputes. Project and estimate records are retained for a minimum of four years.</p>
 
-      <LH>6. Your Rights</LH>
+      <LH>8. Your Rights</LH>
       <p>You may request access to, correction of, or deletion of your personal information by contacting us at {EMAIL}. We will respond to verified requests within 30 days.</p>
 
-      <LH>7. Children's Privacy</LH>
+      <LH>9. Children's Privacy</LH>
       <p>Our Site is not directed to individuals under 18. We do not knowingly collect personal information from minors. Contact us immediately if you believe a minor has submitted information through our Site.</p>
 
-      <LH>8. Changes to This Policy</LH>
+      <LH>10. Changes to This Policy</LH>
       <p>We may update this Privacy Policy periodically. Material changes will be reflected in the "last updated" date at the top of this page.</p>
 
-      <LH id="contact">9. Contact</LH>
+      <LH id="contact">11. Contact</LH>
       <p><strong style={{color:C.white}}>{LEGAL_FULL}</strong><br/>Dallas–Fort Worth, Texas<br/>Email: {EMAIL}<br/>Phone: {PHONE}</p>
     </LegalShell>
   );

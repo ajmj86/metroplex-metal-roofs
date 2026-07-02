@@ -799,6 +799,12 @@ export default function VisualizerPage() {
                             By checking this box, I agree to be contacted by Metroplex Metal Roofs regarding my roofing inquiry via phone, email, or text message. Message frequency varies. Msg &amp; data rates may apply. Reply STOP to opt out. Reply HELP for help.
                           </span>
                         </label>
+                        <div style={{fontSize:12, color:C.muted, marginTop:4, marginBottom:4}}>
+                          By opting in you agree to our{' '}
+                          <a href="/privacy" style={{color:C.accent, textDecoration:'underline'}}>Privacy Policy</a>
+                          {' '}and{' '}
+                          <a href="/terms" style={{color:C.accent, textDecoration:'underline'}}>Terms of Service</a>.
+                        </div>
                         {contactErrors.smsConsent && <div style={{ fontSize: 11, color: '#F87171', marginTop: -6, marginBottom: 8 }}>{contactErrors.smsConsent}</div>}
                         <div style={{ fontSize: 13, color: C.muted, lineHeight: 1.7, marginBottom: 16, padding: '10px 12px', background: C.surface, borderRadius: 4, border: `1px solid ${C.border}` }}>
                           By submitting, you consent to being contacted by Metroplex Metal Roofs regarding your inquiry. Your information is never sold or shared with third parties.
