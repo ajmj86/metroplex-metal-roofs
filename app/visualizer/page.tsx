@@ -923,6 +923,11 @@ export default function VisualizerPage() {
                   Estimated Investment: {estimateLow} – {estimateHigh}
                 </p>
               )}
+              {estimateLow && estimateHigh && (
+                <p style={{ fontFamily: "'Outfit',sans-serif", fontSize: 12, color: C.muted, textAlign: 'center', marginBottom: 16 }}>
+                  This range is a general estimate based on roof size. Final investment may vary based on inspection of current roof condition, precise measurements, slope, and materials tailored to your individualized roofing system.
+                </p>
+              )}
               <a
                 href="https://api.leadconnectorhq.com/widget/booking/gG1ruFfEWkUXO7eIB8NR"
                 target="_blank"
