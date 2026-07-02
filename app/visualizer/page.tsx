@@ -419,8 +419,6 @@ export default function VisualizerPage() {
     padding: '20px 24px', marginBottom: 12,
   }
 
-  const estimateHref = `/estimate?address=${encodeURIComponent(address)}&roofType=${encodeURIComponent(selType ?? '')}&product=${encodeURIComponent(selProduct ?? '')}&color=${encodeURIComponent(selColor ?? '')}&firstName=${encodeURIComponent(gateData.firstName)}&phone=${encodeURIComponent(gateData.phone)}&leadOrigin=visualizer`
-
   return (
     <>
       <style>{fonts + globalStyles + `
@@ -926,11 +924,13 @@ export default function VisualizerPage() {
                 </p>
               )}
               <a
-                href={estimateHref}
-                style={{ display: 'block', padding: '16px', background: C.accent, color: C.black, fontSize: 12, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 700, borderRadius: 4, textDecoration: 'none', textAlign: 'center', transition: 'background 0.2s' }}
+                href="https://api.leadconnectorhq.com/widget/booking/gG1ruFfEWkUXO7eIB8NR"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ display: 'block', padding: '16px', background: C.accent, color: C.black, fontSize: 12, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 700, borderRadius: 4, textDecoration: 'none', textAlign: 'center', transition: 'background 0.2s', fontFamily: "'Outfit',sans-serif" }}
                 onMouseEnter={e => (e.currentTarget.style.background = C.accentLight)}
                 onMouseLeave={e => (e.currentTarget.style.background = C.accent)}
-              >Get Your Full Estimate →</a>
+              >Schedule Your Free Consultation</a>
             </div>
           )}
 
