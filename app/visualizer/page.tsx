@@ -430,7 +430,7 @@ export default function VisualizerPage() {
         <div style={{ maxWidth: 700, margin: '0 auto', padding: 'clamp(40px,6vw,72px) clamp(20px,5vw,48px) 120px', paddingTop: step === 'address' || step === 'results' ? 'clamp(108px,12vw,140px)' : 40 }}>
 
           {/* ── step indicator ── */}
-          {step !== 'loading' && (
+          {(
             <div style={{ textAlign: 'center', marginBottom: 40 }}>
               <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 'clamp(1.4rem,3vw,2rem)', fontWeight: 700, color: C.white, marginBottom: 24 }}>
                 Metal Roof Visualizer
