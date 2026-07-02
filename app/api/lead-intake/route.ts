@@ -4,6 +4,18 @@ export const maxDuration = 30;
 
 const N8N_WEBHOOK_URL = process.env.N8N_WEBHOOK_VISUALIZER;
 
+function parseAddress(full: string) {
+  const parts = full.split(', ');
+  // "123 Main St, Dallas, TX 75201, USA"
+  const stateZip = (parts[2] || '').split(' ');
+  return {
+    address1: parts[0] || '',
+    city: parts[1] || '',
+    state: stateZip[0] || '',
+    postalCode: stateZip[1] || '',
+  };
+}
+
 // Forwards the visualizer lead payload to the n8n Lead Intake workflow.
 // Kept server-side so the webhook URL never ships to the browser.
 export async function POST(req: NextRequest) {
@@ -14,6 +26,7 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
+    const parsed = parseAddress(body.address || '');
 
     const payload = body.partial === true ? body : {
       contact: {
@@ -21,7 +34,10 @@ export async function POST(req: NextRequest) {
         lastName: body.lastName || '',
         phone: body.phone || '',
         email: body.email || '',
-        address1: body.address || '',
+        address1: parsed.address1,
+        city: parsed.city,
+        state: parsed.state,
+        postalCode: parsed.postalCode,
       },
       fields: {
         current_roof_type: body.currentRoofType || '',
@@ -29,6 +45,12 @@ export async function POST(req: NextRequest) {
         insurance_claim_status: body.insuranceClaim || '',
         homeowner_timeline: body.timeline || '',
         selected_roof_type: body.selectedRoofType || '',
+        lead_source: body.utm?.source || 'Organic',
+        property_address: body.address || '',
+        estimated_roof_size: body.estimatedRoofSize != null
+          ? String(Math.round(body.estimatedRoofSize * 10) / 10)
+          : undefined,
+        estimate_range: body.estimateRange || undefined,
       },
       utm: {
         source: body.utm?.source || '',

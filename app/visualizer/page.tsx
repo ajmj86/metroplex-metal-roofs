@@ -138,6 +138,9 @@ export default function VisualizerPage() {
   // loading / results
   const [phraseIdx, setPhraseIdx] = useState(0)
   const [renderUrl, setRenderUrl] = useState<string | null>(null)
+  const [roofSquares, setRoofSquares] = useState<number | null>(null)
+  const [estimateLow, setEstimateLow] = useState<string | null>(null)
+  const [estimateHigh, setEstimateHigh] = useState<string | null>(null)
 
   // ── Google Places ──────────────────────────────────────────────────────────
   useEffect(() => {
@@ -324,6 +327,27 @@ export default function VisualizerPage() {
     const e = validateContact()
     if (Object.keys(e).length) { setContactErrors(e); return }
     setGateLoading(true)
+
+    let squares: number | null = null
+    let low: string | null = null
+    let high: string | null = null
+    try {
+      const roofRes = await fetch('/api/roof-size', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ address, roofType: selType }),
+      })
+      const roofData = await roofRes.json()
+      squares = roofData.squares
+      low = roofData.estimateLow
+      high = roofData.estimateHigh
+    } catch {
+      // non-blocking — continue to lead-intake regardless
+    }
+    setRoofSquares(squares)
+    setEstimateLow(low)
+    setEstimateHigh(high)
+
     try {
       const utmSource = sessionStorage.getItem('utm_source') || ''
       const utmMedium = sessionStorage.getItem('utm_medium') || ''
@@ -347,6 +371,8 @@ export default function VisualizerPage() {
           color: selColor,
           leadOrigin: 'visualizer',
           utm: { source: utmSource, medium: utmMedium, campaign: utmCampaign },
+          estimatedRoofSize: squares,
+          estimateRange: low && high ? `${low} - ${high}` : undefined,
         }),
       })
     } catch { /* advance anyway */ }
@@ -894,6 +920,11 @@ export default function VisualizerPage() {
               <p style={{ fontSize: 11, color: C.muted, lineHeight: 1.7, marginBottom: 24, fontStyle: 'italic' }}>
                 AI-generated visualization for reference only. Actual appearance may vary based on home architecture, lighting, and installation details.
               </p>
+              {estimateLow && estimateHigh && (
+                <p style={{ color: C.accent, fontFamily: "'Cormorant Garamond',serif", fontSize: 22, textAlign: 'center', marginBottom: 16 }}>
+                  Estimated Investment: {estimateLow} – {estimateHigh}
+                </p>
+              )}
               <a
                 href={estimateHref}
                 style={{ display: 'block', padding: '16px', background: C.accent, color: C.black, fontSize: 12, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 700, borderRadius: 4, textDecoration: 'none', textAlign: 'center', transition: 'background 0.2s' }}

@@ -2,7 +2,7 @@
   "roofTypes": {
     "standing_seam": {
       "label": "Standing Seam",
-      "retailPerSquare": 1400,
+      "retailPerSquare": 1500,
       "pitchAdjustment": true,
       "basePitch": 7,
       "pitchSurchargePerLevel": 100,
