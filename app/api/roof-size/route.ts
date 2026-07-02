@@ -77,7 +77,7 @@ export async function POST(req: NextRequest) {
 
     const { lat, lng } = geoData.results[0].geometry.location
 
-    const solarUrl = `https://solar.googleapis.com/v1/buildingInsights:findClosest?location.latitude=${lat}&location.longitude=${lng}&requiredQuality=LOW&key=${process.env.GOOGLE_SOLAR_API_KEY}`
+    const solarUrl = `https://solar.googleapis.com/v1/buildingInsights:findClosest?location.latitude=${lat}&location.longitude=${lng}&requiredQuality=HIGH&key=${process.env.GOOGLE_SOLAR_API_KEY}`
     const solarRes = await fetch(solarUrl)
     const solarData = await solarRes.json()
 
@@ -89,14 +89,18 @@ export async function POST(req: NextRequest) {
     }
 
     const totalAreaM2 = segments.reduce((sum, seg) => sum + seg.stats.areaMeters2, 0)
+
+    // Confidence check: must be between 800 and 8,000 sq ft
+    if (totalAreaM2 < 74.3 || totalAreaM2 > 743) {
+      return NextResponse.json(EMPTY_RESULT)
+    }
+
     const squares = (totalAreaM2 * 10.7639) / 100
 
     const largestSegment = segments.reduce((best, seg) =>
       seg.stats.areaMeters2 > best.stats.areaMeters2 ? seg : best
     )
-    const pitchLevel = config.pitchAdjustment
-      ? Math.round((largestSegment.pitchDegrees ?? 0) / 10)
-      : 0
+    const pitchLevel = Math.max(0, Math.round((largestSegment.pitchDegrees ?? 0) / 4.76) - 7)
 
     const result = calculateEstimate(squares, config, pitchLevel, address)
 
