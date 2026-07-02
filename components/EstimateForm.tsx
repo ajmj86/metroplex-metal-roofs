@@ -297,8 +297,6 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
       e.email = 'Required'
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(contactFields.email.trim()))
       e.email = 'Enter a valid email address'
-    if (!contactFields.smsConsent)
-      e.smsConsent = 'You must agree to be contacted to receive your estimate'
     return e
   }
 
@@ -519,8 +517,7 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
     (skipContactForm || (
       contactFields.firstName.trim() &&
       contactFields.phone.replace(/\D/g, '').length === 10 &&
-      /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(contactFields.email.trim()) &&
-      contactFields.smsConsent
+      /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(contactFields.email.trim())
     ))
   )
 
@@ -871,7 +868,7 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
                   </div>
                   {contactErrors.smsConsent && <div style={{ fontSize: 11, color: '#F87171', marginTop: -6, marginBottom: 8 }}>{contactErrors.smsConsent}</div>}
                   <div style={{ fontSize: 13, color: '#71717A', lineHeight: 1.7, marginBottom: 16, padding: '10px 12px', background: '#111113', borderRadius: 4, border: '1px solid #27272A' }}>
-                    By submitting, you consent to being contacted by Metroplex Metal Roofs regarding your inquiry. Your information is never sold or shared with third parties.
+                    By submitting this form, you agree to be contacted regarding your roofing inquiry. Check the box above to also receive text messages. Your information is never sold or shared with third parties.
                   </div>
                 </div>
               )}
@@ -889,8 +886,6 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
                   ? 'Select a color to continue'
                   : !address.trim()
                   ? 'Enter your address to continue'
-                  : !skipContactForm && !contactFields.smsConsent
-                  ? 'Agree to terms to continue'
                   : 'Get My Estimate →'}
               </button>
 

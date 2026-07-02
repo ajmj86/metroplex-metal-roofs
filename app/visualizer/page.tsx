@@ -316,9 +316,6 @@ export default function VisualizerPage() {
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(gateData.email.trim()))
       e.email = 'Enter a valid email address'
 
-    if (!gateData.smsConsent)
-      e.smsConsent = 'You must agree to be contacted to receive your visualization'
-
     return e
   }
 
@@ -780,8 +777,7 @@ export default function VisualizerPage() {
                     const formReady =
                       gateData.firstName.trim().length > 0 &&
                       gateData.phone.replace(/\D/g, '').length === 10 &&
-                      /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(gateData.email.trim()) &&
-                      gateData.smsConsent
+                      /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(gateData.email.trim())
                     return (
                       <>
                         <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 26, fontWeight: 700, color: C.white, lineHeight: 1.25, marginBottom: 8 }}>
@@ -831,7 +827,7 @@ export default function VisualizerPage() {
                         </div>
                         {contactErrors.smsConsent && <div style={{ fontSize: 11, color: '#F87171', marginTop: -6, marginBottom: 8 }}>{contactErrors.smsConsent}</div>}
                         <div style={{ fontSize: 13, color: C.muted, lineHeight: 1.7, marginBottom: 16, padding: '10px 12px', background: C.surface, borderRadius: 4, border: `1px solid ${C.border}` }}>
-                          By submitting, you consent to being contacted by Metroplex Metal Roofs regarding your inquiry. Your information is never sold or shared with third parties.
+                          By submitting this form, you agree to be contacted regarding your roofing inquiry. Check the box above to also receive text messages. Your information is never sold or shared with third parties.
                         </div>
                         <button
                           onClick={handleContactSubmit}
