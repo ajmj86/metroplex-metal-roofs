@@ -200,6 +200,22 @@ export default function VisualizerPage() {
         if (!cancelled) {
           // render route returns data.image (not data.renderUrl)
           setRenderUrl(data.image ?? null)
+          if (data.image) {
+            fetch('/api/lead-intake', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                partial: true,
+                leadOrigin: 'visualizer_render',
+                email: gateData.email,
+                firstName: gateData.firstName,
+                renderUrl: data.image,
+                estimateRange: estimateLow && estimateHigh ? `${estimateLow} - ${estimateHigh}` : '',
+                roofType: selType ?? '',
+                roofColor: selColor ?? '',
+              }),
+            }).catch(() => {})
+          }
           setStep('results')
         }
       } catch {
