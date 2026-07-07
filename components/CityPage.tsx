@@ -380,9 +380,6 @@ export default function CityPage({ city }: { city: CityData }) {
             <Reveal>
               <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 8, padding: 'clamp(28px,4vw,48px)', position: 'relative', overflow: 'hidden' }}>
                 <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg,${C.accentDark},${C.accent},${C.accentDark})` }}/>
-                <div style={{ display: 'flex', gap: 2, marginBottom: 20 }}>
-                  {'★★★★★'.split('').map((s, i) => <span key={i} style={{ color: C.accent, fontSize: 18 }}>{s}</span>)}
-                </div>
                 <p style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 'clamp(18px,2.5vw,24px)', color: C.white, lineHeight: 1.6, fontStyle: 'italic', marginBottom: 28 }}>
                   "{city.review.text}"
                 </p>

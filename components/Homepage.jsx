@@ -785,17 +785,12 @@ const HomePage = ({ activeTab, setActiveTab }) => {
                 <div style={{fontSize:15,letterSpacing:3,color:C.accent,textTransform:"uppercase",marginBottom:10}}>Reviews</div>
                 <h2 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(1.625rem,4.2vw,3.5rem)",fontWeight:700,color:C.white}}>What DFW Homeowners Say</h2>
               </div>
-              <div style={{display:"flex",alignItems:"center",gap:6}}>
-                {"★★★★★".split("").map((s,i)=><span key={i} style={{color:C.accent,fontSize:20}}>{s}</span>)}
-                <span style={{fontSize:12,color:C.muted,marginLeft:8}}>5.0 · Google</span>
-              </div>
             </div>
           </Reveal>
           <div className="grid-3" style={{gap:16}}>
             {reviews.map((r,i)=>(
               <Reveal key={r.name} delay={i*0.09}>
                 <div style={{padding:28,background:C.card,border:`1px solid ${C.border}`,borderRadius:6,display:"flex",flexDirection:"column",gap:16,height:"100%"}}>
-                  <div style={{display:"flex",gap:2}}>{"★★★★★".split("").map((s,i)=><span key={i} style={{color:C.accent,fontSize:13}}>{s}</span>)}</div>
                   <p style={{fontSize:16,color:C.mutedLight,lineHeight:1.8,fontStyle:"italic",flex:1,margin:0}}>"{r.text}"</p>
                   <div style={{borderTop:`1px solid ${C.border}`,paddingTop:16}}>
                     <div style={{fontSize:14,color:C.white,fontWeight:600}}>{r.name}</div>
