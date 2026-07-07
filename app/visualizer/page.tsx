@@ -826,6 +826,7 @@ export default function VisualizerPage() {
                             onChange={e => setGateData(d => ({ ...d, email: e.target.value }))}
                             placeholder="jane@email.com" style={iStyle} />
                           {contactErrors.email && <div style={errStyle}>{contactErrors.email}</div>}
+                          <div style={{ fontSize: 11, color: C.muted, marginTop: 4, marginBottom: 0 }}>A copy of your rendering will be emailed to you.</div>
                         </div>
                         <label style={{ display: 'flex', gap: 10, alignItems: 'flex-start', marginBottom: 10, cursor: 'pointer' }}>
                           <input type="checkbox" checked={gateData.smsConsent}

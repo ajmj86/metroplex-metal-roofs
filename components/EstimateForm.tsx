@@ -851,6 +851,7 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
                       onChange={e => setContactFields(f => ({ ...f, email: e.target.value }))}
                       placeholder="jane@email.com" style={inputFieldStyle} />
                     {contactErrors.email && <div style={errStyle}>{contactErrors.email}</div>}
+                    <div style={{ fontSize: 11, color: C.muted, marginTop: 4, marginBottom: 0 }}>A copy of your estimate will be emailed to you.</div>
                   </div>
                   <label style={{ display: 'flex', gap: 10, alignItems: 'flex-start', marginBottom: 10, cursor: 'pointer' }}>
                     <input type="checkbox" checked={contactFields.smsConsent}

@@ -236,7 +236,7 @@ export default function CityPage({ city }: { city: CityData }) {
                       </div>
                       <div style={{ fontSize: 10, letterSpacing: 2, textTransform: 'uppercase', color: C.muted }}>{s.label}</div>
                       {s.note && (
-                        <div style={{ fontSize: 13, color: C.muted, opacity: 0.55, lineHeight: 1.5, marginTop: 8, maxWidth: 170, marginLeft: 'auto', marginRight: 'auto' }}>
+                        <div style={{ fontSize: 10, color: C.muted, opacity: 0.55, lineHeight: 1.5, marginTop: 8, maxWidth: 170, marginLeft: 'auto', marginRight: 'auto' }}>
                           *{s.note}
                         </div>
                       )}
@@ -245,8 +245,8 @@ export default function CityPage({ city }: { city: CityData }) {
                 ))}
               </div>
               <div style={{ borderTop: `1px solid ${C.border}`, padding: '8px 24px', textAlign: 'center' }}>
-                <p style={{ fontSize: 13, color: C.muted, maxWidth: 640, margin: '8px auto', lineHeight: 1.6, fontFamily: "'Outfit',sans-serif" }}>
-                  Figures represent industry estimates and vary by home, carrier, and installation. Consult your insurance provider for personalized savings.
+                <p style={{ fontSize: 10, color: C.muted, maxWidth: 640, margin: '8px auto', lineHeight: 1.6, fontFamily: "'Outfit',sans-serif" }}>
+                  Figures represent industry estimates and vary by home, carrier, and installation. Individual results will vary, and actual savings are not guaranteed. Consult your insurance and utility providers for personalized savings.
                 </p>
               </div>
             </div>
