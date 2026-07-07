@@ -50,7 +50,7 @@ export default function EstimateResult({ roofType, estimate }: EstimateResultPro
 
       <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 6, padding: '16px 18px', marginBottom: 28 }}>
         <p style={{ fontSize: 12, color: C.muted, lineHeight: 1.85, margin: 0 }}>
-          This estimate is based on your home&apos;s roof dimensions and is typically within 10% of your final investment. All projects include an on-site inspection and EagleView satellite imaging to confirm exact measurements and assess any existing conditions — such as decking damage or structural issues — that may affect final scope. Your final quote is provided after inspection at no obligation.
+          This figure is based on your home&apos;s estimated roof dimensions, but all final proposals are subject to 1) an EagleView satellite imaging to confirm exact surface area and slopes and 2) an on-site inspection to assess any existing conditions, such as decking damage or structural issues, that may affect final scope and investment. Your final quote will be provided after inspection at no obligation.
         </p>
       </div>
 
@@ -77,7 +77,7 @@ export default function EstimateResult({ roofType, estimate }: EstimateResultPro
         onMouseEnter={e => { e.currentTarget.style.background = C.accentLight }}
         onMouseLeave={e => { e.currentTarget.style.background = C.accent }}
       >
-        Schedule Your Free Inspection →
+        Schedule Your Free Consultation →
       </a>
     </div>
   )
