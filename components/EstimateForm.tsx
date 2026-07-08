@@ -194,6 +194,8 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
   const [standaloneColor, setStandaloneColor]     = useState<string | null>(null)
 
   const [address, setAddress]       = useState(initialSelection?.address ?? '')
+  const [satelliteUrl, setSatelliteUrl] = useState<string | null>(null)
+  const [locatingImage, setLocatingImage] = useState(false)
   const [loading, setLoading]       = useState(shouldAutoTrigger)
   const [showManual, setShowManual] = useState(false)
   const [errorMsg, setErrorMsg]     = useState('')
@@ -283,6 +285,27 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
         setAddress(place.formatted_address)
       }
     })
+  }
+
+  async function handleAddressNext() {
+    if (!address.trim() || locatingImage) return
+    setLocatingImage(true)
+    try {
+      const res = await fetch('/api/resolve-image', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ address }),
+      })
+      const data = await res.json()
+      // resolve-image returns { address, satellite: { imageUrl } }
+      setSatelliteUrl(data.satellite?.imageUrl ?? null)
+    } catch {
+      setSatelliteUrl(null)
+    } finally {
+      setLocatingImage(false)
+      window.scrollTo(0, 0)
+      setEstStep('material')
+    }
   }
 
   function validateContactFields() {
@@ -599,27 +622,74 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
                     ref={addressInputRef}
                     value={address}
                     onChange={e => setAddress(e.target.value)}
-                    onKeyDown={e => { if (e.key === 'Enter' && address.trim()) { window.scrollTo(0, 0); setEstStep('material') } }}
+                    onKeyDown={e => { if (e.key === 'Enter' && address.trim() && !locatingImage) handleAddressNext() }}
                     placeholder="123 Main St, Southlake, TX"
                     style={{ flex: 1, background: 'none', border: 'none', outline: 'none', color: C.white, fontSize: 14, fontFamily: "'Outfit',sans-serif" }}
                   />
                 </div>
               </div>
               <button
-                onClick={() => { if (address.trim()) { window.scrollTo(0, 0); setEstStep('material') } }}
-                disabled={!address.trim()}
-                style={{ ...btnStyle, opacity: address.trim() ? 1 : 0.45, cursor: address.trim() ? 'pointer' : 'not-allowed' }}
-                onMouseEnter={e => { if (address.trim()) e.currentTarget.style.background = C.accentLight }}
+                onClick={handleAddressNext}
+                disabled={!address.trim() || locatingImage}
+                style={{ ...btnStyle, opacity: address.trim() && !locatingImage ? 1 : 0.45, cursor: address.trim() && !locatingImage ? 'pointer' : 'not-allowed' }}
+                onMouseEnter={e => { if (address.trim() && !locatingImage) e.currentTarget.style.background = C.accentLight }}
                 onMouseLeave={e => { e.currentTarget.style.background = C.accent }}
               >
-                Next: Choose Your Material →
+                {locatingImage ? 'Locating…' : 'Next: Choose Your Material →'}
               </button>
+              {locatingImage && (
+                <div style={{ textAlign: 'center', marginTop: 12, fontSize: 13, color: C.muted }}>
+                  Locating <span style={{ color: C.accentLight }}>{address}</span>…
+                </div>
+              )}
             </div>
           )}
 
           {/* ── STEP: material ── */}
           {estStep === 'material' && !showManual && (
             <div style={{ animation: 'efade 0.3s ease' }}>
+              {/* Satellite confirmation card */}
+              <div style={{ ...cardStyle, padding: 0, overflow: 'hidden' }}>
+                {satelliteUrl ? (
+                  <>
+                    <img src={satelliteUrl} alt="Satellite view" style={{
+                      width: '100%', height: 220, objectFit: 'cover',
+                      borderRadius: '6px 6px 0 0', display: 'block'
+                    }} />
+                    <div style={{
+                      padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 10,
+                      borderTop: `1px solid ${C.border}`
+                    }}>
+                      <div style={{
+                        width: 22, height: 22, borderRadius: '50%', background: '#16A34A',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        fontSize: 12, color: '#fff', fontWeight: 700, flexShrink: 0
+                      }}>✓</div>
+                      <div>
+                        <div style={{ fontSize: 11, color: '#4ADE80', fontWeight: 600, marginBottom: 2 }}>
+                          Satellite image confirmed
+                        </div>
+                        <div style={{ fontSize: 12, color: C.mutedLight }}>{address}</div>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '20px 24px' }}>
+                    <div style={{
+                      width: 52, height: 52, borderRadius: 8, background: C.surface,
+                      border: `1px solid ${C.border}`, display: 'flex', alignItems: 'center',
+                      justifyContent: 'center', fontSize: 24, flexShrink: 0
+                    }}>🛰</div>
+                    <div>
+                      <div style={{ fontSize: 13, color: C.white, fontWeight: 500, marginBottom: 4 }}>{address}</div>
+                      <div style={{ fontSize: 11, color: C.muted, fontStyle: 'italic', lineHeight: 1.5 }}>
+                        No satellite image found — your estimate will still use your address details.
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
               {/* Roof type tabs */}
               <div style={cardStyle}>
                 <div style={{ fontSize: 13, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Material</div>
