@@ -384,12 +384,7 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
   useEffect(() => {
     if (autoTriggeredRef.current || !shouldAutoTrigger) return
     autoTriggeredRef.current = true
-    handleAddressSubmit().then(success => {
-      if (!success) {
-        setShowManual(false)
-        setErrorMsg("We weren't able to generate your estimate automatically. Please confirm your address and try again.")
-      }
-    })
+    handleAddressSubmit()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
