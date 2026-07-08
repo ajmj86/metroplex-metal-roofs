@@ -19,6 +19,20 @@ function getAnthropic(): Anthropic {
   return _anthropic;
 }
 
+async function fireRenderEmailWebhook(payload: Record<string, unknown>): Promise<void> {
+  const url = process.env.N8N_WEBHOOK_VISUALIZER;
+  if (!url) { console.warn('[render] N8N_WEBHOOK_VISUALIZER not set'); return }
+  try {
+    await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+  } catch (err) {
+    console.error('[render] fireRenderEmailWebhook failed:', err);
+  }
+}
+
 async function fetchAsFile(url: string, filename: string): Promise<File> {
   const res = await fetch(url);
   if (!res.ok) throw new Error(`Failed to fetch ${filename}: status ${res.status}`);
@@ -137,13 +151,16 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { address, satelliteImageUrl, roofType, style, product, color } = body as {
+    const { address, satelliteImageUrl, roofType, style, product, color, firstName, email, estimateRange } = body as {
       address: string;
       satelliteImageUrl: string;
       roofType: string;
       style: string | null;
       product: string | null;
       color: string | null;
+      firstName?: string;
+      email?: string;
+      estimateRange?: string;
     };
 
     if (!address || !satelliteImageUrl || !roofType) {
@@ -193,6 +210,17 @@ export async function POST(req: NextRequest) {
     if (!image) {
       return NextResponse.json({ error: 'Render failed' }, { status: 500 });
     }
+
+    await fireRenderEmailWebhook({
+      partial: true,
+      leadOrigin: 'visualizer_render',
+      email,
+      firstName,
+      renderUrl: image,
+      estimateRange: estimateRange || '',
+      roofType,
+      roofColor: color || '',
+    });
 
     return NextResponse.json({
       success: true,
