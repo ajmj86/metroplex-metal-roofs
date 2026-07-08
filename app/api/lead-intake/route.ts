@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { formatFormValue } from '@/lib/formatFormValue';
+import { getRoofTypeLabel } from '@/lib/roofProducts';
 
 export const maxDuration = 30;
 
@@ -40,11 +42,11 @@ export async function POST(req: NextRequest) {
         postalCode: parsed.postalCode,
       },
       fields: {
-        current_roof_type: body.currentRoofType || '',
-        project_reason: body.reason || '',
-        insurance_claim_status: body.insuranceClaim || '',
-        homeowner_timeline: body.timeline || '',
-        selected_roof_type: body.selectedRoofType || '',
+        current_roof_type: formatFormValue('roofType', body.currentRoofType),
+        project_reason: formatFormValue('reason', body.reason),
+        insurance_claim_status: formatFormValue('insuranceClaim', body.insuranceClaim),
+        homeowner_timeline: formatFormValue('timeline', body.timeline),
+        selected_roof_type: body.selectedRoofType ? getRoofTypeLabel(body.selectedRoofType) : '',
         lead_source: body.utm?.source || 'Organic',
         property_address: body.address || '',
         estimated_roof_size: body.estimatedRoofSize != null
