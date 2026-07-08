@@ -121,7 +121,7 @@ export async function POST(request: NextRequest) {
         medium: utmMedium || '',
         campaign: utmCampaign || '',
       },
-      tags: insuranceClaim && insuranceClaim !== 'Paying Out of Pocket'
+      tags: insuranceClaim && insuranceClaim !== 'no_cash'
         ? ['Insurance Claim']
         : [],
       source: 'estimate',
@@ -159,7 +159,7 @@ export async function POST(request: NextRequest) {
           homeowner_timeline: formatFormValue('timeline', timeline),
         },
         utm: { source: utmSource || '', medium: utmMedium || '', campaign: utmCampaign || '' },
-        tags: insuranceClaim && insuranceClaim !== 'Paying Out of Pocket' ? ['Insurance Claim'] : [],
+        tags: insuranceClaim && insuranceClaim !== 'no_cash' ? ['Insurance Claim'] : [],
         source: 'estimate',
         solarSuccess: false,
         solar_failure_reason: 'geocode_failed',
@@ -186,7 +186,7 @@ export async function POST(request: NextRequest) {
           homeowner_timeline: formatFormValue('timeline', timeline),
         },
         utm: { source: utmSource || '', medium: utmMedium || '', campaign: utmCampaign || '' },
-        tags: insuranceClaim && insuranceClaim !== 'Paying Out of Pocket' ? ['Insurance Claim'] : [],
+        tags: insuranceClaim && insuranceClaim !== 'no_cash' ? ['Insurance Claim'] : [],
         source: 'estimate',
         solarSuccess: false,
         solar_failure_reason: 'no_roof_data',
@@ -212,7 +212,7 @@ export async function POST(request: NextRequest) {
           homeowner_timeline: formatFormValue('timeline', timeline),
         },
         utm: { source: utmSource || '', medium: utmMedium || '', campaign: utmCampaign || '' },
-        tags: insuranceClaim && insuranceClaim !== 'Paying Out of Pocket' ? ['Insurance Claim'] : [],
+        tags: insuranceClaim && insuranceClaim !== 'no_cash' ? ['Insurance Claim'] : [],
         source: 'estimate',
         solarSuccess: false,
         solar_failure_reason: 'area_out_of_range',
@@ -253,7 +253,7 @@ export async function POST(request: NextRequest) {
         medium: utmMedium || '',
         campaign: utmCampaign || '',
       },
-      tags: insuranceClaim && insuranceClaim !== 'Paying Out of Pocket'
+      tags: insuranceClaim && insuranceClaim !== 'no_cash'
         ? ['Insurance Claim']
         : [],
       source: 'estimate',
@@ -278,7 +278,7 @@ export async function POST(request: NextRequest) {
         homeowner_timeline: formatFormValue('timeline', timeline),
       },
       utm: { source: utmSource || '', medium: utmMedium || '', campaign: utmCampaign || '' },
-      tags: insuranceClaim && insuranceClaim !== 'Paying Out of Pocket' ? ['Insurance Claim'] : [],
+      tags: insuranceClaim && insuranceClaim !== 'no_cash' ? ['Insurance Claim'] : [],
       source: 'estimate',
       solarSuccess: false,
       solar_failure_reason: 'exception',

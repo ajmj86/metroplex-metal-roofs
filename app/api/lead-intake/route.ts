@@ -59,7 +59,7 @@ export async function POST(req: NextRequest) {
         medium: body.utm?.medium || '',
         campaign: body.utm?.campaign || '',
       },
-      tags: body.insuranceClaim && body.insuranceClaim !== 'Paying Out of Pocket'
+      tags: body.insuranceClaim && body.insuranceClaim !== 'no_cash'
         ? ['Insurance Claim']
         : [],
       source: 'visualizer',
