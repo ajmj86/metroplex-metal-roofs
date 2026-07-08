@@ -5,7 +5,7 @@ import { put } from '@vercel/blob';
 import { randomUUID } from 'crypto';
 import { getRoofTypeLabel, resolveSelection } from '@/lib/roofProducts';
 
-export const maxDuration = 90;
+export const maxDuration = 120;
 
 let _openai: OpenAI | null = null;
 function getOpenAI(): OpenAI {
