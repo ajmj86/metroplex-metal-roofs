@@ -364,7 +364,14 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
       await fetch('/api/lead-intake', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...leadFields(), ...extraFields, leadOrigin: leadInfo?.leadOrigin ?? 'estimate' }),
+        body: JSON.stringify({
+          ...leadFields(),
+          ...extraFields,
+          leadOrigin: leadInfo?.leadOrigin ?? 'estimate',
+          // /api/estimate already fired the estimate-tool SMS alert (WF2) for this
+          // submission — tell WF1 not to fire a second one for the same lead.
+          suppressAlert: true,
+        }),
       })
     } catch { /* best-effort */ }
   }

@@ -61,6 +61,7 @@ export async function POST(req: NextRequest) {
         ? ['Insurance Claim']
         : [],
       source: 'visualizer',
+      suppressAlert: body.suppressAlert === true,
     };
 
     console.log('[lead-intake] forwarding payload to n8n:', payload);
