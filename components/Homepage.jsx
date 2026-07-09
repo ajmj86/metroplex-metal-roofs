@@ -7,7 +7,7 @@ import { SiteFooter } from "./SiteFooter";
 import Counter from '@/components/Counter'
 import ProductGallery from '@/components/ProductGallery'
 import {
-  STANDING_SEAM_COLORS, R_PANEL_COLORS, STONE_COLORS, STONE_PROFILE_ORDER, STONE_ROW_PREVIEW,
+  STANDING_SEAM_COLORS, R_PANEL_COLORS, STONE_COLORS, STONE_PROFILE_TILES, STONE_SHINGLE_TILES,
   COPPER_PATINA_CHIPS, COPPER_INSTALL_PHOTOS,
 } from '@/lib/productColors'
 
@@ -356,18 +356,29 @@ const visualizerRoofTypeMap = {
 
 /* ── Swatch row / modal data (see lib/productColors.js) ── */
 const SWATCH_ROW_LIMIT = 6;
-const stoneRowChips = STONE_ROW_PREVIEW
-  .map(p => STONE_COLORS.find(c => c.product === p.product && c.name === p.name))
-  .filter(Boolean);
-const stoneFullSorted = [...STONE_COLORS].sort(
-  (a, b) => STONE_PROFILE_ORDER.indexOf(a.profile) - STONE_PROFILE_ORDER.indexOf(b.profile)
-);
 const swatchDataByTab = {
-  standing: { full: STANDING_SEAM_COLORS, rowOverride: null,       caption: n => `Available in ${n} colors — view all` },
-  rpanel:   { full: R_PANEL_COLORS,       rowOverride: null,       caption: n => `Available in ${n} colors — view all` },
-  stone:    { full: stoneFullSorted,      rowOverride: stoneRowChips, caption: n => `Available in ${n} colors — view all` },
-  copper:   { full: COPPER_PATINA_CHIPS,  rowOverride: null,       caption: () => "One material. A finish that evolves for generations." },
+  standing: { full: STANDING_SEAM_COLORS, rowOverride: null,      caption: n => `Available in ${n} colors — view all` },
+  rpanel:   { full: R_PANEL_COLORS,       rowOverride: null,      caption: n => `Available in ${n} colors — view all` },
+  copper:   { full: COPPER_PATINA_CHIPS,  rowOverride: null,      caption: () => "One material. A finish that evolves for generations." },
 };
+
+/*
+ * Stone is a two-level drill-down (profile tiles → shingle sub-tiles →
+ * colors), handled separately from the flat swatchDataByTab materials.
+ * See openStoneColorModal / stoneTileLevel in HomePage.
+ */
+const findStoneColor = (product, name) => STONE_COLORS.find(c => c.product === product && c.name === name);
+const stoneProfileChips = STONE_PROFILE_TILES.map(t => {
+  const previewItem = findStoneColor(t.previewProduct ?? t.product, t.previewName);
+  return { key: t.key, name: t.label, src: previewItem?.src, previewItem };
+});
+const stoneShingleChips = STONE_SHINGLE_TILES.map(t => {
+  const previewItem = findStoneColor(t.product, t.previewName);
+  return { key: t.key, name: t.label, src: previewItem?.src, previewItem };
+});
+const stoneTileProductByKey = Object.fromEntries(
+  [...STONE_PROFILE_TILES, ...STONE_SHINGLE_TILES].filter(t => t.product).map(t => [t.key, t.product])
+);
 const stats = [
   {val:50,  suffix:"+ yrs", label:"Roof Lifespan"},
   {val:35,  suffix:"%",     label:"Insurance Savings"},
@@ -408,11 +419,13 @@ const HomePage = ({ activeTab, setActiveTab }) => {
 
   const activeType = roofTypes.find(t=>t.id===activeTab);
   const [lightboxIndex, setLightboxIndex] = useState(null);
-  const [swatchModal, setSwatchModal] = useState(null); // { material, items, index } | null
+  const [swatchModal, setSwatchModal] = useState(null); // { material, tileKey?, items, index } | null
+  // Independent of swatchModal so it survives modal close (Back/Escape/backdrop) — see openStoneColorModal.
+  const [stoneTileLevel, setStoneTileLevel] = useState("profiles"); // "profiles" | "shingle"
 
-  const swatchData = swatchDataByTab[activeTab];
-  const swatchChips = (swatchData.rowOverride ?? swatchData.full).slice(0, SWATCH_ROW_LIMIT);
-  const swatchOverflow = swatchData.full.length - swatchChips.length;
+  const swatchData = activeTab !== "stone" ? swatchDataByTab[activeTab] : null;
+  const swatchChips = swatchData ? (swatchData.rowOverride ?? swatchData.full).slice(0, SWATCH_ROW_LIMIT) : [];
+  const swatchOverflow = swatchData ? swatchData.full.length - swatchChips.length : 0;
 
   const openSwatchModal = (tab, item) => {
     if (tab === "copper") {
@@ -422,6 +435,20 @@ const HomePage = ({ activeTab, setActiveTab }) => {
     const full = swatchDataByTab[tab].full;
     const idx = item ? Math.max(full.indexOf(item), 0) : 0;
     setSwatchModal({ material: tab, items: full, index: idx });
+  };
+
+  const openStoneColorModal = (tileKey, item) => {
+    const product = stoneTileProductByKey[tileKey];
+    const items = STONE_COLORS.filter(c => c.product === product);
+    const idx = item ? Math.max(items.indexOf(item), 0) : 0;
+    setSwatchModal({ material: "stone", tileKey, items, index: idx });
+  };
+  const handleStoneProfileChipClick = (chip) => {
+    if (chip.key === "shingle") { setStoneTileLevel("shingle"); return; }
+    openStoneColorModal(chip.key, chip.previewItem);
+  };
+  const handleStoneShingleChipClick = (chip) => {
+    openStoneColorModal(chip.key, chip.previewItem);
   };
 
   const modalItem = swatchModal?.items?.[swatchModal.index];
@@ -465,6 +492,28 @@ const HomePage = ({ activeTab, setActiveTab }) => {
         ))}
       </div>
     </div>
+  );
+
+  /*
+   * Back always just closes the modal — stoneTileLevel lives outside
+   * swatchModal state, so whichever tile screen was visible underneath
+   * (profiles or shingle sub-tiles) is exactly what reappears. Escape and
+   * the backdrop click use the same onClose, so they get this for free.
+   */
+  const stoneModalBack = swatchModal?.material === "stone" && (
+    <button
+      onClick={() => setSwatchModal(null)}
+      aria-label="Back"
+      style={{
+        position:"absolute", top:24, left:24,
+        background:"none", border:"none", color:"#F4F1EB",
+        fontSize:11, letterSpacing:2, textTransform:"uppercase", fontWeight:600,
+        cursor:"pointer", display:"flex", alignItems:"center", gap:6, padding:8,
+        transition:"color 0.2s",
+      }}
+      onMouseEnter={e=>e.currentTarget.style.color="#D4AE7A"}
+      onMouseLeave={e=>e.currentTarget.style.color="#F4F1EB"}
+    >← Back</button>
   );
 
   return (
@@ -716,20 +765,42 @@ const HomePage = ({ activeTab, setActiveTab }) => {
                   </a>
                   {/* Swatch row */}
                   <div style={{flexShrink:0,background:C.black,borderTop:`1px solid ${C.border}`,padding:"18px clamp(20px,3vw,32px)"}}>
-                    <div style={{display:"flex",gap:12,overflowX:"auto",paddingBottom:2}}>
-                      {swatchChips.map((chip,i)=>(
-                        <SwatchChip key={chip.src || chip.hex || `${chip.name}-${i}`} chip={chip} onClick={()=>openSwatchModal(activeTab, chip)}/>
-                      ))}
-                      {swatchOverflow > 0 && (
-                        <SwatchChip label={`+${swatchOverflow}`} onClick={()=>openSwatchModal(activeTab)}/>
-                      )}
-                    </div>
-                    <button
-                      onClick={()=>openSwatchModal(activeTab)}
-                      style={{marginTop:12,fontSize:11,letterSpacing:0.6,color:C.muted,background:"none",border:"none",padding:0,cursor:"pointer",textAlign:"left",transition:"color 0.2s"}}
-                      onMouseEnter={e=>e.currentTarget.style.color=C.mutedLight}
-                      onMouseLeave={e=>e.currentTarget.style.color=C.muted}
-                    >{swatchData.caption(swatchData.full.length)}</button>
+                    {activeTab === "stone" ? (
+                      <>
+                        <div style={{display:"flex",gap:12,overflowX:"auto",paddingBottom:2}}>
+                          {(stoneTileLevel === "profiles" ? stoneProfileChips : stoneShingleChips).map(chip=>(
+                            <SwatchChip key={chip.key} chip={chip} onClick={()=>stoneTileLevel==="profiles" ? handleStoneProfileChipClick(chip) : handleStoneShingleChipClick(chip)}/>
+                          ))}
+                        </div>
+                        {stoneTileLevel === "profiles" ? (
+                          <div style={{marginTop:12,fontSize:11,letterSpacing:0.6,color:C.muted}}>Tap a profile to explore its colors</div>
+                        ) : (
+                          <button
+                            onClick={()=>setStoneTileLevel("profiles")}
+                            style={{marginTop:12,fontSize:11,letterSpacing:0.6,color:C.muted,background:"none",border:"none",padding:0,cursor:"pointer",textAlign:"left",transition:"color 0.2s"}}
+                            onMouseEnter={e=>e.currentTarget.style.color=C.mutedLight}
+                            onMouseLeave={e=>e.currentTarget.style.color=C.muted}
+                          >← Back to profiles</button>
+                        )}
+                      </>
+                    ) : (
+                      <>
+                        <div style={{display:"flex",gap:12,overflowX:"auto",paddingBottom:2}}>
+                          {swatchChips.map((chip,i)=>(
+                            <SwatchChip key={chip.src || chip.hex || `${chip.name}-${i}`} chip={chip} onClick={()=>openSwatchModal(activeTab, chip)}/>
+                          ))}
+                          {swatchOverflow > 0 && (
+                            <SwatchChip label={`+${swatchOverflow}`} onClick={()=>openSwatchModal(activeTab)}/>
+                          )}
+                        </div>
+                        <button
+                          onClick={()=>openSwatchModal(activeTab)}
+                          style={{marginTop:12,fontSize:11,letterSpacing:0.6,color:C.muted,background:"none",border:"none",padding:0,cursor:"pointer",textAlign:"left",transition:"color 0.2s"}}
+                          onMouseEnter={e=>e.currentTarget.style.color=C.mutedLight}
+                          onMouseLeave={e=>e.currentTarget.style.color=C.muted}
+                        >{swatchData.caption(swatchData.full.length)}</button>
+                      </>
+                    )}
                   </div>
                 </div>
                 {/* Info panel */}
@@ -770,6 +841,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
         onNavigate={(i)=>setSwatchModal(m => m ? {...m, index:i} : m)}
         onClose={()=>setSwatchModal(null)}
         renderItem={swatchModal?.material === "copper" ? copperRenderItem : undefined}
+        header={stoneModalBack}
         footer={swatchModalFooter}
         hideCaption
       />
