@@ -506,6 +506,7 @@ export default function VisualizerPage() {
                     onChange={e => { setAddress(e.target.value); setAddrError('') }}
                     onKeyDown={e => e.key === 'Enter' && !locating && handleVisualize()}
                     placeholder="Enter your home address…"
+                    autoComplete="off"
                     style={{ flex: 1, background: 'none', border: 'none', outline: 'none', color: C.white, fontSize: 14, fontFamily: "'Outfit',sans-serif" }}
                   />
                 </div>
