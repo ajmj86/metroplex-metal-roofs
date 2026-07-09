@@ -5,6 +5,11 @@ import Link from "next/link";
 import { C, LEGAL_ENTITY, DBA_NAME, PHONE, YEAR, fonts, globalStyles, Logo } from "./brand";
 import { SiteFooter } from "./SiteFooter";
 import Counter from '@/components/Counter'
+import ProductGallery from '@/components/ProductGallery'
+import {
+  STANDING_SEAM_COLORS, R_PANEL_COLORS, STONE_COLORS, STONE_PROFILE_ORDER, STONE_ROW_PREVIEW,
+  COPPER_PATINA_CHIPS, COPPER_INSTALL_PHOTOS,
+} from '@/lib/productColors'
 
 /* ── Image Placeholder ── */
 const ImgPlaceholder = ({ label, tag, style={} }) => (
@@ -47,6 +52,38 @@ const Reveal = ({ children, delay=0 }) => {
     <div ref={ref} style={{opacity:vis?1:0,transform:vis?"translateY(0)":"translateY(22px)",transition:`opacity 0.65s ease ${delay}s,transform 0.65s ease ${delay}s`}}>
       {children}
     </div>
+  );
+};
+
+/* ── Product swatch chip (circular thumbnail / color / "+N" overflow) ── */
+const SwatchChip = ({ chip, label, onClick }) => {
+  const [hover, setHover] = useState(false);
+  const [press, setPress] = useState(false);
+  return (
+    <button
+      onClick={onClick}
+      onMouseEnter={()=>setHover(true)}
+      onMouseLeave={()=>{setHover(false);setPress(false);}}
+      onMouseDown={()=>setPress(true)}
+      onMouseUp={()=>setPress(false)}
+      aria-label={label ? `${label} more colors` : chip?.name}
+      title={label ? undefined : chip?.name}
+      style={{
+        flexShrink:0, width:44, height:44, borderRadius:"50%",
+        overflow:"hidden", padding:0, cursor:"pointer", position:"relative",
+        display:"flex", alignItems:"center", justifyContent:"center",
+        border:`1px solid ${hover?C.accent:C.border}`,
+        boxShadow: hover ? `0 0 0 1px ${C.accent}` : "none",
+        background: chip?.hex || C.card,
+        color:C.mutedLight, fontSize:10, fontWeight:600,
+        transform: press ? "scale(0.94)" : hover ? "scale(1.08)" : "scale(1)",
+        transition:"transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease",
+      }}
+    >
+      {label ? label : chip?.src && (
+        <img src={chip.src} alt="" loading="lazy" decoding="async" style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}}/>
+      )}
+    </button>
   );
 };
 
@@ -301,11 +338,35 @@ const specMap = {
   rpanel:  [{k:"Lifespan",v:"40–60 yrs"},{k:"Hail Rating",v:"Class 4"},{k:"Wind",v:"120 mph"},{k:"Fastener",v:"Exposed"}],
 };
 const badgeMap = {standing:"Most Popular",copper:"Ultra Premium",stone:"HOA Friendly",rpanel:"Best Value"};
-const collageMap = {
-  standing: "/products/collages/standing-seam-collage.jpg",
-  copper:   "/products/collages/copper-collage.jpg",
-  stone:    "/products/collages/stone-coated-steel-collage.jpg",
-  rpanel:   "/products/collages/r-panel-collage.jpg",
+
+/* Single hero shot per material — replaces the old 4-up collage image. */
+const heroMap = {
+  standing: "/Installation Pics/Standing-Seam-Steel-True-Black.PNG",
+  copper:   "/Installation Pics/Standing-Seam-Copper.PNG",
+  stone:    "/Installation Pics/Stone-Coated-Steel-Pacific-Tile-Timberwood.jpg",
+  // No install photo exists for R-Panel — swatch stand-in until real photography is shot.
+  rpanel:   "/products/r_panel/true-black.jpg",
+};
+const visualizerRoofTypeMap = {
+  standing: "standing_seam",
+  copper:   "copper_standing_seam",
+  stone:    "stone_coated_steel",
+  rpanel:   "r_panel",
+};
+
+/* ── Swatch row / modal data (see lib/productColors.js) ── */
+const SWATCH_ROW_LIMIT = 6;
+const stoneRowChips = STONE_ROW_PREVIEW
+  .map(p => STONE_COLORS.find(c => c.product === p.product && c.name === p.name))
+  .filter(Boolean);
+const stoneFullSorted = [...STONE_COLORS].sort(
+  (a, b) => STONE_PROFILE_ORDER.indexOf(a.profile) - STONE_PROFILE_ORDER.indexOf(b.profile)
+);
+const swatchDataByTab = {
+  standing: { full: STANDING_SEAM_COLORS, rowOverride: null,       caption: n => `Available in ${n} colors — view all` },
+  rpanel:   { full: R_PANEL_COLORS,       rowOverride: null,       caption: n => `Available in ${n} colors — view all` },
+  stone:    { full: stoneFullSorted,      rowOverride: stoneRowChips, caption: n => `Available in ${n} colors — view all` },
+  copper:   { full: COPPER_PATINA_CHIPS,  rowOverride: null,       caption: () => "One material. A finish that evolves for generations." },
 };
 const stats = [
   {val:50,  suffix:"+ yrs", label:"Roof Lifespan"},
@@ -333,7 +394,7 @@ const cities = [
 ];
 const galleryItems = [
   { src: "/Installation Pics/Standing-Seam-Steel-True-Black.PNG",                 label: "Standing Seam Metal - True Black" },
-  { src: "/Installation Pics/Standing-Seam-Copper.PNG",                           label: "Standing Seam Copper" },
+  { src: "/Installation Pics/Standing-Seam-Copper.PNG",                           label: "Standing Seam Copper", objectPosition: "center 75%" },
   { src: "/Installation Pics/Stone-Coated-Steel-Pacific-Tile-Timberwood.jpg",     label: "Stone-Coated Steel - Pacific Tile, Timberwood" },
   { src: "/Installation Pics/Stone-Coated-Steel-Pine-Crest Shake-Timberwood.PNG", label: "Stone-Coated Steel - Pine-Crest Shake, Timberwood" },
   { src: "/Installation Pics/Standing-Seam-Steel-Natural-Metal.jpg",              label: "Standing Seam Metal - Natural Metal" },
@@ -347,17 +408,64 @@ const HomePage = ({ activeTab, setActiveTab }) => {
 
   const activeType = roofTypes.find(t=>t.id===activeTab);
   const [lightboxIndex, setLightboxIndex] = useState(null);
+  const [swatchModal, setSwatchModal] = useState(null); // { material, items, index } | null
 
-  useEffect(() => {
-    if (lightboxIndex === null) return;
-    function handleKey(e) {
-      if (e.key === "Escape") setLightboxIndex(null);
-      if (e.key === "ArrowLeft" && lightboxIndex > 0) setLightboxIndex(lightboxIndex - 1);
-      if (e.key === "ArrowRight" && lightboxIndex < galleryItems.length - 1) setLightboxIndex(lightboxIndex + 1);
+  const swatchData = swatchDataByTab[activeTab];
+  const swatchChips = (swatchData.rowOverride ?? swatchData.full).slice(0, SWATCH_ROW_LIMIT);
+  const swatchOverflow = swatchData.full.length - swatchChips.length;
+
+  const openSwatchModal = (tab, item) => {
+    if (tab === "copper") {
+      setSwatchModal({ material: "copper", items: [{ name: "Copper Patina" }], index: 0 });
+      return;
     }
-    window.addEventListener("keydown", handleKey);
-    return () => window.removeEventListener("keydown", handleKey);
-  }, [lightboxIndex]);
+    const full = swatchDataByTab[tab].full;
+    const idx = item ? Math.max(full.indexOf(item), 0) : 0;
+    setSwatchModal({ material: tab, items: full, index: idx });
+  };
+
+  const modalItem = swatchModal?.items?.[swatchModal.index];
+  const swatchModalFooter = swatchModal && (
+    <div style={{marginTop:20,paddingTop:20,borderTop:`1px solid ${C.border}`,display:"flex",flexDirection:"column",alignItems:"center",gap:12}}>
+      {swatchModal.material !== "copper" && (
+        <div style={{fontSize:13,letterSpacing:0.5}}>
+          {swatchModal.material === "stone" && modalItem?.product && (
+            <span style={{color:C.accent,textTransform:"uppercase",fontSize:11,letterSpacing:2,marginRight:10}}>{modalItem.product}</span>
+          )}
+          <span style={{color:C.white,fontWeight:600,fontSize:16}}>{modalItem?.name}</span>
+        </div>
+      )}
+      <a href={`/visualizer?roofType=${visualizerRoofTypeMap[swatchModal.material]}`} className="cta-btn"
+        style={{display:"inline-flex",alignItems:"center",gap:8,padding:"13px 26px",background:C.accent,color:C.black,fontSize:11,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"background 0.2s"}}
+        onMouseEnter={e=>e.currentTarget.style.background=C.accentLight}
+        onMouseLeave={e=>e.currentTarget.style.background=C.accent}
+      >See this color on your home →</a>
+    </div>
+  );
+
+  const copperRenderItem = () => (
+    <div style={{width:"100%",padding:"8px 4px",display:"flex",flexDirection:"column",gap:26,alignItems:"center"}}>
+      <div style={{maxWidth:480}}>
+        <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:24,color:C.white,marginBottom:8}}>A Living Finish</div>
+        <p style={{fontSize:14,color:C.mutedLight,lineHeight:1.7,margin:0}}>Copper isn't chosen from a color chart — it's one material whose surface evolves for decades.</p>
+      </div>
+      <div style={{width:"100%",maxWidth:480,padding:"0 8px"}}>
+        <div style={{height:20,borderRadius:10,background:`linear-gradient(90deg, ${COPPER_PATINA_CHIPS[0].hex}, ${COPPER_PATINA_CHIPS[1].hex}, ${COPPER_PATINA_CHIPS[2].hex})`}}/>
+        <div style={{display:"flex",justifyContent:"space-between",marginTop:10}}>
+          <span style={{fontSize:11,color:C.muted,letterSpacing:1}}>Year 1</span>
+          <span style={{fontSize:11,color:C.muted,letterSpacing:1}}>~Year 10</span>
+          <span style={{fontSize:11,color:C.muted,letterSpacing:1}}>Year 30+</span>
+        </div>
+      </div>
+      <div style={{display:"flex",gap:10,flexWrap:"wrap",justifyContent:"center"}}>
+        {COPPER_INSTALL_PHOTOS.map(p => (
+          <div key={p.src} style={{width:88,height:88,borderRadius:6,overflow:"hidden",flexShrink:0,border:`1px solid ${C.border}`}}>
+            <img src={p.src} alt={p.name} loading="lazy" decoding="async" style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}}/>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 
   return (
     <div>
@@ -591,25 +699,39 @@ const HomePage = ({ activeTab, setActiveTab }) => {
             <Reveal key={activeTab}>
               <div className="grid-2" style={{border:`1px solid ${C.border}`,borderRadius:8,overflow:"hidden"}}>
                 {/* Image panel */}
-                <a
-                  href={`/visualizer?roofType=${
-                    activeTab === 'standing' ? 'standing_seam' :
-                    activeTab === 'copper'   ? 'copper_standing_seam' :
-                    activeTab === 'stone'    ? 'stone_coated_steel' :
-                    'r_panel'
-                  }`}
-                  style={{display:"block",height:"100%",overflow:"hidden",cursor:"pointer"}}
-                >
-                  <img
-                    src={collageMap[activeTab]}
-                    alt={`${activeType.label} metal roof`}
-                    loading="lazy"
-                    decoding="async"
-                    style={{width:"100%",height:"100%",objectFit:"cover",minHeight:320,display:"block",transition:"transform 0.3s ease"}}
-                    onMouseEnter={e => e.currentTarget.style.transform = "scale(1.02)"}
-                    onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}
-                  />
-                </a>
+                <div style={{display:"flex",flexDirection:"column",height:"100%"}}>
+                  <a
+                    href={`/visualizer?roofType=${visualizerRoofTypeMap[activeTab]}`}
+                    style={{display:"block",overflow:"hidden",cursor:"pointer",flex:"1 1 auto",minHeight:280}}
+                  >
+                    <img
+                      src={heroMap[activeTab]}
+                      alt={`${activeType.label} metal roof`}
+                      loading="lazy"
+                      decoding="async"
+                      style={{width:"100%",height:"100%",objectFit:"cover",display:"block",transition:"transform 0.3s ease"}}
+                      onMouseEnter={e => e.currentTarget.style.transform = "scale(1.02)"}
+                      onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}
+                    />
+                  </a>
+                  {/* Swatch row */}
+                  <div style={{flexShrink:0,background:C.black,borderTop:`1px solid ${C.border}`,padding:"18px clamp(20px,3vw,32px)"}}>
+                    <div style={{display:"flex",gap:12,overflowX:"auto",paddingBottom:2}}>
+                      {swatchChips.map((chip,i)=>(
+                        <SwatchChip key={chip.src || chip.hex || `${chip.name}-${i}`} chip={chip} onClick={()=>openSwatchModal(activeTab, chip)}/>
+                      ))}
+                      {swatchOverflow > 0 && (
+                        <SwatchChip label={`+${swatchOverflow}`} onClick={()=>openSwatchModal(activeTab)}/>
+                      )}
+                    </div>
+                    <button
+                      onClick={()=>openSwatchModal(activeTab)}
+                      style={{marginTop:12,fontSize:11,letterSpacing:0.6,color:C.muted,background:"none",border:"none",padding:0,cursor:"pointer",textAlign:"left",transition:"color 0.2s"}}
+                      onMouseEnter={e=>e.currentTarget.style.color=C.mutedLight}
+                      onMouseLeave={e=>e.currentTarget.style.color=C.muted}
+                    >{swatchData.caption(swatchData.full.length)}</button>
+                  </div>
+                </div>
                 {/* Info panel */}
                 <div style={{background:C.black,padding:"clamp(28px,4vw,52px)",display:"flex",flexDirection:"column",justifyContent:"space-between",gap:32}}>
                   <div>
@@ -625,15 +747,32 @@ const HomePage = ({ activeTab, setActiveTab }) => {
                       ))}
                     </div>
                   </div>
-                  <a href="/estimate" style={{display:"inline-flex",alignItems:"center",gap:8,fontSize:11,letterSpacing:2,textTransform:"uppercase",color:C.accent,fontWeight:600,borderBottom:`1px solid ${C.accentDark}`,paddingBottom:4,width:"fit-content",transition:"color 0.2s"}}>
-                    Get a Free Estimate →
-                  </a>
+                  <div style={{display:"flex",flexDirection:"column",gap:14}}>
+                    <a href={`/visualizer?roofType=${visualizerRoofTypeMap[activeTab]}`} className="cta-btn"
+                      style={{display:"inline-flex",alignItems:"center",justifyContent:"center",gap:8,padding:"14px 24px",background:C.accent,color:C.black,fontSize:11,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"background 0.2s",width:"fit-content"}}
+                      onMouseEnter={e=>e.currentTarget.style.background=C.accentLight}
+                      onMouseLeave={e=>e.currentTarget.style.background=C.accent}
+                    >See it on your home →</a>
+                    <a href={`/estimate?roofType=${visualizerRoofTypeMap[activeTab]}`} style={{display:"inline-flex",alignItems:"center",gap:8,fontSize:11,letterSpacing:2,textTransform:"uppercase",color:C.accent,fontWeight:600,borderBottom:`1px solid ${C.accentDark}`,paddingBottom:4,width:"fit-content",transition:"color 0.2s"}}>
+                      Get a Free Estimate →
+                    </a>
+                  </div>
                 </div>
               </div>
             </Reveal>
           )}
         </div>
       </section>
+
+      <ProductGallery
+        items={swatchModal?.items || []}
+        index={swatchModal ? swatchModal.index : null}
+        onNavigate={(i)=>setSwatchModal(m => m ? {...m, index:i} : m)}
+        onClose={()=>setSwatchModal(null)}
+        renderItem={swatchModal?.material === "copper" ? copperRenderItem : undefined}
+        footer={swatchModalFooter}
+        hideCaption
+      />
 
       {/* ── GALLERY ── */}
       <section id="gallery" className="section-pad" style={{borderTop:`1px solid ${C.border}`}}>
@@ -657,7 +796,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
                     loading="lazy"
                     decoding="async"
                     draggable={false}
-                    style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: item.label.includes("Copper") ? "center 75%" : "center center", display: "block", transition: "transform 0.3s ease", pointerEvents: "auto" }}
+                    style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: item.objectPosition || "center center", display: "block", transition: "transform 0.3s ease", pointerEvents: "auto" }}
                     onMouseEnter={e => e.currentTarget.style.transform = "scale(1.04)"}
                     onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}
                   />
@@ -668,82 +807,12 @@ const HomePage = ({ activeTab, setActiveTab }) => {
         </div>
       </section>
 
-      {lightboxIndex !== null && (
-        <div
-          onClick={() => setLightboxIndex(null)}
-          style={{
-            position: "fixed", inset: 0, zIndex: 999,
-            background: "rgba(9,9,10,0.95)",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            padding: "40px 20px", cursor: "zoom-out",
-          }}
-        >
-          <button
-            onClick={() => setLightboxIndex(null)}
-            style={{
-              position: "absolute", top: 24, right: 24,
-              background: "none", border: "none", color: "#F4F1EB",
-              fontSize: 28, cursor: "pointer", lineHeight: 1,
-              padding: 8,
-            }}
-            aria-label="Close"
-          >×</button>
-
-          {lightboxIndex > 0 && (
-            <button
-              onClick={e => { e.stopPropagation(); setLightboxIndex(lightboxIndex - 1); }}
-              style={{
-                position: "absolute", left: "calc(50% - min(37.5vw, 380px) - 22px)", top: "calc(50% - 20px)",
-                background: "#18181B", border: "none", color: "#B8935A", borderRadius: "50%",
-                width: 44, height: 44, display: "flex", alignItems: "center", justifyContent: "center",
-                fontSize: 22, fontWeight: 700, cursor: "pointer", opacity: 1,
-                boxShadow: "0 2px 12px rgba(0,0,0,0.4)", transition: "background 0.2s", zIndex: 2,
-              }}
-              onMouseEnter={e => e.currentTarget.style.color = "#D4AE7A"}
-              onMouseLeave={e => e.currentTarget.style.color = "#B8935A"}
-              aria-label="Previous"
-            >‹</button>
-          )}
-
-          {lightboxIndex < galleryItems.length - 1 && (
-            <button
-              onClick={e => { e.stopPropagation(); setLightboxIndex(lightboxIndex + 1); }}
-              style={{
-                position: "absolute", right: "calc(50% - min(37.5vw, 380px) - 22px)", top: "calc(50% - 20px)",
-                background: "#18181B", border: "none", color: "#B8935A", borderRadius: "50%",
-                width: 44, height: 44, display: "flex", alignItems: "center", justifyContent: "center",
-                fontSize: 22, fontWeight: 700, cursor: "pointer", opacity: 1,
-                boxShadow: "0 2px 12px rgba(0,0,0,0.4)", transition: "background 0.2s", zIndex: 2,
-              }}
-              onMouseEnter={e => e.currentTarget.style.color = "#D4AE7A"}
-              onMouseLeave={e => e.currentTarget.style.color = "#B8935A"}
-              aria-label="Next"
-            >›</button>
-          )}
-
-          <div onClick={() => setLightboxIndex(null)} style={{ width: "min(75vw, 760px)", height: "min(70vh, 580px)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center" }}>
-            <div style={{ width: "100%", height: "calc(100% - 40px)", borderRadius: 4, overflow: "hidden", position: "relative" }}>
-              <img
-                src={galleryItems[lightboxIndex].src}
-                alt={galleryItems[lightboxIndex].label}
-                draggable={false}
-                style={{
-                  width: "100%", height: "100%",
-                  objectFit: "cover",
-                  objectPosition: galleryItems[lightboxIndex].label.includes("Copper") ? "center 75%" : "center center",
-                  display: "block",
-                  WebkitUserSelect: "none", userSelect: "none",
-                  WebkitTouchCallout: "none",
-                  pointerEvents: "none"
-                }}
-              />
-            </div>
-            <div style={{ color: "#A1A1AA", fontSize: 13, height: 40, display: "flex", alignItems: "center", justifyContent: "center", letterSpacing: 1 }}>
-              {galleryItems[lightboxIndex].label}
-            </div>
-          </div>
-        </div>
-      )}
+      <ProductGallery
+        items={galleryItems}
+        index={lightboxIndex}
+        onNavigate={setLightboxIndex}
+        onClose={() => setLightboxIndex(null)}
+      />
 
       {/* ── PROCESS ── */}
       <section id="process" className="section-pad" style={{background:C.surface,borderTop:`1px solid ${C.border}`}}>
