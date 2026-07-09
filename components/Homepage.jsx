@@ -55,10 +55,20 @@ const Reveal = ({ children, delay=0 }) => {
   );
 };
 
-/* ── Product swatch chip (circular thumbnail / color / "+N" overflow) ── */
-const SwatchChip = ({ chip, label, onClick }) => {
+/*
+ * ── Product swatch chip / stone tile (circular thumbnail + persistent
+ * name label, or "+N" overflow). size="tile" is used for the larger
+ * stone profile/sub-tiles (only 4 or 2 at a time); size="chip" (default)
+ * is used for the flat standing/copper/r-panel rows.
+ * No native `title` tooltip — the label below the circle is always
+ * visible, so there's nothing for a hover tooltip to add.
+ */
+const SwatchChip = ({ chip, label, onClick, size="chip", badge }) => {
   const [hover, setHover] = useState(false);
   const [press, setPress] = useState(false);
+  const displayName = label ? null : chip?.name;
+  const wrapClass   = size === "tile" ? "swatch-tile-wrap"   : "swatch-chip-wrap";
+  const circleClass = size === "tile" ? "swatch-tile-circle" : "swatch-chip-circle";
   return (
     <button
       onClick={onClick}
@@ -66,22 +76,40 @@ const SwatchChip = ({ chip, label, onClick }) => {
       onMouseLeave={()=>{setHover(false);setPress(false);}}
       onMouseDown={()=>setPress(true)}
       onMouseUp={()=>setPress(false)}
-      aria-label={label ? `${label} more colors` : chip?.name}
-      title={label ? undefined : chip?.name}
+      aria-label={label ? `${label} more colors` : (displayName || undefined)}
+      className={wrapClass}
       style={{
-        flexShrink:0, width:44, height:44, borderRadius:"50%",
-        overflow:"hidden", padding:0, cursor:"pointer", position:"relative",
-        display:"flex", alignItems:"center", justifyContent:"center",
-        border:`1px solid ${hover?C.accent:C.border}`,
-        boxShadow: hover ? `0 0 0 1px ${C.accent}` : "none",
-        background: chip?.hex || C.card,
-        color:C.mutedLight, fontSize:10, fontWeight:600,
-        transform: press ? "scale(0.94)" : hover ? "scale(1.08)" : "scale(1)",
-        transition:"transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease",
+        flexShrink:0, display:"flex", flexDirection:"column", alignItems:"center", gap:8,
+        background:"none", border:"none", padding:0, cursor:"pointer",
       }}
     >
-      {label ? label : chip?.src && (
-        <img src={chip.src} alt="" loading="lazy" decoding="async" style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}}/>
+      <span className={circleClass} style={{
+        flexShrink:0, borderRadius:"50%",
+        overflow:"hidden", position:"relative",
+        display:"flex", alignItems:"center", justifyContent:"center",
+        border:`1.5px solid ${hover?C.accent:C.border}`,
+        boxShadow: hover ? `0 0 0 2px ${C.accent}66, 0 8px 18px rgba(0,0,0,0.4)` : "none",
+        background: chip?.hex || C.card,
+        color:C.mutedLight, fontSize:12, fontWeight:600,
+        transform: press ? "scale(0.97)" : hover ? "scale(1.05)" : "scale(1)",
+        transition:"transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease",
+      }}>
+        {label ? label : chip?.src && (
+          <img src={chip.src} alt="" loading="lazy" decoding="async" style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}}/>
+        )}
+      </span>
+      <span style={{
+        width:"100%", minHeight:"2.7em",
+        display:"-webkit-box", WebkitLineClamp:2, WebkitBoxOrient:"vertical", overflow:"hidden",
+        fontFamily:"'Outfit',sans-serif", fontSize:12, lineHeight:1.35, letterSpacing:0.2,
+        color:C.muted, textAlign:"center",
+      }}>{displayName || " "}</span>
+      {badge && (
+        <span style={{
+          fontFamily:"'Outfit',sans-serif", fontSize:11, letterSpacing:1, textTransform:"uppercase",
+          color:C.accent, border:`1px solid ${C.accentDark}`, borderRadius:20, padding:"2px 9px",
+          whiteSpace:"nowrap", marginTop:-2,
+        }}>{badge}</span>
       )}
     </button>
   );
@@ -326,10 +354,10 @@ const VisualizerGate = () => {
 
 /* ── Static data (module scope — no props/state dependency) ── */
 const roofTypes = [
-  {id:"standing",label:"Standing Seam",   desc:"The gold standard in metal roofing. Hidden fasteners, clean architectural lines, and a 50+ year lifespan. Preferred by luxury homebuilders and architects across DFW."},
-  {id:"copper",  label:"Copper",           desc:"The most premium material in residential roofing. Develops a natural patina over decades, lasts 100+ years, and signals enduring quality. Ideal for estate-level homes or architectural accents."},
-  {id:"stone",   label:"Stone-Coated Steel",desc:"The look of architectural shingles with the strength of steel. Class 4 hail rating — ideal for HOA-governed DFW communities that require traditional aesthetics."},
-  {id:"rpanel",  label:"R-Panel",          desc:"A proven exposed-fastener metal panel system offering exceptional durability and longevity. A straightforward entry into metal roofing without sacrificing long-term performance."},
+  {id:"stone",   label:"Stone-Coated Steel",  desc:"The look of architectural shingles with the strength of steel. Class 4 hail rating — ideal for HOA-governed DFW communities that require traditional aesthetics."},
+  {id:"copper",  label:"Copper",              desc:"The most premium material in residential roofing. Develops a natural patina over decades, lasts 100+ years, and signals enduring quality. Ideal for estate-level homes or architectural accents."},
+  {id:"standing",label:"Standing Seam Steel", desc:"The gold standard in metal roofing. Hidden fasteners, clean architectural lines, and a 50+ year lifespan. Preferred by luxury homebuilders and architects across DFW."},
+  {id:"rpanel",  label:"R-Panel",             desc:"A proven exposed-fastener metal panel system offering exceptional durability and longevity. A straightforward entry into metal roofing without sacrificing long-term performance."},
 ];
 const specMap = {
   standing:[{k:"Lifespan",v:"50–70 yrs"},{k:"Hail Rating",v:"Class 4"},{k:"Wind",v:"160 mph"},{k:"Fastener",v:"Hidden"}],
@@ -748,7 +776,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
             <Reveal key={activeTab}>
               <div className="grid-2" style={{border:`1px solid ${C.border}`,borderRadius:8,overflow:"hidden"}}>
                 {/* Image panel */}
-                <div style={{display:"flex",flexDirection:"column",height:"100%"}}>
+                <div style={{display:"flex",flexDirection:"column",height:"100%",minWidth:0}}>
                   <a
                     href={`/visualizer?roofType=${visualizerRoofTypeMap[activeTab]}`}
                     style={{display:"block",overflow:"hidden",cursor:"pointer",flex:"1 1 auto",minHeight:280}}
@@ -764,20 +792,21 @@ const HomePage = ({ activeTab, setActiveTab }) => {
                     />
                   </a>
                   {/* Swatch row */}
-                  <div style={{flexShrink:0,background:C.black,borderTop:`1px solid ${C.border}`,padding:"18px clamp(20px,3vw,32px)"}}>
+                  <div style={{flexShrink:0,minWidth:0,background:C.black,borderTop:`1px solid ${C.border}`,padding:"26px clamp(20px,3vw,32px) 28px"}}>
                     {activeTab === "stone" ? (
                       <>
-                        <div style={{display:"flex",gap:12,overflowX:"auto",paddingBottom:2}}>
+                        <div style={{display:"flex",alignItems:"flex-start",gap:16,overflowX:"auto",padding:"12px 12px 14px",margin:"-12px -12px -14px"}}>
                           {(stoneTileLevel === "profiles" ? stoneProfileChips : stoneShingleChips).map(chip=>(
-                            <SwatchChip key={chip.key} chip={chip} onClick={()=>stoneTileLevel==="profiles" ? handleStoneProfileChipClick(chip) : handleStoneShingleChipClick(chip)}/>
+                            <SwatchChip key={chip.key} chip={chip} size="tile" badge={chip.key === "shingle" ? "2 Styles" : undefined}
+                              onClick={()=>stoneTileLevel==="profiles" ? handleStoneProfileChipClick(chip) : handleStoneShingleChipClick(chip)}/>
                           ))}
                         </div>
                         {stoneTileLevel === "profiles" ? (
-                          <div style={{marginTop:12,fontSize:11,letterSpacing:0.6,color:C.muted}}>Tap a profile to explore its colors</div>
+                          <div style={{marginTop:18,fontSize:11,letterSpacing:0.6,color:C.muted}}>Tap a profile to explore its colors</div>
                         ) : (
                           <button
                             onClick={()=>setStoneTileLevel("profiles")}
-                            style={{marginTop:12,fontSize:11,letterSpacing:0.6,color:C.muted,background:"none",border:"none",padding:0,cursor:"pointer",textAlign:"left",transition:"color 0.2s"}}
+                            style={{marginTop:18,fontSize:11,letterSpacing:0.6,color:C.muted,background:"none",border:"none",padding:0,cursor:"pointer",textAlign:"left",transition:"color 0.2s"}}
                             onMouseEnter={e=>e.currentTarget.style.color=C.mutedLight}
                             onMouseLeave={e=>e.currentTarget.style.color=C.muted}
                           >← Back to profiles</button>
@@ -785,7 +814,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
                       </>
                     ) : (
                       <>
-                        <div style={{display:"flex",gap:12,overflowX:"auto",paddingBottom:2}}>
+                        <div style={{display:"flex",alignItems:"flex-start",gap:10,overflowX:"auto",padding:"12px 12px 14px",margin:"-12px -12px -14px"}}>
                           {swatchChips.map((chip,i)=>(
                             <SwatchChip key={chip.src || chip.hex || `${chip.name}-${i}`} chip={chip} onClick={()=>openSwatchModal(activeTab, chip)}/>
                           ))}
@@ -795,7 +824,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
                         </div>
                         <button
                           onClick={()=>openSwatchModal(activeTab)}
-                          style={{marginTop:12,fontSize:11,letterSpacing:0.6,color:C.muted,background:"none",border:"none",padding:0,cursor:"pointer",textAlign:"left",transition:"color 0.2s"}}
+                          style={{marginTop:18,fontSize:11,letterSpacing:0.6,color:C.muted,background:"none",border:"none",padding:0,cursor:"pointer",textAlign:"left",transition:"color 0.2s"}}
                           onMouseEnter={e=>e.currentTarget.style.color=C.mutedLight}
                           onMouseLeave={e=>e.currentTarget.style.color=C.muted}
                         >{swatchData.caption(swatchData.full.length)}</button>
@@ -1027,7 +1056,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
 ═══════════════════════════════ */
 export default function App() {
   const [scrolled, setScrolled] = useState(false);
-  const [activeTab, setActiveTab] = useState("standing");
+  const [activeTab, setActiveTab] = useState("stone");
   useEffect(()=>{
     const fn=()=>setScrolled(window.scrollY>40);
     window.addEventListener("scroll",fn);
