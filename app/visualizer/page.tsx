@@ -168,6 +168,7 @@ export default function VisualizerPage() {
     s.async = true; s.defer = true; s.dataset.googleMapsPlaces = 'true'
     s.addEventListener('load', attach)
     document.head.appendChild(s)
+    return () => s.removeEventListener('load', attach)
   }, [step])
 
   // ── Rotate loading phrases every 15s ──────────────────────────────────────
