@@ -754,7 +754,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
       </section>
 
       {/* ── ROOF TYPES ── */}
-      <section id="products" className="section-pad" style={{background:C.surface,borderTop:`1px solid ${C.border}`}}>
+      <section id="products" className="section-pad products-section" style={{background:C.surface,borderTop:`1px solid ${C.border}`}}>
         <div className="inner">
           <Reveal>
             <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end",marginBottom:48,flexWrap:"wrap",gap:20}}>

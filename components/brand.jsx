@@ -47,11 +47,13 @@ export const globalStyles = `
    * (fewer, so larger). Chip sizing is tuned so 6 (the max real-color count
    * today) fit the ~536px desktop panel width without scrolling — see the
    * fit math in Homepage.jsx above the swatch row JSX.
+   * Scoped under .products-section — these are generic-sounding class names
+   * (.swatch-chip-wrap etc.) that must not leak onto other pages.
    */
-  .swatch-chip-wrap   { width: 78px; }
-  .swatch-chip-circle { width: 74px; height: 74px; }
-  .swatch-tile-wrap   { width: 112px; }
-  .swatch-tile-circle { width: 96px; height: 96px; }
+  .products-section .swatch-chip-wrap   { width: 78px; }
+  .products-section .swatch-chip-circle { width: 74px; height: 74px; }
+  .products-section .swatch-tile-wrap   { width: 112px; }
+  .products-section .swatch-tile-circle { width: 96px; height: 96px; }
 
   @media (max-width: 1024px) {
     .sp    { padding: 72px 32px; }
@@ -98,10 +100,10 @@ export const globalStyles = `
       align-items: flex-start !important;
       gap: 14px !important;
     }
-    .swatch-chip-wrap   { width: 68px; }
-    .swatch-chip-circle { width: 60px; height: 60px; }
-    .swatch-tile-wrap   { width: 84px; }
-    .swatch-tile-circle { width: 72px; height: 72px; }
+    .products-section .swatch-chip-wrap   { width: 68px; }
+    .products-section .swatch-chip-circle { width: 60px; height: 60px; }
+    .products-section .swatch-tile-wrap   { width: 84px; }
+    .products-section .swatch-tile-circle { width: 72px; height: 72px; }
   }
   @media (min-width: 1440px) {
     .section-pad { padding: 120px 80px; }
