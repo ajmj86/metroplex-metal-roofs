@@ -1,6 +1,45 @@
 'use client'
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+
+/* Small circular thumbnail strip below the main image — opt-in via showThumbnails. */
+function ThumbnailStrip({ items, index, onNavigate }) {
+  const activeRef = useRef(null);
+  useEffect(() => {
+    activeRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+  }, [index]);
+  return (
+    <div style={{ width: "100%", flexShrink: 0, display: "flex", justifyContent: "center" }}>
+      <div style={{ display: "flex", gap: 10, overflowX: "auto", maxWidth: "100%", padding: "6px 4px 4px" }}>
+        {items.map((it, i) => {
+          const active = i === index;
+          return (
+            <button
+              key={it.src || it.name || i}
+              ref={active ? activeRef : null}
+              onClick={e => { e.stopPropagation(); onNavigate(i); }}
+              aria-label={it.label ?? it.name ?? `Color ${i + 1}`}
+              aria-current={active}
+              style={{
+                flexShrink: 0, width: 44, height: 44, borderRadius: "50%",
+                overflow: "hidden", padding: 0, cursor: "pointer",
+                border: active ? "2px solid #B8935A" : "1px solid #27272A",
+                boxShadow: active ? "0 0 0 2px #B8935A55" : "none",
+                opacity: active ? 1 : 0.75,
+                transition: "opacity 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease",
+              }}
+            >
+              {it.src && (
+                <img src={it.src} alt="" loading="lazy" decoding="async"
+                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}/>
+              )}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
 
 /*
  * Shared fullscreen lightbox — originally the inline gallery lightbox in
@@ -19,8 +58,13 @@ import { useEffect } from "react";
  *               of a photo)
  *  - hideCaption?: suppress the default name caption under the image, for
  *               callers whose footer already displays the item name
+ *  - showThumbnails?: render a row of small clickable thumbnails (one per
+ *               item) below the main image. Ignored when renderItem is
+ *               set — a custom body has no "one photo at a time" concept
+ *               for thumbnails to jump between. Opt-in so the Gallery
+ *               lightbox (which doesn't pass it) is unaffected.
  */
-export default function ProductGallery({ items, index, onNavigate, onClose, header, footer, renderItem, hideCaption }) {
+export default function ProductGallery({ items, index, onNavigate, onClose, header, footer, renderItem, hideCaption, showThumbnails }) {
   const open = index !== null && index !== undefined && !!items?.length;
 
   useEffect(() => {
@@ -92,7 +136,7 @@ export default function ProductGallery({ items, index, onNavigate, onClose, head
         >›</button>
       )}
 
-      <div onClick={onClose} style={{ width: "min(75vw, 760px)", maxHeight: "90vh", overflowY: "auto", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", gap: (header || footer) ? 16 : 0 }}>
+      <div onClick={onClose} style={{ width: "min(75vw, 760px)", maxHeight: "90vh", overflowY: "auto", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", gap: (header || footer || showThumbnails) ? 16 : 0 }}>
         {header && <div onClick={e => e.stopPropagation()} style={{ width: "100%", flexShrink: 0 }}>{header}</div>}
 
         <div style={{ width: "100%", flexShrink: 0, ...(renderItem ? {} : { height: "min(70vh, 580px)" }) }}>
@@ -122,6 +166,12 @@ export default function ProductGallery({ items, index, onNavigate, onClose, head
             </>
           )}
         </div>
+
+        {showThumbnails && !renderItem && items.length > 1 && (
+          <div onClick={e => e.stopPropagation()} style={{ width: "100%", flexShrink: 0 }}>
+            <ThumbnailStrip items={items} index={index} onNavigate={onNavigate} />
+          </div>
+        )}
 
         {footer && <div onClick={e => e.stopPropagation()} style={{ width: "100%", flexShrink: 0 }}>{footer}</div>}
       </div>

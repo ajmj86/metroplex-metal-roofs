@@ -473,10 +473,12 @@ const HomePage = ({ activeTab, setActiveTab }) => {
   };
   const handleStoneProfileChipClick = (chip) => {
     if (chip.key === "shingle") { setStoneTileLevel("shingle"); return; }
-    openStoneColorModal(chip.key, chip.previewItem);
+    // Tiles represent a product line, not a single color — always open at
+    // color 0, regardless of which color happens to be the tile's thumbnail.
+    openStoneColorModal(chip.key);
   };
   const handleStoneShingleChipClick = (chip) => {
-    openStoneColorModal(chip.key, chip.previewItem);
+    openStoneColorModal(chip.key);
   };
 
   const modalItem = swatchModal?.items?.[swatchModal.index];
@@ -873,6 +875,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
         header={stoneModalBack}
         footer={swatchModalFooter}
         hideCaption
+        showThumbnails
       />
 
       {/* ── GALLERY ── */}
