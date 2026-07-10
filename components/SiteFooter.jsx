@@ -18,7 +18,7 @@ export function SiteFooter({ setActiveTab = () => {}, setPage = null }) {
     "All DFW Areas →":    {href:"/#service-areas", onClick:(e)=>{e.preventDefault();if(setPage){setPage("home");setTimeout(()=>{const el=document.getElementById("service-areas");if(el)el.scrollIntoView({behavior:"smooth"});},200);}else{window.location.href="/#service-areas";}}},
     "About Us":           {href:"/#about", onClick:(e)=>{e.preventDefault();if(setPage){setPage("home");setTimeout(()=>{const el=document.getElementById("about");if(el){const offset=el.getBoundingClientRect().top+window.scrollY-100;window.scrollTo({top:offset,behavior:"smooth"});}},200);}else{window.location.href="/#about";}}},
     "Our Process":        {href:"/#process", onClick:(e)=>{e.preventDefault();if(setPage){setPage("home");setTimeout(()=>{const el=document.getElementById("process");if(el){const offset=el.getBoundingClientRect().top+window.scrollY-100;window.scrollTo({top:offset,behavior:"smooth"});}},200);}else{window.location.href="/#process";}}},
-    "Reviews":            {href:"/#reviews", onClick:(e)=>{e.preventDefault();if(setPage){setPage("home");setTimeout(()=>{const el=document.getElementById("reviews");if(el){const offset=el.getBoundingClientRect().top+window.scrollY-100;window.scrollTo({top:offset,behavior:"smooth"});}},200);}else{window.location.href="/#reviews";}}},
+    "Why Us":             {href:"/#reviews", onClick:(e)=>{e.preventDefault();if(setPage){setPage("home");setTimeout(()=>{const el=document.getElementById("reviews");if(el){const offset=el.getBoundingClientRect().top+window.scrollY-100;window.scrollTo({top:offset,behavior:"smooth"});}},200);}else{window.location.href="/#reviews";}}},
     "Contact":            {href:"/terms#contact"},
   };
 
@@ -29,7 +29,7 @@ export function SiteFooter({ setActiveTab = () => {}, setPage = null }) {
           <div>
             <Logo size={1.15} light={false}/>
             <p style={{marginTop:18,fontSize:16,color:C.muted,lineHeight:1.8,maxWidth:260}}>
-              Premium metal roofing for DFW homeowners. Licensed partners. Satellite-based estimates. Lifetime results.
+              Premium metal roofing for DFW homeowners. Licensed &amp; insured. Satellite-based estimates. 10-year workmanship warranty.
             </p>
           </div>
           {[
@@ -51,7 +51,7 @@ export function SiteFooter({ setActiveTab = () => {}, setPage = null }) {
             {title:"Company",links:[
               ["About Us","/#about"],
               ["Our Process","/#process"],
-              ["Reviews","/#reviews"],
+              ["Why Us","/#reviews"],
               ["Contact","/terms#contact"],
             ]},
           ].map(col=>(

@@ -123,7 +123,7 @@ const NAV_LINKS = [
   {label:"Our Products",  href:"#products"},
   {label:"Gallery",       href:"#gallery"},
   {label:"Our Process",   href:"#process"},
-  {label:"Reviews",       href:"#reviews"},
+  {label:"Why Us",        href:"#reviews"},
   {label:"Service Areas", href:"#service-areas"},
 ];
 
@@ -431,15 +431,21 @@ const stats = [
   {val:137, suffix:"%",     label:"ROI vs. Asphalt", note:"Based on 20-yr cost comparison: avoided replacement, insurance, and energy savings vs. upfront investment"},
 ];
 const steps = [
-  {n:"01",title:"Visualize Your Roof",   href:"/visualizer",body:"Enter your address. Our AI visualizer pulls a street-level image of your home and renders it with your chosen metal roof style and color — before you commit to anything."},
-  {n:"02",title:"Brief Consultation",    href:"https://api.leadconnectorhq.com/widget/booking/gG1ruFfEWkUXO7eIB8NR",body:"A quick call with our team. We confirm your home's scope, timeline, and whether metal is the right fit. No pressure, no obligation."},
-  {n:"03",title:"Precision Estimate",    href:"/estimate",body:"We use satellite imaging to generate exact measurements for your roof. Your estimate is built from real data — not a guess from the driveway."},
-  {n:"04",title:"Expert Installation",   body:"Your project is executed by a credentialed local metal roofing specialist — licensed in Texas, fully insured, and selected for their proven expertise."},
+  {n:"01",title:"Visualize Your Roof",   time:"~60 seconds",           href:"/visualizer",body:"Enter your address. Our AI visualizer pulls a street-level image of your home and renders it with your chosen metal roof style and color — before you commit to anything."},
+  {n:"02",title:"Brief Consultation",    time:"15 minutes, this week", href:"https://api.leadconnectorhq.com/widget/booking/gG1ruFfEWkUXO7eIB8NR",body:"A quick call with our team. We confirm your home's scope, timeline, and whether metal is the right fit. No pressure, no obligation."},
+  {n:"03",title:"Precision Estimate",    time:"Days, not weeks",       href:"/estimate",body:"We use satellite imaging to generate exact measurements for your roof — then complete a full condition assessment of decking, ventilation, attic, and penetrations, so your price is firm with no post-signing surprises."},
+  {n:"04",title:"Expert Installation",   time:"Warrantied from day one",body:"Your roof is installed to manufacturer spec by a credentialed metal roofing specialist — licensed in Texas and fully insured — and covered by our 10-year workmanship warranty from day one."},
 ];
-const reviews = [
-  {name:"Michael T.",area:"Southlake, TX",text:"We've replaced two asphalt roofs on this house in 22 years. After last spring's hail we finally switched to standing seam. The process was completely different — they actually knew what they were talking about."},
-  {name:"Jennifer R.",area:"Frisco, TX",  text:"I was skeptical about the cost at first. Then they walked me through the insurance discount and the 50-year math. This is the last roof I'll ever put on this house."},
-  {name:"David K.",  area:"Westlake, TX", text:"Most roofing companies send a guy with a clipboard. Metroplex showed me a rendering of my actual house with a metal roof before we even talked numbers. Completely different level of professionalism."},
+/*
+ * Placeholder testimonials (Michael T., Jennifer R., David K.) removed —
+ * FTC 2024 fake-review rule + Texas DTPA exposure until real reviews exist
+ * post-WF4. Swap `credentials` below for a `reviews` array once real
+ * customer reviews are collected; keep the #reviews id and section shape.
+ */
+const credentials = [
+  {eyebrow:"Impact Rating",   label:"Class 4 Hail Rated",           body:"The highest impact rating UL tests for — engineered for DFW's hail climate, not just rated for it."},
+  {eyebrow:"Wind Rating",     label:"Up to 160 MPH Wind Rated",     body:"Standing seam and copper systems rated well above anything DFW's storm season throws at a roof."},
+  {eyebrow:"Coverage",        label:"10-Year Workmanship, In Writing", body:"Backed by manufacturer material warranties on every system — registered in your name, not a verbal promise."},
 ];
 const cities = [
   "Southlake","Frisco","Westlake","Prosper","Celina",
@@ -603,7 +609,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
           </div>
           {/* Trust bar */}
           <div className="trust-bar" style={{display:"flex",gap:28,marginTop:48,flexWrap:"wrap",animation:"fadeUp 0.8s ease 0.4s both"}}>
-            {["50-Year Lifespan","Up to 35% Insurance Discount","AI Render Before You Commit"].map(t=>(
+            {["50-Year Lifespan","Up to 35% Insurance Discount","10-Year Workmanship Warranty"].map(t=>(
               <div key={t} style={{display:"flex",alignItems:"center",gap:8}}>
                 <div style={{width:5,height:5,borderRadius:"50%",background:C.accent,flexShrink:0}}/>
                 <span style={{fontSize:12,color:C.muted}}>{t}</span>
@@ -613,14 +619,15 @@ const HomePage = ({ activeTab, setActiveTab }) => {
         </div>
       </section>
 
-      {/* ── DAVID K. PULL QUOTE ── */}
-      <div style={{background:C.card,borderTop:`1px solid ${C.border}`,padding:"clamp(40px,5vw,64px) 24px",textAlign:"center"}}>
-        <div style={{maxWidth:640,margin:"0 auto"}}>
-          <div style={{color:"#B8935A",fontSize:20,marginBottom:20,letterSpacing:2}}>★★★★★</div>
-          <p style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(1.125rem,1.5vw,1.375rem)",fontStyle:"italic",color:C.white,lineHeight:1.8,marginBottom:20}}>
-            "Metroplex showed me a rendering of my actual house with a metal roof before we even talked numbers. Completely different level of professionalism."
-          </p>
-          <div style={{fontSize:13,color:C.muted,fontFamily:"'Outfit',sans-serif"}}>— David K., Westlake TX</div>
+      {/* ── PROOF BAR (replaces placeholder testimonial pending real reviews) ── */}
+      <div style={{background:C.card,borderTop:`1px solid ${C.border}`,padding:"clamp(36px,5vw,56px) 24px",textAlign:"center"}}>
+        <div style={{maxWidth:680,margin:"0 auto",display:"flex",flexWrap:"wrap",justifyContent:"center",gap:"14px 40px"}}>
+          {["Rendered from your actual home, not a stock photo","Satellite-precision measurements","10-year workmanship warranty, in writing"].map(t=>(
+            <div key={t} style={{display:"flex",alignItems:"center",gap:9}}>
+              <div style={{width:5,height:5,borderRadius:"50%",background:C.accent,flexShrink:0}}/>
+              <span style={{fontSize:13,color:C.mutedLight,letterSpacing:0.3}}>{t}</span>
+            </div>
+          ))}
         </div>
       </div>
 
@@ -968,7 +975,8 @@ const HomePage = ({ activeTab, setActiveTab }) => {
                 >
                   <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:56,fontWeight:700,color:C.border,lineHeight:1,marginBottom:20,userSelect:"none"}}>{step.n}</div>
                   <div style={{width:28,height:2,background:C.accent,marginBottom:16}}/>
-                  <h3 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:20,color:C.white,fontWeight:700,marginBottom:12}}>{step.title}</h3>
+                  <h3 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:20,color:C.white,fontWeight:700,marginBottom:8}}>{step.title}</h3>
+                  {step.time && <div style={{fontSize:11,letterSpacing:1.5,textTransform:"uppercase",color:C.accent,marginBottom:12}}>{step.time}</div>}
                   <p style={{fontSize:16,color:C.mutedLight,lineHeight:1.8,margin:0}}>{step.body}</p>
                 </Tag>
               </Reveal>
@@ -978,26 +986,54 @@ const HomePage = ({ activeTab, setActiveTab }) => {
         </div>
       </section>
 
-      {/* ── REVIEWS ── */}
+      {/* ── THE METROPLEX STANDARD ── */}
+      <section id="standard" className="section-pad" style={{background:C.card,borderTop:`1px solid ${C.border}`,borderBottom:`1px solid ${C.border}`,position:"relative",overflow:"hidden"}}>
+        <div style={{position:"absolute",top:0,left:0,right:0,height:3,background:`linear-gradient(90deg,${C.accentDark},${C.accent},${C.accentDark})`}}/>
+        <div className="inner" style={{maxWidth:840,textAlign:"center"}}>
+          <Reveal>
+            <div style={{fontSize:15,letterSpacing:3,color:C.accent,textTransform:"uppercase",marginBottom:14}}>The Metroplex Standard</div>
+            <h2 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(1.75rem,4.3vw,3.75rem)",fontWeight:700,color:C.white,lineHeight:1.15,marginBottom:24}}>
+              One Project Lead.<br/><span style={{fontStyle:"italic",color:C.accent}}>One Warranty. Zero Chasing.</span>
+            </h2>
+            <p style={{fontSize:16,color:C.mutedLight,lineHeight:1.8,maxWidth:600,margin:"0 auto 48px"}}>
+              Most roof replacements mean juggling a salesman, a crew foreman, and a warranty department that stops answering. Here, you have one project lead from your first call to your final walkthrough — and every roof we install is backed by a 10-year workmanship warranty, in writing, in your contract.
+            </p>
+          </Reveal>
+          <div className="grid-3" style={{gap:16,textAlign:"left"}}>
+            {[
+              {label:"10-Year Workmanship Warranty", body:"Written into your contract. Not a handshake."},
+              {label:"Manufacturer Material Warranty", body:"Panel and finish coverage direct from the manufacturer, registered in your name."},
+              {label:"Licensed & Insured in Texas", body:"Class 4 impact-rated systems, engineered for DFW hail."},
+            ].map((p,i)=>(
+              <Reveal key={p.label} delay={i*0.08}>
+                <div style={{padding:24,background:C.surface,border:`1px solid ${C.border}`,borderRadius:6,height:"100%"}}>
+                  <div style={{fontSize:13,letterSpacing:1,color:C.accent,fontWeight:600,marginBottom:10,lineHeight:1.4}}>{p.label}</div>
+                  <div style={{fontSize:14,color:C.mutedLight,lineHeight:1.7}}>{p.body}</div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── CREDENTIALS (reviews section held for real testimonials) ── */}
       <section id="reviews" className="section-pad" style={{borderTop:`1px solid ${C.border}`}}>
         <div className="inner">
           <Reveal>
             <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end",marginBottom:48,flexWrap:"wrap",gap:20}}>
               <div>
-                <div style={{fontSize:15,letterSpacing:3,color:C.accent,textTransform:"uppercase",marginBottom:10}}>Reviews</div>
-                <h2 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(1.625rem,4.2vw,3.5rem)",fontWeight:700,color:C.white}}>What DFW Homeowners Say</h2>
+                <div style={{fontSize:15,letterSpacing:3,color:C.accent,textTransform:"uppercase",marginBottom:10}}>Built to a Standard</div>
+                <h2 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(1.625rem,4.2vw,3.5rem)",fontWeight:700,color:C.white}}>Why DFW Homeowners Trust the Install</h2>
               </div>
             </div>
           </Reveal>
           <div className="grid-3" style={{gap:16}}>
-            {reviews.map((r,i)=>(
-              <Reveal key={r.name} delay={i*0.09}>
-                <div style={{padding:28,background:C.card,border:`1px solid ${C.border}`,borderRadius:6,display:"flex",flexDirection:"column",gap:16,height:"100%"}}>
-                  <p style={{fontSize:16,color:C.mutedLight,lineHeight:1.8,fontStyle:"italic",flex:1,margin:0}}>"{r.text}"</p>
-                  <div style={{borderTop:`1px solid ${C.border}`,paddingTop:16}}>
-                    <div style={{fontSize:14,color:C.white,fontWeight:600}}>{r.name}</div>
-                    <div style={{fontSize:11,color:C.muted,letterSpacing:1,marginTop:3}}>{r.area}</div>
-                  </div>
+            {credentials.map((cItem,i)=>(
+              <Reveal key={cItem.label} delay={i*0.09}>
+                <div style={{padding:28,background:C.card,border:`1px solid ${C.border}`,borderRadius:6,display:"flex",flexDirection:"column",gap:14,height:"100%"}}>
+                  <div style={{fontSize:11,letterSpacing:2,textTransform:"uppercase",color:C.accent}}>{cItem.eyebrow}</div>
+                  <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:22,color:C.white,fontWeight:700,lineHeight:1.25}}>{cItem.label}</div>
+                  <p style={{fontSize:15,color:C.mutedLight,lineHeight:1.75,margin:0,flex:1}}>{cItem.body}</p>
                 </div>
               </Reveal>
             ))}
