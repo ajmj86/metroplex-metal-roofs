@@ -64,7 +64,17 @@ function ThumbnailStrip({ items, index, onNavigate }) {
  *               for thumbnails to jump between. Opt-in so the Gallery
  *               lightbox (which doesn't pass it) is unaffected.
  */
-export default function ProductGallery({ items, index, onNavigate, onClose, header, footer, renderItem, hideCaption, showThumbnails }) {
+export default function ProductGallery({
+  items, index, onNavigate, onClose,
+  // Explicit `= undefined` defaults (not just omitted) required: under
+  // allowJs, TS infers prop optionality from destructured defaults. This
+  // was masked as long as every caller was itself a .jsx file (untyped),
+  // but CityPage.tsx's lightweight lightbox call (items/index/onNavigate/
+  // onClose only) is .tsx and got these five inferred as required, same
+  // failure mode as the activeTab/onTabChange fix in ProductsSection.jsx.
+  header = undefined, footer = undefined, renderItem = undefined,
+  hideCaption = undefined, showThumbnails = undefined,
+}) {
   const open = index !== null && index !== undefined && !!items?.length;
 
   useEffect(() => {
