@@ -33,6 +33,10 @@ export const NORTHLAKE_DATA: CityData = {
     rating: 5,
   },
   faqs: [
+    {
+      q: 'What warranty comes with a metal roof in Northlake, TX?',
+      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract — plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Northlake homeowners will never need to use.',
+    },
     { q: 'How much does a metal roof cost in Northlake, TX?', a: 'Metal roofing in Northlake typically ranges from $18,000 to $65,000 depending on roof size, pitch, and material. We provide satellite-based estimates from actual roof measurements before any commitment.' },
     { q: 'Is metal roofing common on new construction in Northlake?', a: 'Yes. Metal roofing is increasingly specified on new construction throughout Northlake\'s master-planned communities. Builders in the area are incorporating standing seam and stone-coated steel as standard or upgraded options given the area\'s storm exposure and long-term cost advantages.' },
     { q: 'Does a metal roof qualify for an insurance discount in Northlake?', a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. Northlake homeowners in Denton County\'s active storm corridor typically see meaningful annual premium reductions after upgrading.' },

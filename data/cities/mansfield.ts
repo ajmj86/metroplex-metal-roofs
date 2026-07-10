@@ -33,6 +33,10 @@ export const MANSFIELD_DATA: CityData = {
     rating: 5,
   },
   faqs: [
+    {
+      q: 'What warranty comes with a metal roof in Mansfield, TX?',
+      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract — plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Mansfield homeowners will never need to use.',
+    },
     { q: 'How much does a metal roof cost in Mansfield, TX?', a: 'Metal roofing in Mansfield typically ranges from $16,000 to $55,000 depending on roof size, pitch, and material. We provide satellite-based estimates from actual roof measurements before any commitment.' },
     { q: 'Does a metal roof qualify for an insurance discount in Mansfield?', a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. Mansfield sits in Tarrant County\'s active storm corridor and most homeowners see meaningful annual premium reductions after upgrading to a Class 4 rated roof.' },
     { q: 'Will my Mansfield HOA approve a metal roof?', a: 'Most Mansfield HOAs permit standing seam and stone-coated steel in approved profiles and neutral color palettes. We provide complete HOA documentation support at no additional cost.' },

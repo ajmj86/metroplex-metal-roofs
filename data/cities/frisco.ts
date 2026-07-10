@@ -56,6 +56,10 @@ export const FRISCO_DATA: CityData = {
 
   faqs: [
     {
+      q: 'What warranty comes with a metal roof in Frisco, TX?',
+      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract — plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Frisco homeowners will never need to use.',
+    },
+    {
       q: 'How much does a metal roof cost in Frisco, TX?',
       a: 'Metal roofing in Frisco typically ranges from $18,000 to $72,000 depending on roof size, pitch, material selection, and complexity. Most homes in Frisco\'s master-planned communities fall in the 25 to 40 square range. We provide satellite-based estimates built from actual roof measurements — no site visit required before you have a real number.',
     },

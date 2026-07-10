@@ -33,6 +33,10 @@ export const ARGYLE_DATA: CityData = {
     rating: 5,
   },
   faqs: [
+    {
+      q: 'What warranty comes with a metal roof in Argyle, TX?',
+      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract — plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Argyle homeowners will never need to use.',
+    },
     { q: 'How much does a metal roof cost in Argyle, TX?', a: 'Metal roofing in Argyle typically ranges from $22,000 to $90,000 depending on roof size, pitch, and material. Estate homes with larger footprints and more complex rooflines often fall in the mid to upper range. We provide satellite-based estimates from actual roof measurements before any commitment.' },
     { q: 'What metal roofing options are best for Argyle estate homes?', a: 'Standing seam is the most popular choice for Argyle estate properties due to its clean architectural lines and hidden fastener system. Copper is available for homeowners seeking the highest-tier permanent finish. Both carry the highest available impact resistance ratings.' },
     { q: 'Does a metal roof qualify for an insurance discount in Argyle?', a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. For Argyle homeowners with high-value policies, the combination of reduced annual premiums and eliminated deductible exposure over 20 to 30 years typically represents a strong financial return.' },

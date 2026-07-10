@@ -10,6 +10,7 @@ import {
   STANDING_SEAM_COLORS, R_PANEL_COLORS, STONE_COLORS, STONE_PROFILE_TILES, STONE_SHINGLE_TILES,
   COPPER_PATINA_CHIPS, COPPER_INSTALL_PHOTOS,
 } from '@/lib/productColors'
+import { ASSESSMENT_CATEGORIES } from '@/lib/assessment'
 
 /* ── Image Placeholder ── */
 const ImgPlaceholder = ({ label, tag, style={} }) => (
@@ -433,7 +434,7 @@ const stats = [
 const steps = [
   {n:"01",title:"Visualize Your Roof",   time:"~60 seconds",           href:"/visualizer",body:"Enter your address. Our AI visualizer pulls a street-level image of your home and renders it with your chosen metal roof style and color — before you commit to anything."},
   {n:"02",title:"Brief Consultation",    time:"15 minutes, this week", href:"https://api.leadconnectorhq.com/widget/booking/gG1ruFfEWkUXO7eIB8NR",body:"A quick call with our team. We confirm your home's scope, timeline, and whether metal is the right fit. No pressure, no obligation."},
-  {n:"03",title:"Precision Estimate",    time:"Days, not weeks",       href:undefined,body:"We use satellite imaging to generate exact measurements for your roof — then complete your free 40-Point Roof & Structure Assessment, so your price is firm with no post-signing surprises."},
+  {n:"03",title:"Precision Proposal",    time:"Days, not weeks",       href:undefined,body:"We use satellite imaging to generate exact measurements for your roof, then complete your free 40-Point Roof & Structure Assessment on-site. Your proposal is built from those findings — a firm number, not a guess from the driveway."},
   {n:"04",title:"Expert Installation",   time:"Warrantied from day one",body:"Your roof is installed to manufacturer spec by a credentialed metal roofing specialist — licensed in Texas and fully insured — and covered by our 10-year workmanship warranty from day one."},
 ];
 /*
@@ -454,21 +455,6 @@ const cities = [
   "Midlothian","Waxahachie","Burleson","Lewisville","Coppell",
   "Richardson","Highland Village","Argyle","Northlake","Roanoke",
   "Grapevine","Anna","Fate","Royse City",
-];
-/*
- * The 40-Point Roof & Structure Assessment — named/merchandised version of
- * the condition assessment already performed in Step 3 (Precision Estimate).
- * Point count is grounded in a real, itemized checklist (see category
- * breakdown), not a marketing-only number — see session notes for the
- * full 40-item list. Categories sum to 40: 7+8+6+6+6+7.
- */
-const assessmentCategories = [
-  {label:"Structural & Decking",        count:7, example:"Decking integrity, rafter/truss condition, slope verification, load capacity for your chosen system."},
-  {label:"Weatherproofing & Flashing",  count:8, example:"Valley, chimney, and skylight flashing, drip edge, step flashing, pipe boots, sealant condition."},
-  {label:"Ventilation & Attic",         count:6, example:"Ridge and soffit vent function, attic moisture and insulation, airflow balance."},
-  {label:"Penetrations & Add-Ons",      count:6, example:"Solar mounts, satellite brackets, HVAC lines, electrical mast, plumbing vents, skylights."},
-  {label:"Drainage & Edges",            count:6, example:"Gutters, downspouts, fascia, soffits, roof-to-wall transitions, ponding risk."},
-  {label:"Measurement & Code",          count:7, example:"Satellite aerial measurement, wind/hail rating compliance, HOA material review, permitting."},
 ];
 const galleryItems = [
   { src: "/Installation Pics/Standing-Seam-Steel-True-Black.PNG",                 label: "Standing Seam Metal - True Black" },
@@ -1017,7 +1003,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
             </div>
           </Reveal>
           <div className="grid-3" style={{gap:14}}>
-            {assessmentCategories.map((cat,i)=>(
+            {ASSESSMENT_CATEGORIES.map((cat,i)=>(
               <Reveal key={cat.label} delay={i*0.07}>
                 <div style={{padding:24,background:C.card,border:`1px solid ${C.border}`,borderRadius:6,height:"100%"}}>
                   <div style={{display:"flex",justifyContent:"space-between",alignItems:"baseline",marginBottom:10,gap:10}}>

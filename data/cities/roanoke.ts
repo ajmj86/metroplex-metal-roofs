@@ -33,6 +33,10 @@ export const ROANOKE_DATA: CityData = {
     rating: 5,
   },
   faqs: [
+    {
+      q: 'What warranty comes with a metal roof in Roanoke, TX?',
+      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract — plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Roanoke homeowners will never need to use.',
+    },
     { q: 'How much does a metal roof cost in Roanoke, TX?', a: 'Metal roofing in Roanoke typically ranges from $17,000 to $62,000 depending on roof size, pitch, and material. We provide satellite-based estimates from actual roof measurements before any commitment.' },
     { q: 'Does a metal roof qualify for an insurance discount in Roanoke?', a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. Roanoke homeowners in Denton County\'s active storm corridor typically see meaningful annual premium reductions after upgrading.' },
     { q: 'Will my Roanoke HOA approve a metal roof?', a: 'Most Roanoke communities permit standing seam and stone-coated steel in approved profiles and neutral color palettes. We provide complete HOA documentation support at no additional cost.' },

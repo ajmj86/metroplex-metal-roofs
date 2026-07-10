@@ -33,6 +33,10 @@ export const MIDLOTHIAN_DATA: CityData = {
     rating: 5,
   },
   faqs: [
+    {
+      q: 'What warranty comes with a metal roof in Midlothian, TX?',
+      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract — plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Midlothian homeowners will never need to use.',
+    },
     { q: 'How much does a metal roof cost in Midlothian, TX?', a: 'Metal roofing in Midlothian typically ranges from $15,000 to $55,000 depending on roof size, pitch, and material. We provide satellite-based estimates from actual roof measurements before any commitment is required.' },
     { q: 'Is metal roofing common on new construction in Midlothian?', a: 'Metal roofing is increasingly common on new construction throughout Midlothian\'s developing communities. Builders in the area are specifying standing seam and stone-coated steel more frequently as homebuyers prioritize durability in an active storm corridor.' },
     { q: 'Does a metal roof qualify for an insurance discount in Ellis County?', a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. Midlothian homeowners in Ellis County\'s storm corridor typically see meaningful reductions in their annual wind/hail premium after upgrading.' },

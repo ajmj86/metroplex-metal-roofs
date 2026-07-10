@@ -33,6 +33,10 @@ export const COLLEYVILLE_DATA: CityData = {
     rating: 5,
   },
   faqs: [
+    {
+      q: 'What warranty comes with a metal roof in Colleyville, TX?',
+      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract — plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Colleyville homeowners will never need to use.',
+    },
     { q: 'How much does a metal roof cost in Colleyville, TX?', a: 'Metal roofing in Colleyville typically ranges from $20,000 to $80,000 depending on roof size, pitch, and material. Colleyville homes tend to be larger than average, so many projects fall in the mid to upper range. We provide satellite-based estimates from actual roof measurements before any commitment.' },
     { q: 'Does a metal roof qualify for an insurance discount in Colleyville?', a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. For Colleyville homeowners with high-value policies, the combination of eliminated deductible exposure and reduced annual premiums typically represents a strong financial return over 20 to 30 years.' },
     { q: 'Will my Colleyville HOA approve a metal roof?', a: 'Most Colleyville communities permit metal roofing in approved profiles and color palettes. We provide full documentation support including material samples, color chips, and manufacturer spec sheets for your HOA or architectural review committee submission.' },

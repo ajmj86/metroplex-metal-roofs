@@ -33,6 +33,10 @@ export const KELLER_DATA: CityData = {
     rating: 5,
   },
   faqs: [
+    {
+      q: 'What warranty comes with a metal roof in Keller, TX?',
+      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract — plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Keller homeowners will never need to use.',
+    },
     { q: 'How much does a metal roof cost in Keller, TX?', a: 'Metal roofing in Keller typically ranges from $18,000 to $65,000 depending on roof size, pitch, and material. We provide satellite-based estimates using actual roof measurements so you have a real number before any commitment.' },
     { q: 'Does a metal roof qualify for an insurance discount in Keller?', a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. Keller homeowners in Tarrant County\'s hail corridor typically see meaningful reductions in their annual wind/hail premium after upgrading.' },
     { q: 'Will my Keller HOA approve a metal roof?', a: 'Most Keller HOAs permit standing seam and stone-coated steel in approved profiles and neutral color palettes. We provide full documentation support including material samples and spec sheets for your HOA submission at no additional cost.' },

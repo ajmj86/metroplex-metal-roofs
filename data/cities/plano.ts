@@ -33,6 +33,10 @@ export const PLANO_DATA: CityData = {
     rating: 5,
   },
   faqs: [
+    {
+      q: 'What warranty comes with a metal roof in Plano, TX?',
+      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract — plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Plano homeowners will never need to use.',
+    },
     { q: 'How much does a metal roof cost in Plano, TX?', a: 'Metal roofing in Plano typically ranges from $18,000 to $70,000 depending on roof size, pitch, and material. We provide satellite-based estimates using actual roof measurements before any in-person visit or commitment is required.' },
     { q: 'Does a metal roof qualify for an insurance discount in Plano?', a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. Plano homeowners with median home values above $500,000 often see the largest financial benefit from eliminating repeated deductible exposure and qualifying for annual premium reductions.' },
     { q: 'Will my Plano HOA approve a metal roof?', a: 'Most Plano HOAs permit standing seam and stone-coated steel in approved profiles and neutral color palettes. We provide full HOA documentation support including material samples, color chips, and manufacturer certification at no additional cost.' },

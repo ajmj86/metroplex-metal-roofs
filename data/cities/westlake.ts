@@ -32,6 +32,10 @@ export const WESTLAKE_DATA: CityData = {
     rating: 5,
   },
   faqs: [
+    {
+      q: 'What warranty comes with a metal roof in Westlake, TX?',
+      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract — plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Westlake homeowners will never need to use.',
+    },
     { q: 'How much does a metal roof cost in Westlake, TX?', a: 'Metal roofing in Westlake typically ranges from $25,000 to $120,000 depending on roof size, complexity, and material selection. Estate properties with copper roofing or complex standing seam systems often fall at the higher end of that range. We provide satellite-based estimates built from precise roof measurements before any conversation about commitment.' },
     { q: 'Is copper roofing available for Westlake homes?', a: 'Yes. Copper standing seam is available and particularly well-suited to Westlake estate properties. Copper develops a natural patina over time, lasts 100 years or more, and makes a permanent architectural statement. It is the highest-tier option we offer and requires no maintenance beyond the occasional rinse.' },
     { q: 'Will my Westlake HOA approve a metal roof?', a: 'Most Westlake residential communities permit standing seam and stone-coated steel in approved profiles and colors. Copper roofing is permitted on many estate properties. We provide the complete documentation package including material samples, color chips, and manufacturer spec sheets to support your HOA or architectural review committee submission.' },

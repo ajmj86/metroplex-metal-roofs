@@ -6,6 +6,7 @@ import SiteNav from '@/components/SiteNav'
 import { SiteFooter } from '@/components/SiteFooter'
 import { C, fonts, globalStyles } from '@/components/brand'
 import Counter from '@/components/Counter'
+import { ASSESSMENT_CATEGORIES } from '@/lib/assessment'
 
 /*
   ══════════════════════════════════════
@@ -98,26 +99,30 @@ export default function CityPage({ city }: { city: CityData }) {
     {
       n: '01',
       title: 'Visualize Your Roof',
+      time: '~60 seconds',
       href: '/visualizer',
       body: 'Enter your address. Our AI visualizer pulls a satellite image of your home and renders it with your chosen metal roof style and color — before you commit to anything.',
     },
     {
       n: '02',
       title: 'Brief Consultation',
+      time: '15 minutes, this week',
       href: 'https://api.leadconnectorhq.com/widget/booking/gG1ruFfEWkUXO7eIB8NR',
       body: "A quick call with our team. We confirm your home's scope, timeline, and whether metal is the right fit. No pressure, no obligation.",
     },
     {
       n: '03',
-      title: 'Precision Estimate',
+      title: 'Precision Proposal',
+      time: 'Days, not weeks',
       href: undefined,
-      body: 'We use satellite imaging to generate exact measurements for your roof, then complete your free 40-Point Roof & Structure Assessment. Your estimate is built from real data — not a guess from the driveway.',
+      body: 'We use satellite imaging to generate exact measurements for your roof, then complete your free 40-Point Roof & Structure Assessment on-site. Your proposal is built from those findings — a firm number, not a guess from the driveway.',
     },
     {
       n: '04',
       title: 'Expert Installation',
+      time: 'Warrantied from day one',
       href: undefined,
-      body: 'Your project is executed by a credentialed local metal roofing specialist — licensed in Texas, fully insured, and selected for their proven expertise.',
+      body: 'Your roof is installed to manufacturer spec by a credentialed metal roofing specialist — licensed in Texas and fully insured — and covered by our 10-year workmanship warranty from day one.',
     },
   ]
 
@@ -177,7 +182,7 @@ export default function CityPage({ city }: { city: CityData }) {
                 </div>
                 {/* Trust row */}
                 <div style={{ display: 'flex', gap: 24, marginTop: 48, paddingTop: 32, borderTop: `1px solid ${C.border}`, flexWrap: 'wrap', animation: 'fadeUp 0.7s ease 0.4s both' }}>
-                  {['Licensed TX Installers', 'Satellite Estimates', 'Class 4 Hail Rating', 'DFW Local'].map(t => (
+                  {['10-Year Workmanship Warranty', 'Satellite Estimates', 'Class 4 Hail Rating', 'DFW Local'].map(t => (
                     <div key={t} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                       <div style={{ width: 4, height: 4, borderRadius: '50%', background: C.accent, flexShrink: 0 }}/>
                       <span style={{ fontSize: 11, color: C.muted }}>{t}</span>
@@ -325,10 +330,15 @@ export default function CityPage({ city }: { city: CityData }) {
             </Reveal>
             {city.hoaNote && (
               <Reveal delay={0.15}>
-                <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 6, padding: '20px 24px', display: 'flex', gap: 16, alignItems: 'flex-start' }}>
-                  <div style={{ fontSize: 16, flexShrink: 0, marginTop: 2 }}>🏛️</div>
+                <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 6, padding: '24px 26px', display: 'flex', gap: 18, alignItems: 'flex-start', position: 'relative', overflow: 'hidden' }}>
+                  <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg,${C.accentDark},${C.accent},${C.accentDark})` }}/>
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke={C.accent} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: 2 }}>
+                    <path d="M3 10 L12 4 L21 10"/>
+                    <path d="M5 10 V20 H19 V10"/>
+                    <path d="M9 20 V14 H15 V20"/>
+                  </svg>
                   <div>
-                    <div style={{ fontSize: 10, letterSpacing: 2, color: C.accent, textTransform: 'uppercase', marginBottom: 6 }}>HOA Note</div>
+                    <div style={{ fontSize: 10, letterSpacing: 2, color: C.accent, textTransform: 'uppercase', marginBottom: 6 }}>The HOA Approval Kit — Free With Every Project</div>
                     <p style={{ fontSize: 13, color: C.mutedLight, lineHeight: 1.8, margin: 0 }}>{city.hoaNote}</p>
                   </div>
                 </div>
@@ -362,7 +372,8 @@ export default function CityPage({ city }: { city: CityData }) {
                         >
                           <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 52, fontWeight: 700, color: C.border, lineHeight: 1, marginBottom: 18, userSelect: 'none' }}>{s.n}</div>
                           <div style={{ width: 24, height: 2, background: C.accent, marginBottom: 14 }}/>
-                          <h3 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 19, color: C.white, fontWeight: 700, marginBottom: 10 }}>{s.title}</h3>
+                          <h3 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 19, color: C.white, fontWeight: 700, marginBottom: 8 }}>{s.title}</h3>
+                          {s.time && <div style={{ fontSize: 10, letterSpacing: 1.5, textTransform: 'uppercase', color: C.accent, marginBottom: 10 }}>{s.time}</div>}
                           <p style={{ fontSize: 13, color: C.mutedLight, lineHeight: 1.8, margin: 0 }}>{s.body}</p>
                         </div>
                       </Tag>
@@ -375,45 +386,88 @@ export default function CityPage({ city }: { city: CityData }) {
         </section>
 
         {/* ── 40-POINT ASSESSMENT ── */}
-        <section className="sp-sm" style={{ borderTop: `1px solid ${C.border}` }}>
-          <div className="inner" style={{ maxWidth: 820 }}>
+        <section id="assessment" className="sp" style={{ background: C.black, borderTop: `1px solid ${C.border}` }}>
+          <div className="inner">
             <Reveal>
-              <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 8, padding: 'clamp(28px,4vw,44px)', position: 'relative', overflow: 'hidden' }}>
-                <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg,${C.accentDark},${C.accent},${C.accentDark})` }}/>
-                <div style={{ fontSize: 10, letterSpacing: 3, color: C.accent, textTransform: 'uppercase', marginBottom: 12 }}>Included With Every Estimate — Free</div>
-                <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 'clamp(24px,3vw,34px)', fontWeight: 700, color: C.white, marginBottom: 16, lineHeight: 1.15 }}>
-                  The 40-Point Roof & Structure Assessment
-                </h2>
-                <p style={{ fontSize: 14, color: C.mutedLight, lineHeight: 1.85, marginBottom: 22 }}>
-                  Before we deliver your firm number for your {city.name} home, we inspect structure, weatherproofing, ventilation, and every penetration — 40 points in all, free with every estimate — so your price is locked before installation day, not renegotiated after.
-                </p>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-                  {['Structural & Decking', 'Weatherproofing & Flashing', 'Ventilation & Attic', 'Penetrations & Add-Ons', 'Drainage & Edges', 'Measurement & Code'].map(c => (
-                    <span key={c} style={{ fontSize: 11, letterSpacing: 0.5, color: C.mutedLight, border: `1px solid ${C.border}`, borderRadius: 20, padding: '6px 14px' }}>{c}</span>
-                  ))}
-                </div>
+              <SHead
+                eyebrow="Included With Every Estimate — Free"
+                title={`The 40-Point Roof<br/><em style="font-style:italic;color:${C.accent}">&amp; Structure Assessment</em>`}
+                sub={`Before we build your ${city.name} proposal, we inspect structure, weatherproofing, ventilation, and every penetration — 40 points in all. It's the same diagnostic professional inspectors charge for, done free with every estimate, so your price is locked before installation day, not renegotiated after.`}
+                center
+              />
+            </Reveal>
+            <div className="g3">
+              {ASSESSMENT_CATEGORIES.map((cat, i) => (
+                <Reveal key={cat.label} delay={i * 0.07}>
+                  <div style={{ padding: 22, background: C.card, border: `1px solid ${C.border}`, borderRadius: 6, height: '100%' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 10, gap: 10 }}>
+                      <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 18, color: C.white, fontWeight: 700 }}>{cat.label}</div>
+                      <div style={{ fontSize: 11, color: C.accent, letterSpacing: 1, whiteSpace: 'nowrap' }}>{cat.count} pts</div>
+                    </div>
+                    <p style={{ fontSize: 13, color: C.mutedLight, lineHeight: 1.7, margin: 0 }}>{cat.example}</p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+            <Reveal delay={0.2}>
+              <div style={{ textAlign: 'center', marginTop: 40 }}>
+                <a href="https://api.leadconnectorhq.com/widget/booking/gG1ruFfEWkUXO7eIB8NR" target="_blank" rel="noopener noreferrer"
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '15px 32px', background: C.accent, color: C.black, fontSize: 12, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 600, borderRadius: 2, transition: 'all 0.2s', textDecoration: 'none' }}
+                  onMouseEnter={e => (e.currentTarget.style.background = C.accentLight)}
+                  onMouseLeave={e => (e.currentTarget.style.background = C.accent)}
+                >Book Your Free Consultation →</a>
               </div>
             </Reveal>
           </div>
         </section>
 
-        {/* ── REVIEW ── */}
-        <section className="sp-sm" style={{ borderTop: `1px solid ${C.border}` }}>
-          <div className="inner" style={{ maxWidth: 720 }}>
+        {/* ── THE METROPLEX STANDARD (compact) — replaces per-city placeholder
+             review (was city.review, e.g. Southlake's "Robert M.") pending
+             real reviews post-WF4. Same FTC/DTPA exposure as the homepage
+             testimonials; id="standard" so SiteNav can target it in-page. ── */}
+        <section id="standard" className="sp-sm" style={{ background: C.card, borderTop: `1px solid ${C.border}`, borderBottom: `1px solid ${C.border}`, position: 'relative', overflow: 'hidden' }}>
+          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg,${C.accentDark},${C.accent},${C.accentDark})` }}/>
+          <div className="inner" style={{ maxWidth: 780, textAlign: 'center' }}>
             <Reveal>
-              <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 8, padding: 'clamp(28px,4vw,48px)', position: 'relative', overflow: 'hidden' }}>
-                <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg,${C.accentDark},${C.accent},${C.accentDark})` }}/>
-                <p style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 'clamp(18px,2.5vw,24px)', color: C.white, lineHeight: 1.6, fontStyle: 'italic', marginBottom: 28 }}>
-                  "{city.review.text}"
-                </p>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12, borderTop: `1px solid ${C.border}`, paddingTop: 20 }}>
-                  <div>
-                    <div style={{ fontSize: 14, color: C.white, fontWeight: 600 }}>{city.review.name}</div>
-                    <div style={{ fontSize: 11, color: C.muted, marginTop: 3, letterSpacing: 1 }}>{city.name}, TX</div>
-                  </div>
-                </div>
-              </div>
+              <div style={{ fontSize: 10, letterSpacing: 3, color: C.accent, textTransform: 'uppercase', marginBottom: 12 }}>The Metroplex Standard</div>
+              <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 'clamp(24px,3.4vw,38px)', fontWeight: 700, color: C.white, lineHeight: 1.2, marginBottom: 32 }}>
+                One Project Lead. <span style={{ fontStyle: 'italic', color: C.accent }}>One Warranty. Zero Chasing.</span>
+              </h2>
             </Reveal>
+            <div className="g3" style={{ textAlign: 'left' }}>
+              {[
+                { label: '10-Year Workmanship Warranty', body: 'Written into your contract. Not a handshake.', icon: 'shield' },
+                { label: 'Manufacturer Material Warranty', body: 'Panel and finish coverage direct from the manufacturer, registered in your name.', icon: 'shield-check' },
+                { label: 'Licensed & Insured in Texas', body: 'Class 4 impact-rated systems, engineered for DFW hail.', icon: 'badge' },
+              ].map((p, i) => (
+                <Reveal key={p.label} delay={i * 0.08}>
+                  <div style={{ padding: 20, background: C.surface, border: `1px solid ${C.border}`, borderRadius: 6, height: '100%' }}>
+                    <div style={{ marginBottom: 12 }}>
+                      {p.icon === 'shield' && (
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={C.accent} strokeWidth="1.5" strokeLinejoin="round">
+                          <path d="M12 2.5 L19.5 5.5 V11.2 C19.5 16.1 16.3 19.8 12 21.5 C7.7 19.8 4.5 16.1 4.5 11.2 V5.5 Z"/>
+                        </svg>
+                      )}
+                      {p.icon === 'shield-check' && (
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={C.accent} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M12 2.5 L19.5 5.5 V11.2 C19.5 16.1 16.3 19.8 12 21.5 C7.7 19.8 4.5 16.1 4.5 11.2 V5.5 Z"/>
+                          <path d="M8.75 11.5 L10.8 13.5 L15.25 9"/>
+                        </svg>
+                      )}
+                      {p.icon === 'badge' && (
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={C.accent} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                          <circle cx="12" cy="8.5" r="5.5"/>
+                          <path d="M9.5 8.5 L11.2 10.2 L14.5 6.5"/>
+                          <path d="M8.3 13.3 L6.5 21.5 L12 18.3 L17.5 21.5 L15.7 13.3"/>
+                        </svg>
+                      )}
+                    </div>
+                    <div style={{ fontSize: 12, letterSpacing: 0.5, color: C.accent, fontWeight: 600, marginBottom: 8, lineHeight: 1.4 }}>{p.label}</div>
+                    <div style={{ fontSize: 13, color: C.mutedLight, lineHeight: 1.65 }}>{p.body}</div>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -447,7 +501,7 @@ export default function CityPage({ city }: { city: CityData }) {
             <Reveal>
               <div style={{ fontSize: 10, letterSpacing: 3, color: C.accent, textTransform: 'uppercase', marginBottom: 16 }}>About Metroplex Metal Roofs</div>
               <p style={{ fontSize: 15, color: C.mutedLight, lineHeight: 1.9, marginBottom: 20 }}>
-                Metroplex Metal Roofs specializes exclusively in premium residential metal roofing across the Dallas–Fort Worth metroplex. Our focus is standing seam, stone-coated steel, copper, and R-panel — each project precision-measured using satellite imaging and placed with credentialed installers who specialize in metal specifically.
+                Metroplex Metal Roofs specializes exclusively in premium residential metal roofing across the Dallas–Fort Worth metroplex. Our focus is standing seam, stone-coated steel, copper, and R-panel — every project precision-measured by satellite, installed to manufacturer spec, and backed by our 10-year workmanship warranty.
               </p>
               <Link href="/about"
                 style={{ fontSize: 12, color: C.accent, letterSpacing: 1.5, textTransform: 'uppercase', textDecoration: 'underline', transition: 'opacity 0.2s' }}

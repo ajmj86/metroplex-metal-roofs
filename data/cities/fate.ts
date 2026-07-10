@@ -33,6 +33,10 @@ export const FATE_DATA: CityData = {
     rating: 5,
   },
   faqs: [
+    {
+      q: 'What warranty comes with a metal roof in Fate, TX?',
+      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract — plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Fate homeowners will never need to use.',
+    },
     { q: 'How much does a metal roof cost in Fate, TX?', a: 'Metal roofing in Fate typically ranges from $14,000 to $50,000 depending on roof size, pitch, and material. We provide satellite-based estimates from actual roof measurements before any commitment.' },
     { q: 'Is metal roofing a good choice for new construction in Fate?', a: 'Yes. Metal roofing is increasingly common on new construction throughout Fate and the surrounding Rockwall County area. Many homeowners in newer developments are upgrading from builder-grade shingles to standing seam or stone-coated steel after the first hail season.' },
     { q: 'Does a metal roof qualify for an insurance discount in Rockwall County?', a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. Fate homeowners in Rockwall County\'s active storm corridor typically see meaningful annual premium reductions after upgrading.' },

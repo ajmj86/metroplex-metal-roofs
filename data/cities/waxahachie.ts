@@ -33,6 +33,10 @@ export const WAXAHACHIE_DATA: CityData = {
     rating: 5,
   },
   faqs: [
+    {
+      q: 'What warranty comes with a metal roof in Waxahachie, TX?',
+      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract — plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Waxahachie homeowners will never need to use.',
+    },
     { q: 'How much does a metal roof cost in Waxahachie, TX?', a: 'Metal roofing in Waxahachie typically ranges from $14,000 to $50,000 depending on roof size, pitch, and material. We provide satellite-based estimates from actual roof measurements before any commitment.' },
     { q: 'Does a metal roof qualify for an insurance discount in Waxahachie?', a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. Waxahachie homeowners in Ellis County\'s active storm corridor typically see meaningful annual premium reductions after upgrading to a Class 4 rated roof.' },
     { q: 'How does metal roofing look on older Waxahachie homes?', a: 'Stone-coated steel is specifically designed to replicate the look of traditional shingles or shake in steel form, making it an excellent choice for older and character homes throughout Waxahachie. The AI visualizer lets you see exactly what it will look like on your actual house before you decide.' },

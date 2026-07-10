@@ -56,6 +56,10 @@ export const SOUTHLAKE_DATA: CityData = {
 
   faqs: [
     {
+      q: 'What warranty comes with a metal roof in Southlake, TX?',
+      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract — plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Southlake homeowners will never need to use.',
+    },
+    {
       q: 'How much does a standing seam metal roof cost in Southlake, TX?',
       a: 'Standing seam metal roofing in Southlake typically ranges from $18,000 to $72,000 depending on roof size, pitch, and complexity — with most homes in the 20 to 40 square range. We provide satellite-based estimates built from actual roof measurements so you have a real number before any conversation begins.',
     },

@@ -33,6 +33,10 @@ export const FLOWER_MOUND_DATA: CityData = {
     rating: 5,
   },
   faqs: [
+    {
+      q: 'What warranty comes with a metal roof in Flower Mound, TX?',
+      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract — plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Flower Mound homeowners will never need to use.',
+    },
     { q: 'How much does a metal roof cost in Flower Mound, TX?', a: 'Metal roofing in Flower Mound typically ranges from $18,000 to $70,000 depending on roof size, pitch, and material. We provide satellite-based estimates from actual roof measurements before any commitment is required.' },
     { q: 'Does a metal roof qualify for an insurance discount in Denton County?', a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. Flower Mound homeowners in Denton County\'s storm corridor typically see meaningful annual premium reductions after upgrading to a Class 4 rated roof.' },
     { q: 'Will my Flower Mound HOA approve a metal roof?', a: 'Most Flower Mound HOAs permit metal roofing in approved profiles and color palettes. We provide full documentation support for your HOA submission including material samples and manufacturer spec sheets at no additional cost.' },

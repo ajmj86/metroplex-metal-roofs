@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import { C, Logo } from './brand'
 
@@ -10,12 +11,31 @@ const NAV_LINKS = [
   {label:"Our Products",  href:"/#products"},
   {label:"Gallery",       href:"/#gallery"},
   {label:"Our Process",   href:"/#process"},
-  {label:"Reviews",       href:"/#reviews"},
+  {label:"Why Us",        href:"/#standard"},
   {label:"Service Areas", href:"/#service-areas"},
 ]
 
+/*
+ * City pages have their own why-metal/our-products/process/standard
+ * sections. Without this, every nav click bounced a city-page visitor back
+ * to the homepage — abandoning the city-specific content (and city page's
+ * own matching section) they were already looking at. Gallery and the full
+ * Service Areas grid don't exist on city pages, so those still go home.
+ */
+const CITY_PAGE_OVERRIDES: Record<string,string> = {
+  "Why Metal":    "#why-metal",
+  "Our Products": "#our-products",
+  "Our Process":  "#process",
+  "Why Us":       "#standard",
+}
+
 export default function SiteNav() {
   const [mOpen, setMOpen] = useState(false)
+  const pathname = usePathname()
+  const isCityPage = pathname?.startsWith('/metal-roofing-') ?? false
+  const links = NAV_LINKS.map(l =>
+    isCityPage && CITY_PAGE_OVERRIDES[l.label] ? { ...l, href: CITY_PAGE_OVERRIDES[l.label] } : l
+  )
 
   useEffect(() => {
     if (mOpen) {
@@ -42,7 +62,7 @@ export default function SiteNav() {
           <Logo size={1.25}/>
         </Link>
         <div className="sitenav-links" style={{display:"flex",gap:28,alignItems:"center"}}>
-          {NAV_LINKS.map(l=>(
+          {links.map(l=>(
             <a key={l.label} href={l.href}
               style={{fontSize:11,letterSpacing:2,textTransform:"uppercase",color:C.mutedLight,fontWeight:500,transition:"color 0.2s",textDecoration:"none",fontFamily:"'Outfit',sans-serif"}}
               onMouseEnter={e=>e.currentTarget.style.color=C.accent}
@@ -69,7 +89,7 @@ export default function SiteNav() {
       </nav>
       {mOpen && (
         <div style={{position:"fixed",top:84,left:0,right:0,bottom:0,zIndex:199,background:"rgba(9,9,10,0.98)",display:"flex",flexDirection:"column",padding:"32px 24px",gap:4,overflowY:"auto"}}>
-          {NAV_LINKS.map(l=>(
+          {links.map(l=>(
             <a key={l.label} href={l.href} onClick={()=>setMOpen(false)}
               style={{padding:"16px 0",fontSize:18,letterSpacing:2,textTransform:"uppercase",color:C.mutedLight,fontFamily:"'Cormorant Garamond',serif",borderBottom:`1px solid ${C.border}`,textDecoration:"none"}}
             >{l.label}</a>

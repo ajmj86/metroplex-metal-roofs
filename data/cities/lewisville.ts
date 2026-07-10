@@ -33,6 +33,10 @@ export const LEWISVILLE_DATA: CityData = {
     rating: 5,
   },
   faqs: [
+    {
+      q: 'What warranty comes with a metal roof in Lewisville, TX?',
+      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract — plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Lewisville homeowners will never need to use.',
+    },
     { q: 'How much does a metal roof cost in Lewisville, TX?', a: 'Metal roofing in Lewisville typically ranges from $16,000 to $58,000 depending on roof size, pitch, and material. We provide satellite-based estimates from actual roof measurements before any commitment.' },
     { q: 'Does a metal roof qualify for an insurance discount in Denton County?', a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. Lewisville homeowners in Denton County\'s active storm corridor typically see meaningful annual premium reductions after upgrading.' },
     { q: 'Will my Lewisville HOA approve a metal roof?', a: 'Most Lewisville HOAs permit standing seam and stone-coated steel in approved profiles and neutral color palettes. We provide complete HOA documentation support at no additional cost.' },

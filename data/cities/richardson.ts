@@ -33,6 +33,10 @@ export const RICHARDSON_DATA: CityData = {
     rating: 5,
   },
   faqs: [
+    {
+      q: 'What warranty comes with a metal roof in Richardson, TX?',
+      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract — plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Richardson homeowners will never need to use.',
+    },
     { q: 'How much does a metal roof cost in Richardson, TX?', a: 'Metal roofing in Richardson typically ranges from $17,000 to $60,000 depending on roof size, pitch, and material. We provide satellite-based estimates from actual roof measurements before any commitment.' },
     { q: 'Does a metal roof work on older homes in Richardson?', a: 'Yes. Stone-coated steel is specifically designed to replicate the look of traditional shingles or shake in steel form, making it an excellent choice for Richardson\'s established older homes. The AI visualizer lets you see exactly what it will look like on your actual house before you decide.' },
     { q: 'Does a metal roof qualify for an insurance discount in Richardson?', a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. Richardson homeowners in Dallas County\'s active storm corridor typically see meaningful annual premium reductions after upgrading.' },

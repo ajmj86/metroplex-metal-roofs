@@ -33,6 +33,10 @@ export const TROPHY_CLUB_DATA: CityData = {
     rating: 5,
   },
   faqs: [
+    {
+      q: 'What warranty comes with a metal roof in Trophy Club, TX?',
+      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract — plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Trophy Club homeowners will never need to use.',
+    },
     { q: 'How much does a metal roof cost in Trophy Club, TX?', a: 'Metal roofing in Trophy Club typically ranges from $20,000 to $75,000 depending on roof size, pitch, and material. We provide satellite-based estimates from actual roof measurements before any commitment is required.' },
     { q: 'Will my Trophy Club HOA approve a metal roof?', a: 'Trophy Club approves standing seam and stone-coated steel roofing in pre-approved profiles and color palettes for homeowners who submit proper documentation. We provide complete HOA documentation packages including material samples, color chips, and manufacturer spec sheets at no additional cost.' },
     { q: 'Does a metal roof qualify for an insurance discount in Trophy Club?', a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. Trophy Club homeowners with median home values above $600,000 typically see meaningful financial benefits from both reduced annual premiums and eliminated deductible exposure.' },
