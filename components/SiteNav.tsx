@@ -30,13 +30,43 @@ const CITY_PAGE_OVERRIDES: Record<string,string> = {
   "Why Us":       "#standard",
 }
 
+/*
+ * Remembers the last city page visited (sessionStorage, not a URL param —
+ * avoids the Next.js useSearchParams/Suspense-boundary requirement on a nav
+ * component rendered on every page). When a visitor leaves a city page for
+ * About Us (or any other non-city page using SiteNav), the section links
+ * that only exist on city pages now route back to that same city page
+ * instead of bouncing to the generic homepage sections.
+ */
+const LAST_CITY_KEY = 'mmr_last_city_slug'
+
 export default function SiteNav() {
   const [mOpen, setMOpen] = useState(false)
   const pathname = usePathname()
   const isCityPage = pathname?.startsWith('/metal-roofing-') ?? false
-  const links = NAV_LINKS.map(l =>
-    isCityPage && CITY_PAGE_OVERRIDES[l.label] ? { ...l, href: CITY_PAGE_OVERRIDES[l.label] } : l
-  )
+  const citySlugMatch = pathname?.match(/^\/metal-roofing-(.+)-tx\/?$/)
+  const currentCitySlug = citySlugMatch ? citySlugMatch[1] : null
+
+  const [returnCitySlug, setReturnCitySlug] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (isCityPage && currentCitySlug) {
+      sessionStorage.setItem(LAST_CITY_KEY, currentCitySlug)
+      setReturnCitySlug(null)
+    } else {
+      setReturnCitySlug(sessionStorage.getItem(LAST_CITY_KEY))
+    }
+  }, [pathname, isCityPage, currentCitySlug])
+
+  const links = NAV_LINKS.map(l => {
+    if (isCityPage && CITY_PAGE_OVERRIDES[l.label]) {
+      return { ...l, href: CITY_PAGE_OVERRIDES[l.label] }
+    }
+    if (!isCityPage && returnCitySlug && CITY_PAGE_OVERRIDES[l.label]) {
+      return { ...l, href: `/metal-roofing-${returnCitySlug}-tx${CITY_PAGE_OVERRIDES[l.label]}` }
+    }
+    return l
+  })
 
   useEffect(() => {
     if (mOpen) {
