@@ -845,6 +845,16 @@ export default function App() {
     }
     window.scrollTo(0, 0);
   },[]);
+  useEffect(()=>{
+    // SiteNav.tsx (used on city pages, /about, /visualizer, etc.) remembers
+    // the last city page visited in sessionStorage so it can route section
+    // links back there instead of the homepage. That memory never expired
+    // on its own — landing on the actual homepage is the one clear signal
+    // that the "came from a city page" journey is over, so clear it here.
+    // Homepage.jsx doesn't render SiteNav at all (uses its own Nav below),
+    // so this is the only place that can reliably clear it.
+    sessionStorage.removeItem('mmr_last_city_slug');
+  },[]);
 
   return (
     <div style={{background:C.black,color:C.text,fontFamily:"'Outfit',system-ui,sans-serif",overflowX:"hidden",minHeight:"100vh"}}>

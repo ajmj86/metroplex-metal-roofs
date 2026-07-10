@@ -79,13 +79,15 @@ export default function SiteNav() {
     return l
   })
 
-  // Splice in FAQ right after "Our Process" — only when there's a city to
-  // point it at, either the current page or the last one remembered.
+  // Splice in FAQ right after "Why Us" — matches the actual city-page
+  // section order (Process -> 40-Point Assessment -> Metroplex Standard/
+  // Why Us -> FAQ) -- only when there's a city to point it at, either the
+  // current page or the last one remembered.
   const faqCitySlug = isCityPage ? currentCitySlug : returnCitySlug
   if (faqCitySlug) {
     const faqHref = isCityPage ? "#faq" : `/metal-roofing-${faqCitySlug}-tx#faq`
-    const processIdx = links.findIndex(l => l.label === "Our Process")
-    links.splice(processIdx + 1, 0, { label: FAQ_LABEL, href: faqHref })
+    const whyUsIdx = links.findIndex(l => l.label === "Why Us")
+    links.splice(whyUsIdx + 1, 0, { label: FAQ_LABEL, href: faqHref })
   }
 
   useEffect(() => {

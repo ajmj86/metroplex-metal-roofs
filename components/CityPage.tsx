@@ -71,13 +71,19 @@ const Reveal = ({ children, delay=0, style={} }: { children: React.ReactNode; de
 }
 
 /* ── Section heading helper ── */
+/*
+ * Sizing matched to Homepage.jsx's most common section-heading pattern
+ * (Products/Gallery/Process/Metroplex Standard all use this exact clamp) --
+ * was previously clamp(28px,4vw,50px)/10px eyebrow, visibly smaller than
+ * every equivalent homepage heading.
+ */
 const SHead = ({ eyebrow, title, sub, center=false }: { eyebrow?: string; title: string; sub?: string; center?: boolean }) => (
   <div style={{ textAlign: center?'center':'left', marginBottom: 52 }}>
-    {eyebrow && <div style={{ fontSize: 10, letterSpacing: 3, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>{eyebrow}</div>}
-    <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 'clamp(28px,4vw,50px)', fontWeight: 700, color: C.white, lineHeight: 1.1, marginBottom: sub?18:0 }}
+    {eyebrow && <div style={{ fontSize: 15, letterSpacing: 3, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>{eyebrow}</div>}
+    <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 'clamp(1.75rem,4.3vw,3.75rem)', fontWeight: 700, color: C.white, lineHeight: 1.1, marginBottom: sub?18:0 }}
       dangerouslySetInnerHTML={{ __html: title }}
     />
-    {sub && <p style={{ fontSize: 15, color: C.mutedLight, lineHeight: 1.8, maxWidth: center?580:'100%', margin: center?'0 auto':0 }}>{sub}</p>}
+    {sub && <p style={{ fontSize: 16, color: C.mutedLight, lineHeight: 1.8, maxWidth: center?580:'100%', margin: center?'0 auto':0 }}>{sub}</p>}
   </div>
 )
 
@@ -169,12 +175,12 @@ export default function CityPage({ city }: { city: CityData }) {
 
             <div className="g2" style={{ gap: 48, alignItems: 'center' }}>
               <div>
-                <h1 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 'clamp(44px,5.5vw,80px)', fontWeight: 700, lineHeight: 1.05, color: C.white, marginBottom: 24, animation: 'fadeUp 0.7s ease 0.1s both', whiteSpace: 'pre-line' }}>
+                <h1 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 'clamp(56px,5.5vw,112px)', fontWeight: 700, lineHeight: 1.05, color: C.white, marginBottom: 24, animation: 'fadeUp 0.7s ease 0.1s both', whiteSpace: 'pre-line' }}>
                   {city.heroHeadline.split('\n').map((line, i) => (
                     <span key={i}>{i === 1 ? <span style={{ color: C.accent, fontStyle: 'italic' }}>{line}</span> : line}{'\n'}</span>
                   ))}
                 </h1>
-                <p style={{ fontSize: 16, color: C.mutedLight, lineHeight: 1.8, maxWidth: 480, marginBottom: 40, fontWeight: 300, animation: 'fadeUp 0.7s ease 0.2s both' }}>
+                <p style={{ fontSize: 'clamp(1.125rem,1.3vw,1.1875rem)', color: C.mutedLight, lineHeight: 1.8, maxWidth: 480, marginBottom: 40, fontWeight: 300, animation: 'fadeUp 0.7s ease 0.2s both' }}>
                   {city.heroSub}
                 </p>
                 <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', animation: 'fadeUp 0.7s ease 0.3s both' }}>
@@ -353,7 +359,7 @@ export default function CityPage({ city }: { city: CityData }) {
                   </div>
                   <div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap', marginBottom: 10 }}>
-                      <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 'clamp(19px,2.2vw,24px)', fontWeight: 700, color: C.white, lineHeight: 1.2 }}>The HOA Approval Kit</div>
+                      <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 'clamp(22px,2.6vw,28px)', fontWeight: 700, color: C.white, lineHeight: 1.2 }}>The HOA Approval Kit</div>
                       <span style={{ fontSize: 10, letterSpacing: 1.5, textTransform: 'uppercase', color: C.accent, border: `1px solid ${C.accentDark}`, borderRadius: 20, padding: '4px 11px', whiteSpace: 'nowrap' }}>Free With Every Project</span>
                     </div>
                     <p style={{ fontSize: 14, color: C.mutedLight, lineHeight: 1.8, margin: 0 }}>{city.hoaNote}</p>
@@ -389,9 +395,9 @@ export default function CityPage({ city }: { city: CityData }) {
                         >
                           <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 52, fontWeight: 700, color: C.border, lineHeight: 1, marginBottom: 18, userSelect: 'none' }}>{s.n}</div>
                           <div style={{ width: 24, height: 2, background: C.accent, marginBottom: 14 }}/>
-                          <h3 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 19, color: C.white, fontWeight: 700, marginBottom: 8 }}>{s.title}</h3>
-                          {s.time && <div style={{ fontSize: 10, letterSpacing: 1.5, textTransform: 'uppercase', color: C.accent, marginBottom: 10 }}>{s.time}</div>}
-                          <p style={{ fontSize: 13, color: C.mutedLight, lineHeight: 1.8, margin: 0 }}>{s.body}</p>
+                          <h3 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 20, color: C.white, fontWeight: 700, marginBottom: 8 }}>{s.title}</h3>
+                          {s.time && <div style={{ fontSize: 11, letterSpacing: 1.5, textTransform: 'uppercase', color: C.accent, marginBottom: 10 }}>{s.time}</div>}
+                          <p style={{ fontSize: 16, color: C.mutedLight, lineHeight: 1.8, margin: 0 }}>{s.body}</p>
                         </div>
                       </Tag>
                     )
@@ -418,10 +424,10 @@ export default function CityPage({ city }: { city: CityData }) {
                 <Reveal key={cat.label} delay={i * 0.07}>
                   <div style={{ padding: 22, background: C.card, border: `1px solid ${C.border}`, borderRadius: 6, height: '100%' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 10, gap: 10 }}>
-                      <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 18, color: C.white, fontWeight: 700 }}>{cat.label}</div>
+                      <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 19, color: C.white, fontWeight: 700 }}>{cat.label}</div>
                       <div style={{ fontSize: 11, color: C.accent, letterSpacing: 1, whiteSpace: 'nowrap' }}>{cat.count} pts</div>
                     </div>
-                    <p style={{ fontSize: 13, color: C.mutedLight, lineHeight: 1.7, margin: 0 }}>{cat.example}</p>
+                    <p style={{ fontSize: 14, color: C.mutedLight, lineHeight: 1.7, margin: 0 }}>{cat.example}</p>
                   </div>
                 </Reveal>
               ))}
@@ -446,8 +452,8 @@ export default function CityPage({ city }: { city: CityData }) {
           <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg,${C.accentDark},${C.accent},${C.accentDark})` }}/>
           <div className="inner" style={{ maxWidth: 780, textAlign: 'center' }}>
             <Reveal>
-              <div style={{ fontSize: 10, letterSpacing: 3, color: C.accent, textTransform: 'uppercase', marginBottom: 12 }}>The Metroplex Standard</div>
-              <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 'clamp(24px,3.4vw,38px)', fontWeight: 700, color: C.white, lineHeight: 1.2, marginBottom: 32 }}>
+              <div style={{ fontSize: 15, letterSpacing: 3, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>The Metroplex Standard</div>
+              <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 'clamp(1.75rem,4.3vw,3.75rem)', fontWeight: 700, color: C.white, lineHeight: 1.15, marginBottom: 32 }}>
                 One Project Lead. <span style={{ fontStyle: 'italic', color: C.accent }}>One Warranty. Zero Chasing.</span>
               </h2>
             </Reveal>
@@ -533,8 +539,8 @@ export default function CityPage({ city }: { city: CityData }) {
         <section className="sp" style={{ background: C.card, borderTop: `1px solid ${C.border}` }}>
           <div className="inner" style={{ textAlign: 'center' }}>
             <Reveal>
-              <div style={{ fontSize: 10, letterSpacing: 3, color: C.accent, textTransform: 'uppercase', marginBottom: 20 }}>{city.name}, TX</div>
-              <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 'clamp(28px,4vw,52px)', fontWeight: 700, color: C.white, lineHeight: 1.1, marginBottom: 16 }}>
+              <div style={{ fontSize: 15, letterSpacing: 3, color: C.accent, textTransform: 'uppercase', marginBottom: 20 }}>{city.name}, TX</div>
+              <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 'clamp(30px,5vw,72px)', fontWeight: 700, color: C.white, lineHeight: 1.1, marginBottom: 16 }}>
                 The Last Roof You'll Ever Put<br/><span style={{ color: C.accent, fontStyle: 'italic' }}>On Your {city.name} Home</span>
               </h2>
               <p style={{ fontSize: 15, color: C.mutedLight, lineHeight: 1.8, maxWidth: 520, margin: '0 auto 40px' }}>
