@@ -550,9 +550,9 @@ export default function VisualizerPage() {
                 <button
                   onClick={handleVisualize}
                   disabled={locating}
-                  style={{ padding: '13px 22px', background: locating ? C.accentDark : C.accent, color: C.black, fontSize: 11, letterSpacing: 1.5, textTransform: 'uppercase', fontWeight: 600, borderRadius: 6, whiteSpace: 'nowrap', cursor: locating ? 'not-allowed' : 'pointer', border: 'none', fontFamily: "'Outfit',sans-serif", transition: 'background 0.2s' }}
+                  style={{ padding: '13px 22px', background: C.accent, color: C.black, fontSize: 11, letterSpacing: 1.5, textTransform: 'uppercase', fontWeight: 600, borderRadius: 6, whiteSpace: 'nowrap', opacity: locating ? 0.45 : 1, cursor: locating ? 'not-allowed' : 'pointer', border: 'none', fontFamily: "'Outfit',sans-serif", transition: 'background 0.2s' }}
                   onMouseEnter={e => { if (!locating) e.currentTarget.style.background = C.accentLight }}
-                  onMouseLeave={e => { e.currentTarget.style.background = locating ? C.accentDark : C.accent }}
+                  onMouseLeave={e => { e.currentTarget.style.background = C.accent }}
                 >{locating ? 'Locating…' : 'Visualize My Roof →'}</button>
               </div>
               {addrError && <div style={{ fontSize: 11, color: '#F87171', marginBottom: 8 }}>{addrError}</div>}

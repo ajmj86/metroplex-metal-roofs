@@ -99,11 +99,12 @@
         "description": "Clean vertical panel lines for a sleek, modern roofline.",
         "colors": [
           { "name": "Charcoal Gray", "slug": "charcoal-gray", "sku": null, "hex": "#3A3D3E", "image1": "/products/standing_seam/charcoal-gray.jpg", "image2": null },
-          { "name": "True Black", "slug": "true-black", "sku": null, "hex": "#1A1A1A", "image1": "/products/standing_seam/true-black.jpg", "image2": null },
           { "name": "Bronze", "slug": "bronze", "sku": null, "hex": "#7C5A3A", "image1": "/products/standing_seam/bronze.jpg", "image2": null },
           { "name": "Bone White", "slug": "bone-white", "sku": null, "hex": "#E8E4D8", "image1": "/products/standing_seam/bone-white.jpg", "image2": null },
           { "name": "Burgundy", "slug": "burgundy", "sku": null, "hex": "#5A1A24", "image1": "/products/standing_seam/burgundy.jpg", "image2": null },
-          { "name": "Forest Green", "slug": "forest-green", "sku": null, "hex": "#1F3D2A", "image1": "/products/standing_seam/forest-green.jpg", "image2": null }
+          { "name": "Forest Green", "slug": "forest-green", "sku": null, "hex": "#1F3D2A", "image1": "/products/standing_seam/forest-green.jpg", "image2": null },
+          { "name": "Natural Metal", "slug": "natural-metal", "sku": null, "hex": "#B7B7B8", "image1": "/products/standing_seam/natural-metal.png", "image2": null },
+          { "name": "True Black", "slug": "true-black", "sku": null, "hex": "#1A1A1A", "image1": "/products/standing_seam/true-black.jpg", "image2": null }
         ]
       }
     }

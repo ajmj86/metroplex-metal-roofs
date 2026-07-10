@@ -730,13 +730,20 @@ export default function EstimateForm({ initialSelection, leadInfo, leadSource, u
                 <div style={cardStyle}>
                   <div style={{ fontSize: 13, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Style</div>
                   <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-                    {selStyles.map(([sk, so]) => (
-                      <button key={sk} style={tabBtn(standaloneStyle === sk)} onClick={() => {
-                        setStandaloneProduct(null); setStandaloneColor(null); setStandaloneStyle(sk)
-                        const sp = productsForStyle(standaloneType, sk)
-                        if (sp.length === 1) { setStandaloneProduct(sp[0][0]); if (sp[0][1].colors.length === 1) setStandaloneColor(sp[0][1].colors[0].name) }
-                      }}>{so.label}</button>
-                    ))}
+                    {selStyles.map(([sk, so]) => {
+                      // Styles with exactly one product show that product's name
+                      // instead of the generic style name (e.g. "Pine-Crest Shake"
+                      // rather than "Shake") to match the homepage products section.
+                      const stylePillProducts = productsForStyle(standaloneType, sk)
+                      const pillLabel = stylePillProducts.length === 1 ? stylePillProducts[0][1].label : so.label
+                      return (
+                        <button key={sk} style={tabBtn(standaloneStyle === sk)} onClick={() => {
+                          setStandaloneProduct(null); setStandaloneColor(null); setStandaloneStyle(sk)
+                          const sp = productsForStyle(standaloneType, sk)
+                          if (sp.length === 1) { setStandaloneProduct(sp[0][0]); if (sp[0][1].colors.length === 1) setStandaloneColor(sp[0][1].colors[0].name) }
+                        }}>{pillLabel}</button>
+                      )
+                    })}
                   </div>
                 </div>
               )}

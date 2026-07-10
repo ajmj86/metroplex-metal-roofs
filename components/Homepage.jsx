@@ -887,9 +887,6 @@ const HomePage = ({ activeTab, setActiveTab }) => {
                       onMouseEnter={e=>e.currentTarget.style.background=C.accentLight}
                       onMouseLeave={e=>e.currentTarget.style.background=C.accent}
                     >See it on your home →</a>
-                    <a href={`/estimate?roofType=${visualizerRoofTypeMap[activeTab]}`} style={{display:"inline-flex",alignItems:"center",gap:8,fontSize:11,letterSpacing:2,textTransform:"uppercase",color:C.accent,fontWeight:600,borderBottom:`1px solid ${C.accentDark}`,paddingBottom:4,width:"fit-content",transition:"color 0.2s"}}>
-                      Get a Free Estimate →
-                    </a>
                   </div>
                 </div>
               </div>
