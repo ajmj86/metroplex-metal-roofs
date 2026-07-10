@@ -25,6 +25,7 @@ const NAV_LINKS = [
 const CITY_PAGE_OVERRIDES: Record<string,string> = {
   "Why Metal":    "#why-metal",
   "Our Products": "#our-products",
+  "Gallery":      "#gallery",
   "Our Process":  "#process",
   "Why Us":       "#standard",
 }

@@ -6,7 +6,10 @@ import SiteNav from '@/components/SiteNav'
 import { SiteFooter } from '@/components/SiteFooter'
 import { C, fonts, globalStyles } from '@/components/brand'
 import Counter from '@/components/Counter'
+import ProductGallery from '@/components/ProductGallery'
+import ProductsSection from '@/components/ProductsSection'
 import { ASSESSMENT_CATEGORIES } from '@/lib/assessment'
+import { GALLERY_ITEMS } from '@/lib/gallery'
 
 /*
   ══════════════════════════════════════
@@ -80,13 +83,7 @@ const SHead = ({ eyebrow, title, sub, center=false }: { eyebrow?: string; title:
 
 /* ── Main component ── */
 export default function CityPage({ city }: { city: CityData }) {
-
-  const products = [
-    { id: 'standing', label: 'Standing Seam',       desc: 'The preferred choice for luxury DFW homes. Hidden fasteners, clean architectural lines, Class 4 hail rating, 50+ year lifespan.' },
-    { id: 'copper',   label: 'Copper',               desc: 'The pinnacle of residential roofing. Develops a natural patina, lasts 100+ years, and makes a permanent statement on estate-level properties.' },
-    { id: 'stone',    label: 'Stone-Coated Steel',   desc: 'Shingle aesthetics, steel strength. Widely approved by DFW HOAs and ideal for neighborhoods with traditional architectural guidelines.' },
-    { id: 'rpanel',   label: 'R-Panel',               desc: 'Proven, durable, and cost-effective. A straightforward metal option with a 40–60 year lifespan and Class 4 impact rating.' },
-  ]
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
 
   const whyMetal = [
     { val: 50,  suffix: '+ yrs', label: 'Roof Lifespan' },
@@ -188,11 +185,11 @@ export default function CityPage({ city }: { city: CityData }) {
                   >See Your Home With Metal →</a>
                 </div>
                 {/* Trust row */}
-                <div style={{ display: 'flex', gap: 24, marginTop: 48, paddingTop: 32, borderTop: `1px solid ${C.border}`, flexWrap: 'wrap', animation: 'fadeUp 0.7s ease 0.4s both' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginTop: 48, paddingTop: 32, borderTop: `1px solid ${C.border}`, animation: 'fadeUp 0.7s ease 0.4s both' }}>
                   {['10-Year Workmanship Warranty', 'Satellite Estimates', 'Class 4 Hail Rating', 'DFW Local'].map(t => (
-                    <div key={t} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <div key={t} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                       <div style={{ width: 4, height: 4, borderRadius: '50%', background: C.accent, flexShrink: 0 }}/>
-                      <span style={{ fontSize: 11, color: C.muted }}>{t}</span>
+                      <span style={{ fontSize: 12, color: C.muted }}>{t}</span>
                     </div>
                   ))}
                 </div>
@@ -283,41 +280,49 @@ export default function CityPage({ city }: { city: CityData }) {
           </div>
         </section>
 
-        {/* ── PRODUCTS ── */}
-        <section id="our-products" className="sp" style={{ background: C.surface, borderTop: `1px solid ${C.border}` }}>
+        <ProductsSection
+          id="our-products"
+          eyebrow="Our Products"
+          heading={<>Metal Roofing Systems<br/>for {city.name} Homes</>}
+          initialTab="stone"
+        />
+
+        {/* ── GALLERY ── */}
+        <section id="gallery" className="sp" style={{ borderTop: `1px solid ${C.border}` }}>
           <div className="inner">
             <Reveal>
-              <SHead eyebrow="Our Products" title={`Metal Roofing Systems<br/>for ${city.name} Homes`} center/>
+              <SHead eyebrow="Our Work" title="DFW Installations" center/>
             </Reveal>
-            <div className="g2" style={{ gap: 3 }}>
-              {products.map((p, i) => (
-                <Reveal key={p.id} delay={i * 0.07}>
-                  <a href={`/visualizer?roofType=${
-                    p.id === 'standing' ? 'standing_seam' :
-                    p.id === 'copper'   ? 'copper_standing_seam' :
-                    p.id === 'stone'    ? 'stone_coated_steel' :
-                    'r_panel'
-                  }`}
-                    style={{ textDecoration: 'none', display: 'block', height: '100%' }}
+            <div className="grid-3" style={{ gap: 14 }}>
+              {GALLERY_ITEMS.map((item, i) => (
+                <Reveal key={item.label} delay={i * 0.06}>
+                  <div
+                    onClick={() => setLightboxIndex(i)}
+                    style={{ cursor: 'pointer', height: 240, overflow: 'hidden', borderRadius: 4, position: 'relative' }}
                   >
-                    <div style={{ background: C.black, border: `1px solid ${C.border}`, borderRadius: 6, overflow: 'hidden', height: '100%', transition: 'border-color 0.3s', cursor: 'pointer' }}
-                      onMouseEnter={e => (e.currentTarget.style.borderColor = C.accentDark)}
-                      onMouseLeave={e => (e.currentTarget.style.borderColor = C.border)}
-                    >
-                      <div style={{ padding: '28px 28px 24px' }}>
-                        <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 22, fontWeight: 700, color: C.white, marginBottom: 10 }}>{p.label}</div>
-                        <p style={{ fontSize: 13, color: C.mutedLight, lineHeight: 1.8, margin: 0 }}>{p.desc}</p>
-                        <div style={{ fontSize: 11, color: C.accent, letterSpacing: 1.5, textTransform: 'uppercase', marginTop: 16, fontFamily: "'Outfit',sans-serif" }}>
-                          Visualize this roof →
-                        </div>
-                      </div>
-                    </div>
-                  </a>
+                    <img
+                      src={item.src}
+                      alt={item.label}
+                      loading="lazy"
+                      decoding="async"
+                      draggable={false}
+                      style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: item.objectPosition || 'center center', display: 'block', transition: 'transform 0.3s ease' }}
+                      onMouseEnter={e => (e.currentTarget.style.transform = 'scale(1.04)')}
+                      onMouseLeave={e => (e.currentTarget.style.transform = 'scale(1)')}
+                    />
+                  </div>
                 </Reveal>
               ))}
             </div>
           </div>
         </section>
+
+        <ProductGallery
+          items={GALLERY_ITEMS}
+          index={lightboxIndex}
+          onNavigate={setLightboxIndex}
+          onClose={() => setLightboxIndex(null)}
+        />
 
         {/* ── NEIGHBORHOODS ── */}
         <section className="sp-sm" style={{ borderTop: `1px solid ${C.border}` }}>
@@ -337,16 +342,21 @@ export default function CityPage({ city }: { city: CityData }) {
             </Reveal>
             {city.hoaNote && (
               <Reveal delay={0.15}>
-                <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 6, padding: '24px 26px', display: 'flex', gap: 18, alignItems: 'flex-start', position: 'relative', overflow: 'hidden' }}>
-                  <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg,${C.accentDark},${C.accent},${C.accentDark})` }}/>
-                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke={C.accent} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: 2 }}>
-                    <path d="M3 10 L12 4 L21 10"/>
-                    <path d="M5 10 V20 H19 V10"/>
-                    <path d="M9 20 V14 H15 V20"/>
-                  </svg>
+                <div style={{ background: C.card, border: `1px solid ${C.accentDark}`, borderRadius: 8, padding: 'clamp(24px,3vw,32px)', display: 'flex', gap: 20, alignItems: 'flex-start', position: 'relative', overflow: 'hidden' }}>
+                  <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: `linear-gradient(90deg,${C.accentDark},${C.accent},${C.accentDark})` }}/>
+                  <div style={{ width: 44, height: 44, borderRadius: '50%', background: `${C.accentDark}33`, border: `1px solid ${C.accentDark}`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={C.accent} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M3 10 L12 4 L21 10"/>
+                      <path d="M5 10 V20 H19 V10"/>
+                      <path d="M9 20 V14 H15 V20"/>
+                    </svg>
+                  </div>
                   <div>
-                    <div style={{ fontSize: 10, letterSpacing: 2, color: C.accent, textTransform: 'uppercase', marginBottom: 6 }}>The HOA Approval Kit — Free With Every Project</div>
-                    <p style={{ fontSize: 13, color: C.mutedLight, lineHeight: 1.8, margin: 0 }}>{city.hoaNote}</p>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap', marginBottom: 10 }}>
+                      <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 'clamp(19px,2.2vw,24px)', fontWeight: 700, color: C.white, lineHeight: 1.2 }}>The HOA Approval Kit</div>
+                      <span style={{ fontSize: 10, letterSpacing: 1.5, textTransform: 'uppercase', color: C.accent, border: `1px solid ${C.accentDark}`, borderRadius: 20, padding: '4px 11px', whiteSpace: 'nowrap' }}>Free With Every Project</span>
+                    </div>
+                    <p style={{ fontSize: 14, color: C.mutedLight, lineHeight: 1.8, margin: 0 }}>{city.hoaNote}</p>
                   </div>
                 </div>
               </Reveal>
