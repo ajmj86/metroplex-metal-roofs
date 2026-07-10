@@ -353,11 +353,11 @@ const HomePage = ({ activeTab, setActiveTab }) => {
             >See Your Home With Metal →</a>
           </div>
           {/* Trust bar */}
-          <div className="trust-bar" style={{display:"flex",flexDirection:"column",gap:14,marginTop:48,animation:"fadeUp 0.8s ease 0.4s both"}}>
+          <div className="trust-bar" style={{display:"flex",flexDirection:"column",gap:14,marginTop:48,paddingTop:32,borderTop:`1px solid ${C.border}`,animation:"fadeUp 0.8s ease 0.4s both"}}>
             {["50-Year Lifespan","Up to 35% Insurance Discount","10-Year Workmanship Warranty"].map(t=>(
               <div key={t} style={{display:"flex",alignItems:"center",gap:10}}>
-                <div style={{width:5,height:5,borderRadius:"50%",background:C.accent,flexShrink:0}}/>
-                <span style={{fontSize:13,color:C.muted}}>{t}</span>
+                <div style={{width:4,height:4,borderRadius:"50%",background:C.accent,flexShrink:0}}/>
+                <span style={{fontSize:12,color:C.muted}}>{t}</span>
               </div>
             ))}
           </div>
