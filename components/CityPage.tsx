@@ -556,8 +556,8 @@ export default function CityPage({ city }: { city: CityData }) {
           </div>
         </section>
 
-        {/* ── NEARBY CITIES ── */}
-        <section className="sp-sm" style={{ borderTop: `1px solid ${C.border}` }}>
+        {/* ── NEARBY CITIES (doubles as this page's "Service Areas" anchor target) ── */}
+        <section id="service-areas" className="sp-sm" style={{ borderTop: `1px solid ${C.border}` }}>
           <div className="inner">
             <Reveal>
               <SHead eyebrow="Also Serving" title={`Metal Roofing Near ${city.name}`}/>

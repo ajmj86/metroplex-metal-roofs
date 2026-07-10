@@ -19,16 +19,27 @@ const NAV_LINKS = [
  * City pages have their own why-metal/our-products/process/standard
  * sections. Without this, every nav click bounced a city-page visitor back
  * to the homepage — abandoning the city-specific content (and city page's
- * own matching section) they were already looking at. Gallery and the full
- * Service Areas grid don't exist on city pages, so those still go home.
+ * own matching section) they were already looking at. Gallery doesn't exist
+ * on the homepage-only path, but city pages have their own copy now too.
+ *
+ * "Service Areas" points at the city page's own Nearby Cities section
+ * (id="service-areas" on that section, doubling as this anchor target) —
+ * not a full duplicate of the homepage's DFW-wide grid, just the closest
+ * few cities, which is what "what else do you serve near me" actually
+ * wants. The full grid is still one click away via footer/breadcrumb.
  */
 const CITY_PAGE_OVERRIDES: Record<string,string> = {
-  "Why Metal":    "#why-metal",
-  "Our Products": "#our-products",
-  "Gallery":      "#gallery",
-  "Our Process":  "#process",
-  "Why Us":       "#standard",
+  "Why Metal":     "#why-metal",
+  "Our Products":  "#our-products",
+  "Gallery":       "#gallery",
+  "Our Process":   "#process",
+  "Why Us":        "#standard",
+  "Service Areas": "#service-areas",
 }
+
+// FAQ only exists on city pages (no homepage equivalent), so it's not a
+// base NAV_LINKS entry — it's spliced in only when there's a city context.
+const FAQ_LABEL = "FAQ"
 
 /*
  * Remembers the last city page visited (sessionStorage, not a URL param —
@@ -67,6 +78,15 @@ export default function SiteNav() {
     }
     return l
   })
+
+  // Splice in FAQ right after "Our Process" — only when there's a city to
+  // point it at, either the current page or the last one remembered.
+  const faqCitySlug = isCityPage ? currentCitySlug : returnCitySlug
+  if (faqCitySlug) {
+    const faqHref = isCityPage ? "#faq" : `/metal-roofing-${faqCitySlug}-tx#faq`
+    const processIdx = links.findIndex(l => l.label === "Our Process")
+    links.splice(processIdx + 1, 0, { label: FAQ_LABEL, href: faqHref })
+  }
 
   useEffect(() => {
     if (mOpen) {
