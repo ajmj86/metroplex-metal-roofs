@@ -727,9 +727,9 @@ export default function VisualizerPage() {
                   setStep('gate')
                 }}
                 disabled={!canProceed}
-                style={{ width: '100%', padding: '16px', background: canProceed ? C.accent : C.border, color: canProceed ? C.black : C.muted, fontSize: 12, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 700, borderRadius: 4, cursor: canProceed ? 'pointer' : 'not-allowed', border: 'none', fontFamily: "'Outfit',sans-serif", transition: 'all 0.2s', marginTop: 4 }}
+                style={{ width: '100%', padding: '16px', background: C.accent, color: C.black, fontSize: 12, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 700, borderRadius: 4, opacity: canProceed ? 1 : 0.45, cursor: canProceed ? 'pointer' : 'not-allowed', border: 'none', fontFamily: "'Outfit',sans-serif", transition: 'all 0.2s', marginTop: 4 }}
                 onMouseEnter={e => { if (canProceed) e.currentTarget.style.background = C.accentLight }}
-                onMouseLeave={e => { e.currentTarget.style.background = canProceed ? C.accent : C.border }}
+                onMouseLeave={e => { e.currentTarget.style.background = C.accent }}
               >
                 {canProceed ? 'Next: Enter Your Details →' : selType ? 'Select a color to continue' : 'Select a material to continue'}
               </button>
