@@ -111,7 +111,7 @@ export default function CityPage({ city }: { city: CityData }) {
       n: '03',
       title: 'Precision Estimate',
       href: '/estimate',
-      body: 'We use satellite imaging to generate exact measurements for your roof. Your estimate is built from real data — not a guess from the driveway.',
+      body: 'We use satellite imaging to generate exact measurements for your roof, then complete your free 40-Point Roof & Structure Assessment. Your estimate is built from real data — not a guess from the driveway.',
     },
     {
       n: '04',
@@ -371,6 +371,29 @@ export default function CityPage({ city }: { city: CityData }) {
                 </Reveal>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* ── 40-POINT ASSESSMENT ── */}
+        <section className="sp-sm" style={{ borderTop: `1px solid ${C.border}` }}>
+          <div className="inner" style={{ maxWidth: 820 }}>
+            <Reveal>
+              <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 8, padding: 'clamp(28px,4vw,44px)', position: 'relative', overflow: 'hidden' }}>
+                <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg,${C.accentDark},${C.accent},${C.accentDark})` }}/>
+                <div style={{ fontSize: 10, letterSpacing: 3, color: C.accent, textTransform: 'uppercase', marginBottom: 12 }}>Included With Every Estimate — Free</div>
+                <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 'clamp(24px,3vw,34px)', fontWeight: 700, color: C.white, marginBottom: 16, lineHeight: 1.15 }}>
+                  The 40-Point Roof & Structure Assessment
+                </h2>
+                <p style={{ fontSize: 14, color: C.mutedLight, lineHeight: 1.85, marginBottom: 22 }}>
+                  Before we deliver your firm number for your {city.name} home, we inspect structure, weatherproofing, ventilation, and every penetration — 40 points in all, free with every estimate — so your price is locked before installation day, not renegotiated after.
+                </p>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+                  {['Structural & Decking', 'Weatherproofing & Flashing', 'Ventilation & Attic', 'Penetrations & Add-Ons', 'Drainage & Edges', 'Measurement & Code'].map(c => (
+                    <span key={c} style={{ fontSize: 11, letterSpacing: 0.5, color: C.mutedLight, border: `1px solid ${C.border}`, borderRadius: 20, padding: '6px 14px' }}>{c}</span>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
           </div>
         </section>
 

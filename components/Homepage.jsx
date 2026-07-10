@@ -433,7 +433,7 @@ const stats = [
 const steps = [
   {n:"01",title:"Visualize Your Roof",   time:"~60 seconds",           href:"/visualizer",body:"Enter your address. Our AI visualizer pulls a street-level image of your home and renders it with your chosen metal roof style and color — before you commit to anything."},
   {n:"02",title:"Brief Consultation",    time:"15 minutes, this week", href:"https://api.leadconnectorhq.com/widget/booking/gG1ruFfEWkUXO7eIB8NR",body:"A quick call with our team. We confirm your home's scope, timeline, and whether metal is the right fit. No pressure, no obligation."},
-  {n:"03",title:"Precision Estimate",    time:"Days, not weeks",       href:"/estimate",body:"We use satellite imaging to generate exact measurements for your roof — then complete a full condition assessment of decking, ventilation, attic, and penetrations, so your price is firm with no post-signing surprises."},
+  {n:"03",title:"Precision Estimate",    time:"Days, not weeks",       href:"/estimate",body:"We use satellite imaging to generate exact measurements for your roof — then complete your free 40-Point Roof & Structure Assessment, so your price is firm with no post-signing surprises."},
   {n:"04",title:"Expert Installation",   time:"Warrantied from day one",body:"Your roof is installed to manufacturer spec by a credentialed metal roofing specialist — licensed in Texas and fully insured — and covered by our 10-year workmanship warranty from day one."},
 ];
 /*
@@ -453,6 +453,21 @@ const cities = [
   "Trophy Club","Flower Mound","Mansfield","Forney","Rockwall",
   "Midlothian","Waxahachie","Burleson","Lewisville","Coppell",
   "Richardson","Highland Village","Argyle","Northlake","Roanoke",
+];
+/*
+ * The 40-Point Roof & Structure Assessment — named/merchandised version of
+ * the condition assessment already performed in Step 3 (Precision Estimate).
+ * Point count is grounded in a real, itemized checklist (see category
+ * breakdown), not a marketing-only number — see session notes for the
+ * full 40-item list. Categories sum to 40: 7+8+6+6+6+7.
+ */
+const assessmentCategories = [
+  {label:"Structural & Decking",        count:7, example:"Decking integrity, rafter/truss condition, slope verification, load capacity for your chosen system."},
+  {label:"Weatherproofing & Flashing",  count:8, example:"Valley, chimney, and skylight flashing, drip edge, step flashing, pipe boots, sealant condition."},
+  {label:"Ventilation & Attic",         count:6, example:"Ridge and soffit vent function, attic moisture and insulation, airflow balance."},
+  {label:"Penetrations & Add-Ons",      count:6, example:"Solar mounts, satellite brackets, HVAC lines, electrical mast, plumbing vents, skylights."},
+  {label:"Drainage & Edges",            count:6, example:"Gutters, downspouts, fascia, soffits, roof-to-wall transitions, ponding risk."},
+  {label:"Measurement & Code",          count:7, example:"Satellite aerial measurement, wind/hail rating compliance, HOA material review, permitting."},
 ];
 const galleryItems = [
   { src: "/Installation Pics/Standing-Seam-Steel-True-Black.PNG",                 label: "Standing Seam Metal - True Black" },
@@ -983,6 +998,44 @@ const HomePage = ({ activeTab, setActiveTab }) => {
               );
             })}
           </div>
+        </div>
+      </section>
+
+      {/* ── 40-POINT ASSESSMENT ── */}
+      <section id="assessment" className="section-pad" style={{background:C.black,borderTop:`1px solid ${C.border}`}}>
+        <div className="inner">
+          <Reveal>
+            <div style={{textAlign:"center",marginBottom:48}}>
+              <div style={{fontSize:15,letterSpacing:3,color:C.accent,textTransform:"uppercase",marginBottom:14}}>Included With Every Estimate — Free</div>
+              <h2 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(1.75rem,4.3vw,3.75rem)",fontWeight:700,color:C.white,lineHeight:1.1,marginBottom:20}}>
+                The 40-Point Roof<br/><span style={{fontStyle:"italic",color:C.accent}}>& Structure Assessment</span>
+              </h2>
+              <p style={{fontSize:16,color:C.mutedLight,lineHeight:1.8,maxWidth:640,margin:"0 auto"}}>
+                Before we deliver your firm number, we inspect your roof's structure, weatherproofing, ventilation, and every penetration — 40 points in all. It's the same diagnostic professional inspectors charge for, done free with every estimate, so your price is locked before installation day — not renegotiated after.
+              </p>
+            </div>
+          </Reveal>
+          <div className="grid-3" style={{gap:14}}>
+            {assessmentCategories.map((cat,i)=>(
+              <Reveal key={cat.label} delay={i*0.07}>
+                <div style={{padding:24,background:C.card,border:`1px solid ${C.border}`,borderRadius:6,height:"100%"}}>
+                  <div style={{display:"flex",justifyContent:"space-between",alignItems:"baseline",marginBottom:10,gap:10}}>
+                    <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:19,color:C.white,fontWeight:700}}>{cat.label}</div>
+                    <div style={{fontSize:11,color:C.accent,letterSpacing:1,whiteSpace:"nowrap"}}>{cat.count} pts</div>
+                  </div>
+                  <p style={{fontSize:14,color:C.mutedLight,lineHeight:1.7,margin:0}}>{cat.example}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+          <Reveal delay={0.2}>
+            <div style={{textAlign:"center",marginTop:40}}>
+              <a href="/estimate" className="cta-btn" style={{display:"inline-flex",alignItems:"center",gap:10,padding:"15px 32px",background:C.accent,color:C.black,fontSize:12,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"all 0.2s"}}
+                onMouseEnter={e=>e.currentTarget.style.background=C.accentLight}
+                onMouseLeave={e=>e.currentTarget.style.background=C.accent}
+              >Start My Free Assessment →</a>
+            </div>
+          </Reveal>
         </div>
       </section>
 
