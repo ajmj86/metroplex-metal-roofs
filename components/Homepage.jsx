@@ -434,8 +434,9 @@ const stats = [
 const steps = [
   {n:"01",title:"Visualize Your Roof",   time:"~60 seconds",           href:"/visualizer",body:"Enter your address. Our AI visualizer pulls a street-level image of your home and renders it with your chosen metal roof style and color — before you commit to anything."},
   {n:"02",title:"Brief Consultation",    time:"15 minutes, this week", href:"https://api.leadconnectorhq.com/widget/booking/gG1ruFfEWkUXO7eIB8NR",body:"A quick call with our team. We confirm your home's scope, timeline, and whether metal is the right fit. No pressure, no obligation."},
-  {n:"03",title:"Precision Proposal",    time:"Days, not weeks",       href:undefined,body:"We use satellite imaging to generate exact measurements for your roof, then complete your free 40-Point Roof & Structure Assessment on-site. Your proposal is built from those findings — a firm number, not a guess from the driveway."},
-  {n:"04",title:"Expert Installation",   time:"Warrantied from day one",body:"Your roof is installed to manufacturer spec by a credentialed metal roofing specialist — licensed in Texas and fully insured — and covered by our 10-year workmanship warranty from day one."},
+  {n:"03",title:"40-Point Roof & Structure Assessment", time:"On-site, within days",   href:"#assessment",body:"Our team visits your home to complete the free 40-Point Roof & Structure Assessment — decking, flashing, ventilation, attic, and every penetration. It's the same on-site diagnostic professional inspectors charge for."},
+  {n:"04",title:"Precision Proposal",    time:"Presented in person",    href:undefined,body:"Using your assessment findings and satellite measurements, we build your firm proposal — one clear number, presented in person, with no post-signing surprises."},
+  {n:"05",title:"Expert Installation",   time:"Warrantied from day one",href:undefined,body:"Your roof is installed to manufacturer spec by a credentialed metal roofing specialist — licensed in Texas and fully insured — and covered by our 10-year workmanship warranty from day one."},
 ];
 /*
  * Placeholder testimonials (Michael T., Jennifer R., David K.) removed —
@@ -965,7 +966,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
               <h2 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(1.75rem,4.3vw,3.75rem)",fontWeight:700,color:C.white}}>From Address to Installation</h2>
             </div>
           </Reveal>
-          <div className="grid-4" style={{gap:2}}>
+          <div className="grid-5" style={{gap:2}}>
             {steps.map((step,i)=>{
               const Tag = step.href ? 'a' : 'div';
               const linkProps = step.href ? {href:step.href,...(step.href.startsWith('http')?{target:"_blank",rel:"noopener noreferrer"}:{})} : {};

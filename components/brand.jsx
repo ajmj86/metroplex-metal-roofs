@@ -27,6 +27,7 @@ export const globalStyles = `
   p:last-child { margin-bottom: 0; }
 
   /* ── Responsive helpers ── */
+  .grid-5 { display: grid; grid-template-columns: repeat(5,1fr); }
   .grid-4 { display: grid; grid-template-columns: repeat(4,1fr); }
   .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); }
   .grid-2 { display: grid; grid-template-columns: 1fr 1fr; }
@@ -41,6 +42,7 @@ export const globalStyles = `
   .g2     { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
   .g3     { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
   .g4     { display: grid; grid-template-columns: repeat(4,1fr); }
+  .g5     { display: grid; grid-template-columns: repeat(5,1fr); }
 
   /*
    * Product swatch chips (standing/copper/r-panel) vs stone drill-down tiles
@@ -60,6 +62,7 @@ export const globalStyles = `
     .sp-sm { padding: 48px 32px; }
     .g3    { grid-template-columns: 1fr 1fr; }
     .g4    { grid-template-columns: 1fr 1fr; }
+    .g5    { grid-template-columns: repeat(3,1fr); }
   }
   @media (max-width: 640px) {
     .sp    { padding: 56px 20px; }
@@ -67,10 +70,12 @@ export const globalStyles = `
     .g2    { grid-template-columns: 1fr; }
     .g3    { grid-template-columns: 1fr; }
     .g4    { grid-template-columns: 1fr 1fr; }
+    .g5    { grid-template-columns: 1fr 1fr; }
   }
 
   @media (max-width: 1024px) {
     .grid-4 { grid-template-columns: repeat(2,1fr); }
+    .grid-5 { grid-template-columns: repeat(3,1fr); }
     .grid-3 { grid-template-columns: repeat(2,1fr); }
     .grid-2 { grid-template-columns: 1fr; }
     .grid-2a { grid-template-columns: 1fr 1fr; }
@@ -79,6 +84,7 @@ export const globalStyles = `
   }
   @media (max-width: 640px) {
     .grid-4 { grid-template-columns: 1fr; }
+    .grid-5 { grid-template-columns: 1fr; }
     .grid-3 { grid-template-columns: 1fr; }
     .grid-2a { grid-template-columns: 1fr; }
     .section-pad { padding: 56px 24px; }

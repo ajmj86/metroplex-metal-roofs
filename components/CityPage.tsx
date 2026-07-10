@@ -112,13 +112,20 @@ export default function CityPage({ city }: { city: CityData }) {
     },
     {
       n: '03',
-      title: 'Precision Proposal',
-      time: 'Days, not weeks',
-      href: undefined,
-      body: 'We use satellite imaging to generate exact measurements for your roof, then complete your free 40-Point Roof & Structure Assessment on-site. Your proposal is built from those findings — a firm number, not a guess from the driveway.',
+      title: '40-Point Roof & Structure Assessment',
+      time: 'On-site, within days',
+      href: '#assessment',
+      body: "Our team visits your home to complete the free 40-Point Roof & Structure Assessment — decking, flashing, ventilation, attic, and every penetration. It's the same on-site diagnostic professional inspectors charge for.",
     },
     {
       n: '04',
+      title: 'Precision Proposal',
+      time: 'Presented in person',
+      href: undefined,
+      body: 'Using your assessment findings and satellite measurements, we build your firm proposal — one clear number, presented in person, with no post-signing surprises.',
+    },
+    {
+      n: '05',
       title: 'Expert Installation',
       time: 'Warrantied from day one',
       href: undefined,
@@ -353,7 +360,7 @@ export default function CityPage({ city }: { city: CityData }) {
             <Reveal>
               <SHead eyebrow="Our Process" title="From Visualization to Installation" center/>
             </Reveal>
-            <div className="g4" style={{ gap: 2 }}>
+            <div className="g5" style={{ gap: 2 }}>
               {steps.map((s, i) => (
                 <Reveal key={s.n} delay={i * 0.09}>
                   {(() => {
