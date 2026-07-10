@@ -174,8 +174,12 @@ export default function ProductsSection({
   eyebrow = "Our Products",
   heading = <>Four Systems.<br/>One Standard.</>,
   initialTab = "stone",
-  activeTab: controlledActiveTab,
-  onTabChange,
+  // Explicit `= undefined` (not just omitted) is required, not stylistic:
+  // under allowJs, TS infers prop optionality from destructured defaults.
+  // Without one here, activeTab/onTabChange got inferred as required,
+  // which broke CityPage.tsx's uncontrolled usage at build time.
+  activeTab: controlledActiveTab = undefined,
+  onTabChange = undefined,
 }) {
   const [internalTab, setInternalTab] = useState(initialTab);
   const activeTab = controlledActiveTab ?? internalTab;
