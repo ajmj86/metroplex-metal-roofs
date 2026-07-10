@@ -433,7 +433,7 @@ const stats = [
 const steps = [
   {n:"01",title:"Visualize Your Roof",   time:"~60 seconds",           href:"/visualizer",body:"Enter your address. Our AI visualizer pulls a street-level image of your home and renders it with your chosen metal roof style and color — before you commit to anything."},
   {n:"02",title:"Brief Consultation",    time:"15 minutes, this week", href:"https://api.leadconnectorhq.com/widget/booking/gG1ruFfEWkUXO7eIB8NR",body:"A quick call with our team. We confirm your home's scope, timeline, and whether metal is the right fit. No pressure, no obligation."},
-  {n:"03",title:"Precision Estimate",    time:"Days, not weeks",       href:"/estimate",body:"We use satellite imaging to generate exact measurements for your roof — then complete your free 40-Point Roof & Structure Assessment, so your price is firm with no post-signing surprises."},
+  {n:"03",title:"Precision Estimate",    time:"Days, not weeks",       href:undefined,body:"We use satellite imaging to generate exact measurements for your roof — then complete your free 40-Point Roof & Structure Assessment, so your price is firm with no post-signing surprises."},
   {n:"04",title:"Expert Installation",   time:"Warrantied from day one",body:"Your roof is installed to manufacturer spec by a credentialed metal roofing specialist — licensed in Texas and fully insured — and covered by our 10-year workmanship warranty from day one."},
 ];
 /*
@@ -453,6 +453,7 @@ const cities = [
   "Trophy Club","Flower Mound","Mansfield","Forney","Rockwall",
   "Midlothian","Waxahachie","Burleson","Lewisville","Coppell",
   "Richardson","Highland Village","Argyle","Northlake","Roanoke",
+  "Grapevine","Anna","Fate","Royse City",
 ];
 /*
  * The 40-Point Roof & Structure Assessment — named/merchandised version of
@@ -1030,10 +1031,10 @@ const HomePage = ({ activeTab, setActiveTab }) => {
           </div>
           <Reveal delay={0.2}>
             <div style={{textAlign:"center",marginTop:40}}>
-              <a href="/estimate" className="cta-btn" style={{display:"inline-flex",alignItems:"center",gap:10,padding:"15px 32px",background:C.accent,color:C.black,fontSize:12,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"all 0.2s"}}
+              <a href="https://api.leadconnectorhq.com/widget/booking/gG1ruFfEWkUXO7eIB8NR" target="_blank" rel="noopener noreferrer" className="cta-btn" style={{display:"inline-flex",alignItems:"center",gap:10,padding:"15px 32px",background:C.accent,color:C.black,fontSize:12,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"all 0.2s"}}
                 onMouseEnter={e=>e.currentTarget.style.background=C.accentLight}
                 onMouseLeave={e=>e.currentTarget.style.background=C.accent}
-              >Start My Free Assessment →</a>
+              >Book Your Free Consultation →</a>
             </div>
           </Reveal>
         </div>
@@ -1054,12 +1055,32 @@ const HomePage = ({ activeTab, setActiveTab }) => {
           </Reveal>
           <div className="grid-3" style={{gap:16,textAlign:"left"}}>
             {[
-              {label:"10-Year Workmanship Warranty", body:"Written into your contract. Not a handshake."},
-              {label:"Manufacturer Material Warranty", body:"Panel and finish coverage direct from the manufacturer, registered in your name."},
-              {label:"Licensed & Insured in Texas", body:"Class 4 impact-rated systems, engineered for DFW hail."},
+              {label:"10-Year Workmanship Warranty", body:"Written into your contract. Not a handshake.", icon:"shield"},
+              {label:"Manufacturer Material Warranty", body:"Panel and finish coverage direct from the manufacturer, registered in your name.", icon:"shield-check"},
+              {label:"Licensed & Insured in Texas", body:"Class 4 impact-rated systems, engineered for DFW hail.", icon:"badge"},
             ].map((p,i)=>(
               <Reveal key={p.label} delay={i*0.08}>
                 <div style={{padding:24,background:C.surface,border:`1px solid ${C.border}`,borderRadius:6,height:"100%"}}>
+                  <div style={{marginBottom:14}}>
+                    {p.icon==="shield" && (
+                      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke={C.accent} strokeWidth="1.5" strokeLinejoin="round">
+                        <path d="M12 2.5 L19.5 5.5 V11.2 C19.5 16.1 16.3 19.8 12 21.5 C7.7 19.8 4.5 16.1 4.5 11.2 V5.5 Z"/>
+                      </svg>
+                    )}
+                    {p.icon==="shield-check" && (
+                      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke={C.accent} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M12 2.5 L19.5 5.5 V11.2 C19.5 16.1 16.3 19.8 12 21.5 C7.7 19.8 4.5 16.1 4.5 11.2 V5.5 Z"/>
+                        <path d="M8.75 11.5 L10.8 13.5 L15.25 9"/>
+                      </svg>
+                    )}
+                    {p.icon==="badge" && (
+                      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke={C.accent} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="12" cy="8.5" r="5.5"/>
+                        <path d="M9.5 8.5 L11.2 10.2 L14.5 6.5"/>
+                        <path d="M8.3 13.3 L6.5 21.5 L12 18.3 L17.5 21.5 L15.7 13.3"/>
+                      </svg>
+                    )}
+                  </div>
                   <div style={{fontSize:13,letterSpacing:1,color:C.accent,fontWeight:600,marginBottom:10,lineHeight:1.4}}>{p.label}</div>
                   <div style={{fontSize:14,color:C.mutedLight,lineHeight:1.7}}>{p.body}</div>
                 </div>
@@ -1132,6 +1153,10 @@ const HomePage = ({ activeTab, setActiveTab }) => {
                   city === "Argyle"            ? "/metal-roofing-argyle-tx" :
                   city === "Northlake"         ? "/metal-roofing-northlake-tx" :
                   city === "Roanoke"           ? "/metal-roofing-roanoke-tx" :
+                  city === "Grapevine"         ? "/metal-roofing-grapevine-tx" :
+                  city === "Anna"              ? "/metal-roofing-anna-tx" :
+                  city === "Fate"              ? "/metal-roofing-fate-tx" :
+                  city === "Royse City"        ? "/metal-roofing-royse-city-tx" :
                   "#"
                 } style={{padding:"9px 18px",border:`1px solid ${C.border}`,borderRadius:2,fontSize:12,color:C.mutedLight,letterSpacing:1,transition:"all 0.2s"}}
                   onMouseEnter={e=>{e.currentTarget.style.borderColor=C.accent;e.currentTarget.style.color=C.accent;}}

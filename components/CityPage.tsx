@@ -110,7 +110,7 @@ export default function CityPage({ city }: { city: CityData }) {
     {
       n: '03',
       title: 'Precision Estimate',
-      href: '/estimate',
+      href: undefined,
       body: 'We use satellite imaging to generate exact measurements for your roof, then complete your free 40-Point Roof & Structure Assessment. Your estimate is built from real data — not a guess from the driveway.',
     },
     {
