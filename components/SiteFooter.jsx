@@ -18,7 +18,7 @@ export function SiteFooter({ setActiveTab = () => {}, setPage = null }) {
     "All DFW Areas →":    {href:"/#service-areas", onClick:(e)=>{e.preventDefault();if(setPage){setPage("home");setTimeout(()=>{const el=document.getElementById("service-areas");if(el)el.scrollIntoView({behavior:"smooth"});},200);}else{window.location.href="/#service-areas";}}},
     "About Us":           {href:"/#about", onClick:(e)=>{e.preventDefault();if(setPage){setPage("home");setTimeout(()=>{const el=document.getElementById("about");if(el){const offset=el.getBoundingClientRect().top+window.scrollY-100;window.scrollTo({top:offset,behavior:"smooth"});}},200);}else{window.location.href="/#about";}}},
     "Our Process":        {href:"/#process", onClick:(e)=>{e.preventDefault();if(setPage){setPage("home");setTimeout(()=>{const el=document.getElementById("process");if(el){const offset=el.getBoundingClientRect().top+window.scrollY-100;window.scrollTo({top:offset,behavior:"smooth"});}},200);}else{window.location.href="/#process";}}},
-    "Why Us":             {href:"/#reviews", onClick:(e)=>{e.preventDefault();if(setPage){setPage("home");setTimeout(()=>{const el=document.getElementById("reviews");if(el){const offset=el.getBoundingClientRect().top+window.scrollY-100;window.scrollTo({top:offset,behavior:"smooth"});}},200);}else{window.location.href="/#reviews";}}},
+    "Why Us":             {href:"/#standard", onClick:(e)=>{e.preventDefault();if(setPage){setPage("home");setTimeout(()=>{const el=document.getElementById("standard");if(el){const offset=el.getBoundingClientRect().top+window.scrollY-100;window.scrollTo({top:offset,behavior:"smooth"});}},200);}else{window.location.href="/#standard";}}},
     "Contact":            {href:"/terms#contact"},
   };
 
@@ -51,7 +51,7 @@ export function SiteFooter({ setActiveTab = () => {}, setPage = null }) {
             {title:"Company",links:[
               ["About Us","/#about"],
               ["Our Process","/#process"],
-              ["Why Us","/#reviews"],
+              ["Why Us","/#standard"],
               ["Contact","/terms#contact"],
             ]},
           ].map(col=>(

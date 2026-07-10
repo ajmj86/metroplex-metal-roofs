@@ -123,7 +123,7 @@ const NAV_LINKS = [
   {label:"Our Products",  href:"#products"},
   {label:"Gallery",       href:"#gallery"},
   {label:"Our Process",   href:"#process"},
-  {label:"Why Us",        href:"#reviews"},
+  {label:"Why Us",        href:"#standard"},
   {label:"Service Areas", href:"#service-areas"},
 ];
 
