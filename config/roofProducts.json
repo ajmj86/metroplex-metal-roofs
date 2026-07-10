@@ -85,7 +85,7 @@
     }
   },
   "standing_seam": {
-    "label": "Standing Seam",
+    "label": "Standing Seam Steel",
     "manufacturer": null,
     "styles": {
       "standing_seam": { "label": "Standing Seam", "slug": "standing-seam" }
@@ -109,7 +109,7 @@
     }
   },
   "copper_standing_seam": {
-    "label": "Copper Standing Seam",
+    "label": "Copper",
     "manufacturer": null,
     "styles": {
       "copper_standing_seam": { "label": "Copper Standing Seam", "slug": "copper-standing-seam" }

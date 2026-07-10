@@ -231,13 +231,50 @@ export default function VisualizerPage() {
     if (rt) setSelType(rt)
   }, [])
 
-  // ── Lightweight roofType-only prefill (homepage collage links) ──────────────
+  // ── Lightweight roofType/style/product/color prefill (products section CTAs) ──
+  // Each param only gets applied if it resolves to a real option given the
+  // ones already applied — an invalid/missing param just stops the chain
+  // one step early rather than throwing or setting a bogus value.
   useEffect(() => {
     if (typeof window === 'undefined') return
     const params = new URLSearchParams(window.location.search)
     if (params.get('prefilled')) return // already handled by the block above
+
     const rt = params.get('roofType')
-    if (rt) setSelType(rt)
+    if (!rt || !(ROOF_TYPE_ORDER as readonly string[]).includes(rt)) return
+    setSelType(rt)
+
+    // Materials with only one real style (standing seam, r-panel, copper)
+    // auto-resolve it, same as pickType() does on a tab click — no need to
+    // require a redundant ?style= param when there's only one valid value.
+    let style: string | null = null
+    if (hasExactlyOneProduct(rt)) {
+      style = getAutoSelectedStyleAndProduct(rt)?.style ?? null
+    } else {
+      const styleParam = params.get('style')
+      const styleMatch = styleParam && stylesWithColors(rt).find(([sk]) => sk === styleParam)
+      style = styleMatch ? styleParam : null
+    }
+    if (!style) return
+    setSelStyle(style)
+
+    // Same auto-resolution for a style with exactly one product (e.g. every
+    // stone style except "shingle").
+    const styleProducts = productsForStyle(rt, style)
+    let product: string | null = null
+    if (styleProducts.length === 1) {
+      product = styleProducts[0][0]
+    } else {
+      const productParam = params.get('product')
+      const productMatch = productParam && styleProducts.find(([pk]) => pk === productParam)
+      product = productMatch ? productParam : null
+    }
+    if (!product) return
+    setSelProduct(product)
+
+    const colorParam = params.get('color')
+    const colors = styleProducts.find(([pk]) => pk === product)?.[1].colors ?? []
+    if (colorParam && colors.some(c => c.name === colorParam)) setSelColor(colorParam)
   }, [])
 
   // ── Partial lead capture on tab close / navigation away during gate ────────
@@ -614,13 +651,20 @@ export default function VisualizerPage() {
                 <div style={sectionCard}>
                   <div style={{ fontSize: 13, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Style</div>
                   <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-                    {selStyles.map(([sk, so]) => (
-                      <button key={sk} style={tabBtn(selStyle === sk)} onClick={() => {
-                        setSelProduct(null); setSelColor(null); setSelStyle(sk)
-                        const sp = productsForStyle(selType, sk)
-                        if (sp.length === 1) { setSelProduct(sp[0][0]); if (sp[0][1].colors.length === 1) setSelColor(sp[0][1].colors[0].name) }
-                      }}>{so.label}</button>
-                    ))}
+                    {selStyles.map(([sk, so]) => {
+                      // Styles with exactly one product show that product's name
+                      // instead of the generic style name (e.g. "Pine-Crest Shake"
+                      // rather than "Shake") to match the homepage products section.
+                      const stylePillProducts = productsForStyle(selType, sk)
+                      const pillLabel = stylePillProducts.length === 1 ? stylePillProducts[0][1].label : so.label
+                      return (
+                        <button key={sk} style={tabBtn(selStyle === sk)} onClick={() => {
+                          setSelProduct(null); setSelColor(null); setSelStyle(sk)
+                          const sp = productsForStyle(selType, sk)
+                          if (sp.length === 1) { setSelProduct(sp[0][0]); if (sp[0][1].colors.length === 1) setSelColor(sp[0][1].colors[0].name) }
+                        }}>{pillLabel}</button>
+                      )
+                    })}
                   </div>
                 </div>
               )}

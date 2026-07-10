@@ -382,6 +382,23 @@ const visualizerRoofTypeMap = {
   rpanel:   "r_panel",
 };
 
+/*
+ * roofProducts.json style/product keys for the swatch modal CTA's
+ * passthrough params — flat materials have a single style/product pair,
+ * stone varies by which tile the modal was opened from.
+ */
+const flatMaterialVisualizerParams = {
+  standing: { style: "standing_seam", product: "standing_seam" },
+  rpanel:   { style: "r_panel",       product: "r_panel" },
+};
+const stoneTileVisualizerParams = {
+  "high-barrel":            { style: "high_barrel", product: "barrel_vault_tile" },
+  "low-barrel":             { style: "low_barrel",  product: "pacific_tile" },
+  "shake":                  { style: "shake",       product: "pine_crest_shake" },
+  "cottage-shingle":        { style: "shingle",     product: "cottage_shingle" },
+  "granite-ridge-shingle":  { style: "shingle",     product: "granite_ridge_shingle" },
+};
+
 /* ── Swatch row / modal data (see lib/productColors.js) ── */
 const SWATCH_ROW_LIMIT = 6;
 const swatchDataByTab = {
@@ -482,9 +499,24 @@ const HomePage = ({ activeTab, setActiveTab }) => {
   };
 
   const modalItem = swatchModal?.items?.[swatchModal.index];
+  const swatchModalIsCopper = swatchModal?.material === "copper";
+  // Style/product params: flat for standing/r-panel, keyed by the clicked
+  // stone tile otherwise — undefined (and thus omitted) for copper.
+  const swatchModalParams = swatchModal && !swatchModalIsCopper
+    ? (swatchModal.material === "stone" ? stoneTileVisualizerParams[swatchModal.tileKey] : flatMaterialVisualizerParams[swatchModal.material])
+    : null;
+  const swatchModalHref = swatchModal && (
+    swatchModalIsCopper
+      ? `/visualizer?roofType=${visualizerRoofTypeMap.copper}`
+      : `/visualizer?${new URLSearchParams({
+          roofType: visualizerRoofTypeMap[swatchModal.material],
+          ...(swatchModalParams ? { style: swatchModalParams.style, product: swatchModalParams.product } : {}),
+          ...(modalItem?.name ? { color: modalItem.name } : {}),
+        }).toString()}`
+  );
   const swatchModalFooter = swatchModal && (
     <div style={{marginTop:20,paddingTop:20,borderTop:`1px solid ${C.border}`,display:"flex",flexDirection:"column",alignItems:"center",gap:12}}>
-      {swatchModal.material !== "copper" && (
+      {!swatchModalIsCopper && (
         <div style={{fontSize:13,letterSpacing:0.5}}>
           {swatchModal.material === "stone" && modalItem?.product && (
             <span style={{color:C.accent,textTransform:"uppercase",fontSize:11,letterSpacing:2,marginRight:10}}>{modalItem.product}</span>
@@ -492,11 +524,11 @@ const HomePage = ({ activeTab, setActiveTab }) => {
           <span style={{color:C.white,fontWeight:600,fontSize:16}}>{modalItem?.name}</span>
         </div>
       )}
-      <a href={`/visualizer?roofType=${visualizerRoofTypeMap[swatchModal.material]}`} className="cta-btn"
+      <a href={swatchModalHref} className="cta-btn"
         style={{display:"inline-flex",alignItems:"center",gap:8,padding:"13px 26px",background:C.accent,color:C.black,fontSize:11,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"background 0.2s"}}
         onMouseEnter={e=>e.currentTarget.style.background=C.accentLight}
         onMouseLeave={e=>e.currentTarget.style.background=C.accent}
-      >See this color on your home →</a>
+      >{swatchModalIsCopper ? "Configure your copper roof →" : "See this color on your home →"}</a>
     </div>
   );
 
