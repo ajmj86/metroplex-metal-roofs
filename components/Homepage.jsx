@@ -293,8 +293,8 @@ const stats = [
   {val:50,  suffix:"+ yrs", label:"Roof Lifespan"},
   {val:35,  suffix:"%",     label:"Insurance Savings"},
   {val:25,  suffix:"%",     label:"Energy Cost Reduction"},
-  {val:137, suffix:"%",     label:"ROI vs. Asphalt", note:"Based on 20-yr cost comparison: avoided replacement, insurance, and energy savings vs. upfront investment"},
-  {display:"4–6%",          label:"Resale Value Boost", note:"Based on Remodeling magazine's Cost vs. Value report. Figures are industry averages and vary by home, market, and roof system; actual resale value is not guaranteed. Consult a local real estate professional for market-specific figures."},
+  {val:5,   suffix:"%",     label:"Resale Value Boost"},
+  {val:137, suffix:"%",     label:"ROI vs. Asphalt"},
 ];
 const steps = [
   {n:"01",title:"Visualize Your Roof",   time:"~60 seconds",           href:"/visualizer",body:"Enter your address. Our AI visualizer pulls a street-level image of your home and renders it with your chosen metal roof style and color — before you commit to anything."},
@@ -372,14 +372,9 @@ const HomePage = ({ activeTab, setActiveTab }) => {
             <Reveal key={s.label} delay={i*0.07}>
               <div className="stat-border" style={{padding:"44px 32px",borderRight:i<stats.length-1?`1px solid ${C.border}`:"none",textAlign:"center"}}>
                 <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(40px,4vw,52px)",fontWeight:700,color:C.accent,lineHeight:1,marginBottom:8}}>
-                  {s.display ? s.display : <Counter to={s.val} suffix={s.suffix}/>}
+                  <Counter to={s.val} suffix={s.suffix}/>
                 </div>
                 <div style={{fontSize:10,letterSpacing:2,textTransform:"uppercase",color:C.muted}}>{s.label}</div>
-                {s.note && (
-                  <div style={{fontSize:10,color:C.muted,opacity:0.55,lineHeight:1.5,marginTop:8,maxWidth:170,marginLeft:"auto",marginRight:"auto"}}>
-                    *{s.note}
-                  </div>
-                )}
               </div>
             </Reveal>
           ))}
@@ -387,7 +382,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
       </section>
       <div style={{borderTop:`1px solid ${C.border}`,borderBottom:`1px solid ${C.border}`,background:C.surface,padding:"8px 24px",textAlign:"center"}}>
         <p style={{fontFamily:"'Outfit',sans-serif",fontSize:10,color:C.muted,maxWidth:640,margin:"8px auto",lineHeight:1.6}}>
-          Figures represent industry estimates and vary by home, carrier, and installation. Individual results will vary, and actual savings are not guaranteed. Consult your insurance and utility providers for personalized savings.
+          Figures represent accepted industry ranges but will vary by home, carrier, and installation. Individual results will vary, and actual savings are not guaranteed. Consult a local real estate professional for market-specific figures and your insurance and utility providers for personalized savings. The ROI calculation is based on 20-yr cost comparison of avoided replacement, insurance and energy savings vs. upfront investment.
         </p>
       </div>
 
