@@ -820,6 +820,10 @@ const HomePage = ({ activeTab, setActiveTab }) => {
                 onMouseEnter={e=>{e.currentTarget.style.borderColor=C.accent;e.currentTarget.style.color=C.accent;}}
                 onMouseLeave={e=>{e.currentTarget.style.borderColor=C.borderLight;e.currentTarget.style.color=C.mutedLight;}}
               >{PHONE}</a>
+              <a href="sms:+18173823338" className="cta-btn" style={{padding:"16px 28px",border:`1px solid ${C.borderLight}`,color:C.mutedLight,fontSize:12,letterSpacing:2,textTransform:"uppercase",fontWeight:500,borderRadius:2,transition:"all 0.2s"}}
+                onMouseEnter={e=>{e.currentTarget.style.borderColor=C.accent;e.currentTarget.style.color=C.accent;}}
+                onMouseLeave={e=>{e.currentTarget.style.borderColor=C.borderLight;e.currentTarget.style.color=C.mutedLight;}}
+              >Text ROOF for quick questions</a>
             </div>
           </Reveal>
         </div>

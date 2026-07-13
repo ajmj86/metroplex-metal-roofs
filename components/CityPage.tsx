@@ -51,6 +51,7 @@ export interface CityData {
 const DBA_NAME   = 'Metroplex Metal Roofs'
 const PHONE      = '(817) 382-3338'
 const PHONE_HREF = 'tel:+18173823338'
+const SMS_HREF   = 'sms:+18173823338'
 const LEGAL_FULL = 'Metroplex Metal Roofs, a DBA of Allied Roofing Partners LLC'
 const YEAR       = '2026'
 
@@ -513,7 +514,12 @@ export default function CityPage({ city }: { city: CityData }) {
                   </div>
                 </Reveal>
               ))}
-              <div style={{ borderTop: `1px solid ${C.border}` }}/>
+              <div style={{ borderTop: `1px solid ${C.border}`, padding: '28px 0 0', textAlign: 'center' }}>
+                <p style={{ fontSize: 14, color: C.mutedLight, lineHeight: 1.85, margin: 0 }}>
+                  Still have a question? Text ROOF to{' '}
+                  <a href={SMS_HREF} style={{ color: C.accent, textDecoration: 'underline' }}>{PHONE}</a>.
+                </p>
+              </div>
             </div>
           </div>
         </section>
@@ -557,6 +563,11 @@ export default function CityPage({ city }: { city: CityData }) {
                   onMouseEnter={e => { e.currentTarget.style.borderColor = C.accent; e.currentTarget.style.color = C.accent }}
                   onMouseLeave={e => { e.currentTarget.style.borderColor = C.border; e.currentTarget.style.color = C.mutedLight }}
                 >{PHONE}</a>
+                <a href={SMS_HREF}
+                  style={{ padding: '15px 28px', border: `1px solid ${C.border}`, color: C.mutedLight, fontSize: 12, letterSpacing: 2, textTransform: 'uppercase', borderRadius: 2, transition: 'all 0.2s', whiteSpace: 'nowrap', textDecoration: 'none' }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = C.accent; e.currentTarget.style.color = C.accent }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = C.border; e.currentTarget.style.color = C.mutedLight }}
+                >Text ROOF for quick questions</a>
               </div>
             </Reveal>
           </div>
