@@ -96,7 +96,8 @@ export default function CityPage({ city }: { city: CityData }) {
     { val: 50,  suffix: '+ yrs', label: 'Roof Lifespan' },
     { val: 35,  suffix: '%',     label: 'Insurance Savings' },
     { val: 25,  suffix: '%',     label: 'Energy Cost Reduction' },
-    { val: 137, suffix: '%',     label: 'ROI vs. Asphalt', note: 'Based on 20-yr cost comparison: avoided replacement, insurance, and energy savings vs. upfront investment' },
+    { val: 5,   suffix: '%',     label: 'Resale Value Boost' },
+    { val: 137, suffix: '%',     label: 'ROI vs. Asphalt' },
   ]
 
   const steps = [
@@ -243,26 +244,21 @@ export default function CityPage({ city }: { city: CityData }) {
               />
             </Reveal>
             <div style={{ borderTop: `1px solid ${C.border}`, borderBottom: `1px solid ${C.border}`, background: C.surface, marginBottom: 48 }}>
-              <div className="inner grid-4" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)' }}>
+              <div className="inner grid-5">
                 {whyMetal.map((s, i) => (
                   <Reveal key={s.label} delay={i * 0.07}>
-                    <div style={{ padding: '44px 32px', borderRight: i < 3 ? `1px solid ${C.border}` : 'none', textAlign: 'center' }}>
+                    <div style={{ padding: '44px 32px', borderRight: i < whyMetal.length - 1 ? `1px solid ${C.border}` : 'none', textAlign: 'center' }}>
                       <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 'clamp(40px,4vw,52px)', fontWeight: 700, color: C.accent, lineHeight: 1, marginBottom: 8 }}>
                         <Counter to={s.val} suffix={s.suffix}/>
                       </div>
                       <div style={{ fontSize: 10, letterSpacing: 2, textTransform: 'uppercase', color: C.muted }}>{s.label}</div>
-                      {s.note && (
-                        <div style={{ fontSize: 10, color: C.muted, opacity: 0.55, lineHeight: 1.5, marginTop: 8, maxWidth: 170, marginLeft: 'auto', marginRight: 'auto' }}>
-                          *{s.note}
-                        </div>
-                      )}
                     </div>
                   </Reveal>
                 ))}
               </div>
               <div style={{ borderTop: `1px solid ${C.border}`, padding: '8px 24px', textAlign: 'center' }}>
                 <p style={{ fontSize: 10, color: C.muted, maxWidth: 640, margin: '8px auto', lineHeight: 1.6, fontFamily: "'Outfit',sans-serif" }}>
-                  Figures represent industry estimates and vary by home, carrier, and installation. Individual results will vary, and actual savings are not guaranteed. Consult your insurance and utility providers for personalized savings.
+                  Figures represent accepted industry ranges but will vary by home, carrier, and installation. Individual results will vary, and actual savings are not guaranteed. Consult a local real estate professional for market-specific figures and your insurance and utility providers for personalized savings. The ROI calculation is based on 20-yr cost comparison of avoided replacement, insurance and energy savings vs. upfront investment.
                 </p>
               </div>
             </div>
@@ -279,7 +275,7 @@ export default function CityPage({ city }: { city: CityData }) {
                 <div style={{ flex: 1, minWidth: 260 }}>
                   <div style={{ fontSize: 10, letterSpacing: 2, color: C.accent, textTransform: 'uppercase', marginBottom: 10 }}>The Metal Calculus</div>
                   <p style={{ fontSize: 14, color: C.mutedLight, lineHeight: 1.85, margin: 0 }}>
-                    A metal roof eliminates the replacement cycle entirely. Add carrier discounts, reduced energy costs, and eliminated deductible exposure over 20–30 years — and the upgrade typically pays for itself well within the life of the home.
+                    A metal roof eliminates the replacement cycle entirely. Add carrier discounts, reduced energy costs, and eliminated deductible exposure over 20–30 years — and the upgrade typically pays for itself well within the life of the home. It also typically adds 4–6% to resale value while recouping 60–85% of installation cost at closing, per Remodeling magazine's Cost vs. Value report.
                   </p>
                 </div>
               </div>
