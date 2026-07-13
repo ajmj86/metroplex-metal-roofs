@@ -61,7 +61,7 @@ export const FRISCO_DATA: CityData = {
     },
     {
       q: 'How much does a metal roof cost in Frisco, TX?',
-      a: 'Metal roofing in Frisco typically ranges from $18,000 to $72,000 depending on roof size, pitch, material selection, and complexity. Most homes in Frisco\'s master-planned communities fall in the 25 to 40 square range. We provide satellite-based estimates built from actual roof measurements — no site visit required before you have a real number.',
+      a: 'Metal roofing in Frisco typically ranges from $18,000 to $72,000 depending on roof size, pitch, material selection, and complexity. Most homes in Frisco\'s master-planned communities fall in the 25 to 40 square range. We provide satellite-based estimates built from your roof\'s satellite-measured size — no site visit required to get a ballpark range, which we refine into a firm number after your free on-site assessment.',
     },
     {
       q: 'Will my Frisco HOA approve a metal roof?',

@@ -826,7 +826,7 @@ export default function VisualizerPage() {
                         </h2>
                         <p style={{ fontSize: 13, color: C.muted, lineHeight: 1.65, marginBottom: 24 }}>
                           {gateData.timeline === 'just_researching'
-                            ? "We'll send your render and some real numbers so you have everything you need when you're ready."
+                            ? "We'll send your render and a ballpark price range so you have a starting point for when you're ready."
                             : "We'll send your AI-rendered roof design to this number — no spam, ever."}
                         </p>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 12 }}>

@@ -806,10 +806,10 @@ const HomePage = ({ activeTab, setActiveTab }) => {
           <Reveal>
             <div style={{fontSize:15,letterSpacing:3,color:C.accent,textTransform:"uppercase",marginBottom:18}}>Ready to Start?</div>
             <h2 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(1.875rem,5vw,4.5rem)",fontWeight:700,color:C.white,lineHeight:1.1,marginBottom:20}}>
-              Get a Precision Estimate<br/><span style={{fontStyle:"italic",color:C.accent}}>Built From Your Actual Roof</span>
+              Get a Roof Estimate<br/><span style={{fontStyle:"italic",color:C.accent}}>Built From Satellite Measurements</span>
             </h2>
             <p style={{fontSize:16,color:C.mutedLight,lineHeight:1.8,marginBottom:40}}>
-              We use satellite imaging to generate precise measurements for your exact roof — not a guess from the driveway. Your estimate reflects the real scope of your project.
+              We use satellite imagery to measure your roof's size — not a guess from the driveway. Your ballpark range gets refined into a firm number after your free on-site assessment, where we account for slope, roof levels, and every detail of your specific project.
             </p>
             <div style={{display:"flex",gap:14,justifyContent:"center",flexWrap:"wrap"}}>
               <a href="/visualizer" className="cta-btn" style={{padding:"16px 36px",background:C.accent,color:C.black,fontSize:12,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"all 0.2s"}}

@@ -61,7 +61,7 @@ export const PROSPER_DATA: CityData = {
     },
     {
       q: 'How much does a metal roof cost in Prosper, TX?',
-      a: 'Metal roofing in Prosper typically ranges from $18,000 to $72,000 depending on roof size, pitch, and material. Most homes in Prosper\'s master-planned communities fall in the 28 to 45 square range. We provide satellite-based estimates built from actual roof measurements — no guesswork, no in-person visit required before you have a real number.',
+      a: 'Metal roofing in Prosper typically ranges from $18,000 to $72,000 depending on roof size, pitch, and material. Most homes in Prosper\'s master-planned communities fall in the 28 to 45 square range. We provide satellite-based estimates built from your roof\'s satellite-measured size — no guesswork, no in-person visit required to get a ballpark range, which we refine into a firm number after your free on-site assessment.',
     },
     {
       q: 'Is metal roofing common in Prosper neighborhoods like Windsong Ranch?',
