@@ -122,11 +122,11 @@ export default function SiteNav() {
               onMouseLeave={e=>e.currentTarget.style.color=C.mutedLight}
             >{l.label}</a>
           ))}
-          <a href="/estimate"
+          <a href="/visualizer"
             style={{padding:"9px 22px",background:C.accent,color:C.black,fontSize:11,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"background 0.2s",whiteSpace:"nowrap",textDecoration:"none",fontFamily:"'Outfit',sans-serif"}}
             onMouseEnter={e=>e.currentTarget.style.background=C.accentLight}
             onMouseLeave={e=>e.currentTarget.style.background=C.accent}
-          >Free Estimate</a>
+          >Free Roof Visualizer</a>
         </div>
         <button onClick={()=>setMOpen(o=>!o)}
           className="sitenav-hamburger"
@@ -147,9 +147,9 @@ export default function SiteNav() {
               style={{padding:"16px 0",fontSize:18,letterSpacing:2,textTransform:"uppercase",color:C.mutedLight,fontFamily:"'Cormorant Garamond',serif",borderBottom:`1px solid ${C.border}`,textDecoration:"none"}}
             >{l.label}</a>
           ))}
-          <a href="/estimate" onClick={()=>setMOpen(false)}
+          <a href="/visualizer" onClick={()=>setMOpen(false)}
             style={{marginTop:24,padding:"16px",background:C.accent,color:C.black,fontSize:12,letterSpacing:2,textTransform:"uppercase",fontWeight:700,borderRadius:4,textAlign:"center",textDecoration:"none",fontFamily:"'Outfit',sans-serif"}}
-          >Free Estimate</a>
+          >Free Roof Visualizer</a>
         </div>
       )}
     </>

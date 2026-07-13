@@ -18,6 +18,21 @@ function parseAddress(full: string) {
   };
 }
 
+// Ported from the retired app/estimate/page.tsx's getLeadSource() — /visualizer
+// is now the sole entry point for all traffic (ads, postcards, GBP, organic),
+// not just visualizer-native leads, so this mapping has to live here instead.
+function getLeadSource(utmMedium: string | undefined): string {
+  if (!utmMedium) return 'SEO Organic';
+  switch (utmMedium) {
+    case 'postcard': return 'Direct Mailer';
+    case 'cpc': return 'Google Ads';
+    case 'paid_social': return 'Meta Ads';
+    case 'video': return 'YouTube Ads';
+    case 'gbp': return 'Google Business Profile';
+    default: return 'Other';
+  }
+}
+
 // Forwards the visualizer lead payload to the n8n Lead Intake workflow.
 // Kept server-side so the webhook URL never ships to the browser.
 export async function POST(req: NextRequest) {
@@ -47,7 +62,7 @@ export async function POST(req: NextRequest) {
         insurance_claim_status: formatFormValue('insuranceClaim', body.insuranceClaim),
         homeowner_timeline: formatFormValue('timeline', body.timeline),
         selected_roof_type: body.selectedRoofType ? getRoofTypeLabel(body.selectedRoofType) : '',
-        lead_source: body.utm?.source || 'Organic',
+        lead_source: getLeadSource(body.utm?.medium),
         property_address: body.address || '',
         estimated_roof_size: body.estimatedRoofSize != null
           ? String(Math.round(body.estimatedRoofSize * 10) / 10)

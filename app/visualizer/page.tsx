@@ -2,7 +2,6 @@
 
 import React from 'react'
 import { useState, useRef, useEffect } from 'react'
-import Link from 'next/link'
 import { C, fonts, globalStyles } from '@/components/brand'
 import SiteNav from '@/components/SiteNav'
 import { SiteFooter } from '@/components/SiteFooter'
@@ -529,7 +528,7 @@ export default function VisualizerPage() {
                   See Your Home With<br /><span style={{ color: C.accent, fontStyle: 'italic' }}>a Metal Roof</span>
                 </h1>
                 <p style={{ fontSize: 15, color: C.mutedLight, lineHeight: 1.8, maxWidth: 460, margin: '0 auto' }}>
-                  Enter your address and choose a material. Our AI renders your home with a metal roof in under 60 seconds — no upload required.
+                  Enter your address and choose a material. We'll render your home with a metal roof and give you a price range — in under 60 seconds. No upload required.
                 </p>
               </div>
               <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 8, padding: 6, display: 'flex', gap: 6, alignItems: 'center', flexWrap: 'wrap', marginBottom: 8 }}>
@@ -562,12 +561,6 @@ export default function VisualizerPage() {
                 </div>
               )}
               <p style={{ fontSize: 11, color: C.muted, textAlign: 'center', marginTop: 10 }}>No photo upload · No obligation · Under 60 seconds</p>
-              <div style={{ borderTop: `1px solid ${C.border}`, marginTop: 40, paddingTop: 20, textAlign: 'center' }}>
-                <p style={{ fontSize: 13, color: C.muted }}>
-                  Already know what you want?{' '}
-                  <Link href="/estimate" style={{ color: C.accent, textDecoration: 'underline' }}>Get an instant estimate →</Link>
-                </p>
-              </div>
             </div>
           )}
 

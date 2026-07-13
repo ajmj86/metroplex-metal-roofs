@@ -9,7 +9,7 @@ export function SiteFooter({ setActiveTab = () => {}, setPage = null }) {
     "Copper Roofing":     {href:"/#products", onClick:(e)=>{e.preventDefault();setActiveTab("copper");setTimeout(()=>{const el=document.getElementById("products");if(el)el.scrollIntoView({behavior:"smooth"});},200);}},
     "Stone-Coated Steel": {href:"/#products", onClick:(e)=>{e.preventDefault();setActiveTab("stone");setTimeout(()=>{const el=document.getElementById("products");if(el)el.scrollIntoView({behavior:"smooth"});},200);}},
     "R-Panel":            {href:"/#products", onClick:(e)=>{e.preventDefault();setActiveTab("rpanel");setTimeout(()=>{const el=document.getElementById("products");if(el)el.scrollIntoView({behavior:"smooth"});},200);}},
-    "Free Visualizer":    {href:"/visualizer"},
+    "Free Roof Visualizer": {href:"/visualizer"},
     "Southlake":          {href:"/#service-areas", onClick:(e)=>{e.preventDefault();if(setPage){setPage("home");setTimeout(()=>{const el=document.getElementById("service-areas");if(el)el.scrollIntoView({behavior:"smooth"});},200);}else{window.location.href="/#service-areas";}}},
     "Frisco":             {href:"/#service-areas", onClick:(e)=>{e.preventDefault();if(setPage){setPage("home");setTimeout(()=>{const el=document.getElementById("service-areas");if(el)el.scrollIntoView({behavior:"smooth"});},200);}else{window.location.href="/#service-areas";}}},
     "Westlake":           {href:"/#service-areas", onClick:(e)=>{e.preventDefault();if(setPage){setPage("home");setTimeout(()=>{const el=document.getElementById("service-areas");if(el)el.scrollIntoView({behavior:"smooth"});},200);}else{window.location.href="/#service-areas";}}},
@@ -38,7 +38,7 @@ export function SiteFooter({ setActiveTab = () => {}, setPage = null }) {
               ["Copper Roofing","/#products"],
               ["Stone-Coated Steel","/#products"],
               ["R-Panel","/#products"],
-              ["Free Visualizer","/visualizer"],
+              ["Free Roof Visualizer","/visualizer"],
             ]},
             {title:"Service Areas",links:[
               ["Southlake","/#service-areas"],
