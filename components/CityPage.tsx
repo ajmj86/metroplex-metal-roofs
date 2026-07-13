@@ -51,7 +51,7 @@ export interface CityData {
 const DBA_NAME   = 'Metroplex Metal Roofs'
 const PHONE      = '(817) 382-3338'
 const PHONE_HREF = 'tel:+18173823338'
-const SMS_HREF   = 'sms:+18173823338'
+const SMS_HREF   = 'sms:+18173823338?body=ROOF'
 const LEGAL_FULL = 'Metroplex Metal Roofs, a DBA of Allied Roofing Partners LLC'
 const YEAR       = '2026'
 
