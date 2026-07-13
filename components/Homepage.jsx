@@ -294,6 +294,7 @@ const stats = [
   {val:35,  suffix:"%",     label:"Insurance Savings"},
   {val:25,  suffix:"%",     label:"Energy Cost Reduction"},
   {val:137, suffix:"%",     label:"ROI vs. Asphalt", note:"Based on 20-yr cost comparison: avoided replacement, insurance, and energy savings vs. upfront investment"},
+  {display:"4–6%",          label:"Resale Value Boost", note:"Based on Remodeling magazine's Cost vs. Value report. Figures are industry averages and vary by home, market, and roof system; actual resale value is not guaranteed. Consult a local real estate professional for market-specific figures."},
 ];
 const steps = [
   {n:"01",title:"Visualize Your Roof",   time:"~60 seconds",           href:"/visualizer",body:"Enter your address. Our AI visualizer pulls a street-level image of your home and renders it with your chosen metal roof style and color — before you commit to anything."},
@@ -366,12 +367,12 @@ const HomePage = ({ activeTab, setActiveTab }) => {
 
       {/* ── STATS ── */}
       <section style={{borderTop:`1px solid ${C.border}`,background:C.surface}}>
-        <div className="inner grid-4">
+        <div className="inner grid-5">
           {stats.map((s,i)=>(
             <Reveal key={s.label} delay={i*0.07}>
-              <div className="stat-border" style={{padding:"44px 32px",borderRight:i<3?`1px solid ${C.border}`:"none",textAlign:"center"}}>
+              <div className="stat-border" style={{padding:"44px 32px",borderRight:i<stats.length-1?`1px solid ${C.border}`:"none",textAlign:"center"}}>
                 <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(40px,4vw,52px)",fontWeight:700,color:C.accent,lineHeight:1,marginBottom:8}}>
-                  <Counter to={s.val} suffix={s.suffix}/>
+                  {s.display ? s.display : <Counter to={s.val} suffix={s.suffix}/>}
                 </div>
                 <div style={{fontSize:10,letterSpacing:2,textTransform:"uppercase",color:C.muted}}>{s.label}</div>
                 {s.note && (
@@ -458,7 +459,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
                   {icon:"∞", label:"Replacement cycle",     val:"Once. A quality metal roof outlasts the mortgage — and then some.", gold:true},
                   {icon:"▼", label:"Insurance premiums",    val:"Metal roofs qualify for significant carrier discounts in Texas hail zones.", gold:true},
                   {icon:"❄", label:"Energy savings",        val:"Metal's thermal properties reduce cooling costs — a real line item in DFW summers.", gold:true},
-                  {icon:"◆", label:"Curb appeal & value",   val:"Clean lines, premium materials, and a profile that reads as intentional — not default. Metal roofing has become the standard on new construction across DFW's most sought-after communities.", gold:true},
+                  {icon:"◆", label:"Curb appeal & value",   val:"Metal roofs typically add 4–6% to resale value and recoup 60–85% of installation cost at closing — the highest return of any exterior remodel, per Remodeling magazine's Cost vs. Value report.", gold:true},
                   {icon:"✓", label:"The 20–30 year picture", val:"When you account for avoided replacements, insurance premium savings, and energy reduction, metal typically pays for itself within the life of your home.", gold:true},
                 ].map(item=>(
                   <div key={item.label} style={{display:"flex",gap:16,padding:"18px 0",borderBottom:`1px solid ${C.border}`,alignItems:"flex-start"}}>

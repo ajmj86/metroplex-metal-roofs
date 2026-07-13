@@ -97,6 +97,7 @@ export default function CityPage({ city }: { city: CityData }) {
     { val: 35,  suffix: '%',     label: 'Insurance Savings' },
     { val: 25,  suffix: '%',     label: 'Energy Cost Reduction' },
     { val: 137, suffix: '%',     label: 'ROI vs. Asphalt', note: 'Based on 20-yr cost comparison: avoided replacement, insurance, and energy savings vs. upfront investment' },
+    { display: '4–6%',          label: 'Resale Value Boost', note: "Based on Remodeling magazine's Cost vs. Value report. Figures are industry averages and vary by home, market, and roof system; actual resale value is not guaranteed. Consult a local real estate professional for market-specific figures." },
   ]
 
   const steps = [
@@ -243,12 +244,12 @@ export default function CityPage({ city }: { city: CityData }) {
               />
             </Reveal>
             <div style={{ borderTop: `1px solid ${C.border}`, borderBottom: `1px solid ${C.border}`, background: C.surface, marginBottom: 48 }}>
-              <div className="inner grid-4" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)' }}>
+              <div className="inner grid-5">
                 {whyMetal.map((s, i) => (
                   <Reveal key={s.label} delay={i * 0.07}>
-                    <div style={{ padding: '44px 32px', borderRight: i < 3 ? `1px solid ${C.border}` : 'none', textAlign: 'center' }}>
+                    <div style={{ padding: '44px 32px', borderRight: i < whyMetal.length - 1 ? `1px solid ${C.border}` : 'none', textAlign: 'center' }}>
                       <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 'clamp(40px,4vw,52px)', fontWeight: 700, color: C.accent, lineHeight: 1, marginBottom: 8 }}>
-                        <Counter to={s.val} suffix={s.suffix}/>
+                        {s.val !== undefined ? <Counter to={s.val} suffix={s.suffix}/> : s.display}
                       </div>
                       <div style={{ fontSize: 10, letterSpacing: 2, textTransform: 'uppercase', color: C.muted }}>{s.label}</div>
                       {s.note && (
@@ -279,7 +280,7 @@ export default function CityPage({ city }: { city: CityData }) {
                 <div style={{ flex: 1, minWidth: 260 }}>
                   <div style={{ fontSize: 10, letterSpacing: 2, color: C.accent, textTransform: 'uppercase', marginBottom: 10 }}>The Metal Calculus</div>
                   <p style={{ fontSize: 14, color: C.mutedLight, lineHeight: 1.85, margin: 0 }}>
-                    A metal roof eliminates the replacement cycle entirely. Add carrier discounts, reduced energy costs, and eliminated deductible exposure over 20–30 years — and the upgrade typically pays for itself well within the life of the home.
+                    A metal roof eliminates the replacement cycle entirely. Add carrier discounts, reduced energy costs, and eliminated deductible exposure over 20–30 years — and the upgrade typically pays for itself well within the life of the home. It also typically adds 4–6% to resale value while recouping 60–85% of installation cost at closing, per Remodeling magazine's Cost vs. Value report.
                   </p>
                 </div>
               </div>
