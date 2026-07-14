@@ -96,7 +96,7 @@
       "main": [
         [
           {
-            "node": "Search Opportunities For Contact",
+            "node": "IF – Has Tags To Add?",
             "type": "main",
             "index": 0
           }
@@ -382,6 +382,64 @@
           }
         ]
       ]
+    },
+    "IF – Has SMS Inquiry Tag?": {
+      "main": [
+        [
+          {
+            "node": "GHL – Remove SMS Inquiry Tag",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Search Opportunities For Contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GHL – Remove SMS Inquiry Tag": {
+      "main": [
+        [
+          {
+            "node": "Search Opportunities For Contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF – Has Tags To Add?": {
+      "main": [
+        [
+          {
+            "node": "GHL – Add Tags (Update Path)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "IF – Has SMS Inquiry Tag?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GHL – Add Tags (Update Path)": {
+      "main": [
+        [
+          {
+            "node": "IF – Has SMS Inquiry Tag?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "name": "Lead Intake – Visualizer",
@@ -485,7 +543,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const webhookData = $('Webhook – Lead Intake (Visualizer)').first().json.body;\nconst configData = $('Config – GHL IDs').first().json;\nconst contact = webhookData.contact || {};\nconst fields = webhookData.fields || {};\nconst utm = webhookData.utm || {};\n\nconst FIELD_IDS = {\n  lead_source: 'pOqyjdxOHg67C4JWdkaG',\n  current_roof_type: 'Vo7YnqmuZnhV2U66uKJA',\n  project_reason: 'prLMUoMzKClcfmBzDH3R',\n  insurance_claim_status: 'tpAq0AZMqWJZeTy3dPsS',\n  homeowner_timeline: '7F3CKSSVRj7jdHKoq87X',\n  property_address: 'acFCeylcy8uhep3stymL',\n  selected_roof_type: 'ooxcklKOKGrDCRunZnh3',\n  estimated_roof_size: 'S3E1cQMFQ2vD2Ec1nSAR',\n  estimate_range: 'cEjn1x0nid6taqIaQxKt',\n};\nconst UTM_FIELD_IDS = {\n  source: 'NNZiielScQomx8VDF7q8',\n  medium: 'ELW45zGCkwQkpUV2TnEW',\n  campaign: 'VrI3HZtaymdTdf0lggfD',\n};\n\nconst isEmpty = (v) => v === null || v === undefined || v === '';\n\n// Base contact fields — never-null-write: only include keys that are actually present\nconst contactFields = {};\nfor (const key of ['firstName', 'lastName', 'email', 'phone', 'address1', 'city', 'state', 'postalCode']) {\n  if (!isEmpty(contact[key])) contactFields[key] = contact[key];\n}\n\nconst customFields = [];\nfor (const [key, id] of Object.entries(FIELD_IDS)) {\n  if (!isEmpty(fields[key])) customFields.push({ id, value: fields[key] });\n}\nfor (const [key, id] of Object.entries(UTM_FIELD_IDS)) {\n  if (!isEmpty(utm[key])) customFields.push({ id, value: utm[key] });\n}\nif (customFields.length) contactFields.customFields = customFields;\nconst baseTags = Array.isArray(webhookData.tags) ? webhookData.tags : [];\nconst allTags = webhookData.smsConsent === true ? [...baseTags, 'SMS Consent'] : baseTags;\nif (allTags.length) contactFields.tags = allTags;\n\nconst contactPayloadCreate = { ...contactFields, locationId: configData.locationId };\nconst contactPayloadUpdate = { ...contactFields };\n\nreturn [{\n  json: {\n    email: contact.email,\n    contactPayloadCreate,\n    contactPayloadUpdate,\n    rawFields: fields,\n    locationId: configData.locationId,\n    pipelineId: configData.pipelineId,\n    stageId: configData.stageId,\n    firstName: contact.firstName || '',\n    lastName: contact.lastName || '',\n    phone: contact.phone || '',\n    source: webhookData.source || 'visualizer',\n  },\n}];"
+        "jsCode": "const webhookData = $('Webhook – Lead Intake (Visualizer)').first().json.body;\nconst configData = $('Config – GHL IDs').first().json;\nconst contact = webhookData.contact || {};\nconst fields = webhookData.fields || {};\nconst utm = webhookData.utm || {};\n\nconst FIELD_IDS = {\n  lead_source: 'pOqyjdxOHg67C4JWdkaG',\n  current_roof_type: 'Vo7YnqmuZnhV2U66uKJA',\n  project_reason: 'prLMUoMzKClcfmBzDH3R',\n  insurance_claim_status: 'tpAq0AZMqWJZeTy3dPsS',\n  homeowner_timeline: '7F3CKSSVRj7jdHKoq87X',\n  property_address: 'acFCeylcy8uhep3stymL',\n  selected_roof_type: 'ooxcklKOKGrDCRunZnh3',\n  estimated_roof_size: 'S3E1cQMFQ2vD2Ec1nSAR',\n  estimate_range: 'cEjn1x0nid6taqIaQxKt',\n};\nconst UTM_FIELD_IDS = {\n  source: 'NNZiielScQomx8VDF7q8',\n  medium: 'ELW45zGCkwQkpUV2TnEW',\n  campaign: 'VrI3HZtaymdTdf0lggfD',\n};\n\nconst isEmpty = (v) => v === null || v === undefined || v === '';\n\n// Base contact fields — never-null-write: only include keys that are actually present\nconst contactFields = {};\nfor (const key of ['firstName', 'lastName', 'email', 'phone', 'address1', 'city', 'state', 'postalCode']) {\n  if (!isEmpty(contact[key])) contactFields[key] = contact[key];\n}\n\nconst customFields = [];\nfor (const [key, id] of Object.entries(FIELD_IDS)) {\n  if (!isEmpty(fields[key])) customFields.push({ id, value: fields[key] });\n}\nfor (const [key, id] of Object.entries(UTM_FIELD_IDS)) {\n  if (!isEmpty(utm[key])) customFields.push({ id, value: utm[key] });\n}\nif (customFields.length) contactFields.customFields = customFields;\nconst baseTags = Array.isArray(webhookData.tags) ? webhookData.tags : [];\nconst allTags = webhookData.smsConsent === true ? [...baseTags, 'SMS Consent'] : baseTags;\n\n// Tags are set on contactPayloadCreate (brand-new contact, nothing to clobber) but\n// deliberately left OFF contactPayloadUpdate — GHL's PUT /contacts/{id} replaces the\n// entire tags array, so including it here would silently wipe any tags the contact\n// already had (e.g. 'sms inquiry', manual CRM tags). Existing contacts get any new\n// tags added additively via the dedicated Add Tags endpoint instead (see updateTags).\nconst contactPayloadCreate = { ...contactFields, locationId: configData.locationId };\nif (allTags.length) contactPayloadCreate.tags = allTags;\nconst contactPayloadUpdate = { ...contactFields };\nconst updateTags = allTags;\n\nreturn [{\n  json: {\n    email: contact.email,\n    contactPayloadCreate,\n    contactPayloadUpdate,\n    updateTags,\n    rawFields: fields,\n    locationId: configData.locationId,\n    pipelineId: configData.pipelineId,\n    stageId: configData.stageId,\n    firstName: contact.firstName || '',\n    lastName: contact.lastName || '',\n    phone: contact.phone || '',\n    source: webhookData.source || 'visualizer',\n  },\n}];"
       },
       "id": "04baa7bb-21a6-40fe-8774-e4cfe3cc4915",
       "name": "Build Contact Payload (Filter Nulls)",
@@ -1122,7 +1180,7 @@
             },
             {
               "name": "contact_id",
-              "value": "={{ $json.contactId }}"
+              "value": "={{ $('Normalize Contact Result').first().json.contactId }}"
             }
           ]
         },
@@ -1162,7 +1220,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const search = $(\"Search Opportunities For Contact\").first().json;\nconst cfg = $(\"Config – GHL IDs\").first().json;\nconst built = $(\"Build Contact Payload (Filter Nulls)\").first().json;\nconst normalized = $(\"Normalize Contact Result\").first().json;\nconst opportunities = Array.isArray(search.opportunities) ? search.opportunities : [];\nconst existing = opportunities[0] || null;\nlet opportunityAction = 'create';\nlet opportunityId = null;\nif (existing && existing.id) {\n  opportunityId = existing.id;\n  opportunityAction = (existing.pipelineStageId === cfg.stageId) ? 'updateStage' : 'noop';\n}\nreturn [{ json: { contactId: normalized.contactId, firstName: built.firstName,\n  lastName: built.lastName, phone: built.phone, source: built.source,\n  locationId: built.locationId, pipelineId: built.pipelineId, stageId: built.stageId,\n  opportunityAction, opportunityId } }];"
+        "jsCode": "const search = $(\"Search Opportunities For Contact\").first().json;\nconst cfg = $(\"Config – GHL IDs\").first().json;\nconst built = $(\"Build Contact Payload (Filter Nulls)\").first().json;\nconst normalized = $(\"Normalize Contact Result\").first().json;\nconst opportunities = Array.isArray(search.opportunities) ? search.opportunities : [];\n// Defense in depth: never trust a result that doesn't actually belong to this\n// contact — a missing/blank contactId upstream should fail safe (create new),\n// not silently adopt whatever opportunity the search happens to return.\nconst existing = opportunities.find(o => o.contactId === normalized.contactId) || null;\nlet opportunityAction = 'create';\nlet opportunityId = null;\nif (existing && existing.id) {\n  opportunityId = existing.id;\n  opportunityAction = (existing.pipelineStageId === cfg.stageId) ? 'updateStage' : 'noop';\n}\nreturn [{ json: { contactId: normalized.contactId, firstName: built.firstName,\n  lastName: built.lastName, phone: built.phone, source: built.source,\n  locationId: built.locationId, pipelineId: built.pipelineId, stageId: built.stageId,\n  opportunityAction, opportunityId } }];"
       },
       "id": "edb5797b-1b30-4e25-8bc9-1c3e9d97311e",
       "name": "Check Existing Opportunity",
@@ -1453,6 +1511,143 @@
         4376,
         2284
       ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 1
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "c1",
+              "leftValue": "={{ ($('Search Contact By Email').first().json.contact?.tags || []).join('|') }}",
+              "rightValue": "sms inquiry",
+              "operator": {
+                "type": "string",
+                "operation": "contains",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "node-if-has-sms-inquiry-tag",
+      "name": "IF – Has SMS Inquiry Tag?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        3416,
+        2160
+      ]
+    },
+    {
+      "parameters": {
+        "method": "DELETE",
+        "url": "=https://services.leadconnectorhq.com/contacts/{{ $('Normalize Contact Result').first().json.contactId }}/tags",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Version",
+              "value": "2021-07-28"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { \"tags\": [\"sms inquiry\"] } }}",
+        "options": {}
+      },
+      "id": "node-remove-sms-inquiry-tag",
+      "name": "GHL – Remove SMS Inquiry Tag",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3416,
+        2050
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "EKDDJ0lTGjOvu7Ax",
+          "name": "GHL - Metroplex"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 1
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "c1",
+              "leftValue": "={{ $('Build Contact Payload (Filter Nulls)').item.json.updateTags.length }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "node-if-has-tags-to-add",
+      "name": "IF – Has Tags To Add?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        3536,
+        2160
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://services.leadconnectorhq.com/contacts/{{ $('Normalize Contact Result').first().json.contactId }}/tags",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Version",
+              "value": "2021-07-28"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { \"tags\": $('Build Contact Payload (Filter Nulls)').item.json.updateTags } }}",
+        "options": {}
+      },
+      "id": "node-add-tags-update-path",
+      "name": "GHL – Add Tags (Update Path)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3536,
+        2050
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "EKDDJ0lTGjOvu7Ax",
+          "name": "GHL - Metroplex"
+        }
+      }
     }
   ],
   "pinData": {},
