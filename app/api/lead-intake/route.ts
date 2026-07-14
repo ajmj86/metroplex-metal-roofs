@@ -21,16 +21,23 @@ function parseAddress(full: string) {
 // Ported from the retired app/estimate/page.tsx's getLeadSource() — /visualizer
 // is now the sole entry point for all traffic (ads, postcards, GBP, organic),
 // not just visualizer-native leads, so this mapping has to live here instead.
-function getLeadSource(utmMedium: string | undefined): string {
-  if (!utmMedium) return 'SEO Organic';
-  switch (utmMedium) {
-    case 'postcard': return 'Direct Mailer';
-    case 'cpc': return 'Google Ads';
-    case 'paid_social': return 'Meta Ads';
-    case 'video': return 'YouTube Ads';
-    case 'gbp': return 'Google Business Profile';
-    default: return 'Other';
-  }
+//
+// Checks both utm_source and utm_medium for the known channel values since
+// campaign links aren't finalized yet and may end up populating either field
+// depending on how they're eventually built (e.g. utm_source=postcard vs.
+// utm_medium=postcard) — whichever field carries it, the mapping still works.
+function getLeadSource(utmSource: string | undefined, utmMedium: string | undefined): string {
+  const CHANNEL_MAP: Record<string, string> = {
+    postcard: 'Direct Mailer',
+    cpc: 'Google Ads',
+    paid_social: 'Meta Ads',
+    video: 'YouTube Ads',
+    gbp: 'Google Business Profile',
+  };
+  if (utmSource && CHANNEL_MAP[utmSource]) return CHANNEL_MAP[utmSource];
+  if (utmMedium && CHANNEL_MAP[utmMedium]) return CHANNEL_MAP[utmMedium];
+  if (!utmSource && !utmMedium) return 'SEO Organic';
+  return 'Other';
 }
 
 // Forwards the visualizer lead payload to the n8n Lead Intake workflow.
@@ -62,7 +69,7 @@ export async function POST(req: NextRequest) {
         insurance_claim_status: formatFormValue('insuranceClaim', body.insuranceClaim),
         homeowner_timeline: formatFormValue('timeline', body.timeline),
         selected_roof_type: body.selectedRoofType ? getRoofTypeLabel(body.selectedRoofType) : '',
-        lead_source: getLeadSource(body.utm?.medium),
+        lead_source: getLeadSource(body.utm?.source, body.utm?.medium),
         property_address: body.address || '',
         estimated_roof_size: body.estimatedRoofSize != null
           ? String(Math.round(body.estimatedRoofSize * 10) / 10)
