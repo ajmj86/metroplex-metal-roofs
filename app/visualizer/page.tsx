@@ -142,6 +142,12 @@ export default function VisualizerPage() {
   const [estimateHigh, setEstimateHigh] = useState<string | null>(null)
   const [solarFailureReason, setSolarFailureReason] = useState<string | null>(null)
 
+  // manual square-footage fallback (shown at results when Solar comes back empty)
+  const [manualSqFt, setManualSqFt] = useState('')
+  const [manualStories, setManualStories] = useState<'one' | 'two' | 'unknown' | ''>('')
+  const [manualSubmitting, setManualSubmitting] = useState(false)
+  const [manualError, setManualError] = useState('')
+
   // ── Google Places ──────────────────────────────────────────────────────────
   useEffect(() => {
     if (step !== 'address' || !addrRef.current) return
@@ -395,6 +401,7 @@ export default function VisualizerPage() {
           estimatedRoofSize: squares,
           estimateRange: low && high ? `${low} - ${high}` : undefined,
           solarFailureReason: failureReason ?? undefined,
+          roofSizeSource: squares != null ? 'solar' : undefined,
         }),
       })
     } catch { /* advance anyway */ }
@@ -402,6 +409,67 @@ export default function VisualizerPage() {
       setGateLoading(false)
       setPhraseIdx(0)
       setStep('loading')
+    }
+  }
+
+  // ── Manual square-footage fallback (Solar came back empty) ─────────────────
+  async function handleManualSubmit() {
+    const sqFt = Number(manualSqFt)
+    if (!manualSqFt || Number.isNaN(sqFt) || sqFt <= 0) {
+      setManualError('Please enter a valid square footage.')
+      return
+    }
+    setManualSubmitting(true)
+    setManualError('')
+    try {
+      const res = await fetch('/api/roof-size', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ roofType: selType, manualSqFt: sqFt, stories: manualStories || 'unknown' }),
+      })
+      const data = await res.json()
+      if (data.squares == null || !data.estimateLow || !data.estimateHigh) {
+        setManualError('Something went wrong calculating your estimate. Please try again.')
+        return
+      }
+      setRoofSquares(data.squares)
+      setEstimateLow(data.estimateLow)
+      setEstimateHigh(data.estimateHigh)
+
+      const utmSource = sessionStorage.getItem('utm_source') || ''
+      const utmMedium = sessionStorage.getItem('utm_medium') || ''
+      const utmCampaign = sessionStorage.getItem('utm_campaign') || ''
+      // Update path for a contact already created during handleContactSubmit —
+      // suppressAlert avoids paging Andrew a second time for the same lead.
+      await fetch('/api/lead-intake', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstName: gateData.firstName,
+          lastName: gateData.lastName,
+          phone: gateData.phone,
+          email: gateData.email,
+          smsConsent: gateData.smsConsent,
+          emailConsent: gateData.emailConsent,
+          address,
+          currentRoofType: gateData.currentRoofType,
+          reason: gateData.reason,
+          insuranceClaim: gateData.insuranceClaim,
+          timeline: gateData.timeline,
+          selectedRoofType: selType,
+          product: selProduct,
+          color: selColor,
+          leadOrigin: 'visualizer',
+          utm: { source: utmSource, medium: utmMedium, campaign: utmCampaign },
+          estimatedRoofSize: data.squares,
+          estimateRange: `${data.estimateLow} - ${data.estimateHigh}`,
+          roofSizeSource: 'manual',
+          suppressAlert: true,
+        }),
+      }).catch(() => { /* estimate already shown to user regardless */ })
+    } catch {
+      setManualError('Something went wrong calculating your estimate. Please try again.')
+    } finally {
+      setManualSubmitting(false)
     }
   }
 
@@ -951,6 +1019,61 @@ export default function VisualizerPage() {
                 <p style={{ fontFamily: "'Outfit',sans-serif", fontSize: 12, color: C.muted, textAlign: 'center', marginBottom: 16 }}>
                   This range is a general estimate based on roof size. Final investment may vary based on inspection of current roof condition, precise measurements, slope, and materials tailored to your individualized roofing system.
                 </p>
+              )}
+              {!estimateLow && !estimateHigh && solarFailureReason && (
+                <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 8, padding: 'clamp(20px,4vw,28px)', marginBottom: 16 }}>
+                  <p style={{ fontSize: 13, color: C.mutedLight, lineHeight: 1.7, marginBottom: 20 }}>
+                    We weren&apos;t able to automatically pull roof measurements for your address. Enter your home&apos;s approximate square footage below and we&apos;ll calculate your estimate.
+                  </p>
+                  <div style={{ marginBottom: 14 }}>
+                    <div style={{ fontSize: 10, letterSpacing: 2, textTransform: 'uppercase', color: C.muted, marginBottom: 6 }}>
+                      Approximate square footage of your home
+                    </div>
+                    <input
+                      type="number"
+                      value={manualSqFt}
+                      onChange={e => setManualSqFt(e.target.value)}
+                      placeholder="e.g. 2400"
+                      style={iStyle}
+                    />
+                  </div>
+                  <div style={{ marginBottom: 18 }}>
+                    <div style={{ fontSize: 10, letterSpacing: 2, textTransform: 'uppercase', color: C.muted, marginBottom: 10 }}>
+                      How many stories?
+                    </div>
+                    <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+                      {([['one', 'One story'], ['two', 'Two stories'], ['unknown', 'Not sure']] as const).map(([val, label]) => (
+                        <button
+                          key={val}
+                          onClick={() => setManualStories(val)}
+                          style={{
+                            padding: '10px 16px',
+                            background: manualStories === val ? `${C.accentDark}33` : C.surface,
+                            border: `1px solid ${manualStories === val ? C.accentDark : C.border}`,
+                            borderRadius: 4, fontSize: 13,
+                            color: manualStories === val ? C.accent : C.mutedLight,
+                            cursor: 'pointer', transition: 'all 0.15s', fontFamily: "'Outfit',sans-serif",
+                          }}
+                        >{label}</button>
+                      ))}
+                    </div>
+                  </div>
+                  {manualError && <div style={{ fontSize: 11, color: '#F87171', marginBottom: 12 }}>{manualError}</div>}
+                  <button
+                    onClick={handleManualSubmit}
+                    disabled={manualSubmitting}
+                    style={{
+                      width: '100%', padding: '14px',
+                      background: manualSubmitting ? C.border : C.accent,
+                      color: manualSubmitting ? C.muted : C.black,
+                      fontSize: 12, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 700,
+                      borderRadius: 4, cursor: manualSubmitting ? 'not-allowed' : 'pointer',
+                      border: 'none', fontFamily: "'Outfit',sans-serif", transition: 'all 0.2s',
+                    }}
+                    onMouseEnter={e => { if (!manualSubmitting) e.currentTarget.style.background = C.accentLight }}
+                    onMouseLeave={e => { e.currentTarget.style.background = manualSubmitting ? C.border : C.accent }}
+                  >{manualSubmitting ? 'Calculating…' : 'Calculate My Estimate →'}</button>
+                </div>
               )}
               <a
                 href="https://api.leadconnectorhq.com/widget/booking/gG1ruFfEWkUXO7eIB8NR"

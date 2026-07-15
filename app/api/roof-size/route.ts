@@ -57,18 +57,50 @@ function emptyResult(solarFailureReason?: SolarFailureReason) {
   return { squares: null, estimateLow: null, estimateHigh: null, solarFailureReason: solarFailureReason ?? null }
 }
 
+// Manual fallback: same story-count-to-footprint heuristic as the old
+// (deleted) /api/estimate route — a one-story home's roof is close to its
+// full living-space footprint (no stacking), a two-story home's footprint
+// is roughly half its living space, "not sure" splits the difference.
+function squaresFromManualSqFt(sqFt: number, stories: string | undefined): number {
+  let multiplier = 1.05
+  if (stories === 'one') multiplier = 1.30
+  else if (stories === 'two') multiplier = 0.80
+  return (sqFt * multiplier) / 100
+}
+
 export async function POST(req: NextRequest) {
   let address: string | undefined
   try {
     const body = await req.json()
     address = body?.address
     const roofType: string | undefined = body?.roofType
+    const manualSqFt: number | undefined = body?.manualSqFt != null ? Number(body.manualSqFt) : undefined
+    const stories: string | undefined = body?.stories
 
-    if (!address || !roofType || !(roofType in pricingConfig.roofTypes)) {
+    if (!roofType || !(roofType in pricingConfig.roofTypes)) {
       return NextResponse.json(emptyResult())
     }
 
     const config = pricingConfig.roofTypes[roofType as RoofTypeKey] as RoofTypeConfig
+
+    // Manual fallback path — bypasses geocode/Solar entirely. Uses the same
+    // calculateEstimate() and live config/pricing.json as the Solar path, so
+    // pricing always stays in sync between the two; only the squares input
+    // differs.
+    if (manualSqFt != null && !Number.isNaN(manualSqFt) && manualSqFt > 0) {
+      const squares = squaresFromManualSqFt(manualSqFt, stories)
+      const result = calculateEstimate(squares, config, 0, `manual-${manualSqFt}`)
+      return NextResponse.json({
+        squares: Math.round(squares * 10) / 10,
+        estimateLow: formatDollars(result.low),
+        estimateHigh: formatDollars(result.high),
+        solarFailureReason: null,
+      })
+    }
+
+    if (!address) {
+      return NextResponse.json(emptyResult())
+    }
 
     const geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${process.env.GOOGLE_MAPS_API_KEY}`
     const geoRes = await fetch(geocodeUrl)
