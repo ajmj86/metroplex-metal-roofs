@@ -13,7 +13,6 @@ type RoofTypeConfig = {
   pitchSurchargePerLevel?: number
 }
 
-// Copied verbatim from app/api/estimate/route.ts — keep the two in sync.
 function getPriceFingerprint(seed: string): number {
   let hash = 0
   for (let i = 0; i < seed.length; i++) {
@@ -23,9 +22,8 @@ function getPriceFingerprint(seed: string): number {
   return (Math.abs(hash) % 85) / 100 + 0.13
 }
 
-// Same math as calculateEstimate() in app/api/estimate/route.ts, but returns
-// raw numbers instead of pre-formatted USD strings so formatDollars() below
-// can do its own whole-dollar formatting.
+// Returns raw numbers instead of pre-formatted USD strings so formatDollars()
+// below can do its own whole-dollar formatting.
 function calculateEstimate(
   squares: number,
   config: RoofTypeConfig,
