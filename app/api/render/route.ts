@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse, after } from 'next/server';
 import OpenAI from 'openai';
 import Anthropic from '@anthropic-ai/sdk';
 import { put } from '@vercel/blob';
@@ -211,7 +211,14 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Render failed' }, { status: 500 });
     }
 
-    await fireRenderEmailWebhook({
+    // Fired via after() rather than awaited: the render-email webhook sits
+    // behind WF1's ~45s GHL search-index wait chain, and the user shouldn't
+    // have to watch that after their image is already done. after() keeps
+    // this function instance alive until the callback settles (unlike a
+    // bare unawaited promise, which can get killed the moment the response
+    // is sent) — same reliability guarantee commit d5c7d4d2 wanted from
+    // awaiting it, without blocking the response.
+    after(() => fireRenderEmailWebhook({
       partial: true,
       leadOrigin: 'visualizer_render',
       email,
@@ -220,7 +227,7 @@ export async function POST(req: NextRequest) {
       estimateRange: estimateRange || '',
       roofType,
       roofColor: color || '',
-    });
+    }));
 
     return NextResponse.json({
       success: true,
