@@ -140,6 +140,7 @@ export default function VisualizerPage() {
   const [roofSquares, setRoofSquares] = useState<number | null>(null)
   const [estimateLow, setEstimateLow] = useState<string | null>(null)
   const [estimateHigh, setEstimateHigh] = useState<string | null>(null)
+  const [solarFailureReason, setSolarFailureReason] = useState<string | null>(null)
 
   // ── Google Places ──────────────────────────────────────────────────────────
   useEffect(() => {
@@ -348,6 +349,7 @@ export default function VisualizerPage() {
     let squares: number | null = null
     let low: string | null = null
     let high: string | null = null
+    let failureReason: string | null = null
     try {
       const roofRes = await fetch('/api/roof-size', {
         method: 'POST',
@@ -358,12 +360,14 @@ export default function VisualizerPage() {
       squares = roofData.squares
       low = roofData.estimateLow
       high = roofData.estimateHigh
+      failureReason = roofData.solarFailureReason ?? null
     } catch {
       // non-blocking — continue to lead-intake regardless
     }
     setRoofSquares(squares)
     setEstimateLow(low)
     setEstimateHigh(high)
+    setSolarFailureReason(failureReason)
 
     try {
       const utmSource = sessionStorage.getItem('utm_source') || ''
@@ -390,6 +394,7 @@ export default function VisualizerPage() {
           utm: { source: utmSource, medium: utmMedium, campaign: utmCampaign },
           estimatedRoofSize: squares,
           estimateRange: low && high ? `${low} - ${high}` : undefined,
+          solarFailureReason: failureReason ?? undefined,
         }),
       })
     } catch { /* advance anyway */ }

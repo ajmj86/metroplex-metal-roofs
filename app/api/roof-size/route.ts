@@ -51,16 +51,21 @@ function formatDollars(n: number): string {
   return '$' + Math.round(n).toLocaleString('en-US')
 }
 
-const EMPTY_RESULT = { squares: null, estimateLow: null, estimateHigh: null }
+type SolarFailureReason = 'geocode_failed' | 'no_roof_data' | 'area_out_of_range' | 'exception'
+
+function emptyResult(solarFailureReason?: SolarFailureReason) {
+  return { squares: null, estimateLow: null, estimateHigh: null, solarFailureReason: solarFailureReason ?? null }
+}
 
 export async function POST(req: NextRequest) {
+  let address: string | undefined
   try {
     const body = await req.json()
-    const address: string | undefined = body?.address
+    address = body?.address
     const roofType: string | undefined = body?.roofType
 
     if (!address || !roofType || !(roofType in pricingConfig.roofTypes)) {
-      return NextResponse.json(EMPTY_RESULT)
+      return NextResponse.json(emptyResult())
     }
 
     const config = pricingConfig.roofTypes[roofType as RoofTypeKey] as RoofTypeConfig
@@ -70,7 +75,8 @@ export async function POST(req: NextRequest) {
     const geoData = await geoRes.json()
 
     if (geoData.status !== 'OK' || !geoData.results?.[0]) {
-      return NextResponse.json(EMPTY_RESULT)
+      console.error('[roof-size] Geocoding failed:', geoData.status, address)
+      return NextResponse.json(emptyResult('geocode_failed'))
     }
 
     const { lat, lng } = geoData.results[0].geometry.location
@@ -83,14 +89,16 @@ export async function POST(req: NextRequest) {
     const segments: Segment[] | undefined = solarData?.solarPotential?.roofSegmentStats
 
     if (!segments?.length) {
-      return NextResponse.json(EMPTY_RESULT)
+      console.error('[roof-size] No usable Solar API roof data:', address, `(${lat}, ${lng})`)
+      return NextResponse.json(emptyResult('no_roof_data'))
     }
 
     const totalAreaM2 = segments.reduce((sum, seg) => sum + seg.stats.areaMeters2, 0)
 
     // Confidence check: must be between 800 and 8,000 sq ft
     if (totalAreaM2 < 74.3 || totalAreaM2 > 743) {
-      return NextResponse.json(EMPTY_RESULT)
+      console.error('[roof-size] Roof area out of confidence range:', totalAreaM2, 'sqm for', address, `(${lat}, ${lng})`)
+      return NextResponse.json(emptyResult('area_out_of_range'))
     }
 
     const squares = (totalAreaM2 * 10.7639) / 100
@@ -106,9 +114,10 @@ export async function POST(req: NextRequest) {
       squares: Math.round(squares * 10) / 10,
       estimateLow: formatDollars(result.low),
       estimateHigh: formatDollars(result.high),
+      solarFailureReason: null,
     })
   } catch (err) {
-    console.error('[roof-size]', err)
-    return NextResponse.json(EMPTY_RESULT)
+    console.error('[roof-size] Exception for', address, ':', err)
+    return NextResponse.json(emptyResult('exception'))
   }
 }
