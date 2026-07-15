@@ -297,10 +297,11 @@ const stats = [
   {val:92, suffix:"%",     label:"ROI vs. Asphalt", tooltip:[
     {label:"Time span", value:"20 years"},
     {label:"Roof size", value:"30 squares (~2,800 sf home)"},
+    {label:"Home value", value:"$850,000"},
     {label:"1 standing seam metal roof replacement", value:"$45,000"},
     {label:"Annual utilities", value:"$3,200"},
     {label:"Annual premiums", value:"$4,000"},
-    {label:"2 roof replacements", value:"$42,500"},
+    {label:"2 roof replacement deductibles (2% + 3%)", value:"$42,500"},
     {label:"Premium reduction", value:"35%"},
     {label:"Utility reduction", value:"25%"},
   ], footnote:"Over 20 years, avoided replacement costs, insurance savings, and energy savings return about $1.92 for every $1 spent on your metal roof — nearly double your investment."},
