@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { C, LEGAL_ENTITY, DBA_NAME, PHONE, YEAR, fonts, globalStyles, Logo } from "./brand";
 import { SiteFooter } from "./SiteFooter";
-import Counter from '@/components/Counter'
+import StatItem from '@/components/StatItem'
 import ProductGallery from '@/components/ProductGallery'
 import ProductsSection from '@/components/ProductsSection'
 import { ASSESSMENT_CATEGORIES } from '@/lib/assessment'
@@ -293,8 +293,18 @@ const stats = [
   {val:50,  suffix:"+ yrs", label:"Roof Lifespan"},
   {val:35,  suffix:"%",     label:"Insurance Savings"},
   {val:25,  suffix:"%",     label:"Energy Cost Reduction"},
-  {val:5,   suffix:"%",     label:"Resale Value Boost"},
-  {val:137, suffix:"%",     label:"ROI vs. Asphalt"},
+  {val:55,  suffix:"%",     label:"Cost Recouped at Resale"},
+  {val:92, suffix:"%",     label:"ROI vs. Asphalt", tooltip:[
+    {label:"Time span", value:"20 years"},
+    {label:"Roof size", value:"30 squares (~2,800 sf home)"},
+    {label:"Home value", value:"$850,000"},
+    {label:"1 standing seam metal roof replacement", value:"$45,000"},
+    {label:"Annual utilities", value:"$3,200"},
+    {label:"Annual premiums", value:"$4,000"},
+    {label:"2 roof replacement deductibles (2% + 3%)", value:"$42,500"},
+    {label:"Premium reduction", value:"35%"},
+    {label:"Utility reduction", value:"25%"},
+  ], footnote:"Over 20 years, avoided replacement costs, insurance savings, and energy savings return about $1.92 for every $1 spent on your metal roof — nearly double your investment."},
 ];
 const steps = [
   {n:"01",title:"Visualize Your Roof",   time:"~60 seconds",           href:"/visualizer",body:"Enter your address. Our AI visualizer pulls a street-level image of your home and renders it with your chosen metal roof style and color — before you commit to anything."},
@@ -370,12 +380,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
         <div className="inner grid-5">
           {stats.map((s,i)=>(
             <Reveal key={s.label} delay={i*0.07}>
-              <div className="stat-border" style={{padding:"44px 32px",borderRight:i<stats.length-1?`1px solid ${C.border}`:"none",textAlign:"center"}}>
-                <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(40px,4vw,52px)",fontWeight:700,color:C.accent,lineHeight:1,marginBottom:8}}>
-                  <Counter to={s.val} suffix={s.suffix}/>
-                </div>
-                <div style={{fontSize:10,letterSpacing:2,textTransform:"uppercase",color:C.muted}}>{s.label}</div>
-              </div>
+              <StatItem stat={s} showBorder={i<stats.length-1} className="stat-border"/>
             </Reveal>
           ))}
         </div>
@@ -454,7 +459,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
                   {icon:"∞", label:"Replacement cycle",     val:"Once. A quality metal roof outlasts the mortgage — and then some.", gold:true},
                   {icon:"▼", label:"Insurance premiums",    val:"Metal roofs qualify for significant carrier discounts in Texas hail zones.", gold:true},
                   {icon:"❄", label:"Energy savings",        val:"Metal's thermal properties reduce cooling costs — a real line item in DFW summers.", gold:true},
-                  {icon:"◆", label:"Curb appeal & value",   val:"Metal roofs typically add 4–6% to resale value and recoup 60–85% of installation cost at closing — the highest return of any exterior remodel, per Remodeling magazine's Cost vs. Value report.", gold:true},
+                  {icon:"◆", label:"Curb appeal & value",   val:"Metal roofs typically recoup 50–60% of installation cost at resale — and unlike asphalt, that return doesn't reset every 8–10 years with a full replacement, per Remodeling magazine's Cost vs. Value report.", gold:true},
                   {icon:"✓", label:"The 20–30 year picture", val:"When you account for avoided replacements, insurance premium savings, and energy reduction, metal typically pays for itself within the life of your home.", gold:true},
                 ].map(item=>(
                   <div key={item.label} style={{display:"flex",gap:16,padding:"18px 0",borderBottom:`1px solid ${C.border}`,alignItems:"flex-start"}}>

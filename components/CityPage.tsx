@@ -6,6 +6,7 @@ import SiteNav from '@/components/SiteNav'
 import { SiteFooter } from '@/components/SiteFooter'
 import { C, fonts, globalStyles } from '@/components/brand'
 import Counter from '@/components/Counter'
+import StatItem from '@/components/StatItem'
 import ProductGallery from '@/components/ProductGallery'
 import ProductsSection from '@/components/ProductsSection'
 import { ASSESSMENT_CATEGORIES } from '@/lib/assessment'
@@ -96,8 +97,18 @@ export default function CityPage({ city }: { city: CityData }) {
     { val: 50,  suffix: '+ yrs', label: 'Roof Lifespan' },
     { val: 35,  suffix: '%',     label: 'Insurance Savings' },
     { val: 25,  suffix: '%',     label: 'Energy Cost Reduction' },
-    { val: 5,   suffix: '%',     label: 'Resale Value Boost' },
-    { val: 137, suffix: '%',     label: 'ROI vs. Asphalt' },
+    { val: 55,  suffix: '%',     label: 'Cost Recouped at Resale' },
+    { val: 92, suffix: '%',     label: 'ROI vs. Asphalt', tooltip: [
+      { label: 'Time span', value: '20 years' },
+      { label: 'Roof size', value: '30 squares (~2,800 sf home)' },
+      { label: 'Home value', value: '$850,000' },
+      { label: '1 standing seam metal roof replacement', value: '$45,000' },
+      { label: 'Annual utilities', value: '$3,200' },
+      { label: 'Annual premiums', value: '$4,000' },
+      { label: '2 roof replacement deductibles (2% + 3%)', value: '$42,500' },
+      { label: 'Premium reduction', value: '35%' },
+      { label: 'Utility reduction', value: '25%' },
+    ], footnote: "Over 20 years, avoided replacement costs, insurance savings, and energy savings return about $1.92 for every $1 spent on your metal roof — nearly double your investment." },
   ]
 
   const steps = [
@@ -247,12 +258,7 @@ export default function CityPage({ city }: { city: CityData }) {
               <div className="inner grid-5">
                 {whyMetal.map((s, i) => (
                   <Reveal key={s.label} delay={i * 0.07}>
-                    <div style={{ padding: '44px 32px', borderRight: i < whyMetal.length - 1 ? `1px solid ${C.border}` : 'none', textAlign: 'center' }}>
-                      <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 'clamp(40px,4vw,52px)', fontWeight: 700, color: C.accent, lineHeight: 1, marginBottom: 8 }}>
-                        <Counter to={s.val} suffix={s.suffix}/>
-                      </div>
-                      <div style={{ fontSize: 10, letterSpacing: 2, textTransform: 'uppercase', color: C.muted }}>{s.label}</div>
-                    </div>
+                    <StatItem stat={s} showBorder={i < whyMetal.length - 1}/>
                   </Reveal>
                 ))}
               </div>
@@ -275,7 +281,7 @@ export default function CityPage({ city }: { city: CityData }) {
                 <div style={{ flex: 1, minWidth: 260 }}>
                   <div style={{ fontSize: 10, letterSpacing: 2, color: C.accent, textTransform: 'uppercase', marginBottom: 10 }}>The Metal Calculus</div>
                   <p style={{ fontSize: 14, color: C.mutedLight, lineHeight: 1.85, margin: 0 }}>
-                    A metal roof eliminates the replacement cycle entirely. Add carrier discounts, reduced energy costs, and eliminated deductible exposure over 20–30 years — and the upgrade typically pays for itself well within the life of the home. It also typically adds 4–6% to resale value while recouping 60–85% of installation cost at closing, per Remodeling magazine's Cost vs. Value report.
+                    A metal roof eliminates the replacement cycle entirely. Add carrier discounts, reduced energy costs, and eliminated deductible exposure over 20–30 years — and the upgrade typically pays for itself well within the life of the home. Metal roofs typically recoup 50–60% of installation cost at resale — and unlike asphalt, that return doesn't reset every 8–10 years with a full replacement, per Remodeling magazine's Cost vs. Value report.
                   </p>
                 </div>
               </div>
