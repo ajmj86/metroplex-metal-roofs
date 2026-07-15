@@ -212,24 +212,6 @@ export default function VisualizerPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step])
 
-  // ── Pre-fill from estimate page query params ───────────────────────────────
-  useEffect(() => {
-    if (typeof window === 'undefined') return
-    const params = new URLSearchParams(window.location.search)
-    if (!params.get('prefilled')) return
-    const fn = params.get('firstName') || ''
-    const ln = params.get('lastName') || ''
-    const ph = params.get('phone') || ''
-    const em = params.get('email') || ''
-    const addr = params.get('address') || ''
-    const rt = params.get('roofType') || ''
-    if (fn || ph) {
-      setGateData(d => ({ ...d, firstName: fn, lastName: ln, phone: ph, email: em }))
-    }
-    if (addr) { setAddress(addr); if (addrRef.current) addrRef.current.value = addr }
-    if (rt) setSelType(rt)
-  }, [])
-
   // ── Lightweight roofType/style/product/color prefill (products section CTAs) ──
   // Each param only gets applied if it resolves to a real option given the
   // ones already applied — an invalid/missing param just stops the chain
@@ -237,7 +219,6 @@ export default function VisualizerPage() {
   useEffect(() => {
     if (typeof window === 'undefined') return
     const params = new URLSearchParams(window.location.search)
-    if (params.get('prefilled')) return // already handled by the block above
 
     const rt = params.get('roofType')
     if (!rt || !(ROOF_TYPE_ORDER as readonly string[]).includes(rt)) return
