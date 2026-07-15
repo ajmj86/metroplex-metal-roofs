@@ -294,16 +294,16 @@ const stats = [
   {val:35,  suffix:"%",     label:"Insurance Savings"},
   {val:25,  suffix:"%",     label:"Energy Cost Reduction"},
   {val:55,  suffix:"%",     label:"Cost Recouped at Resale"},
-  {val:101, suffix:"%",     label:"ROI vs. Asphalt", tooltip:[
+  {val:92, suffix:"%",     label:"ROI vs. Asphalt", tooltip:[
     {label:"Time span", value:"20 years"},
     {label:"Roof size", value:"30 squares (~2,800 sf home)"},
     {label:"1 standing seam metal roof replacement", value:"$45,000"},
-    {label:"Annual utilities", value:"$4,017"},
+    {label:"Annual utilities", value:"$3,200"},
     {label:"Annual premiums", value:"$4,000"},
     {label:"2 roof replacements", value:"$42,500"},
     {label:"Premium reduction", value:"35%"},
     {label:"Utility reduction", value:"25%"},
-  ]},
+  ], footnote:"Over 20 years, avoided replacement costs, insurance savings, and energy savings return about $1.92 for every $1 spent on your metal roof — nearly double your investment."},
 ];
 const steps = [
   {n:"01",title:"Visualize Your Roof",   time:"~60 seconds",           href:"/visualizer",body:"Enter your address. Our AI visualizer pulls a street-level image of your home and renders it with your chosen metal roof style and color — before you commit to anything."},
