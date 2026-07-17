@@ -9,8 +9,9 @@ const CHARCOAL = '#2A2A2A';
 const MUTED = '#57534E';
 const BORDER = '#E7E0D2';
 
-const FRAUD_NOTICE =
-  'Important: Our payment instructions will never change via email. If you ever receive revised banking instructions or have any questions, please call us at our published office number to verify them before sending funds.';
+function fraudNotice(phone: string) {
+  return `WIRE FRAUD ALERT: We will never change these payment instructions via email. Before wiring funds, call our office at ${phone} to verbally confirm the account and routing numbers.`;
+}
 
 function drawHeader(doc: PDFKit.PDFDocument, pageWidth: number) {
   doc.rect(0, 0, pageWidth, 100).fill(GOLD);
@@ -56,6 +57,22 @@ function drawDivider(doc: PDFKit.PDFDocument) {
   doc.moveDown(1);
 }
 
+function drawButton(doc: PDFKit.PDFDocument, label: string, url: string) {
+  const x = doc.page.margins.left;
+  const width = doc.page.width - doc.page.margins.left - doc.page.margins.right;
+  const height = 46;
+  const y = doc.y;
+  doc.roundedRect(x, y, width, height, 4).fill(GOLD);
+  doc
+    .fillColor(BLACK)
+    .font('Helvetica-Bold')
+    .fontSize(13)
+    .text(label, x, y + 16, { width, align: 'center' });
+  doc.link(x, y, width, height, url);
+  doc.y = y + height;
+  doc.moveDown(1);
+}
+
 function drawInstructionsBox(doc: PDFKit.PDFDocument, text: string) {
   const x = doc.page.margins.left;
   const width = doc.page.width - doc.page.margins.left - doc.page.margins.right;
@@ -74,20 +91,55 @@ function drawInstructionsBox(doc: PDFKit.PDFDocument, text: string) {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { firstName, lastName, depositAmount } = body as {
+    const {
+      firstName,
+      lastName,
+      depositAmount,
+      password,
+      stripeLink,
+      wireReference,
+      verificationPhone,
+    } = body as {
       firstName?: string;
       lastName?: string;
       depositAmount?: string;
+      password?: string;
+      stripeLink?: string;
+      wireReference?: string;
+      verificationPhone?: string;
     };
 
     if (!depositAmount) {
       return NextResponse.json({ error: 'Missing required field: depositAmount' }, { status: 400 });
     }
+    if (!password) {
+      return NextResponse.json({ error: 'Missing required field: password' }, { status: 400 });
+    }
+    if (!stripeLink) {
+      return NextResponse.json({ error: 'Missing required field: stripeLink' }, { status: 400 });
+    }
 
-    const achInstructions = process.env.ACH_INSTRUCTIONS?.trim() || '{{ACH_INSTRUCTIONS}}';
-    const wireInstructions = process.env.WIRE_INSTRUCTIONS?.trim() || '{{WIRE_INSTRUCTIONS}}';
+    const bankName = process.env.WIRE_BANK_NAME?.trim() || 'PLACEHOLDER — bank name not configured yet';
+    const accountHolderName =
+      process.env.WIRE_ACCOUNT_HOLDER_NAME?.trim() || 'PLACEHOLDER — account holder name not configured yet';
+    const routingNumber = process.env.WIRE_ROUTING_NUMBER?.trim() || 'PLACEHOLDER — routing number not configured yet';
+    const accountNumber = process.env.WIRE_ACCOUNT_NUMBER?.trim() || 'PLACEHOLDER — account number not configured yet';
+    const bankDetails = [
+      `Bank Name: ${bankName}`,
+      `Account Holder: ${accountHolderName}`,
+      `Routing Number: ${routingNumber}`,
+      `Account Number: ${accountNumber}`,
+      `Reference / Memo: ${wireReference || 'N/A'}`,
+    ].join('\n');
+    const phone = verificationPhone?.trim() || '(817) 382-3338';
 
-    const doc = new PDFDocument({ size: 'LETTER', margins: { top: 130, bottom: 60, left: 50, right: 50 } });
+    const doc = new PDFDocument({
+      size: 'LETTER',
+      margins: { top: 130, bottom: 60, left: 50, right: 50 },
+      userPassword: password,
+      ownerPassword: randomUUID(),
+      permissions: { printing: 'highResolution', modifying: false, copying: false, annotating: false },
+    });
     const chunks: Buffer[] = [];
     doc.on('data', (chunk: Buffer) => chunks.push(chunk));
     const done = new Promise<Buffer>((resolve) => {
@@ -100,7 +152,7 @@ export async function POST(req: NextRequest) {
     doc.text(`Hi ${firstName || 'there'},`);
     doc.moveDown(0.5);
     doc.text(
-      'Congratulations on signing your contract! Below are your payment options for submitting your 50% deposit.',
+      'Congratulations on signing your contract! You can submit your 50% deposit any of three ways: pay securely online by card (and, once available, direct bank debit) using the button below, send a direct ACH bank transfer, or send a wire transfer. The ACH and wire options use the same bank details, provided below.',
       { width: doc.page.width - 100 }
     );
     doc.moveDown(1.2);
@@ -110,43 +162,48 @@ export async function POST(req: NextRequest) {
     doc.moveDown(1);
     drawDivider(doc);
 
-    drawSectionLabel(doc, 'Option 1 · ACH Bank Transfer');
+    drawButton(doc, 'Pay Deposit Online ->', stripeLink);
     doc
-      .fillColor(CHARCOAL)
+      .fillColor(MUTED)
       .font('Helvetica')
-      .fontSize(10)
-      .text('Lower/no fee. Typically 1–3 business days. Can potentially be reversed or disputed within a window.');
-    doc.moveDown(0.6);
-    drawInstructionsBox(doc, achInstructions);
+      .fontSize(9)
+      .text(
+        'Card payments are always accepted here. Once bank-debit (ACH) verification clears on our end, this same link will also accept direct bank transfers.'
+      );
+    doc.moveDown(1);
+    drawDivider(doc);
 
-    drawSectionLabel(doc, 'Option 2 · Wire Transfer');
+    drawSectionLabel(doc, 'Bank Transfer Details (ACH or Wire)');
     doc
       .fillColor(CHARCOAL)
       .font('Helvetica')
       .fontSize(10)
-      .text('Fee applies. Typically same-day. Generally irreversible once sent.');
+      .text(
+        'Prefer to send payment directly from your bank? ACH is typically lower/no fee and takes 1–3 business days; wire is typically same-day but a fee may apply and it is generally irreversible once sent. Both use the same account details below.'
+      );
     doc.moveDown(0.6);
-    drawInstructionsBox(doc, wireInstructions);
+    drawInstructionsBox(doc, bankDetails);
 
-    drawSectionLabel(doc, 'Option 3 · Check');
+    drawSectionLabel(doc, 'Check');
     doc
       .fillColor(CHARCOAL)
       .font('Helvetica')
       .fontSize(10)
-      .text('We also accept payment by check. Please contact us at (817) 382-3338 or help@metroplexmetalroofs.com to arrange delivery or mailing instructions.');
+      .text(`We also accept payment by check. Please contact us at ${phone} or help@metroplexmetalroofs.com to arrange delivery or mailing instructions.`);
     doc.moveDown(1.2);
 
     drawDivider(doc);
     const boxY = doc.y;
     const boxWidth = doc.page.width - doc.page.margins.left - doc.page.margins.right;
+    const notice = fraudNotice(phone);
     doc.font('Helvetica-Bold').fontSize(10);
-    const noticeHeight = doc.heightOfString(FRAUD_NOTICE, { width: boxWidth - 24 }) + 24;
+    const noticeHeight = doc.heightOfString(notice, { width: boxWidth - 24 }) + 24;
     doc.rect(doc.page.margins.left, boxY, boxWidth, noticeHeight).strokeColor(GOLD).lineWidth(1.5).stroke();
     doc
       .fillColor(CHARCOAL)
       .font('Helvetica-Bold')
       .fontSize(10)
-      .text(FRAUD_NOTICE, doc.page.margins.left + 12, boxY + 12, { width: boxWidth - 24 });
+      .text(notice, doc.page.margins.left + 12, boxY + 12, { width: boxWidth - 24 });
     doc.y = boxY + noticeHeight + 20;
 
     doc.moveTo(doc.page.margins.left, doc.y).lineTo(doc.page.width - doc.page.margins.right, doc.y).strokeColor(BORDER).stroke();
@@ -154,7 +211,7 @@ export async function POST(req: NextRequest) {
     doc.fillColor(CHARCOAL).font('Times-Roman').fontSize(11);
     doc.text('Andrew');
     doc.text('Metroplex Metal Roofs');
-    doc.text('(817) 382-3338');
+    doc.text(phone);
 
     doc.end();
     const pdfBuffer = await done;
