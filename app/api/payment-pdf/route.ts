@@ -94,23 +94,29 @@ export async function POST(req: NextRequest) {
     const {
       firstName,
       lastName,
+      amount,
       depositAmount,
       password,
       stripeLink,
       wireReference,
       verificationPhone,
+      paymentType,
     } = body as {
       firstName?: string;
       lastName?: string;
+      amount?: string;
       depositAmount?: string;
       password?: string;
       stripeLink?: string;
       wireReference?: string;
       verificationPhone?: string;
+      paymentType?: 'deposit' | 'final';
     };
+    const resolvedAmount = amount ?? depositAmount;
+    const isFinal = paymentType === 'final';
 
-    if (!depositAmount) {
-      return NextResponse.json({ error: 'Missing required field: depositAmount' }, { status: 400 });
+    if (!resolvedAmount) {
+      return NextResponse.json({ error: 'Missing required field: amount' }, { status: 400 });
     }
     if (!password) {
       return NextResponse.json({ error: 'Missing required field: password' }, { status: 400 });
@@ -152,17 +158,19 @@ export async function POST(req: NextRequest) {
     doc.text(`Hi ${firstName || 'there'},`);
     doc.moveDown(0.5);
     doc.text(
-      'Congratulations on signing your contract! You can submit your 50% deposit any of three ways: pay securely online by card (and, once available, direct bank debit) using the button below, send a direct ACH bank transfer, or send a wire transfer. The ACH and wire options use the same bank details, provided below.',
+      isFinal
+        ? 'Congratulations on completing your project! You can submit your final payment any of three ways: pay securely online by card (and, once available, direct bank debit) using the button below, send a direct ACH bank transfer, or send a wire transfer. The ACH and wire options use the same bank details, provided below.'
+        : 'Congratulations on signing your contract! You can submit your 50% deposit any of three ways: pay securely online by card (and, once available, direct bank debit) using the button below, send a direct ACH bank transfer, or send a wire transfer. The ACH and wire options use the same bank details, provided below.',
       { width: doc.page.width - 100 }
     );
     doc.moveDown(1.2);
 
-    drawSectionLabel(doc, '50% Deposit Due');
-    doc.fillColor(GOLD).font('Times-Roman').fontSize(20).text(`$${depositAmount}`);
+    drawSectionLabel(doc, isFinal ? 'Final Payment Due' : '50% Deposit Due');
+    doc.fillColor(GOLD).font('Times-Roman').fontSize(20).text(`$${resolvedAmount}`);
     doc.moveDown(1);
     drawDivider(doc);
 
-    drawButton(doc, 'Pay Deposit Online ->', stripeLink);
+    drawButton(doc, isFinal ? 'Pay Final Payment Online ->' : 'Pay Deposit Online ->', stripeLink);
     doc
       .fillColor(MUTED)
       .font('Helvetica')
