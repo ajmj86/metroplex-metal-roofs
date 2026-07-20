@@ -33,6 +33,31 @@ async function fireRenderEmailWebhook(payload: Record<string, unknown>): Promise
   }
 }
 
+// Same GHL contactId + conversations/messages SMS pattern as n8n Workflow 5
+// ("New Lead Alert SMS"), called directly since this failure happens before
+// any n8n workflow would ever get invoked.
+const ANDREW_CONTACT_ID = 'cIvwP7gZ7JQX45gmU23Z';
+
+async function alertAndrewOfRenderFailure(details: { firstName?: string; email?: string; address: string }): Promise<void> {
+  const apiKey = process.env.GHL_API_KEY;
+  if (!apiKey) { console.warn('[render] GHL_API_KEY not set — could not send failure alert'); return }
+  const message = `⚠ Visualizer render failed for ${details.firstName || 'a lead'} (${details.email || 'no email'}) at ${details.address}. Check Vercel logs.`;
+  try {
+    const res = await fetch('https://services.leadconnectorhq.com/conversations/messages', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        Version: '2021-07-28',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ contactId: ANDREW_CONTACT_ID, type: 'SMS', message }),
+    });
+    if (!res.ok) console.error('[render] alertAndrewOfRenderFailure got non-OK response:', res.status, await res.text());
+  } catch (err) {
+    console.error('[render] alertAndrewOfRenderFailure failed:', err);
+  }
+}
+
 async function fetchAsFile(url: string, filename: string): Promise<File> {
   const res = await fetch(url);
   if (!res.ok) throw new Error(`Failed to fetch ${filename}: status ${res.status}`);
@@ -208,6 +233,10 @@ export async function POST(req: NextRequest) {
     const image = await generateImage(inputs, expandedPrompt);
 
     if (!image) {
+      console.error('[render] FAILURE — no image produced, lead notified but no email will follow', {
+        address, email, firstName, roofType, color,
+      });
+      after(() => alertAndrewOfRenderFailure({ firstName, email, address }));
       return NextResponse.json({ error: 'Render failed' }, { status: 500 });
     }
 

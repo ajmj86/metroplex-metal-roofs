@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { useState, useRef, useEffect } from 'react'
-import { C, fonts, globalStyles } from '@/components/brand'
+import { C, fonts, globalStyles, PHONE, EMAIL } from '@/components/brand'
 import SiteNav from '@/components/SiteNav'
 import { SiteFooter } from '@/components/SiteFooter'
 import {
@@ -207,12 +207,23 @@ export default function VisualizerPage() {
         })
         const data = await res.json()
         if (!cancelled) {
-          // render route returns data.image (not data.renderUrl)
-          setRenderUrl(data.image ?? null)
+          // render route returns data.image (not data.renderUrl) on success.
+          // A non-2xx status or a missing image both mean generation failed —
+          // don't assume success just because the fetch itself didn't throw.
+          if (res.ok && data.image) {
+            setRenderUrl(data.image)
+          } else {
+            console.error('[visualizer] render request failed:', res.status, data?.error)
+            setRenderUrl(null)
+          }
           setStep('results')
         }
-      } catch {
-        if (!cancelled) { setRenderUrl(null); setStep('results') }
+      } catch (err) {
+        if (!cancelled) {
+          console.error('[visualizer] render request threw:', err)
+          setRenderUrl(null)
+          setStep('results')
+        }
       }
     })()
     return () => { cancelled = true }
@@ -1004,7 +1015,9 @@ export default function VisualizerPage() {
                 <img src={renderUrl} alt="AI roof visualization" style={{ width: '100%', borderRadius: 8, display: 'block', marginBottom: 16, border: `1px solid ${C.border}` }} />
               ) : (
                 <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 8, padding: '48px 32px', textAlign: 'center', marginBottom: 16 }}>
-                  <div style={{ fontSize: 14, color: C.muted }}>Visualization processing — you&apos;ll receive it by email shortly.</div>
+                  <div style={{ fontSize: 14, color: C.muted }}>
+                    We hit an issue generating your visualization. Please try again in a few minutes, or contact us at {PHONE} or {EMAIL} and we&apos;ll take care of it.
+                  </div>
                 </div>
               )}
               <p style={{ fontSize: 11, color: C.muted, lineHeight: 1.7, marginBottom: 24, fontStyle: 'italic' }}>
