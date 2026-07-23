@@ -7,7 +7,11 @@ type RoofTypeKey = keyof typeof pricingConfig.roofTypes
 
 type RoofTypeConfig = {
   label: string
-  retailPerSquare: number
+  retailPerSquare?: number
+  retailPerSquareMetallic?: number
+  retailPerSquareStandard?: number
+  metallicColors?: string[]
+  noPriceEstimate?: boolean
   pitchAdjustment: boolean
   wasteFactor: number
   pitchSurchargePerLevel?: number
@@ -22,15 +26,26 @@ function getPriceFingerprint(seed: string): number {
   return (Math.abs(hash) % 85) / 100 + 0.13
 }
 
+// Standing Seam prices by metallicColors membership (e.g. "Natural Metal");
+// every other roof type has a single flat retailPerSquare.
+function resolveRetailPerSquare(config: RoofTypeConfig, color?: string): number {
+  if (config.retailPerSquareMetallic != null && config.retailPerSquareStandard != null) {
+    const isMetallic = !!color && (config.metallicColors ?? []).includes(color)
+    return isMetallic ? config.retailPerSquareMetallic : config.retailPerSquareStandard
+  }
+  return config.retailPerSquare ?? 0
+}
+
 // Returns raw numbers instead of pre-formatted USD strings so formatDollars()
 // below can do its own whole-dollar formatting.
 function calculateEstimate(
   squares: number,
   config: RoofTypeConfig,
   pitchLevel: number,
-  fingerprintSeed: string
+  fingerprintSeed: string,
+  color: string | undefined
 ) {
-  let pricePerSquare = config.retailPerSquare
+  let pricePerSquare = resolveRetailPerSquare(config, color)
   if (config.pitchAdjustment && config.pitchSurchargePerLevel != null) {
     pricePerSquare += pitchLevel * config.pitchSurchargePerLevel
   }
@@ -51,10 +66,44 @@ function formatDollars(n: number): string {
   return '$' + Math.round(n).toLocaleString('en-US')
 }
 
+// Roof types like Copper have no price estimate at all (tariffs/material
+// shortages) — callers get estimateMessage instead of estimateLow/estimateHigh,
+// never a $0 or blank range.
+function buildPriceFields(
+  squares: number,
+  config: RoofTypeConfig,
+  pitchLevel: number,
+  fingerprintSeed: string,
+  color: string | undefined
+) {
+  if (config.noPriceEstimate) {
+    return {
+      estimateLow: null,
+      estimateHigh: null,
+      noPriceEstimate: true as const,
+      estimateMessage: pricingConfig.noPriceEstimateMessage,
+    }
+  }
+  const result = calculateEstimate(squares, config, pitchLevel, fingerprintSeed, color)
+  return {
+    estimateLow: formatDollars(result.low),
+    estimateHigh: formatDollars(result.high),
+    noPriceEstimate: false as const,
+    estimateMessage: null,
+  }
+}
+
 type SolarFailureReason = 'geocode_failed' | 'no_roof_data' | 'area_out_of_range' | 'exception'
 
 function emptyResult(solarFailureReason?: SolarFailureReason) {
-  return { squares: null, estimateLow: null, estimateHigh: null, solarFailureReason: solarFailureReason ?? null }
+  return {
+    squares: null,
+    estimateLow: null,
+    estimateHigh: null,
+    noPriceEstimate: false,
+    estimateMessage: null,
+    solarFailureReason: solarFailureReason ?? null,
+  }
 }
 
 // Manual fallback: same story-count-to-footprint heuristic as the old
@@ -74,6 +123,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json()
     address = body?.address
     const roofType: string | undefined = body?.roofType
+    const color: string | undefined = body?.color
     const manualSqFt: number | undefined = body?.manualSqFt != null ? Number(body.manualSqFt) : undefined
     const stories: string | undefined = body?.stories
 
@@ -84,16 +134,15 @@ export async function POST(req: NextRequest) {
     const config = pricingConfig.roofTypes[roofType as RoofTypeKey] as RoofTypeConfig
 
     // Manual fallback path — bypasses geocode/Solar entirely. Uses the same
-    // calculateEstimate() and live config/pricing.json as the Solar path, so
+    // buildPriceFields() and live config/pricing.json as the Solar path, so
     // pricing always stays in sync between the two; only the squares input
     // differs.
     if (manualSqFt != null && !Number.isNaN(manualSqFt) && manualSqFt > 0) {
       const squares = squaresFromManualSqFt(manualSqFt, stories)
-      const result = calculateEstimate(squares, config, 0, `manual-${manualSqFt}`)
+      const priceFields = buildPriceFields(squares, config, 0, `manual-${manualSqFt}`, color)
       return NextResponse.json({
         squares: Math.round(squares * 10) / 10,
-        estimateLow: formatDollars(result.low),
-        estimateHigh: formatDollars(result.high),
+        ...priceFields,
         solarFailureReason: null,
       })
     }
@@ -140,12 +189,11 @@ export async function POST(req: NextRequest) {
     )
     const pitchLevel = Math.max(0, Math.round((largestSegment.pitchDegrees ?? 0) / 4.76) - 7)
 
-    const result = calculateEstimate(squares, config, pitchLevel, address)
+    const priceFields = buildPriceFields(squares, config, pitchLevel, address, color)
 
     return NextResponse.json({
       squares: Math.round(squares * 10) / 10,
-      estimateLow: formatDollars(result.low),
-      estimateHigh: formatDollars(result.high),
+      ...priceFields,
       solarFailureReason: null,
     })
   } catch (err) {

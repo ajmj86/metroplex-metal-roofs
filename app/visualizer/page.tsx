@@ -140,6 +140,8 @@ export default function VisualizerPage() {
   const [roofSquares, setRoofSquares] = useState<number | null>(null)
   const [estimateLow, setEstimateLow] = useState<string | null>(null)
   const [estimateHigh, setEstimateHigh] = useState<string | null>(null)
+  const [noPriceEstimate, setNoPriceEstimate] = useState(false)
+  const [estimateMessage, setEstimateMessage] = useState<string | null>(null)
   const [solarFailureReason, setSolarFailureReason] = useState<string | null>(null)
 
   // manual square-footage fallback (shown at results when Solar comes back empty)
@@ -202,7 +204,7 @@ export default function VisualizerPage() {
             color: selColor,
             firstName: gateData.firstName,
             email: gateData.email,
-            estimateRange: estimateLow && estimateHigh ? `${estimateLow} - ${estimateHigh}` : '',
+            estimateRange: noPriceEstimate ? (estimateMessage ?? '') : (estimateLow && estimateHigh ? `${estimateLow} - ${estimateHigh}` : ''),
           }),
         })
         const data = await res.json()
@@ -366,17 +368,21 @@ export default function VisualizerPage() {
     let squares: number | null = null
     let low: string | null = null
     let high: string | null = null
+    let noPrice = false
+    let message: string | null = null
     let failureReason: string | null = null
     try {
       const roofRes = await fetch('/api/roof-size', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ address, roofType: selType }),
+        body: JSON.stringify({ address, roofType: selType, color: selColor }),
       })
       const roofData = await roofRes.json()
       squares = roofData.squares
       low = roofData.estimateLow
       high = roofData.estimateHigh
+      noPrice = roofData.noPriceEstimate ?? false
+      message = roofData.estimateMessage ?? null
       failureReason = roofData.solarFailureReason ?? null
     } catch {
       // non-blocking — continue to lead-intake regardless
@@ -384,6 +390,8 @@ export default function VisualizerPage() {
     setRoofSquares(squares)
     setEstimateLow(low)
     setEstimateHigh(high)
+    setNoPriceEstimate(noPrice)
+    setEstimateMessage(message)
     setSolarFailureReason(failureReason)
 
     try {
@@ -410,7 +418,7 @@ export default function VisualizerPage() {
           leadOrigin: 'visualizer',
           utm: { source: utmSource, medium: utmMedium, campaign: utmCampaign },
           estimatedRoofSize: squares,
-          estimateRange: low && high ? `${low} - ${high}` : undefined,
+          estimateRange: noPrice ? (message ?? undefined) : (low && high ? `${low} - ${high}` : undefined),
           solarFailureReason: failureReason ?? undefined,
           roofSizeSource: squares != null ? 'solar' : undefined,
         }),
@@ -436,16 +444,18 @@ export default function VisualizerPage() {
       const res = await fetch('/api/roof-size', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ roofType: selType, manualSqFt: sqFt, stories: manualStories || 'unknown' }),
+        body: JSON.stringify({ roofType: selType, color: selColor, manualSqFt: sqFt, stories: manualStories || 'unknown' }),
       })
       const data = await res.json()
-      if (data.squares == null || !data.estimateLow || !data.estimateHigh) {
+      if (data.squares == null || (!data.noPriceEstimate && (!data.estimateLow || !data.estimateHigh))) {
         setManualError('Something went wrong calculating your estimate. Please try again.')
         return
       }
       setRoofSquares(data.squares)
       setEstimateLow(data.estimateLow)
       setEstimateHigh(data.estimateHigh)
+      setNoPriceEstimate(data.noPriceEstimate ?? false)
+      setEstimateMessage(data.estimateMessage ?? null)
 
       const utmSource = sessionStorage.getItem('utm_source') || ''
       const utmMedium = sessionStorage.getItem('utm_medium') || ''
@@ -472,7 +482,7 @@ export default function VisualizerPage() {
           leadOrigin: 'visualizer',
           utm: { source: utmSource, medium: utmMedium, campaign: utmCampaign },
           estimatedRoofSize: data.squares,
-          estimateRange: `${data.estimateLow} - ${data.estimateHigh}`,
+          estimateRange: data.noPriceEstimate ? (data.estimateMessage ?? undefined) : `${data.estimateLow} - ${data.estimateHigh}`,
           roofSizeSource: 'manual',
           suppressAlert: true,
         }),
@@ -779,6 +789,12 @@ export default function VisualizerPage() {
                 </div>
               )}
 
+              {selType === 'standing_seam' && (
+                <p style={{ fontSize: 11, color: C.muted, fontStyle: 'italic', lineHeight: 1.5, marginBottom: 20 }}>
+                  Standing seam panels are standard 24-gauge steel — a premium, highly durable choice resistant to dents, wind uplift, and oil canning. Fastening system (snaplock or double mechanical lock) is matched to your roof&apos;s slope during final measurement.
+                </p>
+              )}
+
               <button
                 onClick={() => {
                   window.scrollTo(0, 0)
@@ -1033,7 +1049,12 @@ export default function VisualizerPage() {
                   This range is a general estimate based on roof size. Final investment may vary based on inspection of current roof condition, precise measurements, slope, and materials tailored to your individualized roofing system.
                 </p>
               )}
-              {!estimateLow && !estimateHigh && solarFailureReason && (
+              {noPriceEstimate && (
+                <p style={{ color: C.accent, fontFamily: "'Cormorant Garamond',serif", fontSize: 18, textAlign: 'center', marginBottom: 16, lineHeight: 1.5 }}>
+                  {estimateMessage}
+                </p>
+              )}
+              {!estimateLow && !estimateHigh && !noPriceEstimate && solarFailureReason && (
                 <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 8, padding: 'clamp(20px,4vw,28px)', marginBottom: 16 }}>
                   <p style={{ fontSize: 13, color: C.mutedLight, lineHeight: 1.7, marginBottom: 20 }}>
                     We weren&apos;t able to automatically pull roof measurements for your address. Enter your home&apos;s approximate square footage below and we&apos;ll calculate your estimate.

@@ -2,7 +2,9 @@
   "roofTypes": {
     "standing_seam": {
       "label": "Standing Seam",
-      "retailPerSquare": 1500,
+      "retailPerSquareMetallic": 1199.97,
+      "retailPerSquareStandard": 1399.97,
+      "metallicColors": ["Natural Metal"],
       "pitchAdjustment": true,
       "basePitch": 7,
       "pitchSurchargePerLevel": 100,
@@ -10,7 +12,7 @@
     },
     "copper_standing_seam": {
       "label": "Copper Standing Seam",
-      "retailPerSquare": 3200,
+      "noPriceEstimate": true,
       "pitchAdjustment": true,
       "basePitch": 7,
       "pitchSurchargePerLevel": 100,
@@ -18,13 +20,13 @@
     },
     "r_panel": {
       "label": "R-Panel",
-      "retailPerSquare": 1800,
+      "retailPerSquare": 949.97,
       "pitchAdjustment": false,
       "wasteFactor": 0.08
     },
     "stone_coated_steel": {
       "label": "Stone-Coated Steel",
-      "retailPerSquare": 1800,
+      "retailPerSquare": 1499.97,
       "pitchAdjustment": false,
       "wasteFactor": 0.12
     }
@@ -36,5 +38,6 @@
   "estimateRange": {
     "lowMultiplier": 0.93,
     "highMultiplier": 1.10
-  }
+  },
+  "noPriceEstimateMessage": "Due to tariffs and material shortages, contact a representative to discuss tailored pricing."
 }
