@@ -790,7 +790,7 @@ export default function VisualizerPage() {
               )}
 
               {selType === 'standing_seam' && (
-                <p style={{ fontSize: 11, color: C.muted, fontStyle: 'italic', lineHeight: 1.5, marginBottom: 20 }}>
+                <p style={{ fontSize: 13, color: C.muted, fontStyle: 'italic', lineHeight: 1.5, marginBottom: 20 }}>
                   Standing seam panels are standard 24-gauge steel — a premium, highly durable choice resistant to dents, wind uplift, and oil canning. Fastening system (snaplock or double mechanical lock) is matched to your roof&apos;s slope during final measurement.
                 </p>
               )}
@@ -1032,7 +1032,7 @@ export default function VisualizerPage() {
               ) : (
                 <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 8, padding: '48px 32px', textAlign: 'center', marginBottom: 16 }}>
                   <div style={{ fontSize: 14, color: C.muted }}>
-                    We hit an issue generating your visualization. Please try again in a few minutes, or contact us at {PHONE} or {EMAIL} and we&apos;ll take care of it.
+                    We hit an issue generating your visualization. Please try again in a few minutes, or contact us at {PHONE} or {EMAIL}{' '}and we&apos;ll take care of it.
                   </div>
                 </div>
               )}
