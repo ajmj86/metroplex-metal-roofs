@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { formatFormValue } from '@/lib/formatFormValue';
 import { getRoofTypeLabel } from '@/lib/roofProducts';
+import { signVisitorToken } from '@/lib/visitorToken';
+
+const VISITOR_COOKIE = 'mmr_visitor';
 
 export const maxDuration = 30;
 
@@ -106,7 +109,30 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Lead intake workflow failed' }, { status: 502 });
     }
 
-    return NextResponse.json({ success: true });
+    const res = NextResponse.json({ success: true });
+
+    // Issue the returning-visitor cookie on real (non-partial) submissions only —
+    // partial/beforeunload captures and the visualizer_render email-only calls
+    // never reach this branch (see payload.partial above), so this only fires
+    // for a completed contact/opportunity submission.
+    if (body.partial !== true) {
+      try {
+        const n8nJson = JSON.parse(n8nBody);
+        if (n8nJson?.contactId) {
+          res.cookies.set(VISITOR_COOKIE, signVisitorToken(n8nJson.contactId), {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'lax',
+            maxAge: 60 * 60 * 24 * 180,
+            path: '/',
+          });
+        }
+      } catch (err) {
+        console.error('[lead-intake] failed to parse n8n response for cookie issuance:', err);
+      }
+    }
+
+    return res;
   } catch (err) {
     console.error('[lead-intake]', err);
     return NextResponse.json({ error: 'Failed to submit lead' }, { status: 500 });

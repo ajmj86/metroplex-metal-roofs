@@ -15,7 +15,7 @@ import {
   type ColorOption,
 } from '@/lib/roofProducts'
 
-type Step = 'address' | 'select' | 'gate' | 'loading' | 'results'
+type Step = 'checking' | 'welcome-back' | 'address' | 'select' | 'gate' | 'loading' | 'results'
 
 const STEP_LABELS = ['Address', 'Roof Type', 'About You', 'Rendering', 'Results']
 const STEP_KEYS: Step[] = ['address', 'select', 'gate', 'loading', 'results']
@@ -105,7 +105,22 @@ const GATE_SCREENS: GateScreen[] = [
 ]
 
 export default function VisualizerPage() {
-  const [step, setStep] = useState<Step>('address')
+  const [step, setStep] = useState<Step>('checking')
+
+  // returning-visitor recognition (cookie-based, with an email/phone lookup
+  // fallback) — see app/api/returning-visitor/route.ts and .../lookup/route.ts
+  const [returningContact, setReturningContact] = useState<{
+    contactId: string; firstName: string; phone: string; email: string; address: string
+  } | null>(null)
+  // true only when the user confirms "yes, same address" from the welcome-back
+  // screen (Case A) — false for a first-time visitor and for a returning
+  // visitor who picked "not this property" (Case B), both of which go through
+  // the normal address+gate flow.
+  const [returningSameAddress, setReturningSameAddress] = useState(false)
+  const [showLookup, setShowLookup] = useState(false)
+  const [lookupValue, setLookupValue] = useState('')
+  const [lookupSubmitting, setLookupSubmitting] = useState(false)
+  const [lookupError, setLookupError] = useState('')
 
   // address step
   const [address, setAddress] = useState('')
@@ -133,6 +148,11 @@ export default function VisualizerPage() {
   const [gateLoading, setGateLoading] = useState(false)
   // tracks which choice was just selected (for animation flash)
   const [pendingChoice, setPendingChoice] = useState<string | null>(null)
+  // Case B auto-submit trigger (recognized contact, skips the contact-info
+  // screen) — set by handleChoice, consumed by the effect below. Routing
+  // through state rather than calling handleContactSubmit directly from the
+  // gate-choice click handler keeps that handler free of any ref access.
+  const [autoSubmitData, setAutoSubmitData] = useState<GateData | null>(null)
 
   // loading / results
   const [phraseIdx, setPhraseIdx] = useState(0)
@@ -178,6 +198,31 @@ export default function VisualizerPage() {
     document.head.appendChild(s)
     return () => s.removeEventListener('load', attach)
   }, [step])
+
+  // ── Silent returning-visitor check (cookie-only) ────────────────────────────
+  // Runs once on mount, before anything else renders (step starts at
+  // 'checking' specifically so a first-time visitor — the common case — never
+  // sees a flash of the address form before this resolves).
+  useEffect(() => {
+    let cancelled = false
+    ;(async () => {
+      try {
+        const res = await fetch('/api/returning-visitor')
+        const data = await res.json()
+        if (!cancelled && data.recognized) {
+          setReturningContact(data)
+          setAddress(data.address)
+          setGateData(d => ({ ...d, firstName: data.firstName, phone: data.phone, email: data.email }))
+          setStep('welcome-back')
+          return
+        }
+      } catch {
+        // silently fall through to the normal first-time flow
+      }
+      if (!cancelled) setStep('address')
+    })()
+    return () => { cancelled = true }
+  }, [])
 
   // ── Rotate loading phrases every 15s ──────────────────────────────────────
   useEffect(() => {
@@ -231,6 +276,17 @@ export default function VisualizerPage() {
     return () => { cancelled = true }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step])
+
+  // ── Case B auto-submit (recognized contact, skips the contact-info screen) ──
+  // See handleChoice / autoSubmitData above. autoSubmitData is set at most
+  // once per visit (only from handleChoice's last-screen branch), so this
+  // effect fires exactly once on that transition — no need to reset it back
+  // to null afterward.
+  useEffect(() => {
+    if (!autoSubmitData) return
+    handleContactSubmit(autoSubmitData)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [autoSubmitData])
 
   // ── Lightweight roofType/style/product/color prefill (products section CTAs) ──
   // Each param only gets applied if it resolves to a real option given the
@@ -322,13 +378,62 @@ export default function VisualizerPage() {
     }
   }
 
+  // Fallback recognition path for a new device / cleared cookie — see
+  // app/api/returning-visitor/lookup/route.ts. On a match it behaves the same
+  // as the silent cookie check: fetch display data and show 'welcome-back'.
+  async function handleLookup() {
+    const value = lookupValue.trim()
+    if (!value) { setLookupError('Enter your email or phone number.'); return }
+    setLookupSubmitting(true)
+    setLookupError('')
+    try {
+      const isEmail = value.includes('@')
+      const res = await fetch('/api/returning-visitor/lookup', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(isEmail ? { email: value } : { phone: value }),
+      })
+      const data = await res.json()
+      if (data.matched) {
+        const rvRes = await fetch('/api/returning-visitor')
+        const rvData = await rvRes.json()
+        if (rvData.recognized) {
+          setReturningContact(rvData)
+          setAddress(rvData.address)
+          setGateData(d => ({ ...d, firstName: rvData.firstName, phone: rvData.phone, email: rvData.email }))
+          setStep('welcome-back')
+          return
+        }
+      }
+      setLookupError("We couldn't find a match — you can start a new rendering below.")
+    } catch {
+      setLookupError('Something went wrong. Please try again.')
+    } finally {
+      setLookupSubmitting(false)
+    }
+  }
+
   function handleChoice(field: keyof GateData, value: string) {
     setPendingChoice(value)
-    setGateData(d => ({ ...d, [field]: value }))
+    // Compute the merged object explicitly rather than relying on the
+    // `gateData` state variable being fresh by the time the timeout below
+    // fires — needed because a recognized returning contact (Case B) submits
+    // directly from this same tick sequence, before a re-render would have
+    // updated the closed-over `gateData`.
+    const updated = { ...gateData, [field]: value }
+    setGateData(updated)
     setTimeout(() => {
       setPendingChoice(null)
-      setGateScreen(s => s + 1)
-      setTimeout(() => window.scrollTo(0, 0), 0)
+      // A recognized contact already has name/phone/email — skip straight to
+      // submit after the last GATE_SCREENS choice instead of showing the
+      // contact-info screen (gateScreen 4) again. Routed through state (rather
+      // than calling handleContactSubmit directly here) so the effect below —
+      // not this click handler — owns triggering it.
+      if (gateScreen === GATE_SCREENS.length - 1 && returningContact) {
+        setAutoSubmitData(updated)
+      } else {
+        setGateScreen(s => s + 1)
+        setTimeout(() => window.scrollTo(0, 0), 0)
+      }
     }, 220)
   }
 
@@ -339,29 +444,34 @@ export default function VisualizerPage() {
     return `(${digits.slice(0,3)}) ${digits.slice(3,6)}-${digits.slice(6)}`
   }
 
-  function validateContact() {
+  function validateContact(data: GateData = gateData) {
     const e: Record<string, string> = {}
 
-    if (!gateData.firstName.trim())
+    if (!data.firstName.trim())
       e.firstName = 'Required'
 
-    const digits = gateData.phone.replace(/\D/g, '')
-    if (!gateData.phone.trim())
+    const digits = data.phone.replace(/\D/g, '')
+    if (!data.phone.trim())
       e.phone = 'Required'
     else if (digits.length !== 10)
       e.phone = 'Enter a valid 10-digit phone number'
 
-    if (!gateData.email.trim())
+    if (!data.email.trim())
       e.email = 'Required'
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(gateData.email.trim()))
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(data.email.trim()))
       e.email = 'Enter a valid email address'
 
     return e
   }
 
-  async function handleContactSubmit() {
+  // overrideGateData: used only by handleChoice's Case-B auto-submit (skips
+  // the contact-info screen for a recognized returning contact), so the
+  // just-selected timeline value is used immediately rather than waiting for
+  // the `gateData` state to catch up on the next render.
+  async function handleContactSubmit(overrideGateData?: GateData) {
+    const data = overrideGateData ?? gateData
     gateSubmittedRef.current = true
-    const e = validateContact()
+    const e = validateContact(data)
     if (Object.keys(e).length) { setContactErrors(e); return }
     setGateLoading(true)
 
@@ -401,17 +511,17 @@ export default function VisualizerPage() {
       await fetch('/api/lead-intake', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          firstName: gateData.firstName,
-          lastName: gateData.lastName,
-          phone: gateData.phone,
-          email: gateData.email,
-          smsConsent: gateData.smsConsent,
-          emailConsent: gateData.emailConsent,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          phone: data.phone,
+          email: data.email,
+          smsConsent: data.smsConsent,
+          emailConsent: data.emailConsent,
           address,
-          currentRoofType: gateData.currentRoofType,
-          reason: gateData.reason,
-          insuranceClaim: gateData.insuranceClaim,
-          timeline: gateData.timeline,
+          currentRoofType: data.currentRoofType,
+          reason: data.reason,
+          insuranceClaim: data.insuranceClaim,
+          timeline: data.timeline,
           selectedRoofType: selType,
           product: selProduct,
           color: selColor,
@@ -423,12 +533,72 @@ export default function VisualizerPage() {
           roofSizeSource: squares != null ? 'solar' : undefined,
         }),
       })
+
+      // Case B only (returning contact, different address — see the
+      // welcome-back / "not this property" flow): n8n's own opportunity
+      // dedupe is contact-only, not address-aware, so it would reuse the
+      // existing opportunity instead of creating a new one for this property.
+      // Called strictly after /api/lead-intake resolves so n8n's own dedupe
+      // search has already completed — no race between the two writes.
+      if (returningContact) {
+        await fetch('/api/create-opportunity', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contactId: returningContact.contactId,
+            firstName: data.firstName,
+            lastName: data.lastName,
+            address,
+            reason: data.reason,
+            timeline: data.timeline,
+          }),
+        }).catch(() => { /* non-blocking — lead-intake already succeeded */ })
+      }
     } catch { /* advance anyway */ }
     finally {
       setGateLoading(false)
       setPhraseIdx(0)
       setStep('loading')
     }
+  }
+
+  // ── Case A: recognized contact, confirmed same address ──────────────────────
+  // Skips the whole gate step (roof condition/reason/insurance/timeline are
+  // property-specific and already on file) and — critically — never calls
+  // /api/lead-intake, so nothing is written back to the contact's stored GHL
+  // fields or the opportunity. /api/render's existing visualizer_render
+  // webhook branch (contact search + send email, no contact/opportunity
+  // writes) handles the branded email exactly as it already does for a
+  // first-time render.
+  async function handleReturningSameAddressSubmit() {
+    setGateLoading(true)
+    let squares: number | null = null
+    let low: string | null = null
+    let high: string | null = null
+    let noPrice = false
+    let message: string | null = null
+    try {
+      const roofRes = await fetch('/api/roof-size', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ address, roofType: selType, color: selColor }),
+      })
+      const roofData = await roofRes.json()
+      squares = roofData.squares
+      low = roofData.estimateLow
+      high = roofData.estimateHigh
+      noPrice = roofData.noPriceEstimate ?? false
+      message = roofData.estimateMessage ?? null
+    } catch {
+      // non-blocking — render step still proceeds without a price
+    }
+    setRoofSquares(squares)
+    setEstimateLow(low)
+    setEstimateHigh(high)
+    setNoPriceEstimate(noPrice)
+    setEstimateMessage(message)
+    setGateLoading(false)
+    setPhraseIdx(0)
+    setStep('loading')
   }
 
   // ── Manual square-footage fallback (Solar came back empty) ─────────────────
@@ -539,9 +709,9 @@ export default function VisualizerPage() {
       `}</style>
       <div style={{ background: C.black, minHeight: '100vh', color: C.white, fontFamily: "'Outfit',system-ui,sans-serif" }}>
 
-        {(step === 'address' || step === 'results') && <SiteNav/>}
+        {(step === 'address' || step === 'welcome-back' || step === 'results') && <SiteNav/>}
 
-        <div style={{ maxWidth: 700, margin: '0 auto', padding: 'clamp(40px,6vw,72px) clamp(20px,5vw,48px) 120px', paddingTop: step === 'address' || step === 'results' ? 'clamp(108px,12vw,140px)' : 40 }}>
+        <div style={{ maxWidth: 700, margin: '0 auto', padding: 'clamp(40px,6vw,72px) clamp(20px,5vw,48px) 120px', paddingTop: step === 'address' || step === 'welcome-back' || step === 'results' ? 'clamp(108px,12vw,140px)' : 40 }}>
 
           {/* ── step indicator ── */}
           {(
@@ -595,6 +765,30 @@ export default function VisualizerPage() {
           )}
 
           {/* ── address ── */}
+          {/* ── welcome back (recognized returning contact) ── */}
+          {step === 'welcome-back' && returningContact && (
+            <div style={{ animation: 'vfade 0.3s ease', textAlign: 'center' }}>
+              <div style={{ fontSize: 13, letterSpacing: 4, color: C.accent, textTransform: 'uppercase', marginBottom: 20, fontWeight: 600 }}>Welcome Back</div>
+              <h1 style={{ fontFamily: "'Cormorant Garamond',Georgia,serif", fontSize: 'clamp(1.8rem,4vw,2.6rem)', fontWeight: 700, color: C.white, lineHeight: 1.25, marginBottom: 16 }}>
+                Hi {returningContact.firstName || 'there'} — still at<br/><span style={{ color: C.accent }}>{returningContact.address}</span>?
+              </h1>
+              <p style={{ fontSize: 15, color: C.mutedLight, lineHeight: 1.8, maxWidth: 460, margin: '0 auto 32px' }}>
+                See it in a different material or color — no need to re-answer everything.
+              </p>
+              <button
+                onClick={() => { setReturningSameAddress(true); handleVisualize() }}
+                disabled={locating}
+                style={{ width: '100%', maxWidth: 420, margin: '0 auto', display: 'block', padding: '16px', background: C.accent, color: C.black, fontSize: 12, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 700, borderRadius: 4, opacity: locating ? 0.45 : 1, border: 'none', cursor: locating ? 'not-allowed' : 'pointer', fontFamily: "'Outfit',sans-serif", marginBottom: 16, transition: 'background 0.2s' }}
+                onMouseEnter={e => { if (!locating) e.currentTarget.style.background = C.accentLight }}
+                onMouseLeave={e => { e.currentTarget.style.background = C.accent }}
+              >{locating ? 'Locating…' : 'Yes — Try a Different Color →'}</button>
+              <button
+                onClick={() => { setReturningSameAddress(false); setAddress(''); setStep('address') }}
+                style={{ fontSize: 11, color: C.muted, letterSpacing: 1, textTransform: 'uppercase', cursor: 'pointer', background: 'none', border: 'none', padding: 0, textDecoration: 'underline', fontFamily: "'Outfit',sans-serif" }}
+              >Not this property? Enter a different address</button>
+            </div>
+          )}
+
           {step === 'address' && (
             <div style={{ animation: 'vfade 0.3s ease' }}>
               <div style={{ textAlign: 'center', marginBottom: 64 }}>
@@ -636,6 +830,31 @@ export default function VisualizerPage() {
                 </div>
               )}
               <p style={{ fontSize: 11, color: C.muted, textAlign: 'center', marginTop: 10 }}>No photo upload · No obligation · Under 60 seconds</p>
+
+              <div style={{ textAlign: 'center', marginTop: 24 }}>
+                {!showLookup ? (
+                  <button
+                    onClick={() => setShowLookup(true)}
+                    style={{ fontSize: 11, color: C.muted, letterSpacing: 0.5, background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline', fontFamily: "'Outfit',sans-serif" }}
+                  >Already got a rendering? Try another material</button>
+                ) : (
+                  <div style={{ maxWidth: 360, margin: '0 auto' }}>
+                    <input
+                      value={lookupValue}
+                      onChange={e => { setLookupValue(e.target.value); setLookupError('') }}
+                      onKeyDown={e => e.key === 'Enter' && !lookupSubmitting && handleLookup()}
+                      placeholder="Email or phone number"
+                      style={{ ...iStyle, marginBottom: 8 }}
+                    />
+                    {lookupError && <div style={{ fontSize: 11, color: '#F87171', marginBottom: 8 }}>{lookupError}</div>}
+                    <button
+                      onClick={handleLookup}
+                      disabled={lookupSubmitting}
+                      style={{ width: '100%', padding: '10px', background: C.surface, border: `1px solid ${C.border}`, color: C.white, fontSize: 11, letterSpacing: 1, textTransform: 'uppercase', borderRadius: 4, cursor: lookupSubmitting ? 'not-allowed' : 'pointer', opacity: lookupSubmitting ? 0.6 : 1, fontFamily: "'Outfit',sans-serif" }}
+                    >{lookupSubmitting ? 'Checking…' : 'Find My Rendering'}</button>
+                  </div>
+                )}
+              </div>
             </div>
           )}
 
@@ -798,14 +1017,22 @@ export default function VisualizerPage() {
               <button
                 onClick={() => {
                   window.scrollTo(0, 0)
-                  setStep('gate')
+                  if (returningSameAddress) {
+                    handleReturningSameAddressSubmit()
+                  } else {
+                    setStep('gate')
+                  }
                 }}
-                disabled={!canProceed}
-                style={{ width: '100%', padding: '16px', background: C.accent, color: C.black, fontSize: 12, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 700, borderRadius: 4, opacity: canProceed ? 1 : 0.45, cursor: canProceed ? 'pointer' : 'not-allowed', border: 'none', fontFamily: "'Outfit',sans-serif", transition: 'all 0.2s', marginTop: 4 }}
+                disabled={!canProceed || gateLoading}
+                style={{ width: '100%', padding: '16px', background: C.accent, color: C.black, fontSize: 12, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 700, borderRadius: 4, opacity: canProceed && !gateLoading ? 1 : 0.45, cursor: canProceed && !gateLoading ? 'pointer' : 'not-allowed', border: 'none', fontFamily: "'Outfit',sans-serif", transition: 'all 0.2s', marginTop: 4 }}
                 onMouseEnter={e => { if (canProceed) e.currentTarget.style.background = C.accentLight }}
                 onMouseLeave={e => { e.currentTarget.style.background = C.accent }}
               >
-                {canProceed ? 'Next: Enter Your Details →' : selType ? 'Select a color to continue' : 'Select a material to continue'}
+                {gateLoading
+                  ? 'Generating…'
+                  : canProceed
+                    ? (returningSameAddress ? 'Generate My Visualization →' : 'Next: Enter Your Details →')
+                    : selType ? 'Select a color to continue' : 'Select a material to continue'}
               </button>
             </div>
           )}
@@ -953,7 +1180,7 @@ export default function VisualizerPage() {
                           By submitting this form, you agree to be contacted regarding your roofing inquiry. Check the box above to also receive text messages. Your information is never sold or shared with third parties.
                         </div>
                         <button
-                          onClick={handleContactSubmit}
+                          onClick={() => handleContactSubmit()}
                           disabled={gateLoading || !formReady}
                           style={{
                             width: '100%', padding: '15px',
@@ -1121,7 +1348,7 @@ export default function VisualizerPage() {
           )}
 
         </div>
-        {step === 'address' && <SiteFooter/>}
+        {(step === 'address' || step === 'welcome-back') && <SiteFooter/>}
       </div>
     </>
   )
