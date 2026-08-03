@@ -450,6 +450,9 @@ export default function VisualizerPage() {
     if (!data.firstName.trim())
       e.firstName = 'Required'
 
+    if (!data.lastName.trim())
+      e.lastName = 'Required'
+
     const digits = data.phone.replace(/\D/g, '')
     if (!data.phone.trim())
       e.phone = 'Required'
@@ -1125,6 +1128,7 @@ export default function VisualizerPage() {
                     const errStyle = { fontSize: 11, color: '#F87171', marginTop: 4 }
                     const formReady =
                       gateData.firstName.trim().length > 0 &&
+                      gateData.lastName.trim().length > 0 &&
                       gateData.phone.replace(/\D/g, '').length === 10 &&
                       /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(gateData.email.trim())
                     return (
@@ -1137,13 +1141,20 @@ export default function VisualizerPage() {
                             ? "We'll send your render and a ballpark price range so you have a starting point for when you're ready."
                             : "We'll send your AI-rendered roof design to this number — no spam, ever."}
                         </p>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 12 }}>
-                          <div>
+                        <div style={{ display: 'flex', gap: 12, marginBottom: 12 }}>
+                          <div style={{ flex: 1 }}>
                             <div style={labelStyle}>First Name *</div>
                             <input value={gateData.firstName}
                               onChange={e => setGateData(d => ({ ...d, firstName: e.target.value }))}
                               placeholder="Jane" style={iStyle} />
                             {contactErrors.firstName && <div style={errStyle}>{contactErrors.firstName}</div>}
+                          </div>
+                          <div style={{ flex: 1 }}>
+                            <div style={labelStyle}>Last Name *</div>
+                            <input value={gateData.lastName}
+                              onChange={e => setGateData(d => ({ ...d, lastName: e.target.value }))}
+                              placeholder="Doe" style={iStyle} />
+                            {contactErrors.lastName && <div style={errStyle}>{contactErrors.lastName}</div>}
                           </div>
                         </div>
                         <div style={{ marginBottom: 12 }}>
