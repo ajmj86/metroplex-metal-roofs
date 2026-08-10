@@ -5,8 +5,8 @@ import { AboutCTA } from '@/components/AboutCTA'
 import { C, fonts, globalStyles } from '@/components/brand'
 
 export const metadata: Metadata = {
-  title: 'About Us | Premium Metal Roofing DFW | Metroplex Metal Roofs',
-  description: 'Metroplex Metal Roofs specializes in premium residential metal roofing for Dallas-Fort Worth homeowners. Standing seam, stone-coated steel, copper, and R-panel.',
+  title: 'About Us | Metal & Synthetic Slate Roofing | Metroplex Metal Roofs',
+  description: 'Metroplex Metal Roofs specializes in premium metal and synthetic slate roofing for DFW homeowners. Standing seam, stone-coated steel, copper & R-panel.',
 }
 
 export default function AboutPage() {
@@ -19,7 +19,7 @@ export default function AboutPage() {
 
           {/* Eyebrow */}
           <div style={{ fontSize: 13, letterSpacing: 4, color: C.accent, textTransform: 'uppercase', marginBottom: 20, fontWeight: 600, fontFamily: "'Outfit',sans-serif" }}>
-            Premium Metal Roofing · Dallas–Fort Worth
+            Premium Metal & Synthetic Slate Roofing · DFW
           </div>
 
           {/* H1 */}
@@ -34,7 +34,7 @@ export default function AboutPage() {
 
             <p>North Texas is genuinely hard on roofing. Between hail seasons, prolonged summer heat, and insurance deductibles that rise in step with home values, asphalt shingles function less like a long-term asset and more like a recurring operating expense. Metroplex Metal Roofs was founded on the conviction that homeowners with exceptional properties deserve a better answer than that.</p>
 
-            <p>Our work is focused exclusively on residential metal roofing in the Dallas-Fort Worth market. Standing seam, stone-coated steel, copper, and R-panel, each project carefully planned, precision-measured, and engineered for the specific demands of the North Texas climate. That narrow focus is intentional. The homeowners we work with are not shopping for the lowest bid. They are looking for the right solution, executed correctly, by people who know the difference.</p>
+            <p>Our work is focused on premium, low-maintenance roofing for the Dallas-Fort Worth market, led by metal and complemented by synthetic slate for homeowners drawn to that profile. Standing seam, stone-coated steel, copper, and R-panel remain the core of what we install, each project carefully planned, precision-measured, and engineered for the specific demands of the North Texas climate. That focus is intentional. The homeowners we work with are not shopping for the lowest bid. They are looking for the right solution, executed correctly, by people who know the difference.</p>
 
             <p>We also set out to make the process itself more transparent. The first step with Metroplex is seeing your own home, rendered with your chosen roof style and color, before any conversation about price or commitment. It's a small thing that changes the dynamic considerably, because a decision of this permanence should begin with a clear picture of what you're actually building toward.</p>
 

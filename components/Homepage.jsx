@@ -349,7 +349,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
         <div className="inner" style={{position:"relative",zIndex:1,width:"100%"}}>
           <div style={{display:"inline-flex",alignItems:"center",gap:12,marginBottom:28,animation:"fadeUp 0.8s ease both"}}>
             <div style={{width:28,height:1,background:C.accent,flexShrink:0}}/>
-            <span style={{fontSize:"clamp(0.75rem,1.1vw,0.95rem)",letterSpacing:3.5,color:C.accent,textTransform:"uppercase",fontWeight:500}}>Premium Metal Roofing · Dallas–Fort Worth</span>
+            <span style={{fontSize:"clamp(0.75rem,1.1vw,0.95rem)",letterSpacing:3.5,color:C.accent,textTransform:"uppercase",fontWeight:500}}>Premium Metal & Synthetic Slate Roofing · Dallas–Fort Worth</span>
           </div>
           <h1 style={{fontFamily:"'Cormorant Garamond',Georgia,serif",fontSize:"clamp(3.5rem,5.5vw,7rem)",fontWeight:700,lineHeight:1.05,color:C.white,marginBottom:24,maxWidth:720,animation:"fadeUp 0.8s ease 0.1s both"}}>
             The Last Roof<br/><span style={{color:C.accent,fontStyle:"italic"}}>You'll Ever Put On Your House</span>
@@ -364,13 +364,24 @@ const HomePage = ({ activeTab, setActiveTab }) => {
             >See Your Home With Metal →</a>
           </div>
           {/* Trust bar */}
+          {/*
+           * "Up to 35% Insurance Discount" previously had no disclaimer of
+           * its own -- the only "varies by home/carrier" qualifier on this
+           * page lives in the separate Stats section further down, not
+           * connected to this bullet at all. Added a footnote here so the
+           * claim is properly qualified wherever it's actually read
+           * (confirmed missing while auditing this same bullet's rollout to
+           * the city pages). Kept short since this is a terse trust-bar
+           * list, not the full Stats-section disclaimer paragraph.
+           */}
           <div className="trust-bar" style={{display:"flex",flexDirection:"column",gap:14,marginTop:48,paddingTop:32,borderTop:`1px solid ${C.border}`,animation:"fadeUp 0.8s ease 0.4s both"}}>
-            {["50-Year Lifespan","Up to 35% Insurance Discount","10-Year Workmanship Warranty"].map(t=>(
+            {["50-Year Lifespan","Up to 35% Insurance Discount*","10-Year Workmanship Warranty"].map(t=>(
               <div key={t} style={{display:"flex",alignItems:"center",gap:10}}>
                 <div style={{width:4,height:4,borderRadius:"50%",background:C.accent,flexShrink:0}}/>
                 <span style={{fontSize:12,color:C.muted}}>{t}</span>
               </div>
             ))}
+            <span style={{fontSize:10,color:C.muted,opacity:0.7,marginTop:2}}>*Discount varies by home, roof system, and carrier — confirm eligibility with your insurance provider.</span>
           </div>
         </div>
       </section>
@@ -530,6 +541,9 @@ const HomePage = ({ activeTab, setActiveTab }) => {
         id="products"
         eyebrow="Our Products"
         heading={<>Four Systems.<br/>One Standard.</>}
+        note="Also available: synthetic slate roofing, for homeowners who want slate's timeless profile without the weight or maintenance. Ask us whether it's the right fit for your home."
+        noteHref="/synthetic-slate-roofing"
+        noteLinkLabel="Learn About Synthetic Slate →"
         initialTab="stone"
         activeTab={activeTab}
         onTabChange={setActiveTab}

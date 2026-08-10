@@ -173,6 +173,13 @@ export default function ProductsSection({
   id = "products",
   eyebrow = "Our Products",
   heading = <>Four Systems.<br/>One Standard.</>,
+  // Optional text-only addendum under the heading — used on the homepage to
+  // mention synthetic slate without adding a 5th (photo-less) tab. Omitted
+  // by default so city pages (which pass their own heading, no note) are
+  // unaffected unless a caller opts in.
+  note = null,
+  noteHref = null,
+  noteLinkLabel = "Learn more →",
   initialTab = "stone",
   // Explicit `= undefined` (not just omitted) is required, not stylistic:
   // under allowJs, TS infers prop optionality from destructured defaults.
@@ -322,6 +329,31 @@ export default function ProductsSection({
               </div>
             </div>
           </Reveal>
+          {/*
+           * Text-only callout for materials not (yet) represented as a full
+           * photo tab above — e.g. synthetic slate, pending photos/visualizer
+           * support. Deliberately styled with the same weight as a product
+           * card (accent left-border + tinted background, matching the About
+           * page pull-quote and the Economics section's "insight callout"
+           * patterns already used elsewhere on this site) so it doesn't read
+           * as an afterthought next to the photo-based tabs, while staying
+           * fully independent of the swatch/gallery machinery those need.
+           */}
+          {note && (
+            <Reveal>
+              <div style={{
+                display:"flex",alignItems:"center",gap:16,flexWrap:"wrap",
+                padding:"20px 24px",marginBottom:32,
+                background:`${C.accentDark}18`,borderLeft:`3px solid ${C.accent}`,borderRadius:6,
+              }}>
+                <div style={{fontSize:11,letterSpacing:2,textTransform:"uppercase",color:C.accent,fontWeight:600,flexShrink:0}}>Also Available</div>
+                <p style={{fontSize:15,color:C.mutedLight,lineHeight:1.7,margin:0,flex:1,minWidth:240}}>{note}</p>
+                {noteHref && (
+                  <a href={noteHref} style={{fontSize:12,color:C.accent,letterSpacing:1,textTransform:"uppercase",textDecoration:"underline",whiteSpace:"nowrap",flexShrink:0}}>{noteLinkLabel}</a>
+                )}
+              </div>
+            </Reveal>
+          )}
           {activeType && (
             <Reveal key={activeTab}>
               <div className="grid-2" style={{border:`1px solid ${C.border}`,borderRadius:8,overflow:"hidden"}}>

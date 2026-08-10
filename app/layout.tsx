@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Metroplex Metal Roofs | Luxury Metal Roofing Dallas–Fort Worth',
-  description: 'Standing seam and stone-coated steel for DFW homeowners ready to stop replacing their roof. Satellite estimates. Credentialed installers. The last roof you\'ll ever need.',
+  title: 'Metroplex Metal Roofs | Metal & Synthetic Slate Roofing DFW',
+  description: 'Standing seam, stone-coated steel & synthetic slate roofing for DFW homeowners done replacing their roof. Satellite estimates. The last roof you\'ll ever need.',
 };
 
 export default function RootLayout({
