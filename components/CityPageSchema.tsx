@@ -64,7 +64,15 @@ export function CitySchema({ city }: { city: CityData }) {
         '@type': 'BreadcrumbList',
         'itemListElement': [
           { '@type': 'ListItem', 'position': 1, 'name': 'Home', 'item': 'https://www.metroplexmetalroofs.com/' },
-          { '@type': 'ListItem', 'position': 2, 'name': 'Service Areas', 'item': 'https://www.metroplexmetalroofs.com/service-areas/' },
+          // Points at the homepage, not a standalone /service-areas page --
+          // that page has never existed (confirmed via full git history).
+          // The old URL here was a leftover assumption from when this
+          // breadcrumb schema was first written, and Google was crawling it
+          // as a real breadcrumb entity straight into a 404 (flagged in
+          // Search Console, first detected 2026-08-07) since it's served on
+          // every one of the 29 city pages. "Service Areas" content
+          // actually lives in the homepage's #service-areas anchor section.
+          { '@type': 'ListItem', 'position': 2, 'name': 'Service Areas', 'item': 'https://www.metroplexmetalroofs.com/' },
           { '@type': 'ListItem', 'position': 3, 'name': `Metal Roofing ${city.name} TX`, 'item': `https://www.metroplexmetalroofs.com/metal-roofing-${city.slug}-tx/` },
         ]
       }
