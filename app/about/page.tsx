@@ -7,6 +7,9 @@ import { C, fonts, globalStyles } from '@/components/brand'
 export const metadata: Metadata = {
   title: 'About Us | Metal & Synthetic Slate Roofing | Metroplex Metal Roofs',
   description: 'Metroplex Metal Roofs specializes in premium metal and synthetic slate roofing for DFW homeowners. Standing seam, stone-coated steel, copper & R-panel.',
+  alternates: {
+    canonical: '/about',
+  },
 }
 
 export default function AboutPage() {

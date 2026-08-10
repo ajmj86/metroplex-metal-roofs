@@ -11,7 +11,10 @@ export const metadata: Metadata = {
   title: 'Synthetic Slate Roofing Dallas–Fort Worth | Metroplex Metal Roofs',
   description: "Synthetic slate roofing for DFW homeowners who want slate's timeless profile without the weight, fragility, or upkeep. Class 4 hail-rated. Free consultation.",
   alternates: {
-    canonical: `${BASE_URL}/synthetic-slate-roofing/`,
+    // No trailing slash -- trailingSlash isn't enabled in next.config.ts,
+    // so this matches the actual served URL exactly (same fix applied to
+    // the city pages' canonicals in CityPageSchema.tsx).
+    canonical: '/synthetic-slate-roofing',
   },
 }
 

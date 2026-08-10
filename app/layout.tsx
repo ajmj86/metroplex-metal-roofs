@@ -16,8 +16,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://www.metroplexmetalroofs.com'),
   title: 'Metroplex Metal Roofs | Metal & Synthetic Slate Roofing DFW',
   description: 'Standing seam, stone-coated steel & synthetic slate roofing for DFW homeowners done replacing their roof. Satellite estimates. The last roof you\'ll ever need.',
+  alternates: {
+    canonical: '/',
+  },
 };
 
 export default function RootLayout({
