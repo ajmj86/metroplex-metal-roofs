@@ -7,12 +7,17 @@ export const MCKINNEY_DATA: CityData = {
   region: 'North Dallas',
   zip: '75070',
   slug: 'mckinney',
-  metaTitle: 'Metal Roofing McKinney TX | Metroplex Metal Roofs',
-  metaDesc: 'Premium standing seam and stone-coated steel roofing in McKinney, TX. Serving Craig Ranch, Trinity Falls and surrounding Collin County neighborhoods. Satellite estimates, Class 4 hail rating.',
+  metaTitle: 'Metal & Synthetic Slate Roofing McKinney TX | Metroplex',
+  metaDesc: 'Premium standing seam, stone-coated steel & synthetic slate roofing in McKinney, TX. Serving Craig Ranch and Trinity Falls.',
   heroHeadline: "McKinney Homeowners\nAre Done With Asphalt",
   heroSub: "McKinney grows faster than almost any city in Texas. The homes going up today are built with metal. If yours was not, now is the time to catch up.",
   localContext: "McKinney's rapid growth has brought premium construction standards to one of Collin County's most active hail corridors. With median home values approaching $500,000 and 2% wind/hail deductibles now standard across most carriers, McKinney homeowners face a recurring five-figure liability every time a major storm season passes. Metal roofing eliminates that cycle and is now the standard specification on new construction throughout the city's master-planned developments.",
   hoaNote: "McKinney's master-planned communities including Craig Ranch and Trinity Falls have established architectural review processes. Metal roofing in approved profiles and color palettes is permitted and increasingly common. We provide full documentation support for your HOA submission including material samples and spec sheets.",
+
+  syntheticSlate: {
+    heading: 'Synthetic Slate Roofing in McKinney',
+    body: "McKinney's master-planned communities, including Craig Ranch and Trinity Falls, are increasingly open to synthetic slate roofing for homeowners who want a traditional, dimensional profile without real slate's weight or fragility — in a Class 4 hail-rated system built for North Texas. Ask us whether synthetic slate or metal is the better fit for your McKinney home.",
+  },
   localStat: { val: '$490k', label: 'Median Home Value', source: 'McKinney, TX 2025' },
   neighborhoods: [
     'Craig Ranch', 'Trinity Falls', 'Stonebridge Ranch', 'Painted Tree',

@@ -7,12 +7,17 @@ export const FORNEY_DATA: CityData = {
   region: 'East Dallas',
   zip: '75126',
   slug: 'forney',
-  metaTitle: 'Metal Roofing Forney TX | Metroplex Metal Roofs',
-  metaDesc: 'Premium standing seam and stone-coated steel roofing in Forney, TX. Fast-growing Kaufman County community east of Dallas. Satellite estimates, Class 4 hail rating.',
+  metaTitle: 'Metal & Synthetic Slate Roofing Forney TX | Metroplex',
+  metaDesc: 'Premium standing seam, stone-coated steel & synthetic slate roofing in Forney, TX. Serving Travis Ranch and Devonshire.',
   heroHeadline: "Forney Is One of Texas's\nFastest-Growing Cities",
   heroSub: "New homes are going up across Forney every month. The ones built to last are built with metal. If yours was not, this is how you fix that.",
   localContext: "Forney has become one of the most rapidly expanding communities east of Dallas, with new construction setting a high standard for quality and durability. Located in Kaufman County's active storm corridor, Forney homeowners face consistent annual hail exposure. Metal roofing is increasingly specified on new builds throughout the city and represents a strong permanent upgrade for existing homes.",
   hoaNote: "Forney's growing master-planned communities have established architectural review processes for roofing material changes. Standing seam and stone-coated steel in approved profiles and colors are widely permitted. We provide full HOA documentation support at no additional cost.",
+
+  syntheticSlate: {
+    heading: 'Synthetic Slate Roofing in Forney',
+    body: "Forney's rapid growth across neighborhoods like Travis Ranch and Devonshire has brought new construction standards with it, and synthetic slate roofing is part of that — slate's traditional look in a lightweight, Class 4 hail-rated system. Ask us whether synthetic slate is the right fit for your Forney home.",
+  },
   localStat: { val: '$340k', label: 'Median Home Value', source: 'Forney, TX 2025' },
   neighborhoods: [
     'Travis Ranch', 'Devonshire', 'Gateway Parks', 'Windmill Farms',

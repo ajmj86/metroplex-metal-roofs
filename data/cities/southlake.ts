@@ -7,8 +7,8 @@ export const SOUTHLAKE_DATA: CityData = {
   region: 'North Fort Worth',
   zip: '76092',
   slug: 'southlake',
-  metaTitle: 'Metal Roofing Southlake TX | Metroplex Metal Roofs',
-  metaDesc: 'Premium standing seam and stone-coated steel roofing in Southlake, TX. Serving Timarron, Shady Oaks, Clariden Ranch and surrounding Carroll ISD neighborhoods. Satellite estimates, Class 4 hail rating.',
+  metaTitle: 'Metal & Synthetic Slate Roofing Southlake TX | Metroplex',
+  metaDesc: 'Premium standing seam, stone-coated steel & synthetic slate roofing in Southlake, TX. Serving Timarron, Shady Oaks & Clariden Ranch.',
 
   heroHeadline: "Southlake's Standard\nfor Metal Roofing",
   heroSub: "From Timarron to Shady Oaks, Southlake homeowners are upgrading to metal — permanently. One installation that outlasts the mortgage and the next hail season.",
@@ -16,6 +16,11 @@ export const SOUTHLAKE_DATA: CityData = {
   localContext: "Southlake's Tarrant County location places it squarely in one of North Texas's most active hail corridors. With median home values consistently among the highest in DFW and 2% wind/hail deductibles now standard on most carrier policies, many Southlake homeowners are paying $20,000 or more out of pocket per replacement — often more than the cost of a metal roof that would have eliminated the cycle entirely.",
 
   hoaNote: "Many Southlake HOAs require architectural approval for roofing materials. Standing seam and stone-coated steel in pre-approved colors are the most commonly permitted metal options across Carroll ISD neighborhoods. We provide material samples, color chips, and manufacturer spec sheets to support your HOA submission at no additional cost.",
+
+  syntheticSlate: {
+    heading: 'Synthetic Slate Roofing in Southlake',
+    body: "Southlake's estate-level neighborhoods — Timarron, Shady Oaks, Clariden Ranch — often call for a traditional roofline that matches the architecture of the home. Synthetic slate roofing delivers slate's classic profile in a Class 4 hail-rated system engineered for North Texas storms, without the weight or upkeep real slate requires. For homeowners weighing slate's look against metal's proven durability, we'll walk you through both. Ask us whether synthetic slate is the right fit for your Southlake home.",
+  },
 
   localStat: {
     val: '$1.1M',

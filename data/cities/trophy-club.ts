@@ -7,12 +7,17 @@ export const TROPHY_CLUB_DATA: CityData = {
   region: 'North Fort Worth',
   zip: '76262',
   slug: 'trophy-club',
-  metaTitle: 'Metal Roofing Trophy Club TX | Metroplex Metal Roofs',
-  metaDesc: 'Premium standing seam and stone-coated steel roofing in Trophy Club, TX. Serving Trophy Club Country Club and surrounding Denton County neighborhoods. Satellite estimates, Class 4 hail rating.',
+  metaTitle: 'Metal & Synthetic Slate Roofing Trophy Club TX | Metroplex',
+  metaDesc: 'Premium standing seam, stone-coated steel & synthetic slate roofing in Trophy Club, TX. Serving Trophy Club Country Club and Carnoustie.',
   heroHeadline: "Trophy Club Standards\nExtend to the Roof",
   heroSub: "Trophy Club is one of the most carefully maintained communities in North Texas. A metal roof is the permanent upgrade that matches that standard and protects it through every storm season.",
   localContext: "Trophy Club's position in Denton County near Lake Grapevine places it in an active storm corridor with significant annual hail exposure. With median home values above $600,000 and 2% wind/hail deductibles standard on most policies, the financial case for metal is clear. Homeowners who have been replacing asphalt every decade are choosing metal as the permanent alternative.",
   hoaNote: "Trophy Club maintains strict architectural standards throughout the community. Standing seam and stone-coated steel in approved profiles and color palettes are widely permitted for homeowners who submit proper documentation. We handle the complete documentation package at no additional cost.",
+
+  syntheticSlate: {
+    heading: 'Synthetic Slate Roofing in Trophy Club',
+    body: "Trophy Club's carefully maintained neighborhoods, from Trophy Club Country Club to Carnoustie, hold to a high architectural standard — one synthetic slate roofing matches, with a traditional, dimensional profile and Class 4 hail protection, without real slate's weight or fragility. Ask us whether synthetic slate or metal is the better fit for your Trophy Club home.",
+  },
   localStat: { val: '$610k', label: 'Median Home Value', source: 'Trophy Club, TX 2025' },
   neighborhoods: [
     'Trophy Club Country Club', 'The Lakes', 'Indian Creek', 'Carnoustie',

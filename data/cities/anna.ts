@@ -7,12 +7,17 @@ export const ANNA_DATA: CityData = {
   region: 'North Dallas',
   zip: '75409',
   slug: 'anna',
-  metaTitle: 'Metal Roofing Anna TX | Metroplex Metal Roofs',
-  metaDesc: 'Premium standing seam and stone-coated steel roofing in Anna, TX. Fast-growing Collin County community north of McKinney. Satellite estimates, Class 4 hail rating.',
+  metaTitle: 'Metal & Synthetic Slate Roofing Anna TX | Metroplex',
+  metaDesc: 'Premium standing seam, stone-coated steel & synthetic slate roofing in Anna, TX. Serving Village Park and Avery Pointe.',
   heroHeadline: "Anna Is Growing Quickly.\nGet the Roof Right the First Time",
   heroSub: "Anna is one of Collin County's fastest-growing communities. New homes are going up every week. The ones built to last are built with metal.",
   localContext: "Anna has become one of North Texas's most rapidly expanding communities, with new construction setting strong standards for quality throughout the city. Located in Collin County's active hail corridor, Anna homeowners face significant annual storm exposure. Metal roofing is increasingly common on new construction throughout the area and represents a strong long-term upgrade for existing homes.",
   hoaNote: "Anna's growing master-planned communities have established review processes for exterior material changes. Standing seam and stone-coated steel in approved profiles and colors are widely permitted. We provide complete HOA documentation support at no additional cost.",
+
+  syntheticSlate: {
+    heading: 'Synthetic Slate Roofing in Anna',
+    body: "As new construction across Anna's fastest-growing neighborhoods like Village Park and Avery Pointe sets a higher material standard, synthetic slate roofing is worth considering for homeowners who want slate's traditional look without its weight or fragility. Ask us whether synthetic slate is the right fit for your Anna home.",
+  },
   localStat: { val: '$370k', label: 'Median Home Value', source: 'Anna, TX 2025' },
   neighborhoods: [
     'Village Park', 'Avery Pointe', 'Hurricane Creek', 'West Crossing',

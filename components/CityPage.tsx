@@ -42,6 +42,11 @@ export interface CityData {
   heroSub: string
   localContext: string
   hoaNote: string
+  // Optional: renders a "Synthetic Slate Roofing in {city}" section right
+  // after "Why Metal" when present. Omitted (undefined) on cities that
+  // haven't had this content drafted yet, so the section simply doesn't
+  // render there rather than showing empty/placeholder copy.
+  syntheticSlate?: { heading: string; body: string }
   localStat: { val: string; label: string; source: string }
   neighborhoods: string[]
   nearbyCities: { name: string; slug: string }[]
@@ -203,14 +208,20 @@ export default function CityPage({ city }: { city: CityData }) {
                     onMouseLeave={e => (e.currentTarget.style.background = C.accent)}
                   >See Your Home With Metal →</a>
                 </div>
-                {/* Trust row */}
+                {/* Trust row — matches the homepage hero's trust-bar set
+                    exactly (50-Year Lifespan / Up to 35% Insurance Discount /
+                    10-Year Workmanship Warranty), with Class 4 Hail Rating
+                    kept as a 4th item since this layout uses four bullets.
+                    Insurance-discount footnote matches the homepage's, added
+                    there in the same pass since neither had one before. */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginTop: 48, paddingTop: 32, borderTop: `1px solid ${C.border}`, animation: 'fadeUp 0.7s ease 0.4s both' }}>
-                  {['10-Year Workmanship Warranty', 'Satellite Estimates', 'Class 4 Hail Rating', 'DFW Local'].map(t => (
+                  {['50-Year Lifespan', 'Up to 35% Insurance Discount*', '10-Year Workmanship Warranty', 'Class 4 Hail Rating'].map(t => (
                     <div key={t} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                       <div style={{ width: 4, height: 4, borderRadius: '50%', background: C.accent, flexShrink: 0 }}/>
                       <span style={{ fontSize: 12, color: C.muted }}>{t}</span>
                     </div>
                   ))}
+                  <span style={{ fontSize: 10, color: C.muted, opacity: 0.7, marginTop: 2 }}>*Discount varies by home, roof system, and carrier — confirm eligibility with your insurance provider.</span>
                 </div>
               </div>
 
@@ -288,6 +299,41 @@ export default function CityPage({ city }: { city: CityData }) {
             </Reveal>
           </div>
         </section>
+
+        {/*
+         * ── SYNTHETIC SLATE ── Optional, only renders once city.syntheticSlate
+         * is drafted for this city (see CityData). Sits between "Why Metal"
+         * and the product tabs -- same position as the homepage's "Also
+         * Available" callout relative to its own Products section, so the
+         * two pages read consistently. Styled as its own H2 section (not
+         * just a callout bar) since this needs to carry real per-city SEO
+         * copy, not just a one-line mention.
+         */}
+        {city.syntheticSlate && (
+          <section id="synthetic-slate" className="sp-sm" style={{ background: C.surface, borderTop: `1px solid ${C.border}` }}>
+            <div className="inner" style={{ maxWidth: 820 }}>
+              <Reveal>
+                <div style={{
+                  padding: 'clamp(28px,4vw,40px)',
+                  background: `${C.accentDark}18`, borderLeft: `3px solid ${C.accent}`, borderRadius: 6,
+                }}>
+                  <div style={{ fontSize: 11, letterSpacing: 2, color: C.accent, textTransform: 'uppercase', marginBottom: 14, fontWeight: 600 }}>Also Available</div>
+                  <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 'clamp(1.5rem,3.4vw,2.5rem)', fontWeight: 700, color: C.white, lineHeight: 1.15, marginBottom: 16 }}>
+                    {city.syntheticSlate.heading}
+                  </h2>
+                  <p style={{ fontSize: 15, color: C.mutedLight, lineHeight: 1.85, marginBottom: 20 }}>
+                    {city.syntheticSlate.body}
+                  </p>
+                  <Link href="/synthetic-slate-roofing"
+                    style={{ fontSize: 12, color: C.accent, letterSpacing: 1.5, textTransform: 'uppercase', textDecoration: 'underline', transition: 'opacity 0.2s' }}
+                    onMouseEnter={e => (e.currentTarget.style.opacity = '0.7')}
+                    onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
+                  >Learn About Synthetic Slate Roofing →</Link>
+                </div>
+              </Reveal>
+            </div>
+          </section>
+        )}
 
         <ProductsSection
           id="our-products"
@@ -532,7 +578,7 @@ export default function CityPage({ city }: { city: CityData }) {
             <Reveal>
               <div style={{ fontSize: 10, letterSpacing: 3, color: C.accent, textTransform: 'uppercase', marginBottom: 16 }}>About Metroplex Metal Roofs</div>
               <p style={{ fontSize: 15, color: C.mutedLight, lineHeight: 1.9, marginBottom: 20 }}>
-                Metroplex Metal Roofs specializes exclusively in premium residential metal roofing across the Dallas–Fort Worth metroplex. Our focus is standing seam, stone-coated steel, copper, and R-panel — every project precision-measured by satellite, installed to manufacturer spec, and backed by our 10-year workmanship warranty.
+                Metroplex Metal Roofs specializes in premium residential roofing across the Dallas–Fort Worth metroplex, led by metal and complemented by synthetic slate. Our focus is standing seam, stone-coated steel, copper, and R-panel — every project precision-measured by satellite, installed to manufacturer spec, and backed by our 10-year workmanship warranty.
               </p>
               <Link href="/about"
                 style={{ fontSize: 12, color: C.accent, letterSpacing: 1.5, textTransform: 'uppercase', textDecoration: 'underline', transition: 'opacity 0.2s' }}

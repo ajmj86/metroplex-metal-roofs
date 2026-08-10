@@ -7,12 +7,17 @@ export const NORTHLAKE_DATA: CityData = {
   region: 'North Fort Worth',
   zip: '76247',
   slug: 'northlake',
-  metaTitle: 'Metal Roofing Northlake TX | Metroplex Metal Roofs',
-  metaDesc: 'Premium standing seam and stone-coated steel roofing in Northlake, TX. Fast-growing Denton County community. Satellite estimates, Class 4 hail rating.',
+  metaTitle: 'Metal & Synthetic Slate Roofing Northlake TX | Metroplex',
+  metaDesc: 'Premium standing seam, stone-coated steel & synthetic slate roofing in Northlake, TX. Serving Canyon Falls and Pecan Square.',
   heroHeadline: "Northlake Is Building Fast.\nBuild Your Roof Right",
   heroSub: "Northlake is one of the fastest-growing communities in Denton County. The homes going up today are setting a permanent standard. Metal roofing is part of that.",
   localContext: "Northlake has emerged as one of North Texas's most rapidly growing communities, with premium master-planned developments setting new construction standards throughout the city. Located in Denton County's active storm corridor, Northlake homeowners face significant annual hail exposure. Metal roofing is increasingly specified on new builds and makes strong financial sense for any existing homeowner ready to stop replacing asphalt.",
   hoaNote: "Northlake's master-planned communities have established architectural review processes. Metal roofing in approved profiles and color palettes is widely permitted throughout the city's newer developments. We provide complete HOA documentation support at no additional cost.",
+
+  syntheticSlate: {
+    heading: 'Synthetic Slate Roofing in Northlake',
+    body: "Northlake's rapid growth across communities like Canyon Falls and Pecan Square has brought new construction standards, and synthetic slate roofing is part of that shift — slate's traditional profile in a lightweight, Class 4 hail-rated system. Ask us whether synthetic slate is the right fit for your Northlake home.",
+  },
   localStat: { val: '$520k', label: 'Median Home Value', source: 'Northlake, TX 2025' },
   neighborhoods: [
     'Canyon Falls', 'Pecan Square', 'Harvest', 'Wildflower Ranch',

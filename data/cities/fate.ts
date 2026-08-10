@@ -7,12 +7,17 @@ export const FATE_DATA: CityData = {
   region: 'East Dallas',
   zip: '75087',
   slug: 'fate',
-  metaTitle: 'Metal Roofing Fate TX | Metroplex Metal Roofs',
-  metaDesc: 'Premium standing seam and stone-coated steel roofing in Fate, TX. Fast-growing Rockwall County community. Satellite estimates, Class 4 hail rating.',
+  metaTitle: 'Metal & Synthetic Slate Roofing Fate TX | Metroplex',
+  metaDesc: 'Premium standing seam, stone-coated steel & synthetic slate roofing in Fate, TX. Serving Woodcreek and Williamsburg.',
   heroHeadline: "Fate Is One of Texas's\nFastest-Growing Cities",
   heroSub: "New homes are going up across Fate every week. Build your roof to last longer than the shingles the builder put on.",
   localContext: "Fate has become one of the most rapidly expanding communities in Rockwall County, with new construction setting strong quality standards throughout the city. Located in an active storm corridor east of Dallas, Fate homeowners face consistent annual hail exposure. Metal roofing is increasingly specified on new builds and represents a strong permanent upgrade for any existing homeowner ready to end the replacement cycle.",
   hoaNote: "Fate's growing master-planned communities have established architectural review processes. Metal roofing in approved profiles and colors is widely permitted. We provide complete HOA documentation support at no additional cost.",
+
+  syntheticSlate: {
+    heading: 'Synthetic Slate Roofing in Fate',
+    body: "As new construction spreads across Fate's growing neighborhoods like Woodcreek and Williamsburg, synthetic slate roofing is emerging as an alternative for homeowners who want slate's traditional profile without the weight or fragility of the real thing. Ask us whether synthetic slate is the right fit for your Fate home.",
+  },
   localStat: { val: '$360k', label: 'Median Home Value', source: 'Fate, TX 2025' },
   neighborhoods: [
     'Woodcreek', 'Williamsburg', 'Chamberlain Crossing', 'Falcon Creek',

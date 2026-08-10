@@ -7,8 +7,8 @@ export const PROSPER_DATA: CityData = {
   region: 'North Dallas',
   zip: '75078',
   slug: 'prosper',
-  metaTitle: 'Metal Roofing Prosper TX | Metroplex Metal Roofs',
-  metaDesc: 'Premium standing seam and stone-coated steel roofing in Prosper, TX. Serving Windsong Ranch, Lakes of Prosper, Star Trail and surrounding Collin County neighborhoods. Satellite estimates, Class 4 hail rating.',
+  metaTitle: 'Metal & Synthetic Slate Roofing Prosper TX | Metroplex',
+  metaDesc: 'Premium standing seam, stone-coated steel & synthetic slate roofing in Prosper, TX. Serving Windsong Ranch and Star Trail.',
 
   heroHeadline: "Prosper Built to Last —\nYour Roof Should Too",
   heroSub: "From Windsong Ranch to Star Trail, Prosper homeowners are making the same upgrade new construction already has. A metal roof that matches the permanence of the home beneath it.",
@@ -16,6 +16,11 @@ export const PROSPER_DATA: CityData = {
   localContext: "Prosper has become one of the fastest-growing communities in North Texas, with new construction consistently specifying metal roofing as the standard across its master-planned developments. For existing homeowners, the case is equally clear — Collin County's active hail corridor, rising home values above $700,000, and 2% wind/hail deductibles mean asphalt shingles represent a recurring five-figure liability. Metal roofing eliminates that cycle entirely.",
 
   hoaNote: "Prosper's master-planned communities including Windsong Ranch, Star Trail, and Lakes of Prosper have established architectural review processes for roofing material changes. Metal roofing in approved profiles and colors is widely permitted and increasingly common across these neighborhoods. We provide the full documentation package — material samples, color chips, and manufacturer spec sheets — to support your HOA submission.",
+
+  syntheticSlate: {
+    heading: 'Synthetic Slate Roofing in Prosper',
+    body: "Prosper's master-planned communities, including Windsong Ranch and Star Trail, are increasingly drawn to synthetic slate roofing for its traditional, dimensional profile — Class 4 hail-rated and built without real slate's weight or fragility. Ask us whether synthetic slate is the right fit for your Prosper home.",
+  },
 
   localStat: {
     val: '$720k',

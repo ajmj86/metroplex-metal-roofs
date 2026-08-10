@@ -7,12 +7,17 @@ export const PLANO_DATA: CityData = {
   region: 'North Dallas',
   zip: '75093',
   slug: 'plano',
-  metaTitle: 'Metal Roofing Plano TX | Metroplex Metal Roofs',
-  metaDesc: 'Premium standing seam and stone-coated steel roofing in Plano, TX. Serving West Plano, Willow Bend and surrounding Collin County neighborhoods. Satellite estimates, Class 4 hail rating.',
+  metaTitle: 'Metal & Synthetic Slate Roofing Plano TX | Metroplex',
+  metaDesc: 'Premium standing seam, stone-coated steel & synthetic slate roofing in Plano, TX. Serving Willow Bend and Normandy Estates.',
   heroHeadline: "Plano Homes Are Built\nto Last. Your Roof Should Be Too",
   heroSub: "West Plano homeowners have been replacing asphalt roofs for decades. Metal ends that cycle permanently and qualifies for real insurance savings in one of Texas's most active hail zones.",
   localContext: "Plano's established neighborhoods carry median home values well above $500,000, and the city sits in a Collin County hail corridor that sees significant storm activity every year. With 2% wind/hail deductibles now standard, many Plano homeowners are absorbing $10,000 to $15,000 per replacement out of pocket. Metal roofing eliminates that recurring cost and typically delivers a positive financial return within the life of the home.",
   hoaNote: "Plano's established HOA communities have clear processes for exterior material changes. Standing seam and stone-coated steel in neutral and earth-tone color palettes are commonly approved. We provide full documentation support for your HOA submission.",
+
+  syntheticSlate: {
+    heading: 'Synthetic Slate Roofing in Plano',
+    body: "West Plano homeowners in neighborhoods like Willow Bend and Normandy Estates often favor a traditional architectural line, and synthetic slate roofing meets it — a dimensional slate profile, Class 4 hail-rated, without real slate's weight or maintenance. Ask us whether synthetic slate or metal is the better fit for your Plano home.",
+  },
   localStat: { val: '$540k', label: 'Median Home Value', source: 'Plano, TX 2025' },
   neighborhoods: [
     'Willow Bend', 'Windhaven', 'Kings Ridge', 'Normandy Estates',

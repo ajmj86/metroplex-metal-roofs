@@ -7,12 +7,17 @@ export const ARGYLE_DATA: CityData = {
   region: 'North Fort Worth',
   zip: '76226',
   slug: 'argyle',
-  metaTitle: 'Metal Roofing Argyle TX | Metroplex Metal Roofs',
-  metaDesc: 'Premium standing seam and stone-coated steel roofing in Argyle, TX. Serving Denton County estate communities. Satellite estimates, Class 4 hail rating.',
+  metaTitle: 'Metal & Synthetic Slate Roofing Argyle TX | Metroplex',
+  metaDesc: 'Premium standing seam, stone-coated steel & synthetic slate roofing in Argyle, TX. Serving Harvest and Canyon Falls.',
   heroHeadline: "Argyle Estate Homes\nDeserve More Than Asphalt",
   heroSub: "Argyle is one of the most sought-after communities in Denton County for a reason. The properties here deserve a roof that lasts as long as the investment.",
   localContext: "Argyle's rural character and Denton County location combine to create significant annual storm exposure with very few nearby services for rapid response. With estate home values regularly above $700,000 and 2% wind/hail deductibles standard on high-value policies, the financial case for metal is particularly strong in Argyle. Metal roofing eliminates the replacement cycle and qualifies for meaningful insurance savings.",
   hoaNote: "Argyle's estate communities maintain architectural standards for exterior materials. Standing seam and stone-coated steel in approved profiles are widely permitted and increasingly common on estate-level properties throughout the area. We provide complete HOA documentation support at no additional cost.",
+
+  syntheticSlate: {
+    heading: 'Synthetic Slate Roofing in Argyle',
+    body: "Argyle's estate communities — including Harvest and Canyon Falls — often call for a traditional, dimensional roofline that matches the architecture of the home. Synthetic slate roofing delivers that classic profile in a Class 4 hail-rated system, without the weight or maintenance real slate demands. Ask us whether synthetic slate is the right fit for your Argyle estate.",
+  },
   localStat: { val: '$720k', label: 'Median Home Value', source: 'Argyle, TX 2025' },
   neighborhoods: [
     'Harvest', 'Canyon Falls', 'Hilton Farms', 'Northwood Hills',
