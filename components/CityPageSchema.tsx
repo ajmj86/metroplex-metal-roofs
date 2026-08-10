@@ -5,7 +5,12 @@ export function buildCityMetadata(city: CityData) {
     title: city.metaTitle,
     description: city.metaDesc,
     alternates: {
-      canonical: `https://www.metroplexmetalroofs.com/metal-roofing-${city.slug}-tx/`,
+      // Relative path (resolved against the root layout's metadataBase) and
+      // no trailing slash -- trailingSlash isn't enabled in next.config.ts,
+      // so the real served URL for this route has none. The canonical tag
+      // previously included one, which didn't match the actual URL Google
+      // would fetch.
+      canonical: `/metal-roofing-${city.slug}-tx`,
     },
   }
 }
