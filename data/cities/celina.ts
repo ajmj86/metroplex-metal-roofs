@@ -7,12 +7,17 @@ export const CELINA_DATA: CityData = {
   region: 'North Dallas',
   zip: '75009',
   slug: 'celina',
-  metaTitle: 'Metal Roofing Celina TX | Metroplex Metal Roofs',
-  metaDesc: 'Premium standing seam and stone-coated steel roofing in Celina, TX. Fast-growing Collin County community. Satellite estimates, Class 4 hail rating, HOA documentation included.',
+  metaTitle: 'Metal & Synthetic Slate Roofing Celina TX | Metroplex',
+  metaDesc: 'Premium standing seam, stone-coated steel & synthetic slate roofing in Celina, TX. Serving Light Farms and Mustang Lakes.',
   heroHeadline: "Celina Is Growing Fast.\nBuild It Right the First Time",
   heroSub: "Celina is one of the fastest-growing cities in Texas and the homes going up today are setting a new standard. Metal roofing is part of that standard.",
   localContext: "Celina has emerged as one of the most rapidly expanding communities in North Texas, with new construction setting a high bar for quality and durability. Located in Collin County's hail corridor, Celina homeowners face the same storm exposure as neighboring communities but often with newer homes and longer mortgage horizons. Metal roofing is increasingly specified on new builds throughout the city and makes strong financial sense for any existing homeowner ready to stop replacing asphalt.",
   hoaNote: "Celina's growing master-planned communities have established architectural review processes. Metal roofing in approved profiles and colors is widely permitted and becoming increasingly common throughout the city's newer developments. We provide full HOA documentation support at no additional cost.",
+
+  syntheticSlate: {
+    heading: 'Synthetic Slate Roofing in Celina',
+    body: "Celina's rapid growth across communities like Light Farms and Mustang Lakes has raised the bar on building materials, and synthetic slate roofing is part of that shift — delivering slate's traditional look in a lightweight, Class 4 hail-rated system built for North Texas storms. Ask us whether synthetic slate is the right fit for your Celina home.",
+  },
   localStat: { val: '$480k', label: 'Median Home Value', source: 'Celina, TX 2025' },
   neighborhoods: [
     'Light Farms', 'Mustang Lakes', 'Green Meadows', 'Cambridge Crossing',

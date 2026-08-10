@@ -7,8 +7,8 @@ export const FRISCO_DATA: CityData = {
   region: 'North Dallas',
   zip: '75034',
   slug: 'frisco',
-  metaTitle: 'Metal Roofing Frisco TX | Metroplex Metal Roofs',
-  metaDesc: 'Premium standing seam and stone-coated steel roofing in Frisco, TX. Serving Starwood, Newman Village, Phillips Creek Ranch and surrounding Collin County neighborhoods. Satellite estimates, Class 4 hail rating.',
+  metaTitle: 'Metal & Synthetic Slate Roofing Frisco TX | Metroplex',
+  metaDesc: 'Premium standing seam, stone-coated steel & synthetic slate roofing in Frisco, TX. Serving Starwood, Newman Village & Phillips Creek Ranch.',
 
   heroHeadline: "Frisco Homes Deserve\na Permanent Roof",
   heroSub: "From Starwood to Phillips Creek Ranch, Frisco homeowners are done with the asphalt replacement cycle. One metal roof that outlasts the neighborhood and everything the North Texas sky throws at it.",
@@ -16,6 +16,11 @@ export const FRISCO_DATA: CityData = {
   localContext: "Frisco sits in Collin County's most active hail corridor, where rapid growth has brought premium construction standards alongside significant storm exposure. With median home values climbing past $650,000 and 2% wind/hail deductibles now standard across most carriers, a single hail event can mean $13,000 or more out of pocket — a number that resets every time asphalt shingles fail. Metal roofing has become the standard on new construction throughout Frisco's master-planned communities for exactly this reason.",
 
   hoaNote: "Frisco's master-planned communities — including Phillips Creek Ranch, Newman Village, and Starwood — typically require HOA approval for roofing material changes. Stone-coated steel and standing seam in earth-tone and neutral color palettes are the most commonly approved metal options. We provide material samples, color chips, and full spec documentation to support your HOA submission at no additional cost.",
+
+  syntheticSlate: {
+    heading: 'Synthetic Slate Roofing in Frisco',
+    body: "For Frisco homeowners in HOA-governed communities like Phillips Creek Ranch, Newman Village, and Starwood, synthetic slate roofing offers slate's traditional profile in a lightweight, Class 4 hail-rated system that fits neighborhood architectural guidelines without the maintenance real slate demands. It's a strong alternative for homes where a classic, dimensional roofline matters as much as long-term durability. Ask us whether synthetic slate or metal is the better fit for your home.",
+  },
 
   localStat: {
     val: '$650k',

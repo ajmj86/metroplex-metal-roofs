@@ -7,12 +7,17 @@ export const MANSFIELD_DATA: CityData = {
   region: 'South Fort Worth',
   zip: '76063',
   slug: 'mansfield',
-  metaTitle: 'Metal Roofing Mansfield TX | Metroplex Metal Roofs',
-  metaDesc: 'Premium standing seam and stone-coated steel roofing in Mansfield, TX. Serving South Fort Worth area. Tarrant County neighborhoods. Satellite estimates, Class 4 hail rating.',
+  metaTitle: 'Metal & Synthetic Slate Roofing Mansfield TX | Metroplex',
+  metaDesc: 'Premium standing seam, stone-coated steel & synthetic slate roofing in Mansfield, TX. Serving Walnut Creek and Southpointe.',
   heroHeadline: "Mansfield Is Growing.\nBuild a Roof That Keeps Up",
   heroSub: "Mansfield homeowners have been putting up with asphalt long enough. Metal roofing is the upgrade that ends the replacement cycle and holds up to everything North Texas weather brings.",
   localContext: "Mansfield's rapid growth in southern Tarrant County has brought premium construction standards to a community that sits squarely in an active hail corridor. Median home values approaching $400,000 and standard 2% wind/hail deductibles mean a single storm event can cost Mansfield homeowners $8,000 or more out of pocket. Metal roofing eliminates that exposure and is increasingly specified on new construction throughout the area.",
   hoaNote: "Mansfield's established neighborhoods have active HOA review processes. Standing seam and stone-coated steel in approved profiles and neutral color palettes are widely permitted. We provide complete HOA documentation support at no additional cost.",
+
+  syntheticSlate: {
+    heading: 'Synthetic Slate Roofing in Mansfield',
+    body: "Mansfield homeowners in neighborhoods like Walnut Creek and Southpointe increasingly want a traditional roofline without real slate's drawbacks, and synthetic slate roofing delivers exactly that — Class 4 hail-rated and built to hold up to North Texas weather. Ask us whether synthetic slate is the right fit for your Mansfield home.",
+  },
   localStat: { val: '$390k', label: 'Median Home Value', source: 'Mansfield, TX 2025' },
   neighborhoods: [
     'Walnut Creek', 'Southpointe', 'Turning Leaf', 'Brentwood',
