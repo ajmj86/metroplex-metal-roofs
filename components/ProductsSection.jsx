@@ -111,6 +111,15 @@ const specMap = {
   rpanel:  [{k:"Lifespan",v:"40–60 yrs"},{k:"Hail Rating",v:"Class 4"},{k:"Wind",v:"120 mph"},{k:"Fastener",v:"Exposed"}],
 };
 const badgeMap = {standing:"Most Popular",copper:"Ultra Premium",stone:"HOA Friendly",rpanel:"Best Value"};
+// Standalone material landing pages (Phase 3) -- only populated for
+// materials that have a page built so far. Tabs without an entry here just
+// don't render the secondary "full guide" link.
+const productPageMap = {
+  standing:"/standing-seam-roofing",
+  stone:"/stone-coated-steel-roofing",
+  copper:"/copper-roofing",
+  rpanel:"/r-panel-roofing",
+};
 
 /* Single hero shot per material — replaces the old 4-up collage image. */
 const heroMap = {
@@ -435,6 +444,13 @@ export default function ProductsSection({
                       onMouseEnter={e=>e.currentTarget.style.background=C.accentLight}
                       onMouseLeave={e=>e.currentTarget.style.background=C.accent}
                     >See it on your home →</a>
+                    {productPageMap[activeTab] && (
+                      <a href={productPageMap[activeTab]}
+                        style={{display:"inline-flex",alignItems:"center",gap:6,fontSize:14,color:C.mutedLight,letterSpacing:0.5,textDecoration:"underline",width:"fit-content",transition:"color 0.2s"}}
+                        onMouseEnter={e=>e.currentTarget.style.color=C.accent}
+                        onMouseLeave={e=>e.currentTarget.style.color=C.mutedLight}
+                      >Read the full {activeType.label} guide →</a>
+                    )}
                   </div>
                 </div>
               </div>
