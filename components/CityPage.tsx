@@ -9,6 +9,7 @@ import Counter from '@/components/Counter'
 import StatItem from '@/components/StatItem'
 import ProductGallery from '@/components/ProductGallery'
 import ProductsSection from '@/components/ProductsSection'
+import PricingTable from '@/components/PricingTable'
 import { ASSESSMENT_CATEGORIES } from '@/lib/assessment'
 import { GALLERY_ITEMS } from '@/lib/gallery'
 
@@ -341,6 +342,18 @@ export default function CityPage({ city }: { city: CityData }) {
           heading={<>Metal Roofing Systems<br/>for {city.name} Homes</>}
           initialTab="stone"
         />
+
+        {/* ── PRICING ── */}
+        <section id="pricing" className="sp" style={{ background: C.card, borderTop: `1px solid ${C.border}` }}>
+          <div className="inner">
+            <Reveal>
+              <PricingTable
+                title={`Roofing Costs in ${city.name}, TX`}
+                intro={`Installed cost by material, based on current DFW-wide market rates. ${city.name} homeowners typically fall within these ranges regardless of neighborhood -- your exact number depends on your roof's size, pitch, and complexity, not just your zip code.`}
+              />
+            </Reveal>
+          </div>
+        </section>
 
         {/* ── GALLERY ── */}
         <section id="gallery" className="sp" style={{ borderTop: `1px solid ${C.border}` }}>
