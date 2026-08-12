@@ -3,6 +3,7 @@ import SiteNav from '@/components/SiteNav'
 import { SiteFooter } from '@/components/SiteFooter'
 import { AboutCTA } from '@/components/AboutCTA'
 import { C, fonts, globalStyles } from '@/components/brand'
+import { SiteSchema } from '@/components/SiteSchema'
 
 export const metadata: Metadata = {
   title: 'About Us | Metal & Synthetic Slate Roofing | Metroplex Metal Roofs',
@@ -16,6 +17,7 @@ export default function AboutPage() {
   return (
     <>
       <style>{fonts + globalStyles}</style>
+      <SiteSchema />
       <div style={{ background: C.black, minHeight: '100vh', color: C.white, fontFamily: "'Outfit',system-ui,sans-serif" }}>
         <SiteNav/>
         <div style={{ maxWidth: 760, margin: '0 auto', padding: 'clamp(120px,12vw,150px) clamp(24px,5vw,48px) 80px' }}>
