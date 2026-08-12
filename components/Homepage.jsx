@@ -7,8 +7,10 @@ import { SiteFooter } from "./SiteFooter";
 import StatItem from '@/components/StatItem'
 import ProductGallery from '@/components/ProductGallery'
 import ProductsSection from '@/components/ProductsSection'
+import PricingTable from '@/components/PricingTable'
 import { ASSESSMENT_CATEGORIES } from '@/lib/assessment'
 import { GALLERY_ITEMS } from '@/lib/gallery'
+import { HOME_FAQS } from '@/components/HomeFAQSchema'
 
 /* ── Image Placeholder ── */
 const ImgPlaceholder = ({ label, tag, style={} }) => (
@@ -54,14 +56,19 @@ const Reveal = ({ children, delay=0 }) => {
   );
 };
 
+// Order matches the actual top-to-bottom order these sections appear on
+// the homepage (About Us stays first -- it's an external page link, not a
+// same-page anchor, so page order doesn't apply to it).
 const NAV_LINKS = [
   {label:"About Us",      href:"/about"},
   {label:"Why Metal",     href:"#why-metal"},
   {label:"Our Products",  href:"#products"},
+  {label:"Pricing",       href:"#pricing"},
   {label:"Gallery",       href:"#gallery"},
   {label:"Our Process",   href:"#process"},
   {label:"Why Us",        href:"#standard"},
   {label:"Service Areas", href:"#service-areas"},
+  {label:"FAQ",           href:"#faq"},
 ];
 
 /* ── Nav ── */
@@ -86,7 +93,7 @@ const Nav = ({ scrolled }) => {
         <div className="nav-links" style={{display:"flex",gap:28,alignItems:"center"}}>
           {NAV_LINKS.map(l=>(
             <a key={l.label} href={l.href}
-              style={{fontSize:11,letterSpacing:2,textTransform:"uppercase",color:C.mutedLight,fontWeight:500,transition:"color 0.2s"}}
+              style={{fontSize:11,letterSpacing:2,textTransform:"uppercase",color:C.mutedLight,fontWeight:500,transition:"color 0.2s",whiteSpace:"nowrap"}}
               onMouseEnter={e=>e.currentTarget.style.color=C.accent}
               onMouseLeave={e=>e.currentTarget.style.color=C.mutedLight}
             >{l.label}</a>
@@ -94,14 +101,80 @@ const Nav = ({ scrolled }) => {
           <a href="/visualizer" style={{padding:"9px 22px",background:C.accent,color:C.black,fontSize:11,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"background 0.2s",whiteSpace:"nowrap"}}
             onMouseEnter={e=>e.currentTarget.style.background=C.accentLight}
             onMouseLeave={e=>e.currentTarget.style.background=C.accent}
-          >Free Roof Visualizer</a>
+          >Free Visualizer + Estimate</a>
         </div>
         {/* Mobile hamburger */}
         <button onClick={()=>setMOpen(o=>!o)} style={{display:"none",padding:"8px",color:C.white,fontSize:22,lineHeight:1}} className="hide-desktop"
           aria-label="Menu">
           {mOpen ? "✕" : "☰"}
         </button>
-        <style>{`@media(max-width:640px){.hide-desktop{display:flex !important;}}`}</style>
+        {/*
+         * .nav-links' base hide-at-640px rule lives in brand.jsx's shared
+         * globalStyles (used by many other unrelated responsive rules too --
+         * grid collapsing, section padding, etc. -- so that whole media
+         * query block can't just be widened without side effects
+         * everywhere). This local override extends the actual breakpoint
+         * for THIS nav specifically.
+         *
+         * Also added whiteSpace:"nowrap" to each nav link's style (below):
+         * without it, the browser silently wraps individual link labels
+         * onto 2 lines instead of the container ever registering overflow
+         * (scrollWidth stayed == clientWidth right up until the labels
+         * wrapped), which made the true safe width impossible to measure
+         * reliably and produced a broken-looking nav in a ~1240-1400px
+         * band that a naive scrollWidth check wouldn't have caught. With
+         * wrapping disabled, the container's true overflow point measured
+         * (isolated nav-links visibility from the breakpoint itself to
+         * measure this cleanly -- testing right at the boundary conflates
+         * "does content fit" with "did the query just flip") at 1351px
+         * content width when this was first fixed (7 links + CTA).
+         * Phase 10 added 4 more nav links (Pricing/Assessment/Credentials/
+         * FAQ, going from 7 to 11), which re-raised true content width to
+         * 1730px. Assessment and Credentials were then removed again
+         * (back to 9 links), re-lowering it to 1492px -- re-measured fresh
+         * each time (isolating nav-links from the breakpoint via a
+         * `!important` inline style set directly on the element, not
+         * Playwright's addStyleTag -- that injects into <head>, which
+         * loses the cascade tie-break against this component's own
+         * <style> tag rendering later in <body>, so it silently failed to
+         * override anything below the then-current breakpoint and
+         * produced false "no overflow" readings during Phase 10's cleanup
+         * pass). 1599px gives real margin above 1492px for font-rendering
+         * variance. Re-check this number if the link count changes again.
+         * Wins the cascade because this <style> tag renders after the
+         * global one in the DOM (same selector + !important on both, so
+         * source order decides).
+         */}
+        {/*
+         * Logo (below) is an SVG rendered by the Logo component at a fixed
+         * 300px width (size=1.25 * 240px viewBox width) -- fine down to
+         * ~480px, but at true narrow-phone widths (iPhone SE class, 320px)
+         * it alone eats most of the 320-64(padding)=256px available,
+         * leaving no room for the hamburger button next to it (confirmed:
+         * pushed fully off-screen at 320px before this fix). CSS width
+         * override works here because an author stylesheet always beats
+         * the SVG's own width/height presentation attributes in the
+         * cascade -- no !important needed for that part, though the rest
+         * of this block already uses it as a house convention. height:auto
+         * lets the browser compute height from the SVG's own
+         * viewBox-derived aspect ratio (240:66), so it scales
+         * proportionally rather than stretching.
+         * Linear interpolation chosen (not vw alone) so the value lands
+         * exactly on the original 300px right at the 480px query boundary
+         * -- no visual jump when crossing it. At 320px this gives 150px
+         * (half size, still clearly legible -- other Logo call sites in
+         * this codebase already go as small as 163px), leaving well over
+         * 60px of clearance for the hamburger even before its own padding.
+         */}
+        <style>{`
+          @media(max-width:1599px){
+            .hide-desktop{display:flex !important;}
+            .nav-links{display:none !important;}
+          }
+          @media(max-width:480px){
+            .nav-logo svg{width:clamp(150px, calc(93.75vw - 150px), 300px);height:auto;}
+          }
+        `}</style>
       </nav>
       {/* Mobile drawer */}
       {mOpen && (
@@ -112,7 +185,7 @@ const Nav = ({ scrolled }) => {
             >{l.label}</a>
           ))}
           <a href="/visualizer" onClick={()=>setMOpen(false)} className="cta-btn" style={{marginTop:24,padding:"16px",background:C.accent,color:C.black,fontSize:12,letterSpacing:2,textTransform:"uppercase",fontWeight:700,borderRadius:4,textAlign:"center"}}>
-            Free Roof Visualizer
+            Free Visualizer + Estimate
           </a>
         </div>
       )}
@@ -363,6 +436,18 @@ const HomePage = ({ activeTab, setActiveTab }) => {
               onMouseLeave={e=>{e.currentTarget.style.background=C.accent;}}
             >See Your Home With Metal →</a>
           </div>
+          {/*
+           * Supporting microcopy under the hero CTA -- button text itself
+           * stays short/imperative (matches the site's CTA pattern
+           * elsewhere), this line just removes the ambiguity about what
+           * happens after the click. Phrasing matches the established
+           * "no photo upload / no obligation" claim already used on
+           * /visualizer and in the returning-visitor widget above, not
+           * invented fresh here.
+           */}
+          <p style={{fontSize:12,color:C.muted,marginTop:14,animation:"fadeUp 0.8s ease 0.35s both"}}>
+            See your home in metal and get a free price range — no photo upload, no obligation.
+          </p>
           {/* Trust bar */}
           {/*
            * "Up to 35% Insurance Discount" previously had no disclaimer of
@@ -548,6 +633,18 @@ const HomePage = ({ activeTab, setActiveTab }) => {
         activeTab={activeTab}
         onTabChange={setActiveTab}
       />
+
+      {/* ── PRICING ── */}
+      <section id="pricing" className="section-pad" style={{background:C.card,borderTop:`1px solid ${C.border}`}}>
+        <div className="inner">
+          <Reveal>
+            <PricingTable
+              title="Roofing Costs in DFW"
+              intro="Installed cost by material, based on current DFW-wide market rates — your exact number depends on your roof's size, pitch, and complexity, not just which system you choose."
+            />
+          </Reveal>
+        </div>
+      </section>
 
       {/* ── GALLERY ── */}
       <section id="gallery" className="section-pad" style={{borderTop:`1px solid ${C.border}`}}>
@@ -809,6 +906,28 @@ const HomePage = ({ activeTab, setActiveTab }) => {
                   Most of the neighborhoods we serve — Southlake, Prosper, Frisco, and beyond — require architectural review before a new roof goes on. We handle it: material samples, color chips, manufacturer spec sheets, and submission support for your HOA, included at no additional cost. Most approvals sail through on the first pass.
                 </p>
               </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ── FAQ ── */}
+      <section id="faq" className="section-pad" style={{background:C.surface,borderTop:`1px solid ${C.border}`}}>
+        <div className="inner" style={{maxWidth:820}}>
+          <Reveal>
+            <div style={{textAlign:"center",marginBottom:48}}>
+              <div style={{fontSize:15,letterSpacing:3,color:C.accent,textTransform:"uppercase",marginBottom:12}}>FAQ</div>
+              <h2 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(1.625rem,4.2vw,3.5rem)",fontWeight:700,color:C.white}}>Common Questions</h2>
+            </div>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <div style={{display:"flex",flexDirection:"column",gap:2}}>
+              {HOME_FAQS.map(f=>(
+                <div key={f.q} style={{padding:"24px 0",borderBottom:`1px solid ${C.border}`}}>
+                  <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:20,fontWeight:700,color:C.white,marginBottom:10}}>{f.q}</div>
+                  <p style={{fontSize:15,color:C.mutedLight,lineHeight:1.8,margin:0}}>{f.a}</p>
+                </div>
+              ))}
             </div>
           </Reveal>
         </div>

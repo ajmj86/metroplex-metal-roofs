@@ -33,6 +33,9 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
+# business/legal paperwork -- never belongs in source control
+/MMR Company Docs/
+
 # vercel
 .vercel
 
