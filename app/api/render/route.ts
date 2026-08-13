@@ -90,12 +90,10 @@ const SYNTHETIC_SLATE_TEXTURE_BY_STYLE: Record<string, string> = {
   slate: 'a crisp, dimensional composite slate tile roof made of individual rectangular slate tiles laid in courses, with visible butt-joint lines between tiles',
 };
 
-// premiumBlend/width default to false/null: this push intentionally does
-// not carry the lib/roofProducts.ts changes that would populate them from a
-// real selection (Synthetic Slate launch is being held for a separate
-// go-ahead), so nothing can invoke this with real values yet. Kept as
-// optional params, not deleted, so this is a trivial rewire (not a rebuild)
-// once that lib/roofProducts.ts work ships for real.
+// premiumBlend/width kept as optional params (defaulting false/null) so
+// callers that don't care about Synthetic Slate specifics don't need to
+// pass them -- now wired to real values from RoofSelection now that
+// lib/roofProducts.ts's width/premiumBlend support has shipped.
 function buildMaterialDescription(
   roofType: string,
   style: string | null,
@@ -142,9 +140,11 @@ function buildRenderPrompt(
   roofType: string,
   style: string | null,
   productLabel: string | null,
-  color: string | null
+  color: string | null,
+  premiumBlend: boolean = false,
+  width: string | null = null
 ): string {
-  const colorAndProductLabel = buildMaterialDescription(roofType, style, productLabel, color, roofTypeLabel);
+  const colorAndProductLabel = buildMaterialDescription(roofType, style, productLabel, color, roofTypeLabel, premiumBlend, width);
 
   // Fixed per real-render testing: camera framing (angle/zoom/crop) drifted
   // noticeably between independent calls of the same house. Root cause,
@@ -348,13 +348,14 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { address, satelliteImageUrl, roofType, style, product, color, firstName, email, estimateRange } = body as {
+    const { address, satelliteImageUrl, roofType, style, product, color, width, firstName, email, estimateRange } = body as {
       address: string;
       satelliteImageUrl: string;
       roofType: string;
       style: string | null;
       product: string | null;
       color: string | null;
+      width?: 'standard' | 'multi' | null;
       firstName?: string;
       email?: string;
       estimateRange?: string;
@@ -367,10 +368,15 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Not yet passing width here: it depends on the not-yet-committed
-    // lib/roofProducts.ts RoofSelection.width field (Synthetic Slate launch
-    // held for a separate go-ahead). See buildMaterialDescription's note.
-    const selection = resolveSelection(roofType, style ?? null, product ?? null, color ?? null);
+    // Re-enabled now that lib/roofProducts.ts's width/premiumBlend support
+    // is being committed in the same push as this Synthetic Slate launch --
+    // the earlier 4-arg call was a deliberate, temporary scope-down (see
+    // buildMaterialDescription's note above) so this route could build
+    // standalone against the pre-launch lib/roofProducts.ts. Without this,
+    // the frontend's Multi-Width Slate selector would silently render as
+    // Standard every time -- the selection would reach this endpoint and be
+    // dropped on the floor.
+    const selection = resolveSelection(roofType, style ?? null, product ?? null, color ?? null, width ?? null);
     const roofTypeLabel = getRoofTypeLabel(roofType);
 
     let satelliteFile: File;
@@ -409,7 +415,9 @@ export async function POST(req: NextRequest) {
       roofType,
       selection.style,
       selection.productLabel,
-      selection.color
+      selection.color,
+      selection.premiumBlend,
+      selection.width
     );
     const expandedPrompt = await expandRenderPrompt(prompt);
     const image = await generateImage(inputs, expandedPrompt);
