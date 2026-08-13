@@ -7,12 +7,19 @@ import SiteNav from '@/components/SiteNav'
 import { SiteFooter } from '@/components/SiteFooter'
 import {
   ROOF_TYPE_ORDER,
+  MATERIAL_TYPE_GROUPS,
+  MATERIAL_TYPE_LABELS,
   getRoofTypeLabel,
   stylesWithColors,
   productsForStyle,
   hasExactlyOneProduct,
   getAutoSelectedStyleAndProduct,
+  styleHasWidthVariants,
+  colorsForWidth,
+  colorImageForWidth,
   type ColorOption,
+  type MaterialType,
+  type TileWidth,
 } from '@/lib/roofProducts'
 
 type Step = 'checking' | 'welcome-back' | 'address' | 'select' | 'gate' | 'loading' | 'results'
@@ -30,6 +37,82 @@ const LOADING_PHRASES = [
 ]
 
 const TX_BOUNDS = { north: 36.5, south: 25.8, east: -93.5, west: -106.6 }
+
+// Brava Slate color thumbnails are a mix of two source-photo types: 7 colors
+// (Arendale, Atlantic, Cottage, Light Arendale, Onyx, Sandstone, Victorian)
+// use images cropped from Brava's width-comparison graphics, which read as
+// tightly zoomed in on the tile pattern; the other 6 (below) use Brava's
+// original standalone product photos, which are a much wider shot of the
+// roof and read as noticeably more zoomed out in the same fixed-height
+// swatch box. Scoped to Slate only -- at the time this was written, Spanish
+// Barrel Tile and Cedar Shake were checked and didn't have this specific
+// cross-color INCONSISTENCY (their source photos are all a consistent scale
+// relative to each other). They were later given their own deliberate,
+// uniform zoom-in below for a different reason (matching Stone-Coated
+// Steel's thumbnail feel), which is unrelated to this fix. Values tuned by
+// rendering the actual grid and comparing all 13 thumbnails side by side,
+// not derived from source dimensions alone -- crop origin also nudged per
+// color to stay centered on tile faces rather than cropping into a
+// seam/shadow band.
+const SLATE_THUMB_ZOOM: Record<string, { scale: number; position?: string }> = {
+  Graphite: { scale: 2.05, position: '50% 42%' },
+  Washington: { scale: 2.05, position: '50% 38%' },
+  White: { scale: 2.05, position: '50% 40%' },
+  European: { scale: 2.05, position: '50% 40%' },
+  'Pine Green': { scale: 2.05, position: '50% 38%' },
+  'Tuscan Clay': { scale: 2.05, position: '50% 42%' },
+}
+
+// Spanish Barrel Tile and Cedar Shake thumbnails were internally consistent
+// with each other already, but read as noticeably more zoomed-out than the
+// existing Stone-Coated Steel product's thumbnails (Stone-Coated's source
+// photos are tight macro texture shots; these are wider product-overview
+// shots). Requested to match that tighter, more-detail-visible feel. Unlike
+// Slate, every color within EACH of these two products is a uniformly-sized
+// ~3000x2000 source photo, so one flat scale works within a product -- no
+// per-color exception list needed. The two products don't share a single
+// value though: 3.0 was tuned against Stone-Coated Steel and works well for
+// Cedar Shake, but reads as too tight on Spanish Barrel Tile's larger,
+// more-curved tile silhouette (owner feedback: target is 3 full barrel-tile
+// rows per thumbnail, not ~1). Kept as two separate constants rather than
+// one shared value so each can be tuned independently going forward.
+const CEDAR_SHAKE_THUMB_SCALE = 3.0
+const SPANISH_BARREL_THUMB_SCALE = 1.4
+
+// 12 of 14 Spanish Barrel Tile colors land correctly at the default center
+// crop (object-position 50% 50%): half a tile row visible at top, one full
+// row centered, half a row at bottom. Vintage Terra Cotta and Sandstone's
+// source photos happen to be framed with a row boundary sitting almost
+// exactly at the crop's top edge instead, so centering shows ~2 nearly-full
+// rows rather than the half/full/half pattern the other 12 have.
+//
+// Fixed with `object-position`, NOT `transform-origin` (transform-origin
+// was tried first and doesn't have enough range here: it only re-anchors
+// the zoom within the already-cover-cropped 120px slice, which pans a
+// window of just ~34px at this scale -- nowhere near a full tile row. Only
+// object-position, which shifts what object-fit:cover selects from the
+// FULL source image before any transform, has enough range to reach a
+// clean row boundary).
+//
+// First-pass values (35%/30%) were picked by eye and were measurably wrong
+// -- re-derived by actually measuring pixel row-boundary (seam) positions
+// via a per-row grayscale brightness profile on rendered crops, in a
+// standalone harness against the real source images, outside the app. Three
+// confirmed-good references (Antique Clay, Pine Green, Autumn) all place
+// their seams at y=38 and y=88 (of a 124px captured box, border included).
+// Swept object-position in 2% steps for both colors and picked the value
+// whose measured seam positions were closest to that target:
+//   Vintage Terra Cotta @ 8%  -> seams [37, 88] (target [38, 88])
+//   Sandstone @ 12%           -> seams [37, 88] (target [38, 88])
+// Both within 1px of the reference. Also checked seam prominence
+// (contrast) for Sandstone specifically, since its tile boundaries looked
+// visually harder to read -- measured prominence was actually HIGHER than
+// all three references, so that impression doesn't reflect a real
+// low-contrast constraint in this photo.
+const SPANISH_BARREL_OBJECT_POSITION: Record<string, string> = {
+  'Vintage Terra Cotta': '50% 8%',
+  Sandstone: '50% 12%',
+}
 
 const iStyle: React.CSSProperties = {
   width: '100%', background: C.surface, border: `1px solid ${C.border}`,
@@ -132,10 +215,12 @@ export default function VisualizerPage() {
 
   // select step
   const [satelliteUrl, setSatelliteUrl] = useState<string | null>(null)
+  const [selMaterialType, setSelMaterialType] = useState<MaterialType | null>(null)
   const [selType, setSelType] = useState<string | null>(null)
   const [selStyle, setSelStyle] = useState<string | null>(null)
   const [selProduct, setSelProduct] = useState<string | null>(null)
   const [selColor, setSelColor] = useState<string | null>(null)
+  const [selWidth, setSelWidth] = useState<TileWidth | null>(null)
 
   // gate step
   const [gateScreen, setGateScreen] = useState(0)
@@ -247,6 +332,7 @@ export default function VisualizerPage() {
             style: selStyle,
             product: selProduct,
             color: selColor,
+            width: selShowWidthTier ? selWidth : null,
             firstName: gateData.firstName,
             email: gateData.email,
             estimateRange: noPriceEstimate ? (estimateMessage ?? '') : (estimateLow && estimateHigh ? `${estimateLow} - ${estimateHigh}` : ''),
@@ -297,7 +383,10 @@ export default function VisualizerPage() {
     const params = new URLSearchParams(window.location.search)
 
     const rt = params.get('roofType')
-    if (!rt || !(ROOF_TYPE_ORDER as readonly string[]).includes(rt)) return
+    const rtMaterialType = (Object.keys(MATERIAL_TYPE_GROUPS) as MaterialType[])
+      .find((mt) => (MATERIAL_TYPE_GROUPS[mt] as readonly string[]).includes(rt ?? ''))
+    if (!rt || !rtMaterialType) return
+    setSelMaterialType(rtMaterialType)
     setSelType(rt)
 
     // Materials with only one real style (standing seam, r-panel, copper)
@@ -669,22 +758,36 @@ export default function VisualizerPage() {
 
   // ── Material selector helpers ──────────────────────────────────────────────
   function pickType(rt: string) {
-    setSelStyle(null); setSelProduct(null); setSelColor(null); setSelType(rt)
+    setSelStyle(null); setSelProduct(null); setSelColor(null); setSelWidth(null); setSelType(rt)
     if (hasExactlyOneProduct(rt)) {
       const auto = getAutoSelectedStyleAndProduct(rt)
       if (auto) {
         setSelStyle(auto.style); setSelProduct(auto.product)
         const autoColors = productsForStyle(rt, auto.style).find(([k]) => k === auto.product)?.[1].colors ?? []
         if (autoColors.length === 1) setSelColor(autoColors[0].name)
+        if (styleHasWidthVariants(rt, auto.style)) setSelWidth('standard')
       }
     }
   }
 
+  // Top-level Metal/Synthetic Slate tier. When the picked group has exactly
+  // one roofType (Synthetic Slate today), skip straight to it -- the same
+  // "don't make the user click through a redundant single-option tile"
+  // pattern pickType already applies one level down via hasExactlyOneProduct.
+  function pickMaterialType(mt: MaterialType) {
+    setSelMaterialType(mt)
+    setSelType(null); setSelStyle(null); setSelProduct(null); setSelColor(null); setSelWidth(null)
+    const group = MATERIAL_TYPE_GROUPS[mt]
+    if (group.length === 1) pickType(group[0])
+  }
+
   const selStyles   = selType ? stylesWithColors(selType) : []
   const selProducts = selType && selStyle ? productsForStyle(selType, selStyle) : []
-  const selColors: ColorOption[] = selType && selProduct
+  const selColorsRaw: ColorOption[] = selType && selProduct
     ? (productsForStyle(selType, selStyle ?? '').find(([k]) => k === selProduct)?.[1].colors ?? [])
     : []
+  const selShowWidthTier = Boolean(selType && selStyle && styleHasWidthVariants(selType, selStyle))
+  const selColors = colorsForWidth(selColorsRaw, selShowWidthTier ? selWidth : null)
 
   const canProceed = Boolean(selType && selColor)
 
@@ -720,7 +823,7 @@ export default function VisualizerPage() {
           {(
             <div style={{ textAlign: 'center', marginBottom: 40 }}>
               <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 'clamp(1.4rem,3vw,2rem)', fontWeight: 700, color: C.white, marginBottom: 24 }}>
-                Metal Roof Visualizer
+                Roof Visualizer
               </div>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 0, maxWidth: 400, margin: '0 auto' }}>
                 {STEP_KEYS.map((s, i) => {
@@ -797,10 +900,10 @@ export default function VisualizerPage() {
               <div style={{ textAlign: 'center', marginBottom: 64 }}>
                 <div style={{ fontSize: 13, letterSpacing: 4, color: C.accent, textTransform: 'uppercase', marginBottom: 20, fontWeight: 600 }}>AI Roof Visualizer</div>
                 <h1 style={{ fontFamily: "'Cormorant Garamond',Georgia,serif", fontSize: 'clamp(2rem,5vw,3.2rem)', fontWeight: 700, color: C.white, lineHeight: 1.1, marginBottom: 16 }}>
-                  See Your Home With<br /><span style={{ color: C.accent, fontStyle: 'italic' }}>a Metal Roof</span>
+                  See Your Home With<br /><span style={{ color: C.accent, fontStyle: 'italic' }}>a New Roof</span>
                 </h1>
                 <p style={{ fontSize: 15, color: C.mutedLight, lineHeight: 1.8, maxWidth: 460, margin: '0 auto' }}>
-                  Enter your address and choose a material. We'll render your home with a metal roof and give you a price range — in under 60 seconds. No upload required.
+                  Enter your address and choose a material. We&apos;ll render your home with your selected roofing material and give you a price range — in under 60 seconds. No upload required.
                 </p>
               </div>
               <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 8, padding: 6, display: 'flex', gap: 6, alignItems: 'center', flexWrap: 'wrap', marginBottom: 8 }}>
@@ -908,33 +1011,66 @@ export default function VisualizerPage() {
                 )}
               </div>
 
-              {/* Roof type tabs */}
+              {/* Material type tabs (Metal vs. Synthetic Slate) */}
               <div style={sectionCard}>
-                <div style={{ fontSize: 13, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Choose Your Material</div>
+                <div style={{ fontSize: 13, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Material Type</div>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 10 }}>
-                  {(ROOF_TYPE_ORDER as readonly string[]).map(rt => (
-                    <button key={rt} onClick={() => pickType(rt)} style={{
+                  {(Object.keys(MATERIAL_TYPE_GROUPS) as MaterialType[]).map(mt => (
+                    <button key={mt} onClick={() => pickMaterialType(mt)} style={{
                       padding: '16px 20px',
                       fontSize: 12,
                       letterSpacing: 2,
                       textTransform: 'uppercase' as const,
-                      background: selType === rt ? C.accent : C.surface,
-                      color: selType === rt ? C.black : C.mutedLight,
-                      border: `1.5px solid ${selType === rt ? C.accent : C.border}`,
+                      background: selMaterialType === mt ? C.accent : C.surface,
+                      color: selMaterialType === mt ? C.black : C.mutedLight,
+                      border: `1.5px solid ${selMaterialType === mt ? C.accent : C.border}`,
                       borderRadius: 6,
                       cursor: 'pointer',
                       transition: 'all 0.15s',
                       fontFamily: "'Outfit',sans-serif",
-                      fontWeight: selType === rt ? 700 : 500,
-                      boxShadow: selType === rt ? `0 0 12px ${C.accentDark}44` : 'none',
+                      fontWeight: selMaterialType === mt ? 700 : 500,
+                      boxShadow: selMaterialType === mt ? `0 0 12px ${C.accentDark}44` : 'none',
                       textAlign: 'center' as const,
                     }}
-                    onMouseEnter={e => { if (selType !== rt) { e.currentTarget.style.borderColor = C.accentDark; e.currentTarget.style.color = C.white; }}}
-                    onMouseLeave={e => { if (selType !== rt) { e.currentTarget.style.borderColor = C.border; e.currentTarget.style.color = C.mutedLight; }}}
-                    >{getRoofTypeLabel(rt)}</button>
+                    onMouseEnter={e => { if (selMaterialType !== mt) { e.currentTarget.style.borderColor = C.accentDark; e.currentTarget.style.color = C.white; }}}
+                    onMouseLeave={e => { if (selMaterialType !== mt) { e.currentTarget.style.borderColor = C.border; e.currentTarget.style.color = C.mutedLight; }}}
+                    >{MATERIAL_TYPE_LABELS[mt]}</button>
                   ))}
                 </div>
               </div>
+
+              {/* Roof type tabs -- Metal only. Synthetic Slate has exactly one
+                  roofType, so pickMaterialType() auto-selects it and skips
+                  straight to the style pills below; there's nothing for this
+                  grid to show in that case. */}
+              {selMaterialType === 'metal' && (
+                <div style={sectionCard}>
+                  <div style={{ fontSize: 13, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Choose Your Material</div>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 10 }}>
+                    {(ROOF_TYPE_ORDER as readonly string[]).map(rt => (
+                      <button key={rt} onClick={() => pickType(rt)} style={{
+                        padding: '16px 20px',
+                        fontSize: 12,
+                        letterSpacing: 2,
+                        textTransform: 'uppercase' as const,
+                        background: selType === rt ? C.accent : C.surface,
+                        color: selType === rt ? C.black : C.mutedLight,
+                        border: `1.5px solid ${selType === rt ? C.accent : C.border}`,
+                        borderRadius: 6,
+                        cursor: 'pointer',
+                        transition: 'all 0.15s',
+                        fontFamily: "'Outfit',sans-serif",
+                        fontWeight: selType === rt ? 700 : 500,
+                        boxShadow: selType === rt ? `0 0 12px ${C.accentDark}44` : 'none',
+                        textAlign: 'center' as const,
+                      }}
+                      onMouseEnter={e => { if (selType !== rt) { e.currentTarget.style.borderColor = C.accentDark; e.currentTarget.style.color = C.white; }}}
+                      onMouseLeave={e => { if (selType !== rt) { e.currentTarget.style.borderColor = C.border; e.currentTarget.style.color = C.mutedLight; }}}
+                      >{getRoofTypeLabel(rt)}</button>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {/* Style tabs */}
               {selType && selStyles.length > 1 && !hasExactlyOneProduct(selType) && (
@@ -952,9 +1088,29 @@ export default function VisualizerPage() {
                           setSelProduct(null); setSelColor(null); setSelStyle(sk)
                           const sp = productsForStyle(selType, sk)
                           if (sp.length === 1) { setSelProduct(sp[0][0]); if (sp[0][1].colors.length === 1) setSelColor(sp[0][1].colors[0].name) }
+                          setSelWidth(styleHasWidthVariants(selType, sk) ? 'standard' : null)
                         }}>{pillLabel}</button>
                       )
                     })}
+                  </div>
+                </div>
+              )}
+
+              {/* Width tier (Slate only) -- gated the same way the Product
+                  grid above is gated on selProducts.length: a real boolean
+                  check on the actual data, not a hardcoded style name, so it
+                  stops appearing automatically if Slate's photography set
+                  ever changes, and never appears for Spanish Barrel Tile or
+                  Cedar Shake, which have no width distinction at all. */}
+              {selShowWidthTier && (
+                <div style={sectionCard}>
+                  <div style={{ fontSize: 13, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Width</div>
+                  <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                    {(['standard', 'multi'] as TileWidth[]).map(w => (
+                      <button key={w} style={tabBtn(selWidth === w)} onClick={() => { setSelColor(null); setSelWidth(w) }}>
+                        {w === 'standard' ? 'Standard Slate' : 'Multi-Width Slate'}
+                      </button>
+                    ))}
                   </div>
                 </div>
               )}
@@ -981,7 +1137,16 @@ export default function VisualizerPage() {
                 <div style={sectionCard}>
                   <div style={{ fontSize: 13, letterSpacing: 2.5, color: C.accent, textTransform: 'uppercase', marginBottom: 14 }}>Color</div>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 10 }}>
-                    {selColors.map((c: ColorOption) => (
+                    {selColors.map((c: ColorOption) => {
+                      const swatchImage = colorImageForWidth(c, selShowWidthTier ? selWidth : null)
+                      const thumbZoom: { scale: number; position?: string; objectPosition?: string } | undefined = selProduct === 'brava_slate'
+                        ? SLATE_THUMB_ZOOM[c.name]
+                        : selProduct === 'brava_cedar_shake'
+                          ? { scale: CEDAR_SHAKE_THUMB_SCALE }
+                          : selProduct === 'brava_spanish_barrel_tile'
+                            ? { scale: SPANISH_BARREL_THUMB_SCALE, objectPosition: SPANISH_BARREL_OBJECT_POSITION[c.name] }
+                            : undefined
+                      return (
                       <button key={c.name} onClick={() => setSelColor(c.name)}
                         style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
                       >
@@ -991,8 +1156,27 @@ export default function VisualizerPage() {
                           boxShadow: selColor === c.name ? `0 0 0 1px ${C.accent}, 0 0 12px ${C.accentDark}44` : 'none',
                           transition: 'all 0.15s',
                         }}>
-                          {c.image1 ? (
-                            <img src={c.image1} alt={c.name} style={{ width: '100%', height: 120, objectFit: 'cover', display: 'block' }} />
+                          {swatchImage ? (
+                            // Wrapped in its own fixed-height overflow:hidden box: a
+                            // `transform`d img is promoted to its own stacking context
+                            // and paints above later non-transformed siblings (like the
+                            // label bar below) regardless of DOM order -- confirmed live,
+                            // this was silently hiding the color-name label on every
+                            // zoomed thumbnail. Clipping the transform's overflow inside
+                            // this wrapper, instead of relying on the outer card's
+                            // overflow:hidden, keeps the scaled image fully contained so
+                            // it can never paint into the label's region in the first
+                            // place, independent of stacking order.
+                            <div style={{ width: '100%', height: 120, overflow: 'hidden' }}>
+                              <img src={swatchImage} alt={c.name} style={{
+                                width: '100%', height: 120, objectFit: 'cover', display: 'block',
+                                objectPosition: thumbZoom?.objectPosition ?? '50% 50%',
+                                ...(thumbZoom ? {
+                                  transform: `scale(${thumbZoom.scale})`,
+                                  transformOrigin: thumbZoom.position ?? '50% 50%',
+                                } : {}),
+                              }} />
+                            </div>
                           ) : (
                             <div style={{ width: '100%', height: 120, background: c.hex ?? C.surface }} />
                           )}
@@ -1006,7 +1190,8 @@ export default function VisualizerPage() {
                           </div>
                         </div>
                       </button>
-                    ))}
+                      )
+                    })}
                   </div>
                 </div>
               )}
