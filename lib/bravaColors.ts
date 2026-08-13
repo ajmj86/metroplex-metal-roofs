@@ -1,8 +1,12 @@
-// Full Brava synthetic slate/tile color catalog, structured for reuse once
-// these three profiles are wired into the roof visualizer (roofProducts.json
-// style/product keys, swatch photography, etc. -- same shape convention as
-// lib/productColors.js's flat color arrays, but kept in its own file since
-// Brava isn't in the visualizer yet and this has no photography wired up).
+// Full Brava synthetic slate/tile color catalog. As of Phase 12 this same
+// data (plus real photography, Slate's Standard/Multi-Width variants, and
+// visualizer-specific fields like widthVariants) lives in
+// config/roofProducts.json under the "synthetic_slate" roofType -- that's
+// the source of truth for the actual visualizer now. This file stays in
+// use for /synthetic-slate-roofing's marketing copy (representative color
+// mentions), which doesn't need photography or width variants, just the
+// name + premiumBlend list -- not worth re-deriving from the bigger config
+// shape for that one purpose.
 export interface BravaColor {
   name: string
   // Brava's "Premium Blend" tier -- a subset of colors carrying a different
@@ -39,9 +43,14 @@ export const BRAVA_PROFILES: BravaProfile[] = [
   {
     key: 'slate',
     name: 'Brava Slate',
+    // Corrected in Phase 12 against Brava's own product photos (each
+    // Premium Blend photo carries a visible "Premium" badge) -- Victorian
+    // has no badge (moved out of premiumBlend) and White does (moved in).
+    // Every other color in this file matched the photographic evidence
+    // exactly; this was the one real correction across all 39 colors.
     colors: [
-      c('Arendale'), c('Atlantic'), c('Cottage'), c('Graphite'), c('Light Arendale'), c('Onyx'), c('Washington'), c('White'),
-      c('Sandstone', true), c('European', true), c('Pine Green', true), c('Tuscan Clay', true), c('Victorian', true),
+      c('Arendale'), c('Atlantic'), c('Cottage'), c('Graphite'), c('Light Arendale'), c('Onyx'), c('Washington'), c('Victorian'),
+      c('Sandstone', true), c('European', true), c('Pine Green', true), c('Tuscan Clay', true), c('White', true),
     ],
   },
 ]

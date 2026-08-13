@@ -3,10 +3,22 @@
     "label": "Stone-Coated Steel",
     "manufacturer": "Unified Steel",
     "styles": {
-      "shake": { "label": "Shake", "slug": "shake" },
-      "shingle": { "label": "Shingle", "slug": "shingle" },
-      "high_barrel": { "label": "High Barrel", "slug": "high-barrel" },
-      "low_barrel": { "label": "Low Barrel", "slug": "low-barrel" }
+      "shake": {
+        "label": "Shake",
+        "slug": "shake"
+      },
+      "shingle": {
+        "label": "Shingle",
+        "slug": "shingle"
+      },
+      "high_barrel": {
+        "label": "High Barrel",
+        "slug": "high-barrel"
+      },
+      "low_barrel": {
+        "label": "Low Barrel",
+        "slug": "low-barrel"
+      }
     },
     "products": {
       "pine_crest_shake": {
@@ -15,15 +27,78 @@
         "slug": "pine-crest-shake",
         "description": "Engineered to replicate hand-split wood shake with the durability only steel can provide.",
         "colors": [
-          { "name": "Barclay", "slug": "barclay", "sku": "4DAP93185SF", "hex": "#8B4A3C", "image1": "/products/shake/pine-crest-shake/barclay-1.jpg", "image2": "/products/shake/pine-crest-shake/barclay-2.jpg" },
-          { "name": "Charcoal", "slug": "charcoal", "sku": "4DAP9104000", "hex": "#3A3A3A", "image1": "/products/shake/pine-crest-shake/charcoal-1.jpg", "image2": "/products/shake/pine-crest-shake/charcoal-2.jpg" },
-          { "name": "Dover", "slug": "dover", "sku": "4DAP9815000", "hex": "#D6D2C6", "image1": "/products/shake/pine-crest-shake/dover-1.jpg", "image2": "/products/shake/pine-crest-shake/dover-2.jpg" },
-          { "name": "Gold River", "slug": "gold-river", "sku": "4DAP93245SF", "hex": "#A8895A", "image1": "/products/shake/pine-crest-shake/gold-river-1.jpg", "image2": "/products/shake/pine-crest-shake/gold-river-2.jpg" },
-          { "name": "Harborwood", "slug": "harborwood", "sku": "4DAP93569SF", "hex": "#7A6B4F", "image1": "/products/shake/pine-crest-shake/harborwood-1.jpg", "image2": "/products/shake/pine-crest-shake/harborwood-2.jpg" },
-          { "name": "Ironwood", "slug": "ironwood", "sku": "4DAP95325SF", "hex": "#6B6862", "image1": "/products/shake/pine-crest-shake/ironwood-1.jpg", "image2": "/products/shake/pine-crest-shake/ironwood-2.jpg" },
-          { "name": "Sage Green", "slug": "sage-green", "sku": "4DAP94100SF", "hex": "#6F8068", "image1": "/products/shake/pine-crest-shake/sage-green-1.jpg", "image2": "/products/shake/pine-crest-shake/sage-green-2.jpg" },
-          { "name": "Stirling Gray", "slug": "stirling-gray", "sku": "4DAP95427SF", "hex": "#8C8B85", "image1": "/products/shake/pine-crest-shake/stirling-gray-1.jpg", "image2": "/products/shake/pine-crest-shake/stirling-gray-2.jpg" },
-          { "name": "Timberwood", "slug": "timberwood", "sku": "4DAP93225SF", "hex": "#5C4A3C", "image1": "/products/shake/pine-crest-shake/timberwood-1.jpg", "image2": "/products/shake/pine-crest-shake/timberwood-2.jpg" }
+          {
+            "name": "Barclay",
+            "slug": "barclay",
+            "sku": "4DAP93185SF",
+            "hex": "#8B4A3C",
+            "image1": "/products/shake/pine-crest-shake/barclay-1.jpg",
+            "image2": "/products/shake/pine-crest-shake/barclay-2.jpg"
+          },
+          {
+            "name": "Charcoal",
+            "slug": "charcoal",
+            "sku": "4DAP9104000",
+            "hex": "#3A3A3A",
+            "image1": "/products/shake/pine-crest-shake/charcoal-1.jpg",
+            "image2": "/products/shake/pine-crest-shake/charcoal-2.jpg"
+          },
+          {
+            "name": "Dover",
+            "slug": "dover",
+            "sku": "4DAP9815000",
+            "hex": "#D6D2C6",
+            "image1": "/products/shake/pine-crest-shake/dover-1.jpg",
+            "image2": "/products/shake/pine-crest-shake/dover-2.jpg"
+          },
+          {
+            "name": "Gold River",
+            "slug": "gold-river",
+            "sku": "4DAP93245SF",
+            "hex": "#A8895A",
+            "image1": "/products/shake/pine-crest-shake/gold-river-1.jpg",
+            "image2": "/products/shake/pine-crest-shake/gold-river-2.jpg"
+          },
+          {
+            "name": "Harborwood",
+            "slug": "harborwood",
+            "sku": "4DAP93569SF",
+            "hex": "#7A6B4F",
+            "image1": "/products/shake/pine-crest-shake/harborwood-1.jpg",
+            "image2": "/products/shake/pine-crest-shake/harborwood-2.jpg"
+          },
+          {
+            "name": "Ironwood",
+            "slug": "ironwood",
+            "sku": "4DAP95325SF",
+            "hex": "#6B6862",
+            "image1": "/products/shake/pine-crest-shake/ironwood-1.jpg",
+            "image2": "/products/shake/pine-crest-shake/ironwood-2.jpg"
+          },
+          {
+            "name": "Sage Green",
+            "slug": "sage-green",
+            "sku": "4DAP94100SF",
+            "hex": "#6F8068",
+            "image1": "/products/shake/pine-crest-shake/sage-green-1.jpg",
+            "image2": "/products/shake/pine-crest-shake/sage-green-2.jpg"
+          },
+          {
+            "name": "Stirling Gray",
+            "slug": "stirling-gray",
+            "sku": "4DAP95427SF",
+            "hex": "#8C8B85",
+            "image1": "/products/shake/pine-crest-shake/stirling-gray-1.jpg",
+            "image2": "/products/shake/pine-crest-shake/stirling-gray-2.jpg"
+          },
+          {
+            "name": "Timberwood",
+            "slug": "timberwood",
+            "sku": "4DAP93225SF",
+            "hex": "#5C4A3C",
+            "image1": "/products/shake/pine-crest-shake/timberwood-1.jpg",
+            "image2": "/products/shake/pine-crest-shake/timberwood-2.jpg"
+          }
         ]
       },
       "cottage_shingle": {
@@ -32,10 +107,38 @@
         "slug": "cottage-shingle",
         "description": "Unique offset, multi-grooved, deep weather side-lap that creates a classic cottage look.",
         "colors": [
-          { "name": "Barclay HD", "slug": "barclay-hd", "sku": "4DCP93185HD", "hex": "#7A4A35", "image1": "/products/shingle/cottage-shingle/barclay-hd-1.jpg", "image2": "/products/shingle/cottage-shingle/barclay-hd-2.jpg" },
-          { "name": "Charcoal HD", "slug": "charcoal-hd", "sku": "4DCP91040HD", "hex": "#3D3A38", "image1": "/products/shingle/cottage-shingle/charcoal-hd-1.jpg", "image2": "/products/shingle/cottage-shingle/charcoal-hd-2.jpg" },
-          { "name": "Ironwood HD", "slug": "ironwood-hd", "sku": "4DCP95325HD", "hex": "#6E6A60", "image1": "/products/shingle/cottage-shingle/ironwood-hd-1.jpg", "image2": "/products/shingle/cottage-shingle/ironwood-hd-2.jpg" },
-          { "name": "Timberwood HD", "slug": "timberwood-hd", "sku": "4DCP93225HD", "hex": "#5B4538", "image1": "/products/shingle/cottage-shingle/timberwood-hd-1.jpg", "image2": "/products/shingle/cottage-shingle/timberwood-hd-2.jpg" }
+          {
+            "name": "Barclay HD",
+            "slug": "barclay-hd",
+            "sku": "4DCP93185HD",
+            "hex": "#7A4A35",
+            "image1": "/products/shingle/cottage-shingle/barclay-hd-1.jpg",
+            "image2": "/products/shingle/cottage-shingle/barclay-hd-2.jpg"
+          },
+          {
+            "name": "Charcoal HD",
+            "slug": "charcoal-hd",
+            "sku": "4DCP91040HD",
+            "hex": "#3D3A38",
+            "image1": "/products/shingle/cottage-shingle/charcoal-hd-1.jpg",
+            "image2": "/products/shingle/cottage-shingle/charcoal-hd-2.jpg"
+          },
+          {
+            "name": "Ironwood HD",
+            "slug": "ironwood-hd",
+            "sku": "4DCP95325HD",
+            "hex": "#6E6A60",
+            "image1": "/products/shingle/cottage-shingle/ironwood-hd-1.jpg",
+            "image2": "/products/shingle/cottage-shingle/ironwood-hd-2.jpg"
+          },
+          {
+            "name": "Timberwood HD",
+            "slug": "timberwood-hd",
+            "sku": "4DCP93225HD",
+            "hex": "#5B4538",
+            "image1": "/products/shingle/cottage-shingle/timberwood-hd-1.jpg",
+            "image2": "/products/shingle/cottage-shingle/timberwood-hd-2.jpg"
+          }
         ]
       },
       "granite_ridge_shingle": {
@@ -44,11 +147,46 @@
         "slug": "granite-ridge-shingle",
         "description": "Adds long life and beauty to a low-profile, high wind-resistant shingle that carries a Class 4 Hail Impact Rating.",
         "colors": [
-          { "name": "Barclay", "slug": "barclay", "sku": "4DBP93185SF", "hex": "#8C4F38", "image1": "/products/shingle/granite-ridge-shingle/barclay-1.jpg", "image2": "/products/shingle/granite-ridge-shingle/barclay-2.jpg" },
-          { "name": "Charcoal", "slug": "charcoal", "sku": "4DBP9104000", "hex": "#39393A", "image1": "/products/shingle/granite-ridge-shingle/charcoal-1.jpg", "image2": "/products/shingle/granite-ridge-shingle/charcoal-2.jpg" },
-          { "name": "Ironwood", "slug": "ironwood", "sku": "4DBP95325SF", "hex": "#736F66", "image1": "/products/shingle/granite-ridge-shingle/ironwood-1.jpg", "image2": "/products/shingle/granite-ridge-shingle/ironwood-2.jpg" },
-          { "name": "Sage Green", "slug": "sage-green", "sku": "4DBP94100SF", "hex": "#6F7A5E", "image1": "/products/shingle/granite-ridge-shingle/sage-green-1.jpg", "image2": "/products/shingle/granite-ridge-shingle/sage-green-2.jpg" },
-          { "name": "Timberwood", "slug": "timberwood", "sku": "4DBP93225SF", "hex": "#5C463A", "image1": "/products/shingle/granite-ridge-shingle/timberwood-1.jpg", "image2": null }
+          {
+            "name": "Barclay",
+            "slug": "barclay",
+            "sku": "4DBP93185SF",
+            "hex": "#8C4F38",
+            "image1": "/products/shingle/granite-ridge-shingle/barclay-1.jpg",
+            "image2": "/products/shingle/granite-ridge-shingle/barclay-2.jpg"
+          },
+          {
+            "name": "Charcoal",
+            "slug": "charcoal",
+            "sku": "4DBP9104000",
+            "hex": "#39393A",
+            "image1": "/products/shingle/granite-ridge-shingle/charcoal-1.jpg",
+            "image2": "/products/shingle/granite-ridge-shingle/charcoal-2.jpg"
+          },
+          {
+            "name": "Ironwood",
+            "slug": "ironwood",
+            "sku": "4DBP95325SF",
+            "hex": "#736F66",
+            "image1": "/products/shingle/granite-ridge-shingle/ironwood-1.jpg",
+            "image2": "/products/shingle/granite-ridge-shingle/ironwood-2.jpg"
+          },
+          {
+            "name": "Sage Green",
+            "slug": "sage-green",
+            "sku": "4DBP94100SF",
+            "hex": "#6F7A5E",
+            "image1": "/products/shingle/granite-ridge-shingle/sage-green-1.jpg",
+            "image2": "/products/shingle/granite-ridge-shingle/sage-green-2.jpg"
+          },
+          {
+            "name": "Timberwood",
+            "slug": "timberwood",
+            "sku": "4DBP93225SF",
+            "hex": "#5C463A",
+            "image1": "/products/shingle/granite-ridge-shingle/timberwood-1.jpg",
+            "image2": null
+          }
         ]
       },
       "barrel_vault_tile": {
@@ -57,14 +195,70 @@
         "slug": "barrel-vault-tile",
         "description": "Resembles the authentic look of traditional Spanish Tile that increases the curb appeal of any home.",
         "colors": [
-          { "name": "Barcelona", "slug": "barcelona", "sku": "4DDP97335SF", "hex": "#A8472E", "image1": "/products/high-barrel/barrel-vault-tile/barcelona-1.jpg", "image2": "/products/high-barrel/barrel-vault-tile/barcelona-2.jpg" },
-          { "name": "Barclay", "slug": "barclay", "sku": "4DDP93185SF", "hex": "#8A4D3A", "image1": "/products/high-barrel/barrel-vault-tile/barclay-1.jpg", "image2": "/products/high-barrel/barrel-vault-tile/barclay-2.jpg" },
-          { "name": "Charcoal", "slug": "charcoal", "sku": "4DDP9104000", "hex": "#383634", "image1": "/products/high-barrel/barrel-vault-tile/charcoal-1.jpg", "image2": "/products/high-barrel/barrel-vault-tile/charcoal-2.jpg" },
-          { "name": "Dover", "slug": "dover", "sku": "4DDP9815000", "hex": "#D7D3C7", "image1": "/products/high-barrel/barrel-vault-tile/dover-1.jpg", "image2": "/products/high-barrel/barrel-vault-tile/dover-2.jpg" },
-          { "name": "Santa Fe", "slug": "santa-fe", "sku": "4DDP96185SF", "hex": "#B07A4C", "image1": "/products/high-barrel/barrel-vault-tile/santa-fe-1.jpg", "image2": "/products/high-barrel/barrel-vault-tile/santa-fe-2.jpg" },
-          { "name": "Spanish Red", "slug": "spanish-red", "sku": "4DDP9732500", "hex": "#9B4A33", "image1": "/products/high-barrel/barrel-vault-tile/spanish-red-1.jpg", "image2": "/products/high-barrel/barrel-vault-tile/spanish-red-2.jpg" },
-          { "name": "Sunset Gold", "slug": "sunset-gold", "sku": "4DDP96165SF", "hex": "#C08A4E", "image1": "/products/high-barrel/barrel-vault-tile/sunset-gold-1.jpg", "image2": "/products/high-barrel/barrel-vault-tile/sunset-gold-2.jpg" },
-          { "name": "Timberwood", "slug": "timberwood", "sku": "4DDP93225SF", "hex": "#5D4736", "image1": "/products/high-barrel/barrel-vault-tile/timberwood-1.jpg", "image2": "/products/high-barrel/barrel-vault-tile/timberwood-2.jpg" }
+          {
+            "name": "Barcelona",
+            "slug": "barcelona",
+            "sku": "4DDP97335SF",
+            "hex": "#A8472E",
+            "image1": "/products/high-barrel/barrel-vault-tile/barcelona-1.jpg",
+            "image2": "/products/high-barrel/barrel-vault-tile/barcelona-2.jpg"
+          },
+          {
+            "name": "Barclay",
+            "slug": "barclay",
+            "sku": "4DDP93185SF",
+            "hex": "#8A4D3A",
+            "image1": "/products/high-barrel/barrel-vault-tile/barclay-1.jpg",
+            "image2": "/products/high-barrel/barrel-vault-tile/barclay-2.jpg"
+          },
+          {
+            "name": "Charcoal",
+            "slug": "charcoal",
+            "sku": "4DDP9104000",
+            "hex": "#383634",
+            "image1": "/products/high-barrel/barrel-vault-tile/charcoal-1.jpg",
+            "image2": "/products/high-barrel/barrel-vault-tile/charcoal-2.jpg"
+          },
+          {
+            "name": "Dover",
+            "slug": "dover",
+            "sku": "4DDP9815000",
+            "hex": "#D7D3C7",
+            "image1": "/products/high-barrel/barrel-vault-tile/dover-1.jpg",
+            "image2": "/products/high-barrel/barrel-vault-tile/dover-2.jpg"
+          },
+          {
+            "name": "Santa Fe",
+            "slug": "santa-fe",
+            "sku": "4DDP96185SF",
+            "hex": "#B07A4C",
+            "image1": "/products/high-barrel/barrel-vault-tile/santa-fe-1.jpg",
+            "image2": "/products/high-barrel/barrel-vault-tile/santa-fe-2.jpg"
+          },
+          {
+            "name": "Spanish Red",
+            "slug": "spanish-red",
+            "sku": "4DDP9732500",
+            "hex": "#9B4A33",
+            "image1": "/products/high-barrel/barrel-vault-tile/spanish-red-1.jpg",
+            "image2": "/products/high-barrel/barrel-vault-tile/spanish-red-2.jpg"
+          },
+          {
+            "name": "Sunset Gold",
+            "slug": "sunset-gold",
+            "sku": "4DDP96165SF",
+            "hex": "#C08A4E",
+            "image1": "/products/high-barrel/barrel-vault-tile/sunset-gold-1.jpg",
+            "image2": "/products/high-barrel/barrel-vault-tile/sunset-gold-2.jpg"
+          },
+          {
+            "name": "Timberwood",
+            "slug": "timberwood",
+            "sku": "4DDP93225SF",
+            "hex": "#5D4736",
+            "image1": "/products/high-barrel/barrel-vault-tile/timberwood-1.jpg",
+            "image2": "/products/high-barrel/barrel-vault-tile/timberwood-2.jpg"
+          }
         ]
       },
       "pacific_tile": {
@@ -73,13 +267,62 @@
         "slug": "pacific-tile",
         "description": "Mediterranean style with superior performance in a tile panel that provides both high wind and hail impact resistance.",
         "colors": [
-          { "name": "Barclay", "slug": "barclay", "sku": "4DEP93185SF", "hex": "#8A4530", "image1": "/products/low-barrel/pacific-tile/barclay-1.jpg", "image2": "/products/low-barrel/pacific-tile/barclay-2.jpg" },
-          { "name": "Charcoal", "slug": "charcoal", "sku": "4DEP9104000", "hex": "#363332", "image1": "/products/low-barrel/pacific-tile/charcoal-1.jpg", "image2": "/products/low-barrel/pacific-tile/charcoal-2.jpg" },
-          { "name": "Harborwood", "slug": "harborwood", "sku": "4DEP93569SF", "hex": "#7C6E4C", "image1": "/products/low-barrel/pacific-tile/harborwood-1.jpg", "image2": "/products/low-barrel/pacific-tile/harborwood-2.jpg" },
-          { "name": "Sage Green", "slug": "sage-green", "sku": "4DEP94100SF", "hex": "#5F7468", "image1": "/products/low-barrel/pacific-tile/sage-green-1.jpg", "image2": "/products/low-barrel/pacific-tile/sage-green-2.jpg" },
-          { "name": "Spanish Red", "slug": "spanish-red", "sku": "4DEP9732500", "hex": "#9C4631", "image1": "/products/low-barrel/pacific-tile/spanish-red-1.jpg", "image2": "/products/low-barrel/pacific-tile/spanish-red-2.jpg" },
-          { "name": "Stirling Gray", "slug": "stirling-gray", "sku": "4DEP95427SF", "hex": "#8D8A82", "image1": "/products/low-barrel/pacific-tile/stirling-gray-1.jpg", "image2": "/products/low-barrel/pacific-tile/stirling-gray-2.jpg" },
-          { "name": "Timberwood", "slug": "timberwood", "sku": "4DEP93225SF", "hex": "#5A4434", "image1": "/products/low-barrel/pacific-tile/timberwood-1.jpg", "image2": "/products/low-barrel/pacific-tile/timberwood-2.jpg" }
+          {
+            "name": "Barclay",
+            "slug": "barclay",
+            "sku": "4DEP93185SF",
+            "hex": "#8A4530",
+            "image1": "/products/low-barrel/pacific-tile/barclay-1.jpg",
+            "image2": "/products/low-barrel/pacific-tile/barclay-2.jpg"
+          },
+          {
+            "name": "Charcoal",
+            "slug": "charcoal",
+            "sku": "4DEP9104000",
+            "hex": "#363332",
+            "image1": "/products/low-barrel/pacific-tile/charcoal-1.jpg",
+            "image2": "/products/low-barrel/pacific-tile/charcoal-2.jpg"
+          },
+          {
+            "name": "Harborwood",
+            "slug": "harborwood",
+            "sku": "4DEP93569SF",
+            "hex": "#7C6E4C",
+            "image1": "/products/low-barrel/pacific-tile/harborwood-1.jpg",
+            "image2": "/products/low-barrel/pacific-tile/harborwood-2.jpg"
+          },
+          {
+            "name": "Sage Green",
+            "slug": "sage-green",
+            "sku": "4DEP94100SF",
+            "hex": "#5F7468",
+            "image1": "/products/low-barrel/pacific-tile/sage-green-1.jpg",
+            "image2": "/products/low-barrel/pacific-tile/sage-green-2.jpg"
+          },
+          {
+            "name": "Spanish Red",
+            "slug": "spanish-red",
+            "sku": "4DEP9732500",
+            "hex": "#9C4631",
+            "image1": "/products/low-barrel/pacific-tile/spanish-red-1.jpg",
+            "image2": "/products/low-barrel/pacific-tile/spanish-red-2.jpg"
+          },
+          {
+            "name": "Stirling Gray",
+            "slug": "stirling-gray",
+            "sku": "4DEP95427SF",
+            "hex": "#8D8A82",
+            "image1": "/products/low-barrel/pacific-tile/stirling-gray-1.jpg",
+            "image2": "/products/low-barrel/pacific-tile/stirling-gray-2.jpg"
+          },
+          {
+            "name": "Timberwood",
+            "slug": "timberwood",
+            "sku": "4DEP93225SF",
+            "hex": "#5A4434",
+            "image1": "/products/low-barrel/pacific-tile/timberwood-1.jpg",
+            "image2": "/products/low-barrel/pacific-tile/timberwood-2.jpg"
+          }
         ]
       }
     }
@@ -88,7 +331,10 @@
     "label": "Standing Seam Steel",
     "manufacturer": null,
     "styles": {
-      "standing_seam": { "label": "Standing Seam", "slug": "standing-seam" }
+      "standing_seam": {
+        "label": "Standing Seam",
+        "slug": "standing-seam"
+      }
     },
     "products": {
       "standing_seam": {
@@ -98,13 +344,62 @@
         "placeholder": true,
         "description": "Clean vertical panel lines for a sleek, modern roofline.",
         "colors": [
-          { "name": "Charcoal Gray", "slug": "charcoal-gray", "sku": null, "hex": "#3A3D3E", "image1": "/products/standing_seam/charcoal-gray.jpg", "image2": null },
-          { "name": "Bronze", "slug": "bronze", "sku": null, "hex": "#7C5A3A", "image1": "/products/standing_seam/bronze.jpg", "image2": null },
-          { "name": "Bone White", "slug": "bone-white", "sku": null, "hex": "#E8E4D8", "image1": "/products/standing_seam/bone-white.jpg", "image2": null },
-          { "name": "Burgundy", "slug": "burgundy", "sku": null, "hex": "#5A1A24", "image1": "/products/standing_seam/burgundy.jpg", "image2": null },
-          { "name": "Forest Green", "slug": "forest-green", "sku": null, "hex": "#1F3D2A", "image1": "/products/standing_seam/forest-green.jpg", "image2": null },
-          { "name": "Natural Metal", "slug": "natural-metal", "sku": null, "hex": "#B7B7B8", "image1": "/products/standing_seam/natural-metal.png", "image2": null },
-          { "name": "True Black", "slug": "true-black", "sku": null, "hex": "#1A1A1A", "image1": "/products/standing_seam/true-black.jpg", "image2": null }
+          {
+            "name": "Charcoal Gray",
+            "slug": "charcoal-gray",
+            "sku": null,
+            "hex": "#3A3D3E",
+            "image1": "/products/standing_seam/charcoal-gray.jpg",
+            "image2": null
+          },
+          {
+            "name": "Bronze",
+            "slug": "bronze",
+            "sku": null,
+            "hex": "#7C5A3A",
+            "image1": "/products/standing_seam/bronze.jpg",
+            "image2": null
+          },
+          {
+            "name": "Bone White",
+            "slug": "bone-white",
+            "sku": null,
+            "hex": "#E8E4D8",
+            "image1": "/products/standing_seam/bone-white.jpg",
+            "image2": null
+          },
+          {
+            "name": "Burgundy",
+            "slug": "burgundy",
+            "sku": null,
+            "hex": "#5A1A24",
+            "image1": "/products/standing_seam/burgundy.jpg",
+            "image2": null
+          },
+          {
+            "name": "Forest Green",
+            "slug": "forest-green",
+            "sku": null,
+            "hex": "#1F3D2A",
+            "image1": "/products/standing_seam/forest-green.jpg",
+            "image2": null
+          },
+          {
+            "name": "Natural Metal",
+            "slug": "natural-metal",
+            "sku": null,
+            "hex": "#B7B7B8",
+            "image1": "/products/standing_seam/natural-metal.png",
+            "image2": null
+          },
+          {
+            "name": "True Black",
+            "slug": "true-black",
+            "sku": null,
+            "hex": "#1A1A1A",
+            "image1": "/products/standing_seam/true-black.jpg",
+            "image2": null
+          }
         ]
       }
     }
@@ -113,7 +408,10 @@
     "label": "Copper",
     "manufacturer": null,
     "styles": {
-      "copper_standing_seam": { "label": "Copper Standing Seam", "slug": "copper-standing-seam" }
+      "copper_standing_seam": {
+        "label": "Copper Standing Seam",
+        "slug": "copper-standing-seam"
+      }
     },
     "products": {
       "copper_standing_seam": {
@@ -123,7 +421,16 @@
         "placeholder": false,
         "description": "Timeless, maintenance-free luxury that develops a natural patina over time.",
         "colors": [
-          { "name": "Natural Copper", "slug": "natural-copper", "sku": null, "hex": "#A0644D", "image1": "/products/copper_standing_seam/natural-copper.jpg", "image2": "/products/copper_standing_seam/copper-standing-seam-2.jpg", "image3": "/products/copper_standing_seam/copper-standing-seam-3.jpg", "image4": "/products/copper_standing_seam/copper-standing-seam-4.jpg" }
+          {
+            "name": "Natural Copper",
+            "slug": "natural-copper",
+            "sku": null,
+            "hex": "#A0644D",
+            "image1": "/products/copper_standing_seam/natural-copper.jpg",
+            "image2": "/products/copper_standing_seam/copper-standing-seam-2.jpg",
+            "image3": "/products/copper_standing_seam/copper-standing-seam-3.jpg",
+            "image4": "/products/copper_standing_seam/copper-standing-seam-4.jpg"
+          }
         ]
       }
     }
@@ -132,7 +439,10 @@
     "label": "R-Panel",
     "manufacturer": null,
     "styles": {
-      "r_panel": { "label": "R-Panel", "slug": "r-panel" }
+      "r_panel": {
+        "label": "R-Panel",
+        "slug": "r-panel"
+      }
     },
     "products": {
       "r_panel": {
@@ -142,12 +452,465 @@
         "placeholder": true,
         "description": "Durable, cost-effective ribbed steel panels.",
         "colors": [
-          { "name": "Charcoal Gray", "slug": "charcoal-gray", "sku": null, "hex": "#3A3D3E", "image1": "/products/r_panel/charcoal-gray.jpg", "image2": null },
-          { "name": "True Black", "slug": "true-black", "sku": null, "hex": "#1A1A1A", "image1": "/products/r_panel/true-black.jpg", "image2": null },
-          { "name": "Bronze", "slug": "bronze", "sku": null, "hex": "#7C5A3A", "image1": "/products/r_panel/bronze.jpg", "image2": null },
-          { "name": "Bone White", "slug": "bone-white", "sku": null, "hex": "#E8E4D8", "image1": "/products/r_panel/bone-white.jpg", "image2": null },
-          { "name": "Burgundy", "slug": "burgundy", "sku": null, "hex": "#5A1A24", "image1": "/products/r_panel/burgundy.jpg", "image2": null },
-          { "name": "Forest Green", "slug": "forest-green", "sku": null, "hex": "#1F3D2A", "image1": "/products/r_panel/forest-green.jpg", "image2": null }
+          {
+            "name": "Charcoal Gray",
+            "slug": "charcoal-gray",
+            "sku": null,
+            "hex": "#3A3D3E",
+            "image1": "/products/r_panel/charcoal-gray.jpg",
+            "image2": null
+          },
+          {
+            "name": "True Black",
+            "slug": "true-black",
+            "sku": null,
+            "hex": "#1A1A1A",
+            "image1": "/products/r_panel/true-black.jpg",
+            "image2": null
+          },
+          {
+            "name": "Bronze",
+            "slug": "bronze",
+            "sku": null,
+            "hex": "#7C5A3A",
+            "image1": "/products/r_panel/bronze.jpg",
+            "image2": null
+          },
+          {
+            "name": "Bone White",
+            "slug": "bone-white",
+            "sku": null,
+            "hex": "#E8E4D8",
+            "image1": "/products/r_panel/bone-white.jpg",
+            "image2": null
+          },
+          {
+            "name": "Burgundy",
+            "slug": "burgundy",
+            "sku": null,
+            "hex": "#5A1A24",
+            "image1": "/products/r_panel/burgundy.jpg",
+            "image2": null
+          },
+          {
+            "name": "Forest Green",
+            "slug": "forest-green",
+            "sku": null,
+            "hex": "#1F3D2A",
+            "image1": "/products/r_panel/forest-green.jpg",
+            "image2": null
+          }
+        ]
+      }
+    }
+  },
+  "synthetic_slate": {
+    "label": "Synthetic Slate",
+    "styles": {
+      "spanish_barrel_tile": {
+        "label": "Spanish Barrel Tile",
+        "slug": "spanish-barrel-tile"
+      },
+      "cedar_shake": {
+        "label": "Cedar Shake",
+        "slug": "cedar-shake"
+      },
+      "slate": {
+        "label": "Slate",
+        "slug": "slate"
+      }
+    },
+    "products": {
+      "brava_spanish_barrel_tile": {
+        "label": "Brava Spanish Barrel Tile",
+        "style": "spanish_barrel_tile",
+        "slug": "brava-spanish-barrel-tile",
+        "description": "A rounded, high-relief barrel profile that reads as authentic clay tile -- popular on Mediterranean and Spanish Colonial-style homes.",
+        "colors": [
+          {
+            "name": "Aged Mission",
+            "slug": "aged-mission",
+            "hex": null,
+            "image1": "/products/synthetic_slate/spanish_barrel_tile/aged-mission.webp",
+            "image2": null,
+            "premiumBlend": false
+          },
+          {
+            "name": "Antique Clay",
+            "slug": "antique-clay",
+            "hex": null,
+            "image1": "/products/synthetic_slate/spanish_barrel_tile/antique-clay.jpg",
+            "image2": null,
+            "premiumBlend": false
+          },
+          {
+            "name": "Arendale",
+            "slug": "arendale",
+            "hex": null,
+            "image1": "/products/synthetic_slate/spanish_barrel_tile/arendale.jpg",
+            "image2": null,
+            "premiumBlend": false
+          },
+          {
+            "name": "Black Brown Blend",
+            "slug": "black-brown-blend",
+            "hex": null,
+            "image1": "/products/synthetic_slate/spanish_barrel_tile/black-brown-blend.webp",
+            "image2": null,
+            "premiumBlend": false
+          },
+          {
+            "name": "Graphite",
+            "slug": "graphite",
+            "hex": null,
+            "image1": "/products/synthetic_slate/spanish_barrel_tile/graphite.jpg",
+            "image2": null,
+            "premiumBlend": false
+          },
+          {
+            "name": "Onyx",
+            "slug": "onyx",
+            "hex": null,
+            "image1": "/products/synthetic_slate/spanish_barrel_tile/onyx.jpg",
+            "image2": null,
+            "premiumBlend": false
+          },
+          {
+            "name": "Terra Cotta Brown",
+            "slug": "terra-cotta-brown",
+            "hex": null,
+            "image1": "/products/synthetic_slate/spanish_barrel_tile/terra-cotta-brown.jpg",
+            "image2": null,
+            "premiumBlend": false
+          },
+          {
+            "name": "Tuscan Clay",
+            "slug": "tuscan-clay",
+            "hex": null,
+            "image1": "/products/synthetic_slate/spanish_barrel_tile/tuscan-clay.jpg",
+            "image2": null,
+            "premiumBlend": false
+          },
+          {
+            "name": "Vintage Terra Cotta",
+            "slug": "vintage-terra-cotta",
+            "hex": null,
+            "image1": "/products/synthetic_slate/spanish_barrel_tile/vintage-terra-cotta.webp",
+            "image2": null,
+            "premiumBlend": false
+          },
+          {
+            "name": "Autumn",
+            "slug": "autumn",
+            "hex": null,
+            "image1": "/products/synthetic_slate/spanish_barrel_tile/autumn.jpg",
+            "image2": null,
+            "premiumBlend": true
+          },
+          {
+            "name": "Mediterranean",
+            "slug": "mediterranean",
+            "hex": null,
+            "image1": "/products/synthetic_slate/spanish_barrel_tile/mediterranean.jpg",
+            "image2": null,
+            "premiumBlend": true
+          },
+          {
+            "name": "Pine Green",
+            "slug": "pine-green",
+            "hex": null,
+            "image1": "/products/synthetic_slate/spanish_barrel_tile/pine-green.webp",
+            "image2": null,
+            "premiumBlend": true
+          },
+          {
+            "name": "Sandstone",
+            "slug": "sandstone",
+            "hex": null,
+            "image1": "/products/synthetic_slate/spanish_barrel_tile/sandstone.webp",
+            "image2": null,
+            "premiumBlend": true
+          },
+          {
+            "name": "White Spanish Barrel",
+            "slug": "white-spanish-barrel",
+            "hex": null,
+            "image1": "/products/synthetic_slate/spanish_barrel_tile/white-spanish-barrel.webp",
+            "image2": null,
+            "premiumBlend": true
+          }
+        ]
+      },
+      "brava_cedar_shake": {
+        "label": "Brava Cedar Shake",
+        "style": "cedar_shake",
+        "slug": "brava-cedar-shake",
+        "description": "A deeply textured, hand-split shake profile without cedar's fire risk, rot, or ongoing upkeep.",
+        "colors": [
+          {
+            "name": "Aged Cedar",
+            "slug": "aged-cedar",
+            "hex": null,
+            "image1": "/products/synthetic_slate/cedar_shake/aged-cedar.jpg",
+            "image2": null,
+            "premiumBlend": false
+          },
+          {
+            "name": "Aspen",
+            "slug": "aspen",
+            "hex": null,
+            "image1": "/products/synthetic_slate/cedar_shake/aspen.jpg",
+            "image2": null,
+            "premiumBlend": false
+          },
+          {
+            "name": "Beechwood",
+            "slug": "beechwood",
+            "hex": null,
+            "image1": "/products/synthetic_slate/cedar_shake/beechwood.webp",
+            "image2": null,
+            "premiumBlend": false
+          },
+          {
+            "name": "Canyon Gray",
+            "slug": "canyon-gray",
+            "hex": null,
+            "image1": "/products/synthetic_slate/cedar_shake/canyon-gray.jpg",
+            "image2": null,
+            "premiumBlend": false
+          },
+          {
+            "name": "Lake Forest",
+            "slug": "lake-forest",
+            "hex": null,
+            "image1": "/products/synthetic_slate/cedar_shake/lake-forest.jpg",
+            "image2": null,
+            "premiumBlend": false
+          },
+          {
+            "name": "Natural Cedar",
+            "slug": "natural-cedar",
+            "hex": null,
+            "image1": "/products/synthetic_slate/cedar_shake/natural-cedar.jpg",
+            "image2": null,
+            "premiumBlend": false
+          },
+          {
+            "name": "Weathered",
+            "slug": "weathered",
+            "hex": null,
+            "image1": "/products/synthetic_slate/cedar_shake/weathered.webp",
+            "image2": null,
+            "premiumBlend": false
+          },
+          {
+            "name": "Arendale",
+            "slug": "arendale",
+            "hex": null,
+            "image1": "/products/synthetic_slate/cedar_shake/arendale.webp",
+            "image2": null,
+            "premiumBlend": true
+          },
+          {
+            "name": "Light Arendale",
+            "slug": "light-arendale",
+            "hex": null,
+            "image1": "/products/synthetic_slate/cedar_shake/light-arendale.webp",
+            "image2": null,
+            "premiumBlend": true
+          },
+          {
+            "name": "New Cedar",
+            "slug": "new-cedar",
+            "hex": null,
+            "image1": "/products/synthetic_slate/cedar_shake/new-cedar.webp",
+            "image2": null,
+            "premiumBlend": true
+          },
+          {
+            "name": "Onyx",
+            "slug": "onyx",
+            "hex": null,
+            "image1": "/products/synthetic_slate/cedar_shake/onyx.webp",
+            "image2": null,
+            "premiumBlend": true
+          },
+          {
+            "name": "White",
+            "slug": "white",
+            "hex": null,
+            "image1": "/products/synthetic_slate/cedar_shake/white.webp",
+            "image2": null,
+            "premiumBlend": true
+          }
+        ]
+      },
+      "brava_slate": {
+        "label": "Brava Slate",
+        "style": "slate",
+        "slug": "brava-slate",
+        "description": "A crisp, dimensional slate profile -- the closest match to authentic quarried slate.",
+        "colors": [
+          {
+            "name": "Arendale",
+            "slug": "arendale",
+            "hex": null,
+            "image1": "/products/synthetic_slate/slate/arendale-standard.jpg",
+            "image2": null,
+            "premiumBlend": false,
+            "widthVariants": {
+              "standard": {
+                "image1": "/products/synthetic_slate/slate/arendale-standard.jpg"
+              },
+              "multi": {
+                "image1": "/products/synthetic_slate/slate/arendale-multi.jpg"
+              }
+            }
+          },
+          {
+            "name": "Atlantic",
+            "slug": "atlantic",
+            "hex": null,
+            "image1": "/products/synthetic_slate/slate/atlantic-standard.jpg",
+            "image2": null,
+            "premiumBlend": false,
+            "widthVariants": {
+              "standard": {
+                "image1": "/products/synthetic_slate/slate/atlantic-standard.jpg"
+              },
+              "multi": {
+                "image1": "/products/synthetic_slate/slate/atlantic-multi.jpg"
+              }
+            }
+          },
+          {
+            "name": "Cottage",
+            "slug": "cottage",
+            "hex": null,
+            "image1": "/products/synthetic_slate/slate/cottage-standard.jpg",
+            "image2": null,
+            "premiumBlend": false,
+            "widthVariants": {
+              "standard": {
+                "image1": "/products/synthetic_slate/slate/cottage-standard.jpg"
+              },
+              "multi": {
+                "image1": "/products/synthetic_slate/slate/cottage-multi.jpg"
+              }
+            }
+          },
+          {
+            "name": "Graphite",
+            "slug": "graphite",
+            "hex": null,
+            "image1": "/products/synthetic_slate/slate/graphite.jpg",
+            "image2": null,
+            "premiumBlend": false
+          },
+          {
+            "name": "Light Arendale",
+            "slug": "light-arendale",
+            "hex": null,
+            "image1": "/products/synthetic_slate/slate/light-arendale-standard.jpg",
+            "image2": null,
+            "premiumBlend": false,
+            "widthVariants": {
+              "standard": {
+                "image1": "/products/synthetic_slate/slate/light-arendale-standard.jpg"
+              },
+              "multi": {
+                "image1": "/products/synthetic_slate/slate/light-arendale-multi.jpg"
+              }
+            }
+          },
+          {
+            "name": "Onyx",
+            "slug": "onyx",
+            "hex": null,
+            "image1": "/products/synthetic_slate/slate/onyx-standard.jpg",
+            "image2": null,
+            "premiumBlend": false,
+            "widthVariants": {
+              "standard": {
+                "image1": "/products/synthetic_slate/slate/onyx-standard.jpg"
+              },
+              "multi": {
+                "image1": "/products/synthetic_slate/slate/onyx-multi.jpg"
+              }
+            }
+          },
+          {
+            "name": "Washington",
+            "slug": "washington",
+            "hex": null,
+            "image1": "/products/synthetic_slate/slate/washington.jpg",
+            "image2": null,
+            "premiumBlend": false
+          },
+          {
+            "name": "White",
+            "slug": "white",
+            "hex": null,
+            "image1": "/products/synthetic_slate/slate/white.jpg",
+            "image2": null,
+            "premiumBlend": true
+          },
+          {
+            "name": "Sandstone",
+            "slug": "sandstone",
+            "hex": null,
+            "image1": "/products/synthetic_slate/slate/sandstone-standard.jpg",
+            "image2": null,
+            "premiumBlend": true,
+            "widthVariants": {
+              "standard": {
+                "image1": "/products/synthetic_slate/slate/sandstone-standard.jpg"
+              },
+              "multi": {
+                "image1": "/products/synthetic_slate/slate/sandstone-multi.jpg"
+              }
+            }
+          },
+          {
+            "name": "European",
+            "slug": "european",
+            "hex": null,
+            "image1": "/products/synthetic_slate/slate/european.jpg",
+            "image2": null,
+            "premiumBlend": true
+          },
+          {
+            "name": "Pine Green",
+            "slug": "pine-green",
+            "hex": null,
+            "image1": "/products/synthetic_slate/slate/pine-green.jpg",
+            "image2": null,
+            "premiumBlend": true
+          },
+          {
+            "name": "Tuscan Clay",
+            "slug": "tuscan-clay",
+            "hex": null,
+            "image1": "/products/synthetic_slate/slate/tuscan-clay.jpg",
+            "image2": null,
+            "premiumBlend": true
+          },
+          {
+            "name": "Victorian",
+            "slug": "victorian",
+            "hex": null,
+            "image1": "/products/synthetic_slate/slate/victorian-standard.jpg",
+            "image2": null,
+            "premiumBlend": false,
+            "widthVariants": {
+              "standard": {
+                "image1": "/products/synthetic_slate/slate/victorian-standard.jpg"
+              },
+              "multi": {
+                "image1": "/products/synthetic_slate/slate/victorian-multi.jpg"
+              }
+            }
+          }
         ]
       }
     }

@@ -29,6 +29,12 @@
       "retailPerSquare": 1499.97,
       "pitchAdjustment": false,
       "wasteFactor": 0.12
+    },
+    "synthetic_slate": {
+      "label": "Synthetic Slate",
+      "retailPerSquare": 1599.97,
+      "pitchAdjustment": false,
+      "wasteFactor": 0.12
     }
   },
   "tearOff": {
