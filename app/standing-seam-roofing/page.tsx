@@ -151,7 +151,7 @@ export default function StandingSeamRoofingPage() {
           <div className="inner" style={{ position: 'relative', zIndex: 1, width: '100%' }}>
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: 12, marginBottom: 28 }}>
               <div style={{ width: 28, height: 1, background: C.accent, flexShrink: 0 }} />
-              <span style={{ fontSize: 'clamp(0.75rem,1.1vw,0.95rem)', letterSpacing: 3.5, color: C.accent, textTransform: 'uppercase', fontWeight: 500 }}>Premium Metal Roofing · Dallas–Fort Worth</span>
+              <span style={{ fontSize: 'clamp(0.75rem,1.1vw,0.95rem)', letterSpacing: 3.5, color: C.accent, textTransform: 'uppercase', fontWeight: 500 }}>Premium Standing Seam Metal Roofing · Dallas–Fort Worth</span>
             </div>
             <h1 style={{ fontFamily: "'Cormorant Garamond',Georgia,serif", fontSize: 'clamp(2.75rem,5.5vw,5.5rem)', fontWeight: 700, lineHeight: 1.08, color: C.white, marginBottom: 24, maxWidth: 780 }}>
               The Gold Standard<br/><span style={{ color: C.accent, fontStyle: 'italic' }}>In Metal Roofing.</span>

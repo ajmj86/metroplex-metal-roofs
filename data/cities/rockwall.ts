@@ -13,11 +13,6 @@ export const ROCKWALL_DATA: CityData = {
   heroSub: "Rockwall homeowners on Lake Ray Hubbard face some of the most demanding weather in East Texas. Metal roofing is the only option built to handle it long term.",
   localContext: "Rockwall County's position along Lake Ray Hubbard places it in an active storm corridor where significant hail events are a reliable annual occurrence. With median home values near $450,000 and 2% wind/hail deductibles standard, Rockwall homeowners on asphalt face recurring out-of-pocket exposure that compounds over time. Metal roofing eliminates that cycle entirely.",
   hoaNote: "Rockwall's lakefront and master-planned communities have established HOA review processes. Standing seam and stone-coated steel in approved profiles and color palettes are commonly permitted. We provide full HOA documentation support at no additional cost.",
-
-  syntheticSlate: {
-    heading: 'Synthetic Slate Roofing in Rockwall',
-    body: "Rockwall's lakefront neighborhoods, including Lake Ray Hubbard Estates and Chandler Creek, face some of the most demanding weather in East Texas — and synthetic slate roofing is built for it, delivering a traditional profile in a Class 4 hail-rated system without real slate's weight. Ask us whether synthetic slate or metal is the better fit for your Rockwall home.",
-  },
   localStat: { val: '$450k', label: 'Median Home Value', source: 'Rockwall, TX 2025' },
   neighborhoods: [
     'Lake Ray Hubbard Estates', 'Chandler Creek', 'Quail Creek', 'Summerfield',

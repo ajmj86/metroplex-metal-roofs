@@ -182,7 +182,7 @@ export default function SyntheticSlateRoofingPage() {
           <div className="inner" style={{ position: 'relative', zIndex: 1, width: '100%' }}>
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: 12, marginBottom: 28 }}>
               <div style={{ width: 28, height: 1, background: C.accent, flexShrink: 0 }} />
-              <span style={{ fontSize: 'clamp(0.75rem,1.1vw,0.95rem)', letterSpacing: 3.5, color: C.accent, textTransform: 'uppercase', fontWeight: 500 }}>Premium Roofing · Dallas–Fort Worth</span>
+              <span style={{ fontSize: 'clamp(0.75rem,1.1vw,0.95rem)', letterSpacing: 3.5, color: C.accent, textTransform: 'uppercase', fontWeight: 500 }}>Premium Synthetic Slate Roofing · Dallas–Fort Worth</span>
             </div>
             <h1 style={{ fontFamily: "'Cormorant Garamond',Georgia,serif", fontSize: 'clamp(2.75rem,5.5vw,5.5rem)', fontWeight: 700, lineHeight: 1.08, color: C.white, marginBottom: 24, maxWidth: 780 }}>
               Slate's Look.<br/><span style={{ color: C.accent, fontStyle: 'italic' }}>None of Slate's Problems.</span>
@@ -284,10 +284,11 @@ export default function SyntheticSlateRoofingPage() {
               padding: '20px 24px', marginTop: 32,
               background: `${C.accentDark}18`, borderLeft: `3px solid ${C.accent}`, borderRadius: 6,
             }}>
-              <div style={{ fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', color: C.accent, fontWeight: 600, flexShrink: 0 }}>Coming Soon</div>
+              <div style={{ fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', color: C.accent, fontWeight: 600, flexShrink: 0 }}>Try It Now</div>
               <p style={{ fontSize: 14, color: C.mutedLight, lineHeight: 1.7, margin: 0, flex: 1, minWidth: 240 }}>
-                All three Brava profiles — Spanish Barrel Tile, Cedar Shake, and Slate — are coming soon to the Free Roof Visualizer, so you&apos;ll be able to see each one rendered on your own home.
+                All three Brava profiles — Spanish Barrel Tile, Cedar Shake, and Slate — are live in our Free Roof Visualizer, so you can see each one rendered on your own home before you decide.
               </p>
+              <a href="/visualizer" style={{ fontSize: 12, color: C.accent, letterSpacing: 1, textTransform: 'uppercase', textDecoration: 'underline', whiteSpace: 'nowrap', flexShrink: 0 }}>See it on your home →</a>
             </div>
           </div>
         </section>

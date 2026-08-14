@@ -13,11 +13,6 @@ export const KELLER_DATA: CityData = {
   heroSub: "Keller has some of the most established and well-kept neighborhoods in North Fort Worth. A metal roof is the upgrade that protects that investment for the long term.",
   localContext: "Keller sits in Tarrant County's active hail corridor where significant storm activity is a reliable annual occurrence. With median home values approaching $500,000 and 2% wind/hail deductibles now standard across most carriers, Keller homeowners face consistent storm-season exposure on asphalt roofs. Metal roofing eliminates that cycle and qualifies for real insurance savings.",
   hoaNote: "Keller's established neighborhoods have active HOA review processes. Standing seam and stone-coated steel in approved profiles and neutral color palettes are commonly permitted. We provide complete HOA documentation support at no additional cost.",
-
-  syntheticSlate: {
-    heading: 'Synthetic Slate Roofing in Keller',
-    body: "Keller's established neighborhoods, including Bear Creek and Hidden Lakes, are well-kept and often favor a traditional roofline — exactly what synthetic slate roofing delivers, in a Class 4 hail-rated system without real slate's weight or maintenance. Ask us whether synthetic slate is the right fit for your Keller home.",
-  },
   localStat: { val: '$490k', label: 'Median Home Value', source: 'Keller, TX 2025' },
   neighborhoods: [
     'Bear Creek', 'Hidden Lakes', 'Estates of Oak Run', 'Bloomfield',

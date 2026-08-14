@@ -17,11 +17,6 @@ export const PROSPER_DATA: CityData = {
 
   hoaNote: "Prosper's master-planned communities including Windsong Ranch, Star Trail, and Lakes of Prosper have established architectural review processes for roofing material changes. Metal roofing in approved profiles and colors is widely permitted and increasingly common across these neighborhoods. We provide the full documentation package — material samples, color chips, and manufacturer spec sheets — to support your HOA submission.",
 
-  syntheticSlate: {
-    heading: 'Synthetic Slate Roofing in Prosper',
-    body: "Prosper's master-planned communities, including Windsong Ranch and Star Trail, are increasingly drawn to synthetic slate roofing for its traditional, dimensional profile — Class 4 hail-rated and built without real slate's weight or fragility. Ask us whether synthetic slate is the right fit for your Prosper home.",
-  },
-
   localStat: {
     val: '$720k',
     label: 'Median Home Value',

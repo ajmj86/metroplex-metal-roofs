@@ -1,18 +1,26 @@
 'use client'
 
 /*
- * Shared interactive material/color selector — tab strip, swatch chips
- * (with the two-level stone drill-down), color modal, and visualizer
- * passthrough (roofType/style/product/color URL params). Originally lived
- * inline in Homepage.jsx; extracted so CityPage.tsx can use the exact same
- * picker instead of a static, non-interactive product grid, and so the two
- * can never drift out of sync.
+ * Shared interactive material/color selector — Material Type selector (Metal
+ * | Synthetic Slate), tab strip, swatch chips (with the two-level stone
+ * drill-down), color modal, and visualizer passthrough (roofType/style/
+ * product/color URL params). Originally lived inline in Homepage.jsx;
+ * extracted so CityPage.tsx can use the exact same picker instead of a
+ * static, non-interactive product grid, and so the two can never drift out
+ * of sync.
  *
  * activeTab/onTabChange are optional (controlled/uncontrolled pattern):
  * Homepage.jsx passes its own App-level activeTab state through, because
  * SiteFooter's "Standing Seam / Copper / ..." links need to set the tab
  * and scroll to #products. CityPage.tsx renders this fully uncontrolled —
  * each city page just manages its own local tab state.
+ *
+ * materialType is NOT separate state -- it's derived from activeTab (is it
+ * one of the 3 Brava ids, or not). SiteFooter's links only ever set metal
+ * tab ids and know nothing about materialType, so if it were independent
+ * state a footer click while a Brava tab was active would desync (Brava
+ * tab-row still showing, activeTab pointing at a metal id it doesn't
+ * contain). Deriving it keeps activeTab the single source of truth.
  */
 
 import { useState, useEffect, useRef } from "react";
@@ -22,6 +30,7 @@ import {
   STANDING_SEAM_COLORS, R_PANEL_COLORS, STONE_COLORS, STONE_PROFILE_TILES, STONE_SHINGLE_TILES,
   COPPER_PATINA_CHIPS, COPPER_INSTALL_PHOTOS,
 } from "@/lib/productColors";
+import { productsForStyle, MATERIAL_TYPE_LABELS } from "@/lib/roofProducts";
 
 /* ── Reveal on scroll ── */
 const Reveal = ({ children, delay=0 }) => {
@@ -97,6 +106,55 @@ const SwatchChip = ({ chip, label, onClick, size="chip", badge }) => {
   );
 };
 
+/*
+ * ── Synthetic Slate (Brava) — a second Material Type alongside the 4 metal
+ * materials below. Reuses lib/roofProducts.ts's synthetic_slate data (the
+ * visualizer's own source of truth) via a thin adapter, rather than
+ * re-deriving color data a third time. lib/bravaColors.ts is NOT used here
+ * -- checked directly, it carries name + premiumBlend only, no image paths
+ * (by its own doc comment, it exists purely for /synthetic-slate-roofing's
+ * marketing copy).
+ *
+ * Ids match roofProducts.json's style keys directly (spanish_barrel_tile/
+ * cedar_shake/slate) so they plug into productsForStyle() with no lookup
+ * table of their own. Declared before roofTypes/heroMap/etc. below since
+ * several of those merge these in directly.
+ */
+const bravaStyles = [
+  { id: "spanish_barrel_tile", label: "Spanish Barrel Tile", desc: "A rounded, high-relief barrel profile that reads as authentic clay tile from the curb — popular on Mediterranean, Spanish Colonial, and Tuscan-style homes across DFW." },
+  { id: "cedar_shake",         label: "Cedar Shake",         desc: "A deeply textured, hand-split shake profile for homeowners who want a rustic, natural-wood look without cedar's fire risk, rot, or ongoing upkeep." },
+  { id: "slate",               label: "Slate",               desc: "A crisp, dimensional slate profile — the closest match to authentic quarried slate — suited to historic-style, French Country, and traditional architecture." },
+];
+const BRAVA_TAB_IDS = bravaStyles.map(t => t.id);
+// Same "flavor" colors already featured on /synthetic-slate-roofing's own
+// profile cards, for visual consistency between the two pages.
+const bravaHeroMap = {
+  spanish_barrel_tile: "/products/synthetic_slate/spanish_barrel_tile/aged-mission.webp",
+  cedar_shake:          "/products/synthetic_slate/cedar_shake/aged-cedar.jpg",
+  slate:                "/products/synthetic_slate/slate/arendale-standard.jpg",
+};
+// All three profiles route to the same roofType; style disambiguates which.
+const bravaVisualizerRoofTypeMap = {
+  spanish_barrel_tile: "synthetic_slate",
+  cedar_shake: "synthetic_slate",
+  slate: "synthetic_slate",
+};
+// No per-profile anchors exist on /synthetic-slate-roofing today (checked
+// directly -- only #pricing/#faq/#service-areas), so, like Stone-Coated
+// Steel's own multi-product-line guide link, all three profiles point at
+// the same page rather than a fragment that doesn't exist.
+const bravaProductPageMap = {
+  spanish_barrel_tile: "/synthetic-slate-roofing",
+  cedar_shake: "/synthetic-slate-roofing",
+  slate: "/synthetic-slate-roofing",
+};
+// Adapter: lib/roofProducts.ts's ColorOption (image1, ...) -> the flat
+// {name, src} shape this component already expects from lib/productColors.js.
+const bravaColorsForStyle = (styleId) => {
+  const [, product] = productsForStyle("synthetic_slate", styleId)[0] ?? [];
+  return (product?.colors ?? []).map(c => ({ name: c.name, src: c.image1 }));
+};
+
 /* ── Static data (module scope) ── */
 const roofTypes = [
   {id:"stone",   label:"Stone-Coated Steel",  desc:"The look of architectural shingles with the strength of steel. Class 4 hail rating — ideal for HOA-governed DFW communities that require traditional aesthetics."},
@@ -119,6 +177,7 @@ const productPageMap = {
   stone:"/stone-coated-steel-roofing",
   copper:"/copper-roofing",
   rpanel:"/r-panel-roofing",
+  ...bravaProductPageMap,
 };
 
 /* Single hero shot per material — replaces the old 4-up collage image. */
@@ -128,22 +187,51 @@ const heroMap = {
   stone:    "/Installation Pics/Stone-Coated-Steel-Pacific-Tile-Timberwood.jpg",
   // No install photo exists for R-Panel — swatch stand-in until real photography is shot.
   rpanel:   "/products/r_panel/true-black.jpg",
+  ...bravaHeroMap,
 };
 const visualizerRoofTypeMap = {
   standing: "standing_seam",
   copper:   "copper_standing_seam",
   stone:    "stone_coated_steel",
   rpanel:   "r_panel",
+  ...bravaVisualizerRoofTypeMap,
 };
 
 /*
  * roofProducts.json style/product keys for the swatch modal CTA's
  * passthrough params — flat materials have a single style/product pair,
- * stone varies by which tile the modal was opened from.
+ * stone varies by which tile the modal was opened from. The 3 Brava
+ * profiles are flat in this same sense (one style, one product each) so
+ * they slot into this map directly rather than needing their own.
  */
 const flatMaterialVisualizerParams = {
   standing: { style: "standing_seam", product: "standing_seam" },
   rpanel:   { style: "r_panel",       product: "r_panel" },
+  spanish_barrel_tile: { style: "spanish_barrel_tile", product: "brava_spanish_barrel_tile" },
+  cedar_shake:          { style: "cedar_shake",         product: "brava_cedar_shake" },
+  slate:                { style: "slate",               product: "brava_slate" },
+};
+/*
+ * Main "See it on your home" CTA href, shared by the image-panel link and
+ * the info-panel button. Unlike the swatch-modal CTA (which only fires once
+ * a color has been picked), this is visible immediately on tab load, before
+ * any color is chosen — so it never includes a color param.
+ *
+ * roofType=synthetic_slate has 3 different styles (unlike standing/r-panel,
+ * which have exactly one), so it can't auto-resolve a style the way those
+ * do -- the visualizer's own prefill effect requires an explicit ?style=
+ * when hasExactlyOneProduct(roofType) is false (confirmed by reading that
+ * effect directly). Building this from flatMaterialVisualizerParams like
+ * the modal CTA already does gives Brava the style param it needs for free.
+ * Stone and copper have no entry in that map, so their output is byte-
+ * identical to the old roofType-only literal -- zero behavior change there.
+ */
+const materialVisualizerHref = (tab) => {
+  const params = flatMaterialVisualizerParams[tab];
+  return `/visualizer?${new URLSearchParams({
+    roofType: visualizerRoofTypeMap[tab],
+    ...(params ? { style: params.style, product: params.product } : {}),
+  }).toString()}`;
 };
 const stoneTileVisualizerParams = {
   "high-barrel":            { style: "high_barrel", product: "barrel_vault_tile" },
@@ -159,6 +247,9 @@ const swatchDataByTab = {
   standing: { full: STANDING_SEAM_COLORS, rowOverride: null,      caption: n => `Available in ${n} colors — view all` },
   rpanel:   { full: R_PANEL_COLORS,       rowOverride: null,      caption: n => `Available in ${n} colors — view all` },
   copper:   { full: COPPER_PATINA_CHIPS,  rowOverride: null,      caption: () => "One material. A finish that evolves for generations." },
+  spanish_barrel_tile: { full: bravaColorsForStyle("spanish_barrel_tile"), rowOverride: null, caption: n => `Available in ${n} colors — view all` },
+  cedar_shake:          { full: bravaColorsForStyle("cedar_shake"),         rowOverride: null, caption: n => `Available in ${n} colors — view all` },
+  slate:                { full: bravaColorsForStyle("slate"),               rowOverride: null, caption: n => `Available in ${n} colors — view all` },
 };
 
 /*
@@ -182,13 +273,6 @@ export default function ProductsSection({
   id = "products",
   eyebrow = "Our Products",
   heading = <>Four Systems.<br/>One Standard.</>,
-  // Optional text-only addendum under the heading — used on the homepage to
-  // mention synthetic slate without adding a 5th (photo-less) tab. Omitted
-  // by default so city pages (which pass their own heading, no note) are
-  // unaffected unless a caller opts in.
-  note = null,
-  noteHref = null,
-  noteLinkLabel = "Learn more →",
   initialTab = "stone",
   // Explicit `= undefined` (not just omitted) is required, not stylistic:
   // under allowJs, TS infers prop optionality from destructured defaults.
@@ -201,7 +285,13 @@ export default function ProductsSection({
   const activeTab = controlledActiveTab ?? internalTab;
   const setActiveTab = onTabChange ?? setInternalTab;
 
-  const activeType = roofTypes.find(t=>t.id===activeTab);
+  // Derived, not its own state -- see the top-of-file note on why.
+  const materialType = BRAVA_TAB_IDS.includes(activeTab) ? "synthetic_slate" : "metal";
+  const handleMaterialTypeChange = (mt) => {
+    setActiveTab(mt === "synthetic_slate" ? BRAVA_TAB_IDS[0] : "stone");
+  };
+
+  const activeType = [...roofTypes, ...bravaStyles].find(t=>t.id===activeTab);
   const [swatchModal, setSwatchModal] = useState(null); // { material, tileKey?, items, index } | null
   // Independent of swatchModal so it survives modal close (Back/Escape/backdrop) — see openStoneColorModal.
   const [stoneTileLevel, setStoneTileLevel] = useState("profiles"); // "profiles" | "shingle"
@@ -321,6 +411,23 @@ export default function ProductsSection({
       <section id={id} className="section-pad products-section" style={{background:C.surface,borderTop:`1px solid ${C.border}`}}>
         <div className="inner">
           <Reveal>
+            {/*
+             * Material Type selector — same tab-strip visual language as the
+             * roof-type row below (bordered pill-row, dividers, accent-fill
+             * active state), not the visualizer's rounded button-grid style.
+             * Metal selection leaves the row below completely untouched;
+             * Synthetic Slate swaps it to the 3 Brava profiles. Superseded
+             * the old text-only "Also Available" callout, which is now gone.
+             */}
+            <div style={{display:"flex",justifyContent:"flex-end",marginBottom:16}}>
+              <div style={{display:"flex",border:`1px solid ${C.border}`,borderRadius:4,overflow:"hidden",flexShrink:0}}>
+                {["metal","synthetic_slate"].map(mt=>(
+                  <button key={mt} onClick={()=>handleMaterialTypeChange(mt)}
+                    style={{padding:"9px 14px",fontSize:10,letterSpacing:1,textTransform:"uppercase",color:materialType===mt?C.black:C.muted,background:materialType===mt?C.accent:"transparent",borderRight:`1px solid ${C.border}`,transition:"all 0.2s",whiteSpace:"nowrap"}}
+                  >{MATERIAL_TYPE_LABELS[mt]}</button>
+                ))}
+              </div>
+            </div>
             <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end",marginBottom:48,flexWrap:"wrap",gap:20}}>
               <div>
                 <div style={{fontSize:15,letterSpacing:3,color:C.accent,textTransform:"uppercase",marginBottom:10}}>{eyebrow}</div>
@@ -330,7 +437,7 @@ export default function ProductsSection({
               </div>
               {/* Tab strip — scrollable on mobile */}
               <div style={{display:"flex",border:`1px solid ${C.border}`,borderRadius:4,overflow:"hidden",overflowX:"auto",flexShrink:0,maxWidth:"100%"}}>
-                {roofTypes.map(t=>(
+                {(materialType==="metal" ? roofTypes : bravaStyles).map(t=>(
                   <button key={t.id} onClick={()=>setActiveTab(t.id)}
                     style={{padding:"9px 14px",fontSize:10,letterSpacing:1,textTransform:"uppercase",color:activeTab===t.id?C.black:C.muted,background:activeTab===t.id?C.accent:"transparent",borderRight:`1px solid ${C.border}`,transition:"all 0.2s",whiteSpace:"nowrap"}}
                   >{t.label}</button>
@@ -338,43 +445,18 @@ export default function ProductsSection({
               </div>
             </div>
           </Reveal>
-          {/*
-           * Text-only callout for materials not (yet) represented as a full
-           * photo tab above — e.g. synthetic slate, pending photos/visualizer
-           * support. Deliberately styled with the same weight as a product
-           * card (accent left-border + tinted background, matching the About
-           * page pull-quote and the Economics section's "insight callout"
-           * patterns already used elsewhere on this site) so it doesn't read
-           * as an afterthought next to the photo-based tabs, while staying
-           * fully independent of the swatch/gallery machinery those need.
-           */}
-          {note && (
-            <Reveal>
-              <div style={{
-                display:"flex",alignItems:"center",gap:16,flexWrap:"wrap",
-                padding:"20px 24px",marginBottom:32,
-                background:`${C.accentDark}18`,borderLeft:`3px solid ${C.accent}`,borderRadius:6,
-              }}>
-                <div style={{fontSize:11,letterSpacing:2,textTransform:"uppercase",color:C.accent,fontWeight:600,flexShrink:0}}>Also Available</div>
-                <p style={{fontSize:15,color:C.mutedLight,lineHeight:1.7,margin:0,flex:1,minWidth:240}}>{note}</p>
-                {noteHref && (
-                  <a href={noteHref} style={{fontSize:12,color:C.accent,letterSpacing:1,textTransform:"uppercase",textDecoration:"underline",whiteSpace:"nowrap",flexShrink:0}}>{noteLinkLabel}</a>
-                )}
-              </div>
-            </Reveal>
-          )}
           {activeType && (
             <Reveal key={activeTab}>
               <div className="grid-2" style={{border:`1px solid ${C.border}`,borderRadius:8,overflow:"hidden"}}>
                 {/* Image panel */}
                 <div style={{display:"flex",flexDirection:"column",height:"100%",minWidth:0}}>
                   <a
-                    href={`/visualizer?roofType=${visualizerRoofTypeMap[activeTab]}`}
+                    href={materialVisualizerHref(activeTab)}
                     style={{display:"block",overflow:"hidden",cursor:"pointer",flex:"1 1 auto",minHeight:280}}
                   >
                     <img
                       src={heroMap[activeTab]}
-                      alt={`${activeType.label} metal roof`}
+                      alt={`${activeType.label} roof`}
                       loading="lazy"
                       decoding="async"
                       style={{width:"100%",height:"100%",objectFit:"cover",display:"block",transition:"transform 0.3s ease"}}
@@ -426,7 +508,9 @@ export default function ProductsSection({
                 {/* Info panel */}
                 <div style={{background:C.black,padding:"clamp(28px,4vw,52px)",display:"flex",flexDirection:"column",justifyContent:"space-between",gap:32}}>
                   <div>
-                    <div style={{fontSize:10,color:C.accent,letterSpacing:2,textTransform:"uppercase",marginBottom:8}}>{badgeMap[activeTab]}</div>
+                    {badgeMap[activeTab] && (
+                      <div style={{fontSize:10,color:C.accent,letterSpacing:2,textTransform:"uppercase",marginBottom:8}}>{badgeMap[activeTab]}</div>
+                    )}
                     <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(26px,3vw,36px)",fontWeight:700,color:C.white,marginBottom:20}}>{activeType.label}</div>
                     <p style={{fontSize:16,color:C.mutedLight,lineHeight:1.8,marginBottom:28}}>{activeType.desc}</p>
                     <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:0}}>
@@ -439,7 +523,7 @@ export default function ProductsSection({
                     </div>
                   </div>
                   <div style={{display:"flex",flexDirection:"column",gap:14}}>
-                    <a href={`/visualizer?roofType=${visualizerRoofTypeMap[activeTab]}`} className="cta-btn"
+                    <a href={materialVisualizerHref(activeTab)} className="cta-btn"
                       style={{display:"inline-flex",alignItems:"center",justifyContent:"center",gap:8,padding:"14px 24px",background:C.accent,color:C.black,fontSize:11,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"background 0.2s",width:"fit-content"}}
                       onMouseEnter={e=>e.currentTarget.style.background=C.accentLight}
                       onMouseLeave={e=>e.currentTarget.style.background=C.accent}

@@ -13,11 +13,6 @@ export const FLOWER_MOUND_DATA: CityData = {
   heroSub: "Flower Mound is one of the most desirable communities in Denton County. The homes here are built to last. The roofs should be too.",
   localContext: "Flower Mound's position in Denton County puts it in the path of significant annual storm activity, and median home values well above $600,000 mean the 2% wind/hail deductible carries real consequences. Homeowners who have been replacing asphalt roofs every decade are increasingly choosing metal as the permanent alternative, and new construction throughout the city reflects that shift.",
   hoaNote: "Flower Mound's established HOA communities have clear processes for roofing material changes. Standing seam and stone-coated steel in approved profiles and color palettes are widely permitted. We provide full HOA documentation support at no additional cost.",
-
-  syntheticSlate: {
-    heading: 'Synthetic Slate Roofing in Flower Mound',
-    body: "Flower Mound homeowners in neighborhoods like The Chaparral and Bridlewood often want a traditional, dimensional roofline, and synthetic slate roofing delivers it — Class 4 hail-rated, without real slate's weight or ongoing maintenance. Ask us whether synthetic slate or metal is the better fit for your Flower Mound home.",
-  },
   localStat: { val: '$620k', label: 'Median Home Value', source: 'Flower Mound, TX 2025' },
   neighborhoods: [
     'The Chaparral', 'Bridlewood', 'Wellington', 'Lakeside DFW',

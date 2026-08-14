@@ -13,11 +13,6 @@ export const COLLEYVILLE_DATA: CityData = {
   heroSub: "Colleyville homeowners expect quality in everything. A metal roof is the permanent upgrade that protects a high-value home and eliminates the replacement cycle for good.",
   localContext: "Colleyville consistently ranks among the highest-value residential communities in the DFW metroplex, with median home values well above $700,000. Located in Tarrant County's hail corridor, the city sees significant storm activity annually. With 2% wind/hail deductibles standard on high-value policies, a single hail event can expose Colleyville homeowners to $14,000 or more out of pocket. Metal roofing is the permanent solution.",
   hoaNote: "Colleyville's established communities have maintained high architectural standards for decades. Standing seam and stone-coated steel in approved profiles and color palettes are widely permitted. We provide complete HOA documentation packages for your submission.",
-
-  syntheticSlate: {
-    heading: 'Synthetic Slate Roofing in Colleyville',
-    body: "Colleyville's established neighborhoods, including Montclair Parc and Timarron, have long favored a traditional architectural standard, and synthetic slate roofing meets it — a dimensional slate profile without the weight, fragility, or maintenance real slate requires. Ask us whether synthetic slate or metal is the better fit for your Colleyville home.",
-  },
   localStat: { val: '$720k', label: 'Median Home Value', source: 'Colleyville, TX 2025' },
   neighborhoods: [
     'Montclair Parc', 'Timarron', 'Caldwell Creek', 'John McCain Estates',

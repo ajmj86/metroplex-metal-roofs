@@ -13,11 +13,6 @@ export const ROYSE_CITY_DATA: CityData = {
   heroSub: "Royse City has become one of the most affordable entry points into the DFW market. Protecting that investment with metal roofing is the smartest upgrade you can make.",
   localContext: "Royse City's rapid growth in Rockwall County has brought new construction and rising home values to a community that sits in an active East Texas storm corridor. Metal roofing is increasingly common on new builds throughout the area and represents a strong long-term investment for any existing homeowner looking to end the asphalt replacement cycle.",
   hoaNote: "Royse City's growing communities have established review processes for exterior material changes. Standing seam and stone-coated steel in approved profiles and colors are widely permitted. We provide complete HOA documentation support at no additional cost.",
-
-  syntheticSlate: {
-    heading: 'Synthetic Slate Roofing in Royse City',
-    body: "Royse City's growing neighborhoods, like Woodcreek Farms and Falcon Heights, are part of one of DFW's most affordable entry points — and synthetic slate roofing protects that investment with a traditional profile and Class 4 hail rating, without real slate's weight or upkeep. Ask us whether synthetic slate is the right fit for your Royse City home.",
-  },
   localStat: { val: '$330k', label: 'Median Home Value', source: 'Royse City, TX 2025' },
   neighborhoods: [
     'Woodcreek Farms', 'Falcon Heights', 'Stonebridge', 'Edgewater',

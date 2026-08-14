@@ -13,11 +13,6 @@ export const BURLESON_DATA: CityData = {
   heroSub: "Burleson sits south of Fort Worth in one of Texas's most active hail corridors. Metal roofing is the permanent fix that protects your home and ends the cycle.",
   localContext: "Burleson's position in Johnson County south of Fort Worth places it in a region with consistent annual hail activity. With median home values approaching $350,000 and standard 2% wind/hail deductibles, storm seasons represent a recurring financial exposure for homeowners on asphalt. Metal roofing eliminates that exposure and qualifies for meaningful insurance savings.",
   hoaNote: "Burleson's established and developing neighborhoods have review processes for exterior material changes. Standing seam and stone-coated steel in approved profiles and colors are widely permitted. We provide complete HOA documentation support at no additional cost.",
-
-  syntheticSlate: {
-    heading: 'Synthetic Slate Roofing in Burleson',
-    body: "Burleson's established and developing neighborhoods, from Villages of Benbrook to Remington Park, are increasingly drawn to synthetic slate roofing for its traditional profile and Class 4 hail protection — without real slate's weight or ongoing upkeep. Ask us whether synthetic slate or metal is the better fit for your Burleson home.",
-  },
   localStat: { val: '$350k', label: 'Median Home Value', source: 'Burleson, TX 2025' },
   neighborhoods: [
     'Villages of Benbrook', 'Retreat at Willow Creek', 'Hidden Creek', 'Remington Park',

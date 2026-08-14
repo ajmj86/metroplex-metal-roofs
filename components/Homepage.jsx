@@ -625,10 +625,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
       <ProductsSection
         id="products"
         eyebrow="Our Products"
-        heading={<>Four Systems.<br/>One Standard.</>}
-        note="Also available: synthetic slate roofing, for homeowners who want slate's timeless profile without the weight or maintenance. Ask us whether it's the right fit for your home."
-        noteHref="/synthetic-slate-roofing"
-        noteLinkLabel="Learn About Synthetic Slate →"
+        heading={<>Metal & Synthetic Slate.<br/>One Standard.</>}
         initialTab="stone"
         activeTab={activeTab}
         onTabChange={setActiveTab}

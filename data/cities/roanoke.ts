@@ -13,11 +13,6 @@ export const ROANOKE_DATA: CityData = {
   heroSub: "Roanoke sits between some of the most premium communities in North Texas. The homes here reflect that. A metal roof is the upgrade that protects that investment.",
   localContext: "Roanoke's position in Denton County between Southlake and Argyle places it in an active storm corridor with significant annual hail exposure. With growing home values and 2% wind/hail deductibles standard on most carrier policies, Roanoke homeowners face consistent out-of-pocket storm exposure on asphalt. Metal roofing eliminates that exposure and qualifies for meaningful insurance savings.",
   hoaNote: "Roanoke's established and developing neighborhoods have review processes for exterior material changes. Standing seam and stone-coated steel in approved profiles and colors are widely permitted. We provide complete HOA documentation support at no additional cost.",
-
-  syntheticSlate: {
-    heading: 'Synthetic Slate Roofing in Roanoke',
-    body: "Roanoke sits between some of the most premium communities in North Texas, and neighborhoods like Harriet Creek Ranch and Canyon Falls reflect that — synthetic slate roofing matches the standard with a traditional profile, Class 4 hail rating, and none of real slate's weight or fragility. Ask us whether synthetic slate is the right fit for your Roanoke home.",
-  },
   localStat: { val: '$470k', label: 'Median Home Value', source: 'Roanoke, TX 2025' },
   neighborhoods: [
     'Harriet Creek Ranch', 'Canyon Falls', 'Silver Oaks', 'Litsey Estates',

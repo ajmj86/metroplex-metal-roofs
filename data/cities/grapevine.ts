@@ -13,11 +13,6 @@ export const GRAPEVINE_DATA: CityData = {
   heroSub: "Grapevine has a character all its own in North Texas. The homes here reflect that. A metal roof is the upgrade that protects that investment for generations.",
   localContext: "Grapevine sits at the intersection of Tarrant and Dallas counties in one of the most storm-active corridors in North Texas. With median home values approaching $500,000 and significant hail exposure every season, homeowners on asphalt face a predictable cycle of claims and replacements. Metal roofing ends that cycle and qualifies for meaningful carrier discounts.",
   hoaNote: "Grapevine's established neighborhoods have active HOA review processes for exterior changes. Standing seam and stone-coated steel in approved profiles and color palettes are commonly permitted. We provide complete documentation support for your HOA submission.",
-
-  syntheticSlate: {
-    heading: 'Synthetic Slate Roofing in Grapevine',
-    body: "Grapevine's established neighborhoods, from Grapevine Lake Estates to Stonebridge, have a character all their own — and synthetic slate roofing fits it, delivering a traditional, dimensional profile without real slate's weight or fragility. Ask us whether synthetic slate or metal is the better fit for your Grapevine home.",
-  },
   localStat: { val: '$480k', label: 'Median Home Value', source: 'Grapevine, TX 2025' },
   neighborhoods: [
     'Grapevine Lake Estates', 'Dove Meadows', 'Coppell Crossing', 'Silverlake',

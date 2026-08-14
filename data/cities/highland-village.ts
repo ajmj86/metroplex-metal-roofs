@@ -13,11 +13,6 @@ export const HIGHLAND_VILLAGE_DATA: CityData = {
   heroSub: "Highland Village sits along Lake Lewisville in one of Denton County's most established communities. A metal roof is the permanent upgrade that matches the quality of the homes here.",
   localContext: "Highland Village's lakeside position in Denton County places it in an active storm corridor with consistent annual hail exposure. With median home values approaching $500,000 and 2% wind/hail deductibles standard on most policies, Highland Village homeowners face recurring out-of-pocket exposure on asphalt. Metal roofing eliminates that cycle entirely.",
   hoaNote: "Highland Village maintains well-established community standards. Standing seam and stone-coated steel in approved profiles and color palettes are widely permitted. We provide complete HOA documentation support at no additional cost.",
-
-  syntheticSlate: {
-    heading: 'Synthetic Slate Roofing in Highland Village',
-    body: "Highland Village's lakeside neighborhoods — from The Peninsula to Stone Hill — favor a traditional, upscale look, and synthetic slate roofing delivers exactly that: slate's dimensional profile without the weight or fragility that makes real slate a poor match for Denton County's hail exposure. For homeowners who want a classic roofline alongside the durability metal is known for, synthetic slate is worth a look. Ask us whether it fits your home.",
-  },
   localStat: { val: '$490k', label: 'Median Home Value', source: 'Highland Village, TX 2025' },
   neighborhoods: [
     'The Peninsula', 'Lakeside', 'Highland Shores', 'Remington Park',

@@ -13,11 +13,6 @@ export const MIDLOTHIAN_DATA: CityData = {
   heroSub: "Midlothian is one of the fastest growing communities south of Dallas. The homes going in today are specifying metal. For existing homeowners the math is just as clear.",
   localContext: "Midlothian's rapid growth in Ellis County has brought premium construction standards to a community that sits in an active storm corridor. Median home values approaching $380,000 and standard 2% wind/hail deductibles mean storm seasons carry real financial consequences for homeowners on asphalt. Metal roofing is increasingly specified on new construction throughout the area and represents a strong long-term upgrade.",
   hoaNote: "Midlothian's developing communities have established review processes for exterior material changes. Standing seam and stone-coated steel in approved profiles and colors are widely permitted. We provide full HOA documentation support at no additional cost.",
-
-  syntheticSlate: {
-    heading: 'Synthetic Slate Roofing in Midlothian',
-    body: "As Midlothian's fastest-growing neighborhoods like Walnut Grove and Heritage Park set a new material standard, synthetic slate roofing is a compelling option for homeowners who want slate's classic look without the weight or ongoing upkeep. Ask us whether synthetic slate is the right fit for your Midlothian home.",
-  },
   localStat: { val: '$380k', label: 'Median Home Value', source: 'Midlothian, TX 2025' },
   neighborhoods: [
     'Walnut Grove', 'Mockingbird Hill', 'Shiloh Crossing', 'Overlook',

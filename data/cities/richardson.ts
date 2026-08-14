@@ -13,11 +13,6 @@ export const RICHARDSON_DATA: CityData = {
   heroSub: "Richardson has deep roots and well-established neighborhoods. Homes here are worth protecting properly. Metal roofing is how you do that.",
   localContext: "Richardson's established neighborhoods carry median home values above $450,000 and sit in Dallas County's active storm corridor. Many Richardson homes are 30 to 40 years old and have already gone through multiple asphalt replacements. Metal roofing ends that cycle permanently and qualifies for meaningful insurance savings in a county where hail claims are a reliable annual occurrence.",
   hoaNote: "Richardson's established neighborhoods have active HOA review processes. Standing seam and stone-coated steel in approved profiles and neutral color palettes are commonly permitted. We provide complete HOA documentation support at no additional cost.",
-
-  syntheticSlate: {
-    heading: 'Synthetic Slate Roofing in Richardson',
-    body: "Richardson's established neighborhoods, from Canyon Creek to Buckingham, have deep roots and often favor a traditional roofline — exactly what synthetic slate roofing offers, in a Class 4 hail-rated system without real slate's weight or upkeep. Ask us whether synthetic slate or metal is the better fit for your Richardson home.",
-  },
   localStat: { val: '$460k', label: 'Median Home Value', source: 'Richardson, TX 2025' },
   neighborhoods: [
     'Canyon Creek', 'Arapaho East', 'Prairie Creek', 'Buckingham',

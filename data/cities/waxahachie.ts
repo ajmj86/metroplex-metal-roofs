@@ -13,11 +13,6 @@ export const WAXAHACHIE_DATA: CityData = {
   heroSub: "Waxahachie has been building quality homes for generations. A metal roof is the upgrade that protects that investment and ends the replacement cycle for good.",
   localContext: "Waxahachie sits in Ellis County's active storm corridor south of Dallas, where significant hail events occur regularly. With growing home values and 2% wind/hail deductibles standard on most carrier policies, the financial case for metal over asphalt has never been clearer. Metal roofing eliminates the recurring replacement expense and qualifies for meaningful insurance discounts.",
   hoaNote: "Waxahachie's established and developing neighborhoods have review processes for exterior material changes. Standing seam and stone-coated steel in approved profiles are widely permitted. We provide complete documentation support for any HOA or city review process.",
-
-  syntheticSlate: {
-    heading: 'Synthetic Slate Roofing in Waxahachie',
-    body: "Waxahachie has been building quality homes for generations, and neighborhoods like Meadow Creek and Hillcrest often call for a traditional roofline — exactly what synthetic slate roofing delivers, Class 4 hail-rated and without real slate's weight or maintenance. Ask us whether synthetic slate is the right fit for your Waxahachie home.",
-  },
   localStat: { val: '$330k', label: 'Median Home Value', source: 'Waxahachie, TX 2025' },
   neighborhoods: [
     'Meadow Creek', 'Hampton Hills', 'Creekview', 'Hillcrest',

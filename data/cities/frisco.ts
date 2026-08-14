@@ -17,11 +17,6 @@ export const FRISCO_DATA: CityData = {
 
   hoaNote: "Frisco's master-planned communities — including Phillips Creek Ranch, Newman Village, and Starwood — typically require HOA approval for roofing material changes. Stone-coated steel and standing seam in earth-tone and neutral color palettes are the most commonly approved metal options. We provide material samples, color chips, and full spec documentation to support your HOA submission at no additional cost.",
 
-  syntheticSlate: {
-    heading: 'Synthetic Slate Roofing in Frisco',
-    body: "For Frisco homeowners in HOA-governed communities like Phillips Creek Ranch, Newman Village, and Starwood, synthetic slate roofing offers slate's traditional profile in a lightweight, Class 4 hail-rated system that fits neighborhood architectural guidelines without the maintenance real slate demands. It's a strong alternative for homes where a classic, dimensional roofline matters as much as long-term durability. Ask us whether synthetic slate or metal is the better fit for your home.",
-  },
-
   localStat: {
     val: '$650k',
     label: 'Median Home Value',

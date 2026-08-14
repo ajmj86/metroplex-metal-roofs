@@ -13,11 +13,6 @@ export const COPPELL_DATA: CityData = {
   heroSub: "Coppell is one of the most established and sought-after communities in North Dallas. A metal roof is the upgrade that protects that investment permanently.",
   localContext: "Coppell's well-established neighborhoods carry median home values above $550,000 and sit in Dallas County's active storm corridor. With 2% wind/hail deductibles standard across most carriers, Coppell homeowners face consistent storm-season exposure on asphalt roofs. Metal roofing eliminates that cycle and qualifies for meaningful annual insurance savings.",
   hoaNote: "Coppell's established neighborhoods have active HOA review processes for exterior material changes. Standing seam and stone-coated steel in approved profiles and neutral color palettes are commonly permitted. We provide complete HOA documentation support at no additional cost.",
-
-  syntheticSlate: {
-    heading: 'Synthetic Slate Roofing in Coppell',
-    body: "Coppell's established neighborhoods, from Northlake Woodlands to Riverchase, often call for a traditional roofline, and synthetic slate roofing offers exactly that in a Class 4 hail-rated system engineered for North Texas storms — without real slate's weight or upkeep. Ask us whether synthetic slate is the right fit for your Coppell home.",
-  },
   localStat: { val: '$560k', label: 'Median Home Value', source: 'Coppell, TX 2025' },
   neighborhoods: [
     'Northlake Woodlands', 'Parkway Estates', 'Woodlands', 'Stratford Manor',

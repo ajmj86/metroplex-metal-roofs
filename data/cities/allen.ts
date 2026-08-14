@@ -13,11 +13,6 @@ export const ALLEN_DATA: CityData = {
   heroSub: "Allen has some of the best schools and neighborhoods in North Texas. The homes here deserve a roof that lasts as long as the investment underneath it.",
   localContext: "Allen sits in Collin County's core hail corridor, where severe storm seasons have become an expected annual event. With median home values near $500,000 and 2% wind/hail deductibles standard across most carriers, a single claim means $10,000 or more out of pocket for most Allen homeowners. Metal roofing is the permanent fix that eliminates the replacement cycle and qualifies for meaningful insurance savings.",
   hoaNote: "Allen's established neighborhoods including Watters Crossing and Twin Creeks have active HOA review processes for exterior changes. Standing seam and stone-coated steel in approved colors are commonly permitted. We provide full documentation support for your HOA submission.",
-
-  syntheticSlate: {
-    heading: 'Synthetic Slate Roofing in Allen',
-    body: "Allen's established neighborhoods like Watters Crossing and Twin Creeks often favor a traditional, dimensional roofline, and synthetic slate roofing delivers exactly that — a classic profile with Class 4 hail protection, at a fraction of real slate's weight and upkeep. Ask us whether synthetic slate or metal is the better fit for your Allen home.",
-  },
   localStat: { val: '$500k', label: 'Median Home Value', source: 'Allen, TX 2025' },
   neighborhoods: [
     'Watters Crossing', 'Twin Creeks', 'Monarch', 'Stacy Ridge',

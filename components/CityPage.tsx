@@ -43,11 +43,6 @@ export interface CityData {
   heroSub: string
   localContext: string
   hoaNote: string
-  // Optional: renders a "Synthetic Slate Roofing in {city}" section right
-  // after "Why Metal" when present. Omitted (undefined) on cities that
-  // haven't had this content drafted yet, so the section simply doesn't
-  // render there rather than showing empty/placeholder copy.
-  syntheticSlate?: { heading: string; body: string }
   localStat: { val: string; label: string; source: string }
   neighborhoods: string[]
   nearbyCities: { name: string; slug: string }[]
@@ -301,45 +296,10 @@ export default function CityPage({ city }: { city: CityData }) {
           </div>
         </section>
 
-        {/*
-         * ── SYNTHETIC SLATE ── Optional, only renders once city.syntheticSlate
-         * is drafted for this city (see CityData). Sits between "Why Metal"
-         * and the product tabs -- same position as the homepage's "Also
-         * Available" callout relative to its own Products section, so the
-         * two pages read consistently. Styled as its own H2 section (not
-         * just a callout bar) since this needs to carry real per-city SEO
-         * copy, not just a one-line mention.
-         */}
-        {city.syntheticSlate && (
-          <section id="synthetic-slate" className="sp-sm" style={{ background: C.surface, borderTop: `1px solid ${C.border}` }}>
-            <div className="inner" style={{ maxWidth: 820 }}>
-              <Reveal>
-                <div style={{
-                  padding: 'clamp(28px,4vw,40px)',
-                  background: `${C.accentDark}18`, borderLeft: `3px solid ${C.accent}`, borderRadius: 6,
-                }}>
-                  <div style={{ fontSize: 11, letterSpacing: 2, color: C.accent, textTransform: 'uppercase', marginBottom: 14, fontWeight: 600 }}>Also Available</div>
-                  <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 'clamp(1.5rem,3.4vw,2.5rem)', fontWeight: 700, color: C.white, lineHeight: 1.15, marginBottom: 16 }}>
-                    {city.syntheticSlate.heading}
-                  </h2>
-                  <p style={{ fontSize: 15, color: C.mutedLight, lineHeight: 1.85, marginBottom: 20 }}>
-                    {city.syntheticSlate.body}
-                  </p>
-                  <Link href="/synthetic-slate-roofing"
-                    style={{ fontSize: 12, color: C.accent, letterSpacing: 1.5, textTransform: 'uppercase', textDecoration: 'underline', transition: 'opacity 0.2s' }}
-                    onMouseEnter={e => (e.currentTarget.style.opacity = '0.7')}
-                    onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
-                  >Learn About Synthetic Slate Roofing →</Link>
-                </div>
-              </Reveal>
-            </div>
-          </section>
-        )}
-
         <ProductsSection
           id="our-products"
           eyebrow="Our Products"
-          heading={<>Metal Roofing Systems<br/>for {city.name} Homes</>}
+          heading={<>Metal & Synthetic Slate Roofing<br/>for {city.name} Homes</>}
           initialTab="stone"
         />
 

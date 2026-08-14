@@ -13,11 +13,6 @@ export const WESTLAKE_DATA: CityData = {
   heroSub: "Westlake homeowners expect a higher standard in everything they own. A metal roof is the permanent finish that matches that standard and handles North Texas weather without compromise.",
   localContext: "Westlake consistently ranks among the wealthiest communities in Texas, with home values regularly exceeding $2 million. With 2% wind/hail deductibles standard on high-value policies, a single hail event can expose Westlake homeowners to $40,000 or more out of pocket on an asphalt roof. Metal roofing is the only permanent solution that eliminates that exposure entirely.",
   hoaNote: "Westlake's residential communities maintain strict architectural standards. Standing seam and copper roofing in approved profiles are widely permitted and increasingly common on estate-level properties. We provide complete HOA documentation packages including material samples, color specifications, and manufacturer certification at no additional cost.",
-
-  syntheticSlate: {
-    heading: 'Synthetic Slate Roofing in Westlake',
-    body: "Westlake's estate-level properties in Vaquero and Glenwyck Farms are held to the highest architectural standard in North Texas, and synthetic slate roofing meets it — a traditional, dimensional profile without real slate's weight or fragility, for homeowners who want that look alongside the durability metal and copper are known for here. Ask us whether synthetic slate is the right fit for your Westlake estate.",
-  },
   localStat: { val: '$2.1M', label: 'Median Home Value', source: 'Westlake, TX 2025' },
   neighborhoods: [
     'Vaquero', 'Glenwyck Farms', 'Terra Bella', 'Wyck Hill',

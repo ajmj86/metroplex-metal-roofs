@@ -17,11 +17,6 @@ export const SOUTHLAKE_DATA: CityData = {
 
   hoaNote: "Many Southlake HOAs require architectural approval for roofing materials. Standing seam and stone-coated steel in pre-approved colors are the most commonly permitted metal options across Carroll ISD neighborhoods. We provide material samples, color chips, and manufacturer spec sheets to support your HOA submission at no additional cost.",
 
-  syntheticSlate: {
-    heading: 'Synthetic Slate Roofing in Southlake',
-    body: "Southlake's estate-level neighborhoods — Timarron, Shady Oaks, Clariden Ranch — often call for a traditional roofline that matches the architecture of the home. Synthetic slate roofing delivers slate's classic profile in a Class 4 hail-rated system engineered for North Texas storms, without the weight or upkeep real slate requires. For homeowners weighing slate's look against metal's proven durability, we'll walk you through both. Ask us whether synthetic slate is the right fit for your Southlake home.",
-  },
-
   localStat: {
     val: '$1.1M',
     label: 'Median Home Value',

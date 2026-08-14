@@ -13,11 +13,6 @@ export const LEWISVILLE_DATA: CityData = {
   heroSub: "Lewisville sits on the lake and in the path of North Texas storms. Metal roofing is the upgrade that handles both.",
   localContext: "Lewisville's position along Lake Lewisville in Denton County places it in an active storm corridor where hail events occur regularly. With median home values approaching $400,000 and standard 2% wind/hail deductibles, Lewisville homeowners face recurring out-of-pocket storm exposure on asphalt roofs. Metal roofing eliminates that exposure and qualifies for real insurance savings.",
   hoaNote: "Lewisville's established neighborhoods have active HOA review processes. Standing seam and stone-coated steel in approved profiles and neutral color palettes are commonly permitted. We provide complete HOA documentation support at no additional cost.",
-
-  syntheticSlate: {
-    heading: 'Synthetic Slate Roofing in Lewisville',
-    body: "Lewisville sits on the lake and squarely in the path of North Texas storms, and synthetic slate roofing handles both — a traditional, dimensional profile engineered to resist hail, without real slate's weight or fragility. Ask us whether synthetic slate or metal is the better fit for your Lewisville home.",
-  },
   localStat: { val: '$390k', label: 'Median Home Value', source: 'Lewisville, TX 2025' },
   neighborhoods: [
     'Castle Hills', 'Lake Vista', 'Lakeridge Estates', 'Lakeland Hills',
