@@ -497,7 +497,21 @@ export default function ProductsSection({
         <div className="inner">
           <Reveal>
             <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end",marginBottom:48,flexWrap:"wrap",gap:20}}>
-              <div>
+              {/*
+               * maxWidth is a safety net, not the fix -- flex-wrap's
+               * line-breaking decision uses each item's natural
+               * (pre-shrink) width, so an unbounded heading here could
+               * still push the row's total width past the .inner
+               * container's 1200px on the wider 4-tab Metal row while
+               * fitting on the narrower 3-tab Synthetic Slate row,
+               * wrapping inconsistently between the two states. The real
+               * fix is keeping heading callers' actual text short enough
+               * to fit both states' worst case (Metal's 4-tab row, 463px)
+               * -- CityPage.tsx's heading was shortened for exactly this
+               * (see its own comment). 900px is generous headroom for
+               * that, not a tight budget being relied on to force wraps.
+               */}
+              <div style={{maxWidth:900,minWidth:0}}>
                 <div style={{fontSize:15,letterSpacing:3,color:C.accent,textTransform:"uppercase",marginBottom:10}}>{eyebrow}</div>
                 <h2 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(1.75rem,4.3vw,3.75rem)",fontWeight:700,color:C.white,lineHeight:1.1}}>
                   {heading}

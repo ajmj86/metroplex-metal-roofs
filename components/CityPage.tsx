@@ -296,10 +296,21 @@ export default function CityPage({ city }: { city: CityData }) {
           </div>
         </section>
 
+        {/*
+         * "Roofing" dropped from this specific heading (kept in every
+         * other "Roofing" mention on this page -- breadcrumb, "Why Metal"
+         * section, FAQ title, nearby-cities links, plus the <title> tag
+         * and meta description, all of which already carry it) so the
+         * heading's rendered width stays short enough to fit the Material
+         * Type selector + tab row on the same line without wrapping, for
+         * every city name including the longest ("Highland Village") --
+         * see the maxWidth comment on ProductsSection.jsx's heading item
+         * for the underlying flex-wrap issue this avoids triggering.
+         */}
         <ProductsSection
           id="our-products"
           eyebrow="Our Products"
-          heading={<>Metal & Synthetic Slate Roofing<br/>for {city.name} Homes</>}
+          heading={<>Metal & Synthetic Slate<br/>for {city.name} Homes</>}
           initialTab="stone"
         />
 
