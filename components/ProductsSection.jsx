@@ -30,7 +30,7 @@ import {
   STANDING_SEAM_COLORS, R_PANEL_COLORS, STONE_COLORS, STONE_PROFILE_TILES, STONE_SHINGLE_TILES,
   COPPER_PATINA_CHIPS, COPPER_INSTALL_PHOTOS,
 } from "@/lib/productColors";
-import { productsForStyle, MATERIAL_TYPE_LABELS } from "@/lib/roofProducts";
+import { productsForStyle, MATERIAL_TYPE_LABELS, styleHasWidthVariants, colorsForWidth, colorImageForWidth } from "@/lib/roofProducts";
 
 /* ── Reveal on scroll ── */
 const Reveal = ({ children, delay=0 }) => {
@@ -86,7 +86,10 @@ const SwatchChip = ({ chip, label, onClick, size="chip", badge }) => {
         transition:"transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease",
       }}>
         {label ? label : chip?.src && (
-          <img src={chip.src} alt="" loading="lazy" decoding="async" style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}}/>
+          <img src={chip.src} alt="" loading="lazy" decoding="async" style={{
+            width:"100%",height:"100%",objectFit:"cover",display:"block",
+            ...(chip.imageScale ? { transform:`scale(${chip.imageScale})`, transformOrigin: chip.imageOrigin || "50% 50%" } : {}),
+          }}/>
         )}
       </span>
       <span style={{
@@ -148,11 +151,67 @@ const bravaProductPageMap = {
   cedar_shake: "/synthetic-slate-roofing",
   slate: "/synthetic-slate-roofing",
 };
+/*
+ * ── Slate thumbnail zoom correction ──
+ * Started as the exact scale/transformOrigin values tuned in
+ * app/visualizer/page.tsx's SLATE_THUMB_ZOOM for these same 6 source
+ * photos (the Slate colors with no width-variant photography, which read
+ * as noticeably more zoomed-out than the other 7 colors' tightly-cropped
+ * width-variant photos). Graphite and White were re-tuned down from the
+ * visualizer's 2.05 (which reads correctly at the visualizer's 120px
+ * swatch size, but over-zooms in this component's larger swatch-modal
+ * preview) -- the other 4 keep the original value since they weren't
+ * flagged as over-zoomed here.
+ */
+const SLATE_THUMB_ZOOM = {
+  Graphite:      { scale: 1.55, origin: "50% 42%" },
+  Washington:    { scale: 2.05, origin: "50% 38%" },
+  White:         { scale: 1.55, origin: "50% 40%" },
+  European:      { scale: 2.05, origin: "50% 40%" },
+  "Pine Green":  { scale: 2.05, origin: "50% 38%" },
+  "Tuscan Clay": { scale: 2.05, origin: "50% 42%" },
+};
+/*
+ * ── Spanish Barrel Tile / Cedar Shake badge-crop corrections ──
+ * Same "Premium Blend" label, same top-left position/size, on the same 5
+ * premiumBlend colors per style (see config/roofProducts.json) -- these
+ * two styles otherwise need no zoom at all (their non-premiumBlend colors
+ * are already visually consistent with each other, confirmed in the prior
+ * Slate-only pass), so only the affected colors get a value here, tuned
+ * to the minimum scale that clears the badge -- not SLATE_THUMB_ZOOM's
+ * larger values, which also had a separate cross-color-consistency goal
+ * these two styles don't need.
+ */
+const SPANISH_BARREL_ZOOM = {
+  Autumn:                { scale: 1.18, origin: "85% 78%" },
+  Mediterranean:         { scale: 1.18, origin: "85% 78%" },
+  "Pine Green":          { scale: 1.18, origin: "85% 78%" },
+  Sandstone:             { scale: 1.25, origin: "86% 78%" },
+  "White Spanish Barrel": { scale: 1.18, origin: "85% 78%" },
+};
+const CEDAR_SHAKE_ZOOM = {
+  Arendale:       { scale: 1.35, origin: "72% 64%" },
+  "Light Arendale": { scale: 1.35, origin: "72% 64%" },
+  "New Cedar":    { scale: 1.35, origin: "72% 64%" },
+  Onyx:           { scale: 1.35, origin: "72% 64%" },
+  White:          { scale: 1.35, origin: "72% 64%" },
+};
+const BRAVA_FLAT_ZOOM = {
+  spanish_barrel_tile: SPANISH_BARREL_ZOOM,
+  cedar_shake: CEDAR_SHAKE_ZOOM,
+};
 // Adapter: lib/roofProducts.ts's ColorOption (image1, ...) -> the flat
-// {name, src} shape this component already expects from lib/productColors.js.
+// {name, src} shape this component already expects from lib/productColors.js,
+// plus the per-color zoom correction above for the two flat (non-width-tiered)
+// Brava styles. Slate is width-tiered and handled separately in the component
+// body (see slateChips) since it needs to react to slateWidth state.
 const bravaColorsForStyle = (styleId) => {
   const [, product] = productsForStyle("synthetic_slate", styleId)[0] ?? [];
-  return (product?.colors ?? []).map(c => ({ name: c.name, src: c.image1 }));
+  const zoomMap = BRAVA_FLAT_ZOOM[styleId] ?? {};
+  return (product?.colors ?? []).map(c => {
+    const zoom = zoomMap[c.name];
+    return { name: c.name, src: c.image1, imageScale: zoom?.scale, imageOrigin: zoom?.origin };
+  });
 };
 
 /* ── Static data (module scope) ── */
@@ -295,8 +354,34 @@ export default function ProductsSection({
   const [swatchModal, setSwatchModal] = useState(null); // { material, tileKey?, items, index } | null
   // Independent of swatchModal so it survives modal close (Back/Escape/backdrop) — see openStoneColorModal.
   const [stoneTileLevel, setStoneTileLevel] = useState("profiles"); // "profiles" | "shingle"
+  // Same pattern as stoneTileLevel above — a sub-drill-down within one tab,
+  // independent of swatchModal so it survives modal close. Matches the
+  // visualizer's own Standard/Multi-Width split for this exact style (see
+  // styleHasWidthVariants/colorsForWidth in lib/roofProducts.ts).
+  const [slateWidth, setSlateWidth] = useState("standard"); // "standard" | "multi"
 
-  const swatchData = activeTab !== "stone" ? swatchDataByTab[activeTab] : null;
+  // Slate-only: build the width-filtered color list live (not at module
+  // scope like bravaColorsForStyle, since it needs to react to slateWidth),
+  // and attach the zoom-correction values above per color/width. Other
+  // Brava styles (Spanish Barrel Tile, Cedar Shake) have no width
+  // distinction, so styleHasWidthVariants gates this off for them.
+  const slateHasWidthVariants = styleHasWidthVariants("synthetic_slate", "slate");
+  const slateColorsRaw = productsForStyle("synthetic_slate", "slate")[0]?.[1]?.colors ?? [];
+  const slateVisibleColors = slateHasWidthVariants ? colorsForWidth(slateColorsRaw, slateWidth) : slateColorsRaw;
+  const slateChips = slateVisibleColors.map(c => {
+    const zoom = SLATE_THUMB_ZOOM[c.name];
+    return {
+      name: c.name,
+      src: colorImageForWidth(c, slateHasWidthVariants ? slateWidth : null),
+      imageScale: zoom?.scale,
+      imageOrigin: zoom?.origin,
+    };
+  });
+  const swatchDataByTabLive = activeTab === "slate"
+    ? { ...swatchDataByTab, slate: { ...swatchDataByTab.slate, full: slateChips } }
+    : swatchDataByTab;
+
+  const swatchData = activeTab !== "stone" ? swatchDataByTabLive[activeTab] : null;
   const swatchChips = swatchData ? (swatchData.rowOverride ?? swatchData.full).slice(0, SWATCH_ROW_LIMIT) : [];
   const swatchOverflow = swatchData ? swatchData.full.length - swatchChips.length : 0;
 
@@ -305,7 +390,7 @@ export default function ProductsSection({
       setSwatchModal({ material: "copper", items: [{ name: "Copper Patina" }], index: 0 });
       return;
     }
-    const full = swatchDataByTab[tab].full;
+    const full = swatchDataByTabLive[tab].full;
     const idx = item ? Math.max(full.indexOf(item), 0) : 0;
     setSwatchModal({ material: tab, items: full, index: idx });
   };
@@ -411,23 +496,6 @@ export default function ProductsSection({
       <section id={id} className="section-pad products-section" style={{background:C.surface,borderTop:`1px solid ${C.border}`}}>
         <div className="inner">
           <Reveal>
-            {/*
-             * Material Type selector — same tab-strip visual language as the
-             * roof-type row below (bordered pill-row, dividers, accent-fill
-             * active state), not the visualizer's rounded button-grid style.
-             * Metal selection leaves the row below completely untouched;
-             * Synthetic Slate swaps it to the 3 Brava profiles. Superseded
-             * the old text-only "Also Available" callout, which is now gone.
-             */}
-            <div style={{display:"flex",justifyContent:"flex-end",marginBottom:16}}>
-              <div style={{display:"flex",border:`1px solid ${C.border}`,borderRadius:4,overflow:"hidden",flexShrink:0}}>
-                {["metal","synthetic_slate"].map(mt=>(
-                  <button key={mt} onClick={()=>handleMaterialTypeChange(mt)}
-                    style={{padding:"9px 14px",fontSize:10,letterSpacing:1,textTransform:"uppercase",color:materialType===mt?C.black:C.muted,background:materialType===mt?C.accent:"transparent",borderRight:`1px solid ${C.border}`,transition:"all 0.2s",whiteSpace:"nowrap"}}
-                  >{MATERIAL_TYPE_LABELS[mt]}</button>
-                ))}
-              </div>
-            </div>
             <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end",marginBottom:48,flexWrap:"wrap",gap:20}}>
               <div>
                 <div style={{fontSize:15,letterSpacing:3,color:C.accent,textTransform:"uppercase",marginBottom:10}}>{eyebrow}</div>
@@ -435,13 +503,34 @@ export default function ProductsSection({
                   {heading}
                 </h2>
               </div>
-              {/* Tab strip — scrollable on mobile */}
-              <div style={{display:"flex",border:`1px solid ${C.border}`,borderRadius:4,overflow:"hidden",overflowX:"auto",flexShrink:0,maxWidth:"100%"}}>
-                {(materialType==="metal" ? roofTypes : bravaStyles).map(t=>(
-                  <button key={t.id} onClick={()=>setActiveTab(t.id)}
-                    style={{padding:"9px 14px",fontSize:10,letterSpacing:1,textTransform:"uppercase",color:activeTab===t.id?C.black:C.muted,background:activeTab===t.id?C.accent:"transparent",borderRight:`1px solid ${C.border}`,transition:"all 0.2s",whiteSpace:"nowrap"}}
-                  >{t.label}</button>
-                ))}
+              {/*
+               * Material Type selector, stacked directly above the roof-type
+               * tab strip as one grouped control cluster (both right-
+               * aligned, same column, small gap) -- rather than its own
+               * full-width row above the eyebrow/heading, which read as
+               * disconnected page-header chrome instead of belonging to
+               * this section. Same tab-strip visual language throughout
+               * (bordered pill-row, dividers, accent-fill active state),
+               * not the visualizer's rounded button-grid style. Metal
+               * selection leaves the tab strip below completely untouched;
+               * Synthetic Slate swaps it to the 3 Brava profiles.
+               */}
+              <div style={{display:"flex",flexDirection:"column",alignItems:"flex-end",gap:10,flexShrink:0,maxWidth:"100%"}}>
+                <div style={{display:"flex",border:`1px solid ${C.border}`,borderRadius:4,overflow:"hidden",flexShrink:0}}>
+                  {["metal","synthetic_slate"].map(mt=>(
+                    <button key={mt} onClick={()=>handleMaterialTypeChange(mt)}
+                      style={{padding:"9px 14px",fontSize:10,letterSpacing:1,textTransform:"uppercase",color:materialType===mt?C.black:C.muted,background:materialType===mt?C.accent:"transparent",borderRight:`1px solid ${C.border}`,transition:"all 0.2s",whiteSpace:"nowrap"}}
+                    >{MATERIAL_TYPE_LABELS[mt]}</button>
+                  ))}
+                </div>
+                {/* Tab strip — scrollable on mobile */}
+                <div style={{display:"flex",border:`1px solid ${C.border}`,borderRadius:4,overflow:"hidden",overflowX:"auto",flexShrink:0,maxWidth:"100%"}}>
+                  {(materialType==="metal" ? roofTypes : bravaStyles).map(t=>(
+                    <button key={t.id} onClick={()=>setActiveTab(t.id)}
+                      style={{padding:"9px 14px",fontSize:10,letterSpacing:1,textTransform:"uppercase",color:activeTab===t.id?C.black:C.muted,background:activeTab===t.id?C.accent:"transparent",borderRight:`1px solid ${C.border}`,transition:"all 0.2s",whiteSpace:"nowrap"}}
+                    >{t.label}</button>
+                  ))}
+                </div>
               </div>
             </div>
           </Reveal>
@@ -487,6 +576,26 @@ export default function ProductsSection({
                       </>
                     ) : (
                       <>
+                        {/*
+                         * Width sub-selector, Slate only -- matches the
+                         * visualizer's own Standard/Multi-Width split for
+                         * this exact style (styleHasWidthVariants gates it
+                         * off automatically for Spanish Barrel Tile/Cedar
+                         * Shake, which have no width distinction). Same
+                         * drill-down pattern as Stone-Coated Steel's
+                         * profile/shingle tile level above, just a plain
+                         * two-button toggle instead of tiles since there's
+                         * no separate preview image per width tier here.
+                         */}
+                        {activeTab === "slate" && slateHasWidthVariants && (
+                          <div style={{display:"flex",gap:8,marginBottom:16}}>
+                            {["standard","multi"].map(w=>(
+                              <button key={w} onClick={()=>setSlateWidth(w)}
+                                style={{padding:"7px 14px",fontSize:10,letterSpacing:1,textTransform:"uppercase",color:slateWidth===w?C.black:C.muted,background:slateWidth===w?C.accent:"transparent",border:`1px solid ${slateWidth===w?C.accent:C.border}`,borderRadius:4,cursor:"pointer",transition:"all 0.2s",whiteSpace:"nowrap"}}
+                              >{w==="standard" ? "Standard Slate" : "Multi-Width Slate"}</button>
+                            ))}
+                          </div>
+                        )}
                         <div style={{display:"flex",alignItems:"flex-start",gap:10,overflowX:"auto",padding:"12px 12px 14px",margin:"-12px -12px -14px"}}>
                           {swatchChips.map((chip,i)=>(
                             <SwatchChip key={chip.src || chip.hex || `${chip.name}-${i}`} chip={chip} onClick={()=>openSwatchModal(activeTab, chip)}/>

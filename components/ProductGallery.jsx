@@ -31,7 +31,10 @@ function ThumbnailStrip({ items, index, onNavigate }) {
             >
               {it.src && (
                 <img src={it.src} alt="" loading="lazy" decoding="async"
-                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}/>
+                  style={{
+                    width: "100%", height: "100%", objectFit: "cover", display: "block",
+                    ...(it.imageScale ? { transform: `scale(${it.imageScale})`, transformOrigin: it.imageOrigin || "50% 50%" } : {}),
+                  }}/>
               )}
             </button>
           );
@@ -47,7 +50,7 @@ function ThumbnailStrip({ items, index, onNavigate }) {
  * component can back both the photo gallery and the product swatch modals.
  *
  * Props:
- *  - items:     array of { src, label|name, objectPosition? }
+ *  - items:     array of { src, label|name, objectPosition?, imageScale?, imageOrigin? }
  *  - index:     current item index, or null/undefined to render nothing
  *  - onNavigate(newIndex): called by the prev/next arrows and arrow keys
  *  - onClose():  called by Escape, the × button, or a click outside the frame
@@ -164,7 +167,18 @@ export default function ProductGallery({
                     display: "block",
                     WebkitUserSelect: "none", userSelect: "none",
                     WebkitTouchCallout: "none",
-                    pointerEvents: "none"
+                    pointerEvents: "none",
+                    // Optional extra zoom beyond the base cover-fit crop
+                    // above (Brava Slate: fixes cross-color scale
+                    // inconsistency and crops a source-photo "Premium
+                    // Blend" label out of frame -- see ProductsSection.jsx's
+                    // SLATE_THUMB_ZOOM/SANDSTONE_MULTI_ZOOM). This div is
+                    // already a tight overflow:hidden wrapper directly
+                    // around the img, so the transform is safely contained.
+                    ...(item.imageScale ? {
+                      transform: `scale(${item.imageScale})`,
+                      transformOrigin: item.imageOrigin || "50% 50%",
+                    } : {}),
                   }}
                 />
               </div>
