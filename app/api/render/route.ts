@@ -188,7 +188,19 @@ function buildRenderPrompt(
   // orientation of street/driveway/yard within the frame, same side of the
   // house facing the camera.
   const AERIAL_FRAMING_TARGET = `a fixed elevated aerial vantage: camera positioned as if hovering roughly 40-60 feet above ground level and off to one side of the house, looking down at approximately a 35-45 degree angle from horizontal (steep enough to clearly reveal the roof's material, texture, and dimensional profile — not a flat, straight-down satellite nadir view), framed so the entire home and roofline fill most of the image with a small, consistent margin of yard and surroundings visible on all sides`;
-  const framingLockClause = `Render from ${AERIAL_FRAMING_TARGET}. Match the horizontal viewing direction (azimuth) to image 1, the satellite reference: keep the street, driveway, and yard in the same relative position within the frame (e.g. same side/corner) as they appear in image 1, so the camera is effectively orbiting around the same fixed point on the same side of the house as the satellite view, just tilted down to an elevated angle instead of straight overhead. This exact camera vantage — same height, angle, distance, azimuth, and crop — must be used consistently every time this house is rendered: do not zoom in tighter, pull back wider, tilt the angle, orbit to a different side of the house, or otherwise reinterpret the framing between renders.`;
+  // Reworded per regression found in live testing after daacadd6: the prior
+  // wording ("keep the street/driveway/yard in the same relative position
+  // within the frame ... as they appear in image 1", "orbiting ... just
+  // tilted down ... instead of straight overhead") described image 1's own
+  // nadir composition as the starting point and the elevated angle as a
+  // minor adjustment to it, which pulled renders back toward a near-nadir
+  // top-down look -- the exact "elevated 3/4 angle" regression this was
+  // reported against. Azimuth (which side of the house the camera favors)
+  // and elevation/tilt (the AERIAL_FRAMING_TARGET shot type, always
+  // elevated, never nadir) are now stated as two independently-governed
+  // properties rather than one derived from the other, with an explicit
+  // "do not copy image 1's own angle" line.
+  const framingLockClause = `Render from ${AERIAL_FRAMING_TARGET}. Use image 1, the satellite reference, ONLY to pick which side of the house the elevated camera favors: identify which side of the house faces the street/driveway in image 1, and position the elevated camera on that same side, looking toward that same side of the house, so the yard/street/driveway fall on the same relative side of the frame as in image 1. Do NOT copy image 1's own camera angle, height, tilt, or overall top-down composition — image 1 is a near-nadir straight-down shot and is explicitly not the target framing; it is a directional reference only, for choosing which side of the house to shoot from, never for how elevated or tilted the shot itself is. This exact camera vantage — the elevated height, tilt angle, and distance from AERIAL_FRAMING_TARGET above, this same side-of-house choice, and this same crop — must be used consistently every time this house is rendered: do not zoom in tighter, pull back wider, change the tilt angle, switch to a different side of the house, drift toward a flatter/more-overhead angle, or otherwise reinterpret the framing between renders.`;
 
   // Hardened per Phase 12 Step 4: enumerates every non-roof element
   // explicitly rather than a short catch-all clause, and separately forbids
@@ -228,6 +240,26 @@ function buildRenderPrompt(
 
   const fidelityClause = `Change ONLY the roofing material, color, and texture, and only on the primary/subject house. Every other element must remain exactly as shown in the reference images: windows, doors, garage doors, siding material and color, trim, gutters, chimneys, landscaping, trees, driveway, walkways, fences, sky, and lighting direction and color temperature must all stay pixel-faithful to the reference images. Do not add, remove, or reposition any architectural element. ${noHallucinationClause} ${houseScopeClause} Do not change the time of day, weather, or shadow direction. Camera framing follows the aerial vantage instruction, not the reference images' own camera angles. The only permitted differences between the reference images and the final render are the roof's material, color, and texture on the primary/subject house, and the camera vantage as specified.`;
 
+  // 2-image (no Street View) path only -- deliberately separate from
+  // AERIAL_FRAMING_TARGET/framingLockClause above, which target an elevated
+  // 3/4 angle. Confirmed via real-render A/B testing (see the "ALSO NOT YET
+  // FIXED" note below this function) that the 2-image path can't reach that
+  // elevated look regardless of prompt wording -- without a ground-level
+  // reference photo, the model has no oblique view to draw from and falls
+  // back toward the satellite's own near-nadir composition. Since fighting
+  // that is a separate, harder problem left for a future phase, this clause
+  // works WITH the near-nadir tendency instead of against it: keep the
+  // angle close to straight-down (just a slight tilt, not an elevation
+  // fight) but fix the actual complaint, which was crop/zoom -- the
+  // satellite reference is zoomed out to show multiple lots, and that wide
+  // framing was bleeding into the render along with the nadir angle. This
+  // clause targets angle and crop as separate asks: keep the angle near the
+  // satellite's own (slight tilt only), but zoom in tighter than the
+  // satellite reference so the subject house and immediate lot dominate the
+  // frame instead of neighboring properties and excess yard.
+  const NEAR_NADIR_TIGHT_FRAMING_TARGET = `a near-overhead aerial vantage: camera positioned almost straight down but tilted only about 10-15 degrees off pure vertical (just enough to hint at the roof's dimensional profile and texture — not a perfectly flat orthographic top-down view, and NOT an elevated drone-style 3/4 angle), framed TIGHT: zoomed in so the subject house and its immediate lot (roofline, driveway, entryway, and close yard) fill nearly the entire frame, with only a thin, consistent margin of yard around the house — neighboring houses, adjacent lots, and the street should be cropped out or reduced to a small sliver at the frame's edge rather than taking up significant space`;
+  const nearNadirFramingClause = `Render from ${NEAR_NADIR_TIGHT_FRAMING_TARGET}. Image 1, the satellite reference, is typically zoomed out further than this and shows more of the surrounding yard, neighboring lots, and street — do NOT match image 1's zoom level or crop; the final render must be noticeably tighter/more zoomed-in on the subject house than image 1 is. This exact framing — the same near-vertical tilt and the same tight, house-filling crop — must be used consistently every time this house is rendered: do not pull back wider, zoom in even tighter, change the tilt toward a flatter or more elevated angle, or otherwise reinterpret the framing between renders.`;
+
   if (useStreetView) {
     return `I'm giving you 3 reference images in order:
 1. Aerial/satellite view of the house — use this as the primary reference for the home's true shape, structure, and layout
@@ -241,7 +273,7 @@ Using all three, render a single photorealistic image of this home with a new ro
 1. Aerial/satellite view of the house — use this as the reference for the home's true shape, structure, layout, and surroundings
 2. Close-up reference of the new roof material and color: ${colorAndProductLabel} — match this roof color and texture exactly
 
-Using both, render a single photorealistic image of this home with a new roof in the color and material shown in image 2. The result should look like a real estate listing photograph: natural daylight, true-to-life color, sharp architectural photography detail, accurate shadows, and realistic texture — not an illustration, painting, or stylized rendering. ${framingLockClause} Note this vantage is intentionally more angled than image 1's straight-down satellite view — image 1 is for the home's shape, structure, and surroundings reference only, not for literal camera framing. ${fidelityClause} Stay as true to the actual shape, structure, and details of this specific house as possible. The final image must be photorealistic, not cartoonish or artificial-looking.`;
+Using both, render a single photorealistic image of this home with a new roof in the color and material shown in image 2. The result should look like a real estate listing photograph: natural daylight, true-to-life color, sharp architectural photography detail, accurate shadows, and realistic texture — not an illustration, painting, or stylized rendering. ${nearNadirFramingClause} ${fidelityClause} Stay as true to the actual shape, structure, and details of this specific house as possible. The final image must be photorealistic, not cartoonish or artificial-looking.`;
 }
 
 // NOT YET DECIDED (flagged during Phase 12 hallucination testing, not
@@ -255,6 +287,27 @@ Using both, render a single photorealistic image of this home with a new roof in
 // capture), or accept it as a known limitation and document it for
 // customer-facing expectations. Framing drift (see framingLockClause above)
 // remains a separate, also-unresolved issue from this one.
+//
+// PARTIALLY ADDRESSED (found via real-render A/B testing while diagnosing
+// the framingLockClause nadir regression above, fixed in a later pass): the
+// no-Street-View, 2-image path (useStreetView=false -- satellite + color
+// reference only) reliably stayed near-nadir even with the fixed
+// framingLockClause and regardless of input_fidelity ('high' vs 'low'),
+// tested on multiple real addresses/houses. The SAME house, SAME prompt,
+// with a real Street View photo added as a 3rd reference image reliably
+// produces the correct elevated 3/4 angle. Conclusion: the model needs an
+// actual oblique/ground-level photographic reference among the inputs to
+// depart from the satellite's own near-nadir composition -- prompt text
+// alone does not seem to be enough when the satellite image is the only
+// quasi-photographic reference available. Fighting the angle itself is a
+// distinct, likely harder problem (no known second image source for
+// addresses without Street View coverage) and remains unsolved. What WAS
+// fixed: the 2-image path now has its own nearNadirFramingClause (see
+// above) that accepts the near-nadir angle and instead fixes the crop --
+// the satellite reference's wide, multi-lot zoom level was also bleeding
+// into renders, which is what "too much yard/neighboring lots" complaints
+// were actually about; nearNadirFramingClause explicitly tells the model
+// to zoom in tighter than image 1 rather than matching its crop.
 
 const PROMPT_EXPANSION_SYSTEM = `You are a minimal prompt editor for an image-editing pipeline. Your ONLY job is to add a single short sentence about photographic technical quality (camera sharpness, natural lighting, realistic detail) to the END of the given prompt.
 
