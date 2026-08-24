@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 import ScrollReset from "@/components/ScrollReset";
 import UTMCapture from "@/components/UTMCapture";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -42,6 +43,7 @@ export default function RootLayout({
      ::-webkit-scrollbar-track { background: #09090A; }
      ::-webkit-scrollbar-thumb { background: #27272A; border-radius: 3px; }
    `}</style>
+        <GoogleAnalytics />
         <ScrollReset />
         <Suspense fallback={null}>
           <UTMCapture />
