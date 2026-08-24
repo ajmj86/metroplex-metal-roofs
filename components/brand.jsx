@@ -122,6 +122,44 @@ export const globalStyles = `
   }
 `;
 
+/*
+ * Shared hero style values -- extracted from Homepage.jsx's own hero section
+ * so it and LandingHero.tsx (components/lp landing pages) reference the same
+ * numbers instead of each hand-tuning its own copy, which is how their font
+ * sizes/line-height/image positioning drifted apart in the first place.
+ */
+export const HERO_EYEBROW_WRAP_STYLE = { display: "inline-flex", alignItems: "center", gap: 12, marginBottom: 28 };
+export const HERO_EYEBROW_BAR_STYLE  = { width: 28, height: 1, background: C.accent, flexShrink: 0 };
+export const HERO_EYEBROW_TEXT_STYLE = { fontSize: "clamp(0.75rem,1.1vw,0.95rem)", letterSpacing: 3.5, color: C.accent, textTransform: "uppercase", fontWeight: 500 };
+
+export const HERO_H1_STYLE = {
+  fontFamily: "'Cormorant Garamond',Georgia,serif",
+  fontSize: "clamp(3.5rem,5.5vw,7rem)",
+  fontWeight: 700,
+  lineHeight: 1.05,
+  color: C.white,
+  marginBottom: 24,
+  maxWidth: 720,
+};
+export const HERO_H1_ACCENT_STYLE = { color: C.accent, fontStyle: "italic" };
+
+export const HERO_SUBHEAD_STYLE = {
+  fontSize: "clamp(1.125rem,1.3vw,1.1875rem)",
+  lineHeight: 1.8,
+  color: C.mutedLight,
+  maxWidth: 480,
+  marginBottom: 40,
+  fontWeight: 500,
+};
+
+// The real fix for the hero image shifting between pages is in Hero.tsx
+// (the background layer's box is now pinned to a fixed 100vh, independent
+// of the section's content-driven height) -- with that box size no longer
+// varying, `center` is safe again and restores the original intended photo
+// composition (pool/patio visible at the bottom).
+export const heroBackgroundStyle = (imageSrc) =>
+  `linear-gradient(to bottom, rgba(9,9,10,0.82) 0%, rgba(9,9,10,0.70) 40%, rgba(9,9,10,0.88) 100%), url('${imageSrc}') center/cover no-repeat`;
+
 export const Logo = ({ size=1, light=false }) => {
   const fg = light ? C.black : C.white;
   const gold = C.accent;
