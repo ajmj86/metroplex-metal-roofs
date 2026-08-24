@@ -271,7 +271,7 @@
       "main": [
         [
           {
-            "node": "Create Opportunity",
+            "node": "Build Opportunity Payload",
             "type": "main",
             "index": 0
           }
@@ -440,6 +440,17 @@
           }
         ]
       ]
+    },
+    "Build Opportunity Payload": {
+      "main": [
+        [
+          {
+            "node": "Create Opportunity",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "name": "Lead Intake – Visualizer",
@@ -543,7 +554,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const webhookData = $('Webhook – Lead Intake (Visualizer)').first().json.body;\nconst configData = $('Config – GHL IDs').first().json;\nconst contact = webhookData.contact || {};\nconst fields = webhookData.fields || {};\nconst utm = webhookData.utm || {};\n\nconst FIELD_IDS = {\n  lead_source: 'pOqyjdxOHg67C4JWdkaG',\n  current_roof_type: 'Vo7YnqmuZnhV2U66uKJA',\n  project_reason: 'prLMUoMzKClcfmBzDH3R',\n  insurance_claim_status: 'tpAq0AZMqWJZeTy3dPsS',\n  homeowner_timeline: '7F3CKSSVRj7jdHKoq87X',\n  property_address: 'acFCeylcy8uhep3stymL',\n  selected_roof_type: 'ooxcklKOKGrDCRunZnh3',\n  estimated_roof_size: 'S3E1cQMFQ2vD2Ec1nSAR',\n  estimate_range: 'cEjn1x0nid6taqIaQxKt',\n  solar_failure_reason: 'BGNa09wcBsV8K1wJaWpz',\n  roof_size_source: 'DM5heXbAUYr0bzz7qmpZ',\n};\nconst UTM_FIELD_IDS = {\n  source: 'NNZiielScQomx8VDF7q8',\n  medium: 'ELW45zGCkwQkpUV2TnEW',\n  campaign: 'VrI3HZtaymdTdf0lggfD',\n  content: 'PGjESDF2GrVJD8bneg4j',\n};\n\nconst isEmpty = (v) => v === null || v === undefined || v === '';\n\n// Base contact fields — never-null-write: only include keys that are actually present\nconst contactFields = {};\nfor (const key of ['firstName', 'lastName', 'email', 'phone', 'address1', 'city', 'state', 'postalCode']) {\n  if (!isEmpty(contact[key])) contactFields[key] = contact[key];\n}\n\nconst customFields = [];\nfor (const [key, id] of Object.entries(FIELD_IDS)) {\n  if (!isEmpty(fields[key])) customFields.push({ id, value: fields[key] });\n}\nfor (const [key, id] of Object.entries(UTM_FIELD_IDS)) {\n  if (!isEmpty(utm[key])) customFields.push({ id, value: utm[key] });\n}\nif (customFields.length) contactFields.customFields = customFields;\n// 'Visualizer Lead' is applied unconditionally on every full submission --\n// this is what WF1A's native GHL trigger now filters on (replacing a\n// non-functional 'Lead Source = Visualizer' condition), so it has to land on\n// every contact reaching this path, not just some.\nconst baseTags = Array.isArray(webhookData.tags) ? webhookData.tags : [];\nconst withVisualizerLead = [...baseTags, 'Visualizer Lead'];\nconst allTags = webhookData.smsConsent === true ? [...withVisualizerLead, 'SMS Consent'] : withVisualizerLead;\n\n// Tags are set on contactPayloadCreate (brand-new contact, nothing to clobber) but\n// deliberately left OFF contactPayloadUpdate — GHL's PUT /contacts/{id} replaces the\n// entire tags array, so including it here would silently wipe any tags the contact\n// already had (e.g. 'sms inquiry', manual CRM tags). Existing contacts get any new\n// tags added additively via the dedicated Add Tags endpoint instead (see updateTags).\nconst contactPayloadCreate = { ...contactFields, locationId: configData.locationId };\nif (allTags.length) contactPayloadCreate.tags = allTags;\nconst contactPayloadUpdate = { ...contactFields };\nconst updateTags = allTags;\n\nreturn [{\n  json: {\n    email: contact.email,\n    contactPayloadCreate,\n    contactPayloadUpdate,\n    updateTags,\n    rawFields: fields,\n    locationId: configData.locationId,\n    pipelineId: configData.pipelineId,\n    stageId: configData.stageId,\n    firstName: contact.firstName || '',\n    lastName: contact.lastName || '',\n    phone: contact.phone || '',\n    source: webhookData.source || 'visualizer',\n  },\n}];"
+        "jsCode": "const webhookData = $('Webhook – Lead Intake (Visualizer)').first().json.body;\nconst configData = $('Config – GHL IDs').first().json;\nconst contact = webhookData.contact || {};\nconst fields = webhookData.fields || {};\nconst utm = webhookData.utm || {};\n\nconst FIELD_IDS = {\n  current_roof_type: 'Vo7YnqmuZnhV2U66uKJA',\n  project_reason: 'prLMUoMzKClcfmBzDH3R',\n  insurance_claim_status: 'tpAq0AZMqWJZeTy3dPsS',\n  homeowner_timeline: '7F3CKSSVRj7jdHKoq87X',\n  property_address: 'acFCeylcy8uhep3stymL',\n  selected_roof_type: 'ooxcklKOKGrDCRunZnh3',\n  estimated_roof_size: 'S3E1cQMFQ2vD2Ec1nSAR',\n  estimate_range: 'cEjn1x0nid6taqIaQxKt',\n  solar_failure_reason: 'BGNa09wcBsV8K1wJaWpz',\n  roof_size_source: 'DM5heXbAUYr0bzz7qmpZ',\n};\nconst UTM_FIELD_IDS = {\n  source: 'NNZiielScQomx8VDF7q8',\n  medium: 'ELW45zGCkwQkpUV2TnEW',\n  campaign: 'VrI3HZtaymdTdf0lggfD',\n  content: 'PGjESDF2GrVJD8bneg4j',\n};\n\nconst isEmpty = (v) => v === null || v === undefined || v === '';\n\n// Base contact fields — never-null-write: only include keys that are actually present\nconst contactFields = {};\nfor (const key of ['firstName', 'lastName', 'email', 'phone', 'address1', 'city', 'state', 'postalCode']) {\n  if (!isEmpty(contact[key])) contactFields[key] = contact[key];\n}\n\nconst customFields = [];\nfor (const [key, id] of Object.entries(FIELD_IDS)) {\n  if (!isEmpty(fields[key])) customFields.push({ id, value: fields[key] });\n}\nfor (const [key, id] of Object.entries(UTM_FIELD_IDS)) {\n  if (!isEmpty(utm[key])) customFields.push({ id, value: utm[key] });\n}\nif (customFields.length) contactFields.customFields = customFields;\n// 'Visualizer Lead' is applied unconditionally on every full submission --\n// this is what WF1A's native GHL trigger now filters on (replacing a\n// non-functional 'Lead Source = Visualizer' condition), so it has to land on\n// every contact reaching this path, not just some.\nconst baseTags = Array.isArray(webhookData.tags) ? webhookData.tags : [];\nconst withVisualizerLead = [...baseTags, 'Visualizer Lead'];\nconst allTags = webhookData.smsConsent === true ? [...withVisualizerLead, 'SMS Consent'] : withVisualizerLead;\n\n// Tags are set on contactPayloadCreate (brand-new contact, nothing to clobber) but\n// deliberately left OFF contactPayloadUpdate — GHL's PUT /contacts/{id} replaces the\n// entire tags array, so including it here would silently wipe any tags the contact\n// already had (e.g. 'sms inquiry', manual CRM tags). Existing contacts get any new\n// tags added additively via the dedicated Add Tags endpoint instead (see updateTags).\nconst contactPayloadCreate = { ...contactFields, locationId: configData.locationId };\nif (allTags.length) contactPayloadCreate.tags = allTags;\nconst contactPayloadUpdate = { ...contactFields };\nconst updateTags = allTags;\n\nreturn [{\n  json: {\n    email: contact.email,\n    contactPayloadCreate,\n    contactPayloadUpdate,\n    updateTags,\n    rawFields: fields,\n    locationId: configData.locationId,\n    pipelineId: configData.pipelineId,\n    stageId: configData.stageId,\n    firstName: contact.firstName || '',\n    lastName: contact.lastName || '',\n    phone: contact.phone || '',\n    source: webhookData.source || 'visualizer',\n  },\n}];"
       },
       "id": "04baa7bb-21a6-40fe-8774-e4cfe3cc4915",
       "name": "Build Contact Payload (Filter Nulls)",
@@ -716,7 +727,7 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ { \"pipelineId\": $('Build Contact Payload (Filter Nulls)').item.json.pipelineId, \"locationId\": $('Build Contact Payload (Filter Nulls)').item.json.locationId, \"pipelineStageId\": $('Build Contact Payload (Filter Nulls)').item.json.stageId, \"name\": ($('Build Contact Payload (Filter Nulls)').item.json.firstName + ' ' + $('Build Contact Payload (Filter Nulls)').item.json.lastName + ' - ' + $('Build Contact Payload (Filter Nulls)').item.json.source.charAt(0).toUpperCase() + $('Build Contact Payload (Filter Nulls)').item.json.source.slice(1) + ' Lead').trim(), \"status\": \"open\", \"contactId\": $json.contactId, \"source\": $('Build Contact Payload (Filter Nulls)').item.json.source } }}",
+        "jsonBody": "={{ $json.body }}",
         "options": {}
       },
       "id": "d795bf3b-8262-4152-81d4-ca2d13748cc7",
@@ -1648,6 +1659,19 @@
           "name": "GHL - Metroplex"
         }
       }
+    },
+    {
+      "parameters": {
+        "jsCode": "const webhookData = $('Webhook – Lead Intake (Visualizer)').first().json.body;\nconst utm = webhookData.utm || {};\nconst d = $json; // output of Check Existing Opportunity: contactId, firstName, lastName, phone, source, locationId, pipelineId, stageId\n\nconst OPPORTUNITY_FIELD_IDS = {\n  route_code: 'jY9FyUMmjcjOvImF4GW6',\n  campaign_name: 'ifPE6rhmD5wUsq58ttmM',\n};\n// Opportunity-level Lead Source is a curated SINGLE_OPTIONS dropdown (EDDM /\n// Facebook Ads / YouTube Ads / Google Ads) -- unlike the plain-text UTM\n// fields, this needs an explicit slug->label map, and an unrecognized/empty\n// utm_source must leave the field unset rather than guess or default to one\n// of the four options.\nconst LEAD_SOURCE_FIELD_ID = 'DGRy6EHziji2kevcDXpE';\nconst LEAD_SOURCE_MAP = {\n  eddm: 'EDDM',\n  facebook: 'Facebook Ads',\n  youtube: 'YouTube Ads',\n  google: 'Google Ads',\n};\n\nconst isEmpty = (v) => v === null || v === undefined || v === '';\n\nconst customFields = [];\nif (!isEmpty(utm.content)) customFields.push({ id: OPPORTUNITY_FIELD_IDS.route_code, value: utm.content });\nif (!isEmpty(utm.campaign)) customFields.push({ id: OPPORTUNITY_FIELD_IDS.campaign_name, value: utm.campaign });\nconst leadSourceLabel = LEAD_SOURCE_MAP[utm.source];\nif (leadSourceLabel) customFields.push({ id: LEAD_SOURCE_FIELD_ID, value: leadSourceLabel });\n\nconst name = (d.firstName + ' ' + d.lastName + ' - ' + d.source.charAt(0).toUpperCase() + d.source.slice(1) + ' Lead').trim();\n\nconst body = {\n  pipelineId: d.pipelineId,\n  locationId: d.locationId,\n  pipelineStageId: d.stageId,\n  name,\n  status: 'open',\n  contactId: d.contactId,\n  source: d.source,\n};\nif (customFields.length) body.customFields = customFields;\n\nreturn [{ json: { ...d, body } }];"
+      },
+      "id": "build-opportunity-payload",
+      "name": "Build Opportunity Payload",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3596,
+        2224
+      ]
     }
   ],
   "pinData": {},
