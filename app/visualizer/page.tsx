@@ -5,6 +5,7 @@ import { useState, useRef, useEffect } from 'react'
 import { C, fonts, globalStyles, PHONE, EMAIL } from '@/components/brand'
 import SiteNav from '@/components/SiteNav'
 import { SiteFooter } from '@/components/SiteFooter'
+import { trackEvent } from '@/lib/analytics'
 import {
   ROOF_TYPE_ORDER,
   MATERIAL_TYPE_GROUPS,
@@ -255,6 +256,16 @@ export default function VisualizerPage() {
   const [manualSubmitting, setManualSubmitting] = useState(false)
   const [manualError, setManualError] = useState('')
 
+  // ── GA4: visualizer session start ───────────────────────────────────────────
+  useEffect(() => {
+    trackEvent('visualizer_start', {
+      channel: sessionStorage.getItem('utm_medium') || '',
+      utm_source: sessionStorage.getItem('utm_source') || '',
+      utm_campaign: sessionStorage.getItem('utm_campaign') || '',
+      utm_content: sessionStorage.getItem('utm_content') || '',
+    })
+  }, [])
+
   // ── Google Places ──────────────────────────────────────────────────────────
   useEffect(() => {
     if (step !== 'address' || !addrRef.current) return
@@ -439,6 +450,12 @@ export default function VisualizerPage() {
           roofType: selType,
           colorSelected: selColor,
           timestamp: new Date().toISOString(),
+          utm: {
+            source: sessionStorage.getItem('utm_source') || '',
+            medium: sessionStorage.getItem('utm_medium') || '',
+            campaign: sessionStorage.getItem('utm_campaign') || '',
+            content: sessionStorage.getItem('utm_content') || '',
+          },
         }),
       }).catch(() => {})
     }
@@ -596,10 +613,18 @@ export default function VisualizerPage() {
     setEstimateMessage(message)
     setSolarFailureReason(failureReason)
 
+    const utmSource = sessionStorage.getItem('utm_source') || ''
+    const utmMedium = sessionStorage.getItem('utm_medium') || ''
+    const utmCampaign = sessionStorage.getItem('utm_campaign') || ''
+    const utmContent = sessionStorage.getItem('utm_content') || ''
+    trackEvent('visualizer_complete', {
+      channel: utmMedium,
+      utm_source: utmSource,
+      utm_campaign: utmCampaign,
+      utm_content: utmContent,
+    })
+
     try {
-      const utmSource = sessionStorage.getItem('utm_source') || ''
-      const utmMedium = sessionStorage.getItem('utm_medium') || ''
-      const utmCampaign = sessionStorage.getItem('utm_campaign') || ''
       await fetch('/api/lead-intake', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -618,7 +643,7 @@ export default function VisualizerPage() {
           product: selProduct,
           color: selColor,
           leadOrigin: 'visualizer',
-          utm: { source: utmSource, medium: utmMedium, campaign: utmCampaign },
+          utm: { source: utmSource, medium: utmMedium, campaign: utmCampaign, content: utmContent },
           estimatedRoofSize: squares,
           estimateRange: noPrice ? (message ?? undefined) : (low && high ? `${low} - ${high}` : undefined),
           solarFailureReason: failureReason ?? undefined,
@@ -688,6 +713,12 @@ export default function VisualizerPage() {
     setEstimateHigh(high)
     setNoPriceEstimate(noPrice)
     setEstimateMessage(message)
+    trackEvent('visualizer_complete', {
+      channel: sessionStorage.getItem('utm_medium') || '',
+      utm_source: sessionStorage.getItem('utm_source') || '',
+      utm_campaign: sessionStorage.getItem('utm_campaign') || '',
+      utm_content: sessionStorage.getItem('utm_content') || '',
+    })
     setGateLoading(false)
     setPhraseIdx(0)
     setStep('loading')
@@ -722,6 +753,13 @@ export default function VisualizerPage() {
       const utmSource = sessionStorage.getItem('utm_source') || ''
       const utmMedium = sessionStorage.getItem('utm_medium') || ''
       const utmCampaign = sessionStorage.getItem('utm_campaign') || ''
+      const utmContent = sessionStorage.getItem('utm_content') || ''
+      trackEvent('visualizer_complete', {
+        channel: utmMedium,
+        utm_source: utmSource,
+        utm_campaign: utmCampaign,
+        utm_content: utmContent,
+      })
       // Update path for a contact already created during handleContactSubmit —
       // suppressAlert avoids paging Andrew a second time for the same lead.
       await fetch('/api/lead-intake', {
@@ -742,7 +780,7 @@ export default function VisualizerPage() {
           product: selProduct,
           color: selColor,
           leadOrigin: 'visualizer',
-          utm: { source: utmSource, medium: utmMedium, campaign: utmCampaign },
+          utm: { source: utmSource, medium: utmMedium, campaign: utmCampaign, content: utmContent },
           estimatedRoofSize: data.squares,
           estimateRange: data.noPriceEstimate ? (data.estimateMessage ?? undefined) : `${data.estimateLow} - ${data.estimateHigh}`,
           roofSizeSource: 'manual',

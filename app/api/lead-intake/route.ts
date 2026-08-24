@@ -85,6 +85,7 @@ export async function POST(req: NextRequest) {
         source: body.utm?.source || '',
         medium: body.utm?.medium || '',
         campaign: body.utm?.campaign || '',
+        content: body.utm?.content || '',
       },
       tags: body.insuranceClaim && body.insuranceClaim !== 'no_cash'
         ? ['Insurance Claim']
