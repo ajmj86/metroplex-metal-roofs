@@ -24,7 +24,6 @@ export const ARGYLE_DATA: CityData = {
     { name: 'Highland Village', slug: 'highland-village' },
     { name: 'Northlake', slug: 'northlake' },
     { name: 'Roanoke', slug: 'roanoke' },
-    { name: 'Bartonville', slug: 'bartonville' },
   ],
   review: {
     name: 'Todd W.',

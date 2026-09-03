@@ -23,8 +23,6 @@ export const ROYSE_CITY_DATA: CityData = {
     { name: 'Rockwall', slug: 'rockwall' },
     { name: 'Fate', slug: 'fate' },
     { name: 'Forney', slug: 'forney' },
-    { name: 'Caddo Mills', slug: 'caddo-mills' },
-    { name: 'Greenville', slug: 'greenville' },
   ],
   review: {
     name: 'Jennifer H.',

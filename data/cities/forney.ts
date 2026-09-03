@@ -21,10 +21,7 @@ export const FORNEY_DATA: CityData = {
   ],
   nearbyCities: [
     { name: 'Rockwall', slug: 'rockwall' },
-    { name: 'Rowlett', slug: 'rowlett' },
     { name: 'Mesquite', slug: 'mesquite' },
-    { name: 'Terrell', slug: 'terrell' },
-    { name: 'Heath', slug: 'heath' },
   ],
   review: {
     name: 'Ashley T.',

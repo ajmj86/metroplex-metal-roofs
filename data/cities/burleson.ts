@@ -22,9 +22,6 @@ export const BURLESON_DATA: CityData = {
   nearbyCities: [
     { name: 'Mansfield', slug: 'mansfield' },
     { name: 'Midlothian', slug: 'midlothian' },
-    { name: 'Crowley', slug: 'crowley' },
-    { name: 'Alvarado', slug: 'alvarado' },
-    { name: 'Joshua', slug: 'joshua' },
   ],
   review: {
     name: 'Mike V.',

@@ -24,7 +24,6 @@ export const MANSFIELD_DATA: CityData = {
     { name: 'Midlothian', slug: 'midlothian' },
     { name: 'Burleson', slug: 'burleson' },
     { name: 'Grand Prairie', slug: 'grand-prairie' },
-    { name: 'Kennedale', slug: 'kennedale' },
   ],
   review: {
     name: 'Chris A.',

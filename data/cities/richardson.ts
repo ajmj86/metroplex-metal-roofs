@@ -24,7 +24,6 @@ export const RICHARDSON_DATA: CityData = {
     { name: 'Allen', slug: 'allen' },
     { name: 'Garland', slug: 'garland' },
     { name: 'Dallas', slug: 'dallas' },
-    { name: 'Murphy', slug: 'murphy' },
   ],
   review: {
     name: 'Linda C.',

@@ -21,8 +21,6 @@ export const ROCKWALL_DATA: CityData = {
   ],
   nearbyCities: [
     { name: 'Forney', slug: 'forney' },
-    { name: 'Rowlett', slug: 'rowlett' },
-    { name: 'Heath', slug: 'heath' },
     { name: 'Fate', slug: 'fate' },
     { name: 'Royse City', slug: 'royse-city' },
   ],

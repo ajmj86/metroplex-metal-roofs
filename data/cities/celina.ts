@@ -24,7 +24,6 @@ export const CELINA_DATA: CityData = {
     { name: 'McKinney', slug: 'mckinney' },
     { name: 'Frisco', slug: 'frisco' },
     { name: 'Anna', slug: 'anna' },
-    { name: 'Gunter', slug: 'gunter' },
   ],
   review: {
     name: 'Derek M.',

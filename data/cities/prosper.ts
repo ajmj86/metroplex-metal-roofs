@@ -43,8 +43,6 @@ export const PROSPER_DATA: CityData = {
     { name: 'Celina',        slug: 'celina' },
     { name: 'McKinney',      slug: 'mckinney' },
     { name: 'Allen',         slug: 'allen' },
-    { name: 'Little Elm',    slug: 'little-elm' },
-    { name: 'Gunter',        slug: 'gunter' },
   ],
 
   review: {

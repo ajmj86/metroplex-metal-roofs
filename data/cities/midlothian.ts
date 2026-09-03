@@ -23,8 +23,6 @@ export const MIDLOTHIAN_DATA: CityData = {
     { name: 'Mansfield', slug: 'mansfield' },
     { name: 'Waxahachie', slug: 'waxahachie' },
     { name: 'Burleson', slug: 'burleson' },
-    { name: 'Cedar Hill', slug: 'cedar-hill' },
-    { name: 'Glenn Heights', slug: 'glenn-heights' },
   ],
   review: {
     name: 'Rachel P.',

@@ -24,7 +24,6 @@ export const HIGHLAND_VILLAGE_DATA: CityData = {
     { name: 'Lewisville', slug: 'lewisville' },
     { name: 'Coppell', slug: 'coppell' },
     { name: 'Argyle', slug: 'argyle' },
-    { name: 'Bartonville', slug: 'bartonville' },
   ],
   review: {
     name: 'Scott M.',
