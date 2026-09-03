@@ -22,9 +22,6 @@ export const WAXAHACHIE_DATA: CityData = {
   nearbyCities: [
     { name: 'Midlothian', slug: 'midlothian' },
     { name: 'Mansfield', slug: 'mansfield' },
-    { name: 'Ennis', slug: 'ennis' },
-    { name: 'Red Oak', slug: 'red-oak' },
-    { name: 'Glenn Heights', slug: 'glenn-heights' },
   ],
   review: {
     name: 'James F.',

@@ -14,6 +14,8 @@ const CITY_SLUGS = [
   'keller', 'lewisville', 'mansfield', 'mckinney', 'midlothian', 'northlake',
   'plano', 'prosper', 'richardson', 'roanoke', 'rockwall', 'royse-city',
   'southlake', 'trophy-club', 'waxahachie', 'westlake',
+  'dallas', 'arlington', 'irving', 'garland', 'mesquite', 'carrollton',
+  'grand-prairie',
 ]
 
 export default function sitemap(): MetadataRoute.Sitemap {

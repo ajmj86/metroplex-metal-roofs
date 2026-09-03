@@ -23,8 +23,6 @@ export const COLLEYVILLE_DATA: CityData = {
     { name: 'Southlake', slug: 'southlake' },
     { name: 'Keller', slug: 'keller' },
     { name: 'Grapevine', slug: 'grapevine' },
-    { name: 'Bedford', slug: 'bedford' },
-    { name: 'Hurst', slug: 'hurst' },
   ],
   review: {
     name: 'Mark D.',

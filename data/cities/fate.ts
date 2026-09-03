@@ -23,8 +23,6 @@ export const FATE_DATA: CityData = {
     { name: 'Rockwall', slug: 'rockwall' },
     { name: 'Royse City', slug: 'royse-city' },
     { name: 'Forney', slug: 'forney' },
-    { name: 'Rowlett', slug: 'rowlett' },
-    { name: 'Heath', slug: 'heath' },
   ],
   review: {
     name: 'Steve R.',

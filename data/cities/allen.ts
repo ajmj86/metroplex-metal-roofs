@@ -23,7 +23,6 @@ export const ALLEN_DATA: CityData = {
     { name: 'Plano', slug: 'plano' },
     { name: 'McKinney', slug: 'mckinney' },
     { name: 'Frisco', slug: 'frisco' },
-    { name: 'Fairview', slug: 'fairview' },
     { name: 'Richardson', slug: 'richardson' },
   ],
   review: {

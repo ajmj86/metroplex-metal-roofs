@@ -404,6 +404,7 @@ const cities = [
   "Midlothian","Waxahachie","Burleson","Lewisville","Coppell",
   "Richardson","Highland Village","Argyle","Northlake","Roanoke",
   "Grapevine","Anna","Fate","Royse City",
+  "Dallas","Arlington","Irving","Garland","Mesquite","Carrollton","Grand Prairie",
 ];
 const galleryItems = GALLERY_ITEMS;
 
@@ -870,6 +871,13 @@ const HomePage = ({ activeTab, setActiveTab }) => {
                   city === "Anna"              ? "/metal-roofing-anna-tx" :
                   city === "Fate"              ? "/metal-roofing-fate-tx" :
                   city === "Royse City"        ? "/metal-roofing-royse-city-tx" :
+                  city === "Dallas"            ? "/metal-roofing-dallas-tx" :
+                  city === "Arlington"         ? "/metal-roofing-arlington-tx" :
+                  city === "Irving"            ? "/metal-roofing-irving-tx" :
+                  city === "Garland"           ? "/metal-roofing-garland-tx" :
+                  city === "Mesquite"          ? "/metal-roofing-mesquite-tx" :
+                  city === "Carrollton"        ? "/metal-roofing-carrollton-tx" :
+                  city === "Grand Prairie"     ? "/metal-roofing-grand-prairie-tx" :
                   "#"
                 } style={{padding:"9px 18px",border:`1px solid ${C.border}`,borderRadius:2,fontSize:12,color:C.mutedLight,letterSpacing:1,transition:"all 0.2s"}}
                   onMouseEnter={e=>{e.currentTarget.style.borderColor=C.accent;e.currentTarget.style.color=C.accent;}}

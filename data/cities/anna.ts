@@ -22,9 +22,6 @@ export const ANNA_DATA: CityData = {
   nearbyCities: [
     { name: 'McKinney', slug: 'mckinney' },
     { name: 'Celina', slug: 'celina' },
-    { name: 'Melissa', slug: 'melissa' },
-    { name: 'Van Alstyne', slug: 'van-alstyne' },
-    { name: 'Farmersville', slug: 'farmersville' },
   ],
   review: {
     name: 'Nathan B.',

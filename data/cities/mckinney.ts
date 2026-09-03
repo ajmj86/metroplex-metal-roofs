@@ -25,7 +25,6 @@ export const MCKINNEY_DATA: CityData = {
     { name: 'Allen', slug: 'allen' },
     { name: 'Celina', slug: 'celina' },
     { name: 'Anna', slug: 'anna' },
-    { name: 'Fairview', slug: 'fairview' },
   ],
   review: {
     name: 'Brian C.',

@@ -44,7 +44,6 @@ export const FRISCO_DATA: CityData = {
     { name: 'Allen',         slug: 'allen' },
     { name: 'Plano',         slug: 'plano' },
     { name: 'Celina',        slug: 'celina' },
-    { name: 'Little Elm',    slug: 'little-elm' },
   ],
 
   review: {

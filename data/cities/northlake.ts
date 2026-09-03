@@ -24,7 +24,6 @@ export const NORTHLAKE_DATA: CityData = {
     { name: 'Flower Mound', slug: 'flower-mound' },
     { name: 'Trophy Club', slug: 'trophy-club' },
     { name: 'Roanoke', slug: 'roanoke' },
-    { name: 'Justin', slug: 'justin' },
   ],
   review: {
     name: 'Amy J.',
