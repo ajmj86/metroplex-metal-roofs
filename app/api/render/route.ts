@@ -19,29 +19,57 @@ function getAnthropic(): Anthropic {
   return _anthropic;
 }
 
+const RENDER_EMAIL_WEBHOOK_MAX_ATTEMPTS = 3;
+const RENDER_EMAIL_WEBHOOK_BACKOFF_MS = [3000, 8000]; // delay before attempt 2, attempt 3
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+// Retries transient failures (network errors, non-2xx from the n8n gateway)
+// since a single unretried POST here is a real lead's render email silently
+// vanishing with no trace anywhere -- confirmed live 2026-09-13 for a real
+// postcard lead (Michael Brigance): n8n showed zero executions for the
+// render-email step at all, meaning the original bare fetch/catch here
+// never got the payload there in the first place, and the failure was only
+// ever visible via a console.error nobody was watching. If every attempt
+// still fails, alertAndrew below is the operator-visible fallback so Andrew
+// can manually forward the already-generated render instead of the lead
+// never hearing back at all.
 async function fireRenderEmailWebhook(payload: Record<string, unknown>): Promise<void> {
   const url = process.env.N8N_WEBHOOK_VISUALIZER;
   if (!url) { console.warn('[render] N8N_WEBHOOK_VISUALIZER not set'); return }
-  try {
-    await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    });
-  } catch (err) {
-    console.error('[render] fireRenderEmailWebhook failed:', err);
+
+  for (let attempt = 1; attempt <= RENDER_EMAIL_WEBHOOK_MAX_ATTEMPTS; attempt++) {
+    try {
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (res.ok) return;
+      console.error(`[render] fireRenderEmailWebhook attempt ${attempt} got non-OK response:`, res.status, await res.text());
+    } catch (err) {
+      console.error(`[render] fireRenderEmailWebhook attempt ${attempt} failed:`, err);
+    }
+    if (attempt < RENDER_EMAIL_WEBHOOK_MAX_ATTEMPTS) await sleep(RENDER_EMAIL_WEBHOOK_BACKOFF_MS[attempt - 1]);
   }
+
+  console.error('[render] fireRenderEmailWebhook exhausted all retries — render email was not sent', payload);
+  const { firstName, email, renderUrl } = payload as { firstName?: string; email?: string; renderUrl?: string };
+  await alertAndrew(
+    `⚠ Render email failed to send for ${firstName || 'a lead'} (${email || 'no email'}) after ${RENDER_EMAIL_WEBHOOK_MAX_ATTEMPTS} attempts. They saw their render in-browser but won't get the follow-up email — forward it manually: ${renderUrl || '(no render URL)'}`
+  );
 }
 
 // Same GHL contactId + conversations/messages SMS pattern as n8n Workflow 5
-// ("New Lead Alert SMS"), called directly since this failure happens before
-// any n8n workflow would ever get invoked.
+// ("New Lead Alert SMS"), called directly since these failures happen before
+// or outside of any n8n workflow ever getting invoked.
 const ANDREW_CONTACT_ID = 'cIvwP7gZ7JQX45gmU23Z';
 
-async function alertAndrewOfRenderFailure(details: { firstName?: string; email?: string; address: string }): Promise<void> {
+async function alertAndrew(message: string): Promise<void> {
   const apiKey = process.env.GHL_API_KEY;
-  if (!apiKey) { console.warn('[render] GHL_API_KEY not set — could not send failure alert'); return }
-  const message = `⚠ Visualizer render failed for ${details.firstName || 'a lead'} (${details.email || 'no email'}) at ${details.address}. Check Vercel logs.`;
+  if (!apiKey) { console.warn('[render] GHL_API_KEY not set — could not send alert:', message); return }
   try {
     const res = await fetch('https://services.leadconnectorhq.com/conversations/messages', {
       method: 'POST',
@@ -52,10 +80,14 @@ async function alertAndrewOfRenderFailure(details: { firstName?: string; email?:
       },
       body: JSON.stringify({ contactId: ANDREW_CONTACT_ID, type: 'SMS', message }),
     });
-    if (!res.ok) console.error('[render] alertAndrewOfRenderFailure got non-OK response:', res.status, await res.text());
+    if (!res.ok) console.error('[render] alertAndrew got non-OK response:', res.status, await res.text());
   } catch (err) {
-    console.error('[render] alertAndrewOfRenderFailure failed:', err);
+    console.error('[render] alertAndrew failed:', err);
   }
+}
+
+async function alertAndrewOfRenderFailure(details: { firstName?: string; email?: string; address: string }): Promise<void> {
+  await alertAndrew(`⚠ Visualizer render failed for ${details.firstName || 'a lead'} (${details.email || 'no email'}) at ${details.address}. Check Vercel logs.`);
 }
 
 async function fetchAsFile(url: string, filename: string): Promise<File> {
