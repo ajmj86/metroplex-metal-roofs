@@ -646,7 +646,10 @@ export default function VisualizerPage() {
           utm: { source: utmSource, medium: utmMedium, campaign: utmCampaign, content: utmContent },
           estimatedRoofSize: squares,
           estimateRange: noPrice ? (message ?? undefined) : (low && high ? `${low} - ${high}` : undefined),
-          solarFailureReason: failureReason ?? undefined,
+          // '' (not undefined) on success so the API/n8n layer can tell "solar worked
+          // this time" apart from "this field wasn't touched" and clear a stale
+          // failure reason from an earlier visit instead of leaving it stuck.
+          solarFailureReason: failureReason ?? '',
           roofSizeSource: squares != null ? 'solar' : undefined,
         }),
       })

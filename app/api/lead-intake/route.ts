@@ -55,7 +55,10 @@ export async function POST(req: NextRequest) {
           ? String(Math.round(body.estimatedRoofSize * 10) / 10)
           : undefined,
         estimate_range: body.estimateRange || undefined,
-        solar_failure_reason: body.solarFailureReason || undefined,
+        // ?? (not ||) so an explicit '' (solar succeeded) survives instead of
+        // collapsing to undefined like a field that was never sent at all —
+        // n8n needs that distinction to clear a stale failure reason on success.
+        solar_failure_reason: body.solarFailureReason ?? undefined,
         roof_size_source: body.roofSizeSource || undefined,
       },
       utm: {
