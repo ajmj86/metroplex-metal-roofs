@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { C, LEGAL_ENTITY, DBA_NAME, PHONE, YEAR, fonts, globalStyles, Logo } from "./brand";
 import { SiteFooter } from "./SiteFooter";
+import Hero from '@/components/Hero'
 import StatItem from '@/components/StatItem'
 import ProductGallery from '@/components/ProductGallery'
 import ProductsSection from '@/components/ProductsSection'
@@ -417,60 +418,30 @@ const HomePage = ({ activeTab, setActiveTab }) => {
   return (
     <div>
       {/* ── HERO ── */}
-      <section className="hero-pad" style={{minHeight:"100vh",display:"flex",flexDirection:"column",justifyContent:"center",position:"relative",overflow:"hidden"}}>
-        <div style={{position:"absolute",inset:0,zIndex:0,background:`linear-gradient(to bottom, rgba(9,9,10,0.82) 0%, rgba(9,9,10,0.70) 40%, rgba(9,9,10,0.88) 100%), url('/MMR Hero Pic.png') center/cover no-repeat`}}/>
-
-        <div className="inner" style={{position:"relative",zIndex:1,width:"100%"}}>
-          <div style={{display:"inline-flex",alignItems:"center",gap:12,marginBottom:28,animation:"fadeUp 0.8s ease both"}}>
-            <div style={{width:28,height:1,background:C.accent,flexShrink:0}}/>
-            <span style={{fontSize:"clamp(0.75rem,1.1vw,0.95rem)",letterSpacing:3.5,color:C.accent,textTransform:"uppercase",fontWeight:500}}>Premium Metal & Synthetic Slate Roofing · Dallas–Fort Worth</span>
-          </div>
-          <h1 style={{fontFamily:"'Cormorant Garamond',Georgia,serif",fontSize:"clamp(3.5rem,5.5vw,7rem)",fontWeight:700,lineHeight:1.05,color:C.white,marginBottom:24,maxWidth:720,animation:"fadeUp 0.8s ease 0.1s both"}}>
-            The Last Roof<br/><span style={{color:C.accent,fontStyle:"italic"}}>You'll Ever Put On Your House</span>
-          </h1>
-          <p style={{fontSize:"clamp(1.125rem,1.3vw,1.1875rem)",lineHeight:1.8,color:C.mutedLight,maxWidth:480,marginBottom:40,fontWeight:500,animation:"fadeUp 0.8s ease 0.2s both"}}>
-            For DFW homeowners done replacing their asphalt roof every decade.
-          </p>
-          <div style={{display:"flex",gap:14,flexWrap:"wrap",alignItems:"center",animation:"fadeUp 0.8s ease 0.3s both"}}>
-            <a href="/visualizer" className="cta-btn" style={{display:"inline-flex",alignItems:"center",gap:10,padding:"15px 32px",background:C.accent,color:C.black,fontSize:12,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"all 0.2s",whiteSpace:"nowrap"}}
-              onMouseEnter={e=>{e.currentTarget.style.background=C.accentLight;}}
-              onMouseLeave={e=>{e.currentTarget.style.background=C.accent;}}
-            >See Your Home With Metal →</a>
-          </div>
-          {/*
-           * Supporting microcopy under the hero CTA -- button text itself
-           * stays short/imperative (matches the site's CTA pattern
-           * elsewhere), this line just removes the ambiguity about what
-           * happens after the click. Phrasing matches the established
-           * "no photo upload / no obligation" claim already used on
-           * /visualizer and in the returning-visitor widget above, not
-           * invented fresh here.
-           */}
-          <p style={{fontSize:12,color:C.muted,marginTop:14,animation:"fadeUp 0.8s ease 0.35s both"}}>
-            See your home in metal and get a free price range — no photo upload, no obligation.
-          </p>
-          {/* Trust bar */}
-          {/*
-           * "Up to 35% Insurance Discount" previously had no disclaimer of
-           * its own -- the only "varies by home/carrier" qualifier on this
-           * page lives in the separate Stats section further down, not
-           * connected to this bullet at all. Added a footnote here so the
-           * claim is properly qualified wherever it's actually read
-           * (confirmed missing while auditing this same bullet's rollout to
-           * the city pages). Kept short since this is a terse trust-bar
-           * list, not the full Stats-section disclaimer paragraph.
-           */}
-          <div className="trust-bar" style={{display:"flex",flexDirection:"column",gap:14,marginTop:48,paddingTop:32,borderTop:`1px solid ${C.border}`,animation:"fadeUp 0.8s ease 0.4s both"}}>
-            {["50-Year Lifespan","Up to 35% Insurance Discount*","10-Year Workmanship Warranty"].map(t=>(
-              <div key={t} style={{display:"flex",alignItems:"center",gap:10}}>
-                <div style={{width:4,height:4,borderRadius:"50%",background:C.accent,flexShrink:0}}/>
-                <span style={{fontSize:12,color:C.muted}}>{t}</span>
-              </div>
-            ))}
-            <span style={{fontSize:10,color:C.muted,opacity:0.7,marginTop:2}}>*Discount varies by home, roof system, and carrier — confirm eligibility with your insurance provider.</span>
-          </div>
-        </div>
-      </section>
+      {/*
+       * Same shared Hero component the /lp/{channel} landing pages render
+       * (see components/Hero.tsx) -- not a separate hand-synced copy.
+       * Microcopy phrasing matches the established "no photo upload / no
+       * obligation" claim already used on /visualizer and in the
+       * returning-visitor widget above. The insurance-discount footnote
+       * exists because "Up to 35% Insurance Discount" previously had no
+       * disclaimer of its own -- the only "varies by home/carrier"
+       * qualifier lived in the separate Stats section further down, not
+       * connected to this bullet at all (confirmed missing while auditing
+       * this same bullet's rollout to the city pages).
+       */}
+      <Hero
+        eyebrowText="Premium Metal & Synthetic Slate Roofing · Dallas–Fort Worth"
+        headline="The Last Roof"
+        headlineAccent="You'll Ever Put On Your House"
+        subhead="For DFW homeowners done replacing their asphalt roof every decade."
+        ctaLabel="See Your Home With Metal →"
+        ctaHref="/visualizer"
+        microcopy="See your home in metal and get a free price range — no photo upload, no obligation."
+        trustBullets={["50-Year Lifespan","Up to 35% Insurance Discount*","10-Year Workmanship Warranty"]}
+        trustBulletFootnote="*Discount varies by home, roof system, and carrier — confirm eligibility with your insurance provider."
+        backgroundImageSrc="/MMR Hero Pic.png"
+      />
 
       {/* ── STATS ── */}
       <section style={{borderTop:`1px solid ${C.border}`,background:C.surface}}>
