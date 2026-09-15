@@ -156,7 +156,7 @@ export async function POST(req: NextRequest) {
     const geoData = await geoRes.json()
 
     if (geoData.status !== 'OK' || !geoData.results?.[0]) {
-      console.error('[roof-size] Geocoding failed:', geoData.status, address)
+      console.error('[roof-size] Geocoding failed:', geoData.status, geoData.error_message, address)
       return NextResponse.json(emptyResult('geocode_failed'))
     }
 
