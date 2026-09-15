@@ -982,6 +982,13 @@ export default function VisualizerPage() {
                   Enter your address and choose a material. We&apos;ll render your home with your selected roofing material and give you a price range — in under 60 seconds. No upload required.
                 </p>
               </div>
+              {!addrError && address.trim() && !addressComponents && (
+                // Above the input, not below -- the Places suggestion dropdown
+                // renders directly under the box and would cover a message
+                // placed there, hiding the exact instruction the user needs
+                // while that dropdown is open.
+                <div style={{ fontSize: 11, color: C.accentLight, marginBottom: 6 }}>Select your address from the list above to continue.</div>
+              )}
               <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 8, padding: 6, display: 'flex', gap: 6, alignItems: 'center', flexWrap: 'wrap', marginBottom: 8 }}>
                 <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', minWidth: 180 }}>
                   <svg width="14" height="14" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0 }}>
@@ -1014,9 +1021,6 @@ export default function VisualizerPage() {
                 >{locating ? 'Locating…' : 'Visualize My Roof →'}</button>
               </div>
               {addrError && <div style={{ fontSize: 11, color: '#F87171', marginBottom: 8 }}>{addrError}</div>}
-              {!addrError && address.trim() && !addressComponents && (
-                <div style={{ fontSize: 11, color: C.accentLight, marginBottom: 8 }}>Select your address from the list above to continue.</div>
-              )}
               {locating && (
                 <div style={{ textAlign: 'center', marginTop: 12, fontSize: 13, color: C.muted }}>
                   Locating <span style={{ color: C.accentLight }}>{address}</span>…
