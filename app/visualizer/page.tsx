@@ -39,6 +39,27 @@ const LOADING_PHRASES = [
 
 const TX_BOUNDS = { north: 36.5, south: 25.8, east: -93.5, west: -106.6 }
 
+type GoogleAddressComponent = { long_name: string; short_name: string; types: string[] }
+
+// Pulls city/state/zip out of Google's own structured address_components
+// instead of string-splitting formatted_address -- the split-based parser
+// downstream (parseAddress in /api/lead-intake) only works for the exact
+// "Street, City, ST ZIP, USA" shape, and silently produces blank city/state/
+// zip for anything else. This is the reliable source; only used when a
+// Places suggestion was actually selected (see place_changed below).
+function extractAddressComponents(components: GoogleAddressComponent[] | undefined) {
+  const get = (type: string, short = false) => {
+    const c = components?.find(c => c.types.includes(type))
+    return c ? (short ? c.short_name : c.long_name) : ''
+  }
+  return {
+    streetAddress: [get('street_number'), get('route')].filter(Boolean).join(' '),
+    city: get('locality') || get('sublocality') || get('postal_town') || '',
+    state: get('administrative_area_level_1', true),
+    postalCode: get('postal_code'),
+  }
+}
+
 // Brava Slate color thumbnails are a mix of two source-photo types: 7 colors
 // (Arendale, Atlantic, Cottage, Light Arendale, Onyx, Sandstone, Victorian)
 // use images cropped from Brava's width-comparison graphics, which read as
@@ -208,6 +229,12 @@ export default function VisualizerPage() {
 
   // address step
   const [address, setAddress] = useState('')
+  // Structured city/state/zip from Google's own address_components, captured
+  // only when the visitor actually picks a Places suggestion -- null whenever
+  // the box holds free-typed text instead (onChange clears it), so the
+  // lead-intake API can tell "trustworthy" apart from "guess-parse this
+  // string" instead of always blind-splitting the display string.
+  const [addressComponents, setAddressComponents] = useState<{ streetAddress: string; city: string; state: string; postalCode: string } | null>(null)
   const [locating, setLocating] = useState(false)
   const [addrError, setAddrError] = useState('')
   const addrRef = useRef<HTMLInputElement>(null)
@@ -280,7 +307,10 @@ export default function VisualizerPage() {
       })
       ac.addListener('place_changed', () => {
         const p = ac.getPlace()
-        if (p?.formatted_address) setAddress(p.formatted_address)
+        if (p?.formatted_address) {
+          setAddress(p.formatted_address)
+          setAddressComponents(extractAddressComponents(p.address_components))
+        }
       })
       acAttached.current = true
     }
@@ -635,6 +665,11 @@ export default function VisualizerPage() {
           smsConsent: data.smsConsent,
           emailConsent: data.emailConsent,
           address,
+          // Present only when this exact address string came from an actual
+          // Places selection (see extractAddressComponents) -- absent means
+          // the visitor typed/edited it by hand and the API should treat
+          // city/state/zip as unverified rather than guess-parsing them.
+          addressComponents,
           currentRoofType: data.currentRoofType,
           reason: data.reason,
           insuranceClaim: data.insuranceClaim,
@@ -955,7 +990,10 @@ export default function VisualizerPage() {
                   <input
                     ref={addrRef}
                     value={address}
-                    onChange={e => { setAddress(e.target.value); setAddrError('') }}
+                    // Editing by hand invalidates any previously-selected Places
+                    // suggestion -- clears addressComponents so a since-modified
+                    // string never gets treated as trustworthy structured data.
+                    onChange={e => { setAddress(e.target.value); setAddrError(''); setAddressComponents(null) }}
                     onKeyDown={e => e.key === 'Enter' && !locating && handleVisualize()}
                     placeholder="Enter your home address…"
                     autoComplete="off"

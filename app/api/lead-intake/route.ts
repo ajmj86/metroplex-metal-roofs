@@ -9,15 +9,27 @@ export const maxDuration = 30;
 
 const N8N_WEBHOOK_URL = process.env.N8N_WEBHOOK_VISUALIZER;
 
-function parseAddress(full: string) {
+type AddressComponents = { streetAddress?: string; city?: string; state?: string; postalCode?: string };
+
+// `components` comes from the visualizer's Google Places selection
+// (extractAddressComponents in page.tsx) and is only present when the
+// visitor actually picked a suggestion — it's the reliable source and
+// always wins when available. The string-split of `full` is a best-effort
+// fallback for the few callers that don't have it (e.g. a returning
+// visitor's previously-stored address string), and only reliably works for
+// Google's own "Street, City, ST ZIP, USA" formatted_address shape — it
+// silently produces blank city/state/zip for anything else, including
+// free-typed text with no commas at all. That fallback failure is expected
+// and handled by the caller (see the Address Needs Verification tag below),
+// not something to "fix" here.
+function parseAddress(full: string, components?: AddressComponents | null) {
   const parts = full.split(', ');
-  // "123 Main St, Dallas, TX 75201, USA"
   const stateZip = (parts[2] || '').split(' ');
   return {
-    address1: parts[0] || '',
-    city: parts[1] || '',
-    state: stateZip[0] || '',
-    postalCode: stateZip[1] || '',
+    address1: components?.streetAddress || parts[0] || '',
+    city: components?.city || parts[1] || '',
+    state: components?.state || stateZip[0] || '',
+    postalCode: components?.postalCode || stateZip[1] || '',
   };
 }
 
@@ -31,7 +43,7 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const parsed = parseAddress(body.address || '');
+    const parsed = parseAddress(body.address || '', body.addressComponents);
 
     const payload = body.partial === true ? body : {
       contact: {
@@ -70,6 +82,12 @@ export async function POST(req: NextRequest) {
       tags: [
         ...(body.insuranceClaim && body.insuranceClaim !== 'no_cash' ? ['Insurance Claim'] : []),
         ...(body.roofSizeSource === 'manual' ? ['Manual Roof Size'] : []),
+        // Neither a real Places selection nor the string-split fallback
+        // produced a city — the visitor typed/edited the address by hand in
+        // a shape the fallback can't parse. Surfaces on the pipeline card so
+        // it doesn't sit silently blank the way it did for two of the three
+        // leads that hit this before the fix (2026-09-15).
+        ...(body.address && !parsed.city ? ['Address Needs Verification'] : []),
       ],
       source: 'visualizer',
       suppressAlert: body.suppressAlert === true,
