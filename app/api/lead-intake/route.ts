@@ -64,9 +64,10 @@ export async function POST(req: NextRequest) {
         campaign: body.utm?.campaign || '',
         content: body.utm?.content || '',
       },
-      tags: body.insuranceClaim && body.insuranceClaim !== 'no_cash'
-        ? ['Insurance Claim']
-        : [],
+      tags: [
+        ...(body.insuranceClaim && body.insuranceClaim !== 'no_cash' ? ['Insurance Claim'] : []),
+        ...(body.roofSizeSource === 'manual' ? ['Manual Roof Size'] : []),
+      ],
       source: 'visualizer',
       suppressAlert: body.suppressAlert === true,
       smsConsent: body.smsConsent === true,
