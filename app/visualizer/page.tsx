@@ -994,7 +994,12 @@ export default function VisualizerPage() {
                     // suggestion -- clears addressComponents so a since-modified
                     // string never gets treated as trustworthy structured data.
                     onChange={e => { setAddress(e.target.value); setAddrError(''); setAddressComponents(null) }}
-                    onKeyDown={e => e.key === 'Enter' && !locating && handleVisualize()}
+                    // Requires an actual Places selection (addressComponents),
+                    // not just non-empty text -- a free-typed partial address
+                    // can geocode to a plausible but wrong DFW city with no
+                    // error at all, which is worse than a blank field because
+                    // nothing downstream flags it.
+                    onKeyDown={e => e.key === 'Enter' && !locating && !!addressComponents && handleVisualize()}
                     placeholder="Enter your home address…"
                     autoComplete="off"
                     style={{ flex: 1, background: 'none', border: 'none', outline: 'none', color: C.white, fontSize: 14, fontFamily: "'Outfit',sans-serif" }}
@@ -1002,13 +1007,16 @@ export default function VisualizerPage() {
                 </div>
                 <button
                   onClick={handleVisualize}
-                  disabled={locating}
-                  style={{ padding: '13px 22px', background: C.accent, color: C.black, fontSize: 11, letterSpacing: 1.5, textTransform: 'uppercase', fontWeight: 600, borderRadius: 6, whiteSpace: 'nowrap', opacity: locating ? 0.45 : 1, cursor: locating ? 'not-allowed' : 'pointer', border: 'none', fontFamily: "'Outfit',sans-serif", transition: 'background 0.2s' }}
-                  onMouseEnter={e => { if (!locating) e.currentTarget.style.background = C.accentLight }}
+                  disabled={locating || !addressComponents}
+                  style={{ padding: '13px 22px', background: C.accent, color: C.black, fontSize: 11, letterSpacing: 1.5, textTransform: 'uppercase', fontWeight: 600, borderRadius: 6, whiteSpace: 'nowrap', opacity: (locating || !addressComponents) ? 0.45 : 1, cursor: (locating || !addressComponents) ? 'not-allowed' : 'pointer', border: 'none', fontFamily: "'Outfit',sans-serif", transition: 'background 0.2s' }}
+                  onMouseEnter={e => { if (!locating && addressComponents) e.currentTarget.style.background = C.accentLight }}
                   onMouseLeave={e => { e.currentTarget.style.background = C.accent }}
                 >{locating ? 'Locating…' : 'Visualize My Roof →'}</button>
               </div>
               {addrError && <div style={{ fontSize: 11, color: '#F87171', marginBottom: 8 }}>{addrError}</div>}
+              {!addrError && address.trim() && !addressComponents && (
+                <div style={{ fontSize: 11, color: C.accentLight, marginBottom: 8 }}>Select your address from the list above to continue.</div>
+              )}
               {locating && (
                 <div style={{ textAlign: 'center', marginTop: 12, fontSize: 13, color: C.muted }}>
                   Locating <span style={{ color: C.accentLight }}>{address}</span>…
