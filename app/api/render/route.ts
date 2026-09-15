@@ -530,7 +530,9 @@ export async function POST(req: NextRequest) {
       renderUrl: image,
       estimateRange: estimateRange || '',
       roofType,
-      roofColor: color || '',
+      roofColor: selection.color || color || '',
+      roofMaterial: roofTypeLabel,
+      roofStyle: selection.productLabel || '',
     }));
 
     return NextResponse.json({
