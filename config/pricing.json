@@ -36,7 +36,9 @@
     "highMultiplier": 1.10
   },
   "roofSizeCalibration": {
-    "solarApiAreaCorrectionFactor": 0.8117
+    "baselineSegmentCount": 2,
+    "perSegmentDiscount": 0.0157,
+    "minAreaCorrectionFactor": 0.8117
   },
   "noPriceEstimateMessage": "Due to tariffs and material shortages, contact a representative to discuss tailored pricing."
 }

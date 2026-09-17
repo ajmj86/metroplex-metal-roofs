@@ -15,6 +15,43 @@ type RoofTypeConfig = {
   wasteFactor: number
 }
 
+// Google Solar API's per-segment areas run systematically higher than
+// professional aerial measurement (RoofScope/EagleView) -- confirmed
+// 2026-09-17 against a real RoofScope report for 3808 Marquette St., Dallas:
+// Solar API's raw sum (38.44 sq, reproduced exactly from live segment data)
+// vs RoofScope's surveyed 31.20 sq for the same roof (ratio 0.8117).
+//
+// The inflation is NOT concentrated in a few detectable "duplicate"
+// segments that could be found and discarded -- checked directly: even
+// where a real RoofScope plane (847 sq ft) lines up almost exactly with two
+// adjacent Solar segments (603.6 + 254.3 = 857.9 sq ft, both ~22-23 degree
+// pitch), the combined pair is barely bigger than the single real plane
+// (+1.3%). So splitting one real plane into two Solar segments is close to
+// area-neutral on its own -- the actual ~23% gap must be small
+// edge/eave-boundary over-measurement spread across essentially every
+// segment (each segment's boundary is measured slightly larger than the
+// real roof edge), not a handful of phantom facets. That means more
+// segments -> more total edge boundary -> more accumulated inflation, so
+// the correction is scaled by segment count rather than applied as one
+// flat discount to every roof regardless of complexity (a simple few-facet
+// roof has little edge boundary to inflate and shouldn't take the same hit
+// as this address's fragmented 14-segment case).
+//
+// This is a single-address calibration, not an independently validated
+// curve: baselineSegmentCount/perSegmentDiscount are chosen so the curve
+// passes through 1.0 at a minimal-complexity roof and lands on the one
+// real measured ratio (0.8117) at this address's 14 segments; the floor
+// (minAreaCorrectionFactor) keeps hypothetically-more-fragmented roofs from
+// extrapolating past what's actually been observed. Retune all three in
+// config/pricing.json once more paired RoofScope comparisons exist,
+// ideally spanning a range of segment counts, not just complex ones.
+function solarAreaCorrectionFactor(segmentCount: number): number {
+  const { baselineSegmentCount, perSegmentDiscount, minAreaCorrectionFactor } = pricingConfig.roofSizeCalibration
+  const excessSegments = Math.max(0, segmentCount - baselineSegmentCount)
+  const factor = 1 - excessSegments * perSegmentDiscount
+  return Math.max(minAreaCorrectionFactor, factor)
+}
+
 // Standing Seam prices by metallicColors membership (e.g. "Natural Metal");
 // every other roof type has a single flat retailPerSquare.
 function resolveRetailPerSquare(config: RoofTypeConfig, color?: string): number {
@@ -147,23 +184,7 @@ export async function POST(req: NextRequest) {
     }
 
     const rawAreaM2 = segments.reduce((sum, seg) => sum + seg.stats.areaMeters2, 0)
-
-    // Google Solar API's per-segment areas run systematically higher than
-    // professional aerial measurement (RoofScope/EagleView) -- confirmed
-    // 2026-09-17 against a real RoofScope report for 3808 Marquette St.,
-    // Dallas: Solar API's raw sum (38.44 sq, reproduced exactly from live
-    // segment data) vs RoofScope's surveyed 31.20 sq for the same roof
-    // (ratio 0.8117). Root cause, visible in the segment data itself: Solar
-    // API split the roof into 14 segments where RoofScope's human-reviewed
-    // geometry found only 10 real planes (e.g. RoofScope's single 847 sq ft
-    // plane lines up with two adjacent Solar segments, 603.6 + 254.3 = 857.9
-    // sq ft, both ~22-23 degree pitch) -- likely DSM noise from the mature
-    // tree canopy overhanging this roof splitting real planes into spurious
-    // extra fragments. This one-address ratio is what
-    // solarApiAreaCorrectionFactor encodes -- retune it in
-    // config/pricing.json once more paired comparisons exist, rather than
-    // trusting a single sample indefinitely.
-    const totalAreaM2 = rawAreaM2 * pricingConfig.roofSizeCalibration.solarApiAreaCorrectionFactor
+    const totalAreaM2 = rawAreaM2 * solarAreaCorrectionFactor(segments.length)
 
     // Confidence check: must be between 800 and 8,000 sq ft
     if (totalAreaM2 < 74.3 || totalAreaM2 > 743) {
