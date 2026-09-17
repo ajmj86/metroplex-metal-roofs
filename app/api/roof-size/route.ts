@@ -174,7 +174,24 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(emptyResult('no_roof_data'))
     }
 
-    const totalAreaM2 = segments.reduce((sum, seg) => sum + seg.stats.areaMeters2, 0)
+    const rawAreaM2 = segments.reduce((sum, seg) => sum + seg.stats.areaMeters2, 0)
+
+    // Google Solar API's per-segment areas run systematically higher than
+    // professional aerial measurement (RoofScope/EagleView) -- confirmed
+    // 2026-09-17 against a real RoofScope report for 3808 Marquette St.,
+    // Dallas: Solar API's raw sum (38.44 sq, reproduced exactly from live
+    // segment data) vs RoofScope's surveyed 31.20 sq for the same roof
+    // (ratio 0.8117). Root cause, visible in the segment data itself: Solar
+    // API split the roof into 14 segments where RoofScope's human-reviewed
+    // geometry found only 10 real planes (e.g. RoofScope's single 847 sq ft
+    // plane lines up with two adjacent Solar segments, 603.6 + 254.3 = 857.9
+    // sq ft, both ~22-23 degree pitch) -- likely DSM noise from the mature
+    // tree canopy overhanging this roof splitting real planes into spurious
+    // extra fragments. This one-address ratio is what
+    // solarApiAreaCorrectionFactor encodes -- retune it in
+    // config/pricing.json once more paired comparisons exist, rather than
+    // trusting a single sample indefinitely.
+    const totalAreaM2 = rawAreaM2 * pricingConfig.roofSizeCalibration.solarApiAreaCorrectionFactor
 
     // Confidence check: must be between 800 and 8,000 sq ft
     if (totalAreaM2 < 74.3 || totalAreaM2 > 743) {
