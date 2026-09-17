@@ -12,18 +12,7 @@ type RoofTypeConfig = {
   retailPerSquareStandard?: number
   metallicColors?: string[]
   noPriceEstimate?: boolean
-  pitchAdjustment: boolean
   wasteFactor: number
-  pitchSurchargePerLevel?: number
-}
-
-function getPriceFingerprint(seed: string): number {
-  let hash = 0
-  for (let i = 0; i < seed.length; i++) {
-    hash = ((hash << 5) - hash) + seed.charCodeAt(i)
-    hash |= 0
-  }
-  return (Math.abs(hash) % 85) / 100 + 0.13
 }
 
 // Standing Seam prices by metallicColors membership (e.g. "Natural Metal");
@@ -37,27 +26,16 @@ function resolveRetailPerSquare(config: RoofTypeConfig, color?: string): number 
 }
 
 // Returns raw numbers instead of pre-formatted USD strings so formatDollars()
-// below can do its own whole-dollar formatting.
-function calculateEstimate(
-  squares: number,
-  config: RoofTypeConfig,
-  pitchLevel: number,
-  fingerprintSeed: string,
-  color: string | undefined
-) {
-  let pricePerSquare = resolveRetailPerSquare(config, color)
-  if (config.pitchAdjustment && config.pitchSurchargePerLevel != null) {
-    pricePerSquare += pitchLevel * config.pitchSurchargePerLevel
-  }
-
+// below can do its own whole-dollar formatting. Low end is the material's
+// configured rate times roof size adjusted for waste (offcuts/overlap
+// material a real job needs beyond the bare roof area); high end adds the
+// configured margin on top (pricingConfig.estimateRange.highMultiplier,
+// currently 10%).
+function calculateEstimate(squares: number, config: RoofTypeConfig, color: string | undefined) {
+  const pricePerSquare = resolveRetailPerSquare(config, color)
   const adjustedSquares = squares * (1 + config.wasteFactor)
-  const grandTotal = adjustedSquares * pricePerSquare
-
-  const fingerprint = getPriceFingerprint(fingerprintSeed)
-  const pointEstimate = Math.round(grandTotal) + fingerprint
-
-  const low = pointEstimate * pricingConfig.estimateRange.lowMultiplier
-  const high = pointEstimate * pricingConfig.estimateRange.highMultiplier
+  const low = pricePerSquare * adjustedSquares
+  const high = low * pricingConfig.estimateRange.highMultiplier
 
   return { low, high }
 }
@@ -69,13 +47,7 @@ function formatDollars(n: number): string {
 // Roof types like Copper have no price estimate at all (tariffs/material
 // shortages) — callers get estimateMessage instead of estimateLow/estimateHigh,
 // never a $0 or blank range.
-function buildPriceFields(
-  squares: number,
-  config: RoofTypeConfig,
-  pitchLevel: number,
-  fingerprintSeed: string,
-  color: string | undefined
-) {
+function buildPriceFields(squares: number, config: RoofTypeConfig, color: string | undefined) {
   if (config.noPriceEstimate) {
     return {
       estimateLow: null,
@@ -84,7 +56,7 @@ function buildPriceFields(
       estimateMessage: pricingConfig.noPriceEstimateMessage,
     }
   }
-  const result = calculateEstimate(squares, config, pitchLevel, fingerprintSeed, color)
+  const result = calculateEstimate(squares, config, color)
   return {
     estimateLow: formatDollars(result.low),
     estimateHigh: formatDollars(result.high),
@@ -139,7 +111,7 @@ export async function POST(req: NextRequest) {
     // differs.
     if (manualSqFt != null && !Number.isNaN(manualSqFt) && manualSqFt > 0) {
       const squares = squaresFromManualSqFt(manualSqFt, stories)
-      const priceFields = buildPriceFields(squares, config, 0, `manual-${manualSqFt}`, color)
+      const priceFields = buildPriceFields(squares, config, color)
       return NextResponse.json({
         squares: Math.round(squares * 10) / 10,
         ...priceFields,
@@ -166,7 +138,7 @@ export async function POST(req: NextRequest) {
     const solarRes = await fetch(solarUrl)
     const solarData = await solarRes.json()
 
-    type Segment = { stats: { areaMeters2: number }; pitchDegrees?: number }
+    type Segment = { stats: { areaMeters2: number } }
     const segments: Segment[] | undefined = solarData?.solarPotential?.roofSegmentStats
 
     if (!segments?.length) {
@@ -201,12 +173,7 @@ export async function POST(req: NextRequest) {
 
     const squares = (totalAreaM2 * 10.7639) / 100
 
-    const largestSegment = segments.reduce((best, seg) =>
-      seg.stats.areaMeters2 > best.stats.areaMeters2 ? seg : best
-    )
-    const pitchLevel = Math.max(0, Math.round((largestSegment.pitchDegrees ?? 0) / 4.76) - 7)
-
-    const priceFields = buildPriceFields(squares, config, pitchLevel, address, color)
+    const priceFields = buildPriceFields(squares, config, color)
 
     return NextResponse.json({
       squares: Math.round(squares * 10) / 10,
