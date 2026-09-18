@@ -12,6 +12,7 @@ import ProductsSection from '@/components/ProductsSection'
 import PricingTable from '@/components/PricingTable'
 import { ASSESSMENT_CATEGORIES } from '@/lib/assessment'
 import { GALLERY_ITEMS } from '@/lib/gallery'
+import { ROI_STAT } from '@/lib/roiCalculator'
 
 /*
   ══════════════════════════════════════
@@ -99,17 +100,7 @@ export default function CityPage({ city }: { city: CityData }) {
     { val: 35,  suffix: '%',     label: 'Insurance Savings' },
     { val: 25,  suffix: '%',     label: 'Energy Cost Reduction' },
     { val: 55,  suffix: '%',     label: 'Cost Recouped at Resale' },
-    { val: 92, suffix: '%',     label: 'ROI vs. Asphalt', tooltip: [
-      { label: 'Time span', value: '20 years' },
-      { label: 'Roof size', value: '30 squares (~2,800 sf home)' },
-      { label: 'Home value', value: '$850,000' },
-      { label: '1 standing seam metal roof replacement', value: '$45,000' },
-      { label: 'Annual utilities', value: '$3,200' },
-      { label: 'Annual premiums', value: '$4,000' },
-      { label: '2 roof replacement deductibles (2% + 3%)', value: '$42,500' },
-      { label: 'Premium reduction', value: '35%' },
-      { label: 'Utility reduction', value: '25%' },
-    ], footnote: "Over 20 years, avoided replacement costs, insurance savings, and energy savings return about $1.92 for every $1 spent on your metal roof — nearly double your investment." },
+    ROI_STAT,
   ]
 
   const steps = [
