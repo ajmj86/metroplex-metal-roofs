@@ -20,10 +20,15 @@ export interface Stat {
 
 const slugify = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-')
 
+// Gap between the anchor and the bubble, and the minimum margin the bubble
+// keeps from any viewport edge — both directions.
+const GAP = 10
+const EDGE_MARGIN = 12
+
 /*
- * Tooltip opens on hover (desktop), and on click/tap + focus (touch and
- * keyboard) — CSS-only :hover doesn't fire on touch devices, so a real
- * open/close state is required for this to be reachable on mobile.
+ * Tooltip opens on hover (desktop), and on tap + focus (touch and keyboard) —
+ * CSS-only :hover doesn't fire on touch devices, so a real open/close state
+ * is required for this to be reachable on mobile.
  *
  * Rendered via a portal into document.body: the on-page Reveal wrapper
  * around every stat sets an inline `transform` (never the literal `none`),
@@ -34,11 +39,21 @@ const slugify = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-')
  * z-index:200. Portaling to body escapes that entirely, so the tooltip
  * competes for stacking at the root, where a z-index above the nav's
  * actually wins and fully occludes it (no more nav bleed-through).
+ *
+ * Placement: collision-aware above/below the anchor (whichever side has
+ * more room), clamped horizontally so it never crosses the viewport edges.
+ * Left/right-of-anchor placement was deliberately not added — the bubble's
+ * content is a vertically-stacked list of rows (up to ~10 plus a footnote),
+ * and the anchors sit side-by-side in a stat grid, so there's no open
+ * horizontal lane next to an anchor to place into; a wide-but-short bubble
+ * above or below the row is the only shape that actually fits this layout.
+ * Horizontal clamping still keeps it fully on-screen at any anchor position.
  */
 export default function StatItem({ stat, showBorder, className }: { stat: Stat; showBorder: boolean; className?: string }) {
   const [open, setOpen] = useState(false)
-  const [coords, setCoords] = useState({ top: 0, left: 0 })
+  const [position, setPosition] = useState({ top: 0, left: 0, placement: 'above' as 'above' | 'below' })
   const anchorRef = useRef<HTMLDivElement>(null)
+  const bubbleRef = useRef<HTMLDivElement>(null)
   const hasTooltip = !!stat.tooltip?.length
   const tooltipId = `stat-tooltip-${slugify(stat.label)}`
 
@@ -49,22 +64,65 @@ export default function StatItem({ stat, showBorder, className }: { stat: Stat; 
   const [mounted, setMounted] = useState(false)
   useEffect(() => setMounted(true), [])
 
+  // `(hover: none)` is the standard CSS-level signal for "the primary input
+  // can't hover" — checked once at mount, not per-event, since a device's
+  // primary input doesn't change mid-session. Touch gets tap-to-open/
+  // tap-again-to-close; anything that can hover keeps the original
+  // hover/focus behavior.
+  const [isTouch] = useState(() => typeof window !== 'undefined' && window.matchMedia('(hover: none)').matches)
+
   useLayoutEffect(() => {
-    if (!open || !anchorRef.current) return
+    if (!open || !anchorRef.current || !bubbleRef.current) return
+
     const update = () => {
-      const rect = anchorRef.current!.getBoundingClientRect()
-      setCoords({ top: rect.top - 10, left: rect.left + rect.width / 2 })
+      const anchor = anchorRef.current!.getBoundingClientRect()
+      const bubble = bubbleRef.current!.getBoundingClientRect()
+      const vw = window.innerWidth
+      const vh = window.innerHeight
+
+      const spaceAbove = anchor.top
+      const spaceBelow = vh - anchor.bottom
+      const placeAbove = spaceAbove >= bubble.height + GAP + EDGE_MARGIN || spaceAbove > spaceBelow
+
+      let top = placeAbove ? anchor.top - bubble.height - GAP : anchor.bottom + GAP
+      // Clamp vertically too, for the rare case neither side has enough room
+      // (e.g. a very short window) — keeps the bubble on-screen rather than
+      // trusting either side blindly.
+      top = Math.min(Math.max(top, EDGE_MARGIN), Math.max(EDGE_MARGIN, vh - bubble.height - EDGE_MARGIN))
+
+      let left = anchor.left + anchor.width / 2 - bubble.width / 2
+      left = Math.min(Math.max(left, EDGE_MARGIN), Math.max(EDGE_MARGIN, vw - bubble.width - EDGE_MARGIN))
+
+      setPosition({ top, left, placement: placeAbove ? 'above' : 'below' })
     }
+
     update()
-    // A stale fixed-position tooltip would drift from its anchor on
-    // scroll/resize, so just close it rather than track continuously.
-    const close = () => setOpen(false)
-    window.addEventListener('scroll', close, { passive: true })
-    window.addEventListener('resize', close)
+    // Re-measure on scroll/resize instead of closing — the anchor's
+    // position keeps changing while the user scrolls, and a fixed-position
+    // bubble that doesn't track it would either drift away from the anchor
+    // or (the previous bug) render past the top of the viewport when the
+    // anchor is close to it.
+    window.addEventListener('scroll', update, { passive: true })
+    window.addEventListener('resize', update)
     return () => {
-      window.removeEventListener('scroll', close)
-      window.removeEventListener('resize', close)
+      window.removeEventListener('scroll', update)
+      window.removeEventListener('resize', update)
     }
+  }, [open])
+
+  // Tap-elsewhere-to-close for touch (and a harmless click-outside-to-close
+  // on desktop) — pointerdown fires for both mouse and touch, so one
+  // listener covers both without needing separate touch/mouse handling.
+  useEffect(() => {
+    if (!open) return
+    function handleOutside(e: PointerEvent) {
+      const target = e.target as Node
+      if (anchorRef.current?.contains(target)) return
+      if (bubbleRef.current?.contains(target)) return
+      setOpen(false)
+    }
+    document.addEventListener('pointerdown', handleOutside)
+    return () => document.removeEventListener('pointerdown', handleOutside)
   }, [open])
 
   return (
@@ -76,11 +134,19 @@ export default function StatItem({ stat, showBorder, className }: { stat: Stat; 
           role: 'button' as const,
           'aria-expanded': open,
           'aria-describedby': tooltipId,
-          onClick: () => setOpen(true),
-          onMouseEnter: () => setOpen(true),
-          onMouseLeave: () => setOpen(false),
-          onFocus: () => setOpen(true),
-          onBlur: () => setOpen(false),
+          // Touch: tap toggles open/closed (there's no hover to rely on).
+          // Non-touch: click just ensures it's open — hover/mouseleave
+          // already drive open/close, so toggling here would fight a
+          // hover-then-click sequence and flicker the bubble shut.
+          onClick: () => { isTouch ? setOpen(o => !o) : setOpen(true) },
+          onMouseEnter: () => { if (!isTouch) setOpen(true) },
+          onMouseLeave: () => { if (!isTouch) setOpen(false) },
+          // Skipped for touch: a tap fires focus immediately before click,
+          // and toggling from both in the same gesture makes the open state
+          // race itself. Keyboard-driven focus (Tab key) never fires click
+          // in the same gesture, so this stays for real keyboard/a11y use.
+          onFocus: () => { if (!isTouch) setOpen(true) },
+          onBlur: () => { if (!isTouch) setOpen(false) },
           onKeyDown: (e: React.KeyboardEvent) => { if (e.key === 'Escape') setOpen(false) },
         } : {})}
         style={{ cursor: hasTooltip ? 'pointer' : 'default', outline: 'none', display: 'inline-block' }}
@@ -98,15 +164,20 @@ export default function StatItem({ stat, showBorder, className }: { stat: Stat; 
 
       {hasTooltip && mounted && createPortal(
         <div
+          ref={bubbleRef}
           id={tooltipId}
           role="tooltip"
           style={{
             position: 'fixed',
-            top: coords.top,
-            left: coords.left,
-            transform: `translate(-50%, calc(-100% + ${open ? '0px' : '6px'}))`,
+            top: position.top,
+            left: position.left,
+            // Small directional slide on open/close, layered on top of the
+            // already-clamped resting position — it's a few px, well inside
+            // the EDGE_MARGIN buffer, so it never reintroduces an off-screen
+            // bubble.
+            transform: open ? 'translateY(0)' : `translateY(${position.placement === 'above' ? 6 : -6}px)`,
             width: 260,
-            maxWidth: 'calc(100vw - 32px)',
+            maxWidth: 'calc(100vw - 24px)',
             background: C.card,
             border: `1px solid ${C.accentDark}`,
             borderRadius: 8,
