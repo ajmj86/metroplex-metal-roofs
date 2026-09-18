@@ -45,22 +45,22 @@ export default function Hero({
   return (
     <section className="hero-pad" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative', overflow: 'hidden' }}>
       {/*
-       * height:'100vh' here, NOT inset:0 -- inset:0 stretches this div to
-       * match the SECTION's actual rendered height, which varies with
-       * content (the section is min-height:100vh, not a fixed height, and
-       * different pages have different amounts of hero copy, so it grows by
-       * a different amount past 100vh on each page). That variable height
-       * was what made the same "cover"-sized image crop differently per
-       * page -- fixing this div's height to exactly 100vh regardless of the
-       * section's own height means the image is ALWAYS the same box, so it
-       * always crops identically, on every page, at every viewport. Any
-       * section overflow past 100vh (content taller than the viewport)
-       * shows the page's own near-black background below the image instead
-       * of stretching/re-cropping it -- visually seamless, since the
-       * gradient overlay is already nearly black at the image's own bottom
-       * edge.
+       * inset:0 (fills the SECTION's own rendered height), not a literal
+       * height:'100vh' -- a fixed 100vh here caused a visible black strip
+       * between the image and whatever renders below the hero whenever a
+       * headline was long enough to push the section (min-height:100vh,
+       * not a fixed height) taller than one viewport: the section grew but
+       * this layer stayed pinned at 100vh, leaving the section's own
+       * background exposed in the gap below the image. inset:0 always
+       * matches the section's actual height instead, so there's never a
+       * gap regardless of how much the headline wraps. This does NOT
+       * reintroduce the earlier crop-drift bug (see Hero visual-parity fix
+       * history) -- that bug was about the image's crop *position* shifting
+       * between pages, which lives in heroBackgroundStyle()'s own
+       * `center/cover` and is untouched here; only this div's height source
+       * changed, from a hardcoded viewport unit to the parent's own size.
        */}
-      <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '100vh', zIndex: 0, background: heroBackgroundStyle(backgroundImageSrc) }} />
+      <div style={{ position: 'absolute', inset: 0, zIndex: 0, background: heroBackgroundStyle(backgroundImageSrc) }} />
 
       <div className="inner" style={{ position: 'relative', zIndex: 1, width: '100%' }}>
         <div style={{ ...HERO_EYEBROW_WRAP_STYLE, animation: 'fadeUp 0.8s ease both' }}>
