@@ -11,6 +11,7 @@ export default function UTMCapture() {
     const medium = searchParams.get('utm_medium')
     const campaign = searchParams.get('utm_campaign')
     const content = searchParams.get('utm_content')
+    const term = searchParams.get('utm_term')
     // Not a UTM param -- carries the neighborhood/community name a landing
     // page's QR destination URL was generated for (see HeroEyebrowLine.tsx).
     const area = searchParams.get('area')
@@ -18,6 +19,7 @@ export default function UTMCapture() {
     if (medium) sessionStorage.setItem('utm_medium', medium)
     if (campaign) sessionStorage.setItem('utm_campaign', campaign)
     if (content) sessionStorage.setItem('utm_content', content)
+    if (term) sessionStorage.setItem('utm_term', term)
     if (area) sessionStorage.setItem('area', area)
   }, [searchParams])
 

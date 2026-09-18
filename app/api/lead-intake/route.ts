@@ -78,6 +78,7 @@ export async function POST(req: NextRequest) {
         medium: body.utm?.medium || '',
         campaign: body.utm?.campaign || '',
         content: body.utm?.content || '',
+        term: body.utm?.term || '',
       },
       tags: [
         ...(body.insuranceClaim && body.insuranceClaim !== 'no_cash' ? ['Insurance Claim'] : []),

@@ -290,6 +290,7 @@ export default function VisualizerPage() {
       utm_source: sessionStorage.getItem('utm_source') || '',
       utm_campaign: sessionStorage.getItem('utm_campaign') || '',
       utm_content: sessionStorage.getItem('utm_content') || '',
+      utm_term: sessionStorage.getItem('utm_term') || '',
     })
   }, [])
 
@@ -485,6 +486,7 @@ export default function VisualizerPage() {
             medium: sessionStorage.getItem('utm_medium') || '',
             campaign: sessionStorage.getItem('utm_campaign') || '',
             content: sessionStorage.getItem('utm_content') || '',
+            term: sessionStorage.getItem('utm_term') || '',
           },
         }),
       }).catch(() => {})
@@ -647,11 +649,13 @@ export default function VisualizerPage() {
     const utmMedium = sessionStorage.getItem('utm_medium') || ''
     const utmCampaign = sessionStorage.getItem('utm_campaign') || ''
     const utmContent = sessionStorage.getItem('utm_content') || ''
+    const utmTerm = sessionStorage.getItem('utm_term') || ''
     trackEvent('visualizer_complete', {
       channel: utmMedium,
       utm_source: utmSource,
       utm_campaign: utmCampaign,
       utm_content: utmContent,
+      utm_term: utmTerm,
     })
 
     try {
@@ -678,7 +682,7 @@ export default function VisualizerPage() {
           product: selProduct,
           color: selColor,
           leadOrigin: 'visualizer',
-          utm: { source: utmSource, medium: utmMedium, campaign: utmCampaign, content: utmContent },
+          utm: { source: utmSource, medium: utmMedium, campaign: utmCampaign, content: utmContent, term: utmTerm },
           estimatedRoofSize: squares,
           estimateRange: noPrice ? (message ?? undefined) : (low && high ? `${low} - ${high}` : undefined),
           // '' (not undefined) on success so the API/n8n layer can tell "solar worked
@@ -756,6 +760,7 @@ export default function VisualizerPage() {
       utm_source: sessionStorage.getItem('utm_source') || '',
       utm_campaign: sessionStorage.getItem('utm_campaign') || '',
       utm_content: sessionStorage.getItem('utm_content') || '',
+      utm_term: sessionStorage.getItem('utm_term') || '',
     })
     setGateLoading(false)
     setPhraseIdx(0)
@@ -792,11 +797,13 @@ export default function VisualizerPage() {
       const utmMedium = sessionStorage.getItem('utm_medium') || ''
       const utmCampaign = sessionStorage.getItem('utm_campaign') || ''
       const utmContent = sessionStorage.getItem('utm_content') || ''
+      const utmTerm = sessionStorage.getItem('utm_term') || ''
       trackEvent('visualizer_complete', {
         channel: utmMedium,
         utm_source: utmSource,
         utm_campaign: utmCampaign,
         utm_content: utmContent,
+        utm_term: utmTerm,
       })
       // Update path for a contact already created during handleContactSubmit —
       // suppressAlert avoids paging Andrew a second time for the same lead.
@@ -818,7 +825,7 @@ export default function VisualizerPage() {
           product: selProduct,
           color: selColor,
           leadOrigin: 'visualizer',
-          utm: { source: utmSource, medium: utmMedium, campaign: utmCampaign, content: utmContent },
+          utm: { source: utmSource, medium: utmMedium, campaign: utmCampaign, content: utmContent, term: utmTerm },
           estimatedRoofSize: data.squares,
           estimateRange: data.noPriceEstimate ? (data.estimateMessage ?? undefined) : `${data.estimateLow} - ${data.estimateHigh}`,
           roofSizeSource: 'manual',
