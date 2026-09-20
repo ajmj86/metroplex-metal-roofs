@@ -15,42 +15,36 @@ type RoofTypeConfig = {
   wasteFactor: number
 }
 
-// Google Solar API's per-segment areas run systematically higher than
-// professional aerial measurement (RoofScope/EagleView) -- confirmed
-// 2026-09-17 against a real RoofScope report for 3808 Marquette St., Dallas:
-// Solar API's raw sum (38.44 sq, reproduced exactly from live segment data)
-// vs RoofScope's surveyed 31.20 sq for the same roof (ratio 0.8117).
+// Google Solar API's per-segment area sum doesn't track professional aerial
+// measurement (RoofScope/EagleView) in a consistent direction -- confirmed
+// 2026-09-20 against two real paired reports:
+//   - 3808 Marquette St, Dallas (RoofScope): Solar raw 38.44 sq vs truth
+//     31.20 sq (+23.2%, overestimate). 14 Solar segments vs 10 real planes --
+//     mature tree canopy over the roof splits real planes into noisy
+//     fragments, and boundary/edge over-measurement accumulates with segment
+//     count.
+//   - 7902 Hanover St, Dallas (EagleView): Solar raw 40.06 sq vs truth
+//     42.24 sq (-5.2%, UNDERestimate). 11 Solar segments vs 19 real facets --
+//     Solar merged/missed a real 112.7 sq ft flat (0/12 pitch) facet
+//     entirely, unrelated to tree cover.
+// The two errors have opposite signs, so segment count alone does not
+// predict over- vs under-estimation (the previous formula assumed more
+// segments always meant more inflation to discount, which made the Hanover
+// estimate worse -- -18.5% -- than doing nothing at all). With only two
+// data points of opposite sign, a segment-count-aware curve is curve-fitting
+// noise, not signal.
 //
-// The inflation is NOT concentrated in a few detectable "duplicate"
-// segments that could be found and discarded -- checked directly: even
-// where a real RoofScope plane (847 sq ft) lines up almost exactly with two
-// adjacent Solar segments (603.6 + 254.3 = 857.9 sq ft, both ~22-23 degree
-// pitch), the combined pair is barely bigger than the single real plane
-// (+1.3%). So splitting one real plane into two Solar segments is close to
-// area-neutral on its own -- the actual ~23% gap must be small
-// edge/eave-boundary over-measurement spread across essentially every
-// segment (each segment's boundary is measured slightly larger than the
-// real roof edge), not a handful of phantom facets. That means more
-// segments -> more total edge boundary -> more accumulated inflation, so
-// the correction is scaled by segment count rather than applied as one
-// flat discount to every roof regardless of complexity (a simple few-facet
-// roof has little edge boundary to inflate and shouldn't take the same hit
-// as this address's fragmented 14-segment case).
-//
-// This is a single-address calibration, not an independently validated
-// curve: baselineSegmentCount/perSegmentDiscount are chosen so the curve
-// passes through 1.0 at a minimal-complexity roof and lands on the one
-// real measured ratio (0.8117) at this address's 14 segments; the floor
-// (minAreaCorrectionFactor) keeps hypothetically-more-fragmented roofs from
-// extrapolating past what's actually been observed. Retune all three in
-// config/pricing.json once more paired RoofScope comparisons exist,
-// ideally spanning a range of segment counts, not just complex ones.
-function solarAreaCorrectionFactor(segmentCount: number): number {
-  const { baselineSegmentCount, perSegmentDiscount, minAreaCorrectionFactor } = pricingConfig.roofSizeCalibration
-  const excessSegments = Math.max(0, segmentCount - baselineSegmentCount)
-  const factor = 1 - excessSegments * perSegmentDiscount
-  return Math.max(minAreaCorrectionFactor, factor)
-}
+// AREA_CORRECTION_FACTOR = 0.917 is a flat, minimax-optimal multiplier: the
+// value that makes both properties' corrected error equal and opposite
+// (+13.0% / -13.0%), which bounds worst-case error tighter than either the
+// raw Solar output (23.2% worst case) or the old segment-scaled formula
+// (18.5% worst case, and in the wrong direction on non-calibration data).
+// This is a stopgap, not a validated model -- retune (and consider a real
+// runtime-observable feature, e.g. fraction of segment area in small/<150
+// sq ft segments) once 3-5+ more paired reports exist, ideally spanning a
+// simple untreed roof, a roof with a flat/porch section, and another
+// tree-heavy roof.
+const AREA_CORRECTION_FACTOR = pricingConfig.roofSizeCalibration.areaCorrectionFactor
 
 // Standing Seam prices by metallicColors membership (e.g. "Natural Metal");
 // every other roof type has a single flat retailPerSquare.
@@ -184,7 +178,7 @@ export async function POST(req: NextRequest) {
     }
 
     const rawAreaM2 = segments.reduce((sum, seg) => sum + seg.stats.areaMeters2, 0)
-    const totalAreaM2 = rawAreaM2 * solarAreaCorrectionFactor(segments.length)
+    const totalAreaM2 = rawAreaM2 * AREA_CORRECTION_FACTOR
 
     // Confidence check: must be between 800 and 8,000 sq ft
     if (totalAreaM2 < 74.3 || totalAreaM2 > 743) {
