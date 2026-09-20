@@ -5,27 +5,27 @@
       "retailPerSquareMetallic": 1199.97,
       "retailPerSquareStandard": 1399.97,
       "metallicColors": ["Natural Metal"],
-      "wasteFactor": 0.10
+      "wasteFactorRange": { "simple": 0.05, "high": 0.20 }
     },
     "copper_standing_seam": {
       "label": "Copper Standing Seam",
       "noPriceEstimate": true,
-      "wasteFactor": 0.12
+      "wasteFactorRange": { "simple": 0.05, "high": 0.20 }
     },
     "r_panel": {
       "label": "R-Panel",
       "retailPerSquare": 949.97,
-      "wasteFactor": 0.08
+      "wasteFactorRange": { "simple": 0.03, "high": 0.14 }
     },
     "stone_coated_steel": {
       "label": "Stone-Coated Steel",
       "retailPerSquare": 1499.97,
-      "wasteFactor": 0.12
+      "wasteFactorRange": { "simple": 0.03, "high": 0.15 }
     },
     "synthetic_slate": {
       "label": "Synthetic Slate",
       "retailPerSquare": 1949.97,
-      "wasteFactor": 0.12
+      "wasteFactorRange": { "simple": 0.05, "high": 0.15 }
     }
   },
   "tearOff": {

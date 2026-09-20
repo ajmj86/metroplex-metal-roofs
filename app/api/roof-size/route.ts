@@ -12,7 +12,7 @@ type RoofTypeConfig = {
   retailPerSquareStandard?: number
   metallicColors?: string[]
   noPriceEstimate?: boolean
-  wasteFactor: number
+  wasteFactorRange: { simple: number; high: number }
 }
 
 // Google Solar API's per-segment area sum doesn't track professional aerial
@@ -46,6 +46,82 @@ type RoofTypeConfig = {
 // tree-heavy roof.
 const AREA_CORRECTION_FACTOR = pricingConfig.roofSizeCalibration.areaCorrectionFactor
 
+// Waste-factor complexity scoring -- reuses the same `segments` array
+// pulled for the area correction above (no second Solar API call). Instead
+// of one flat wasteFactor per material, each material now has a
+// [simple, high] band (config/pricing.json's wasteFactorRange) and the
+// roof's complexity score (0-1) picks a point in that band.
+//
+// Density: segments per CORRECTED square (post area-correction, not raw --
+// stays on the same "believed" roof size as the rest of the pipeline).
+// 0.10 seg/sq anchors complexity 0 (a simple ~4-segment hip roof on a
+// ~30-sq home); 0.50 seg/sq anchors complexity 1 (heavy fragmentation).
+//
+// Pitch variance: population stdev of segment pitchDegrees. 0 degrees
+// anchors complexity 0 (one uniform pitch); 8 degrees anchors complexity 1
+// (multiple genuinely distinct pitch bands -- porches, accent pitches,
+// dormers). Deliberately independent of segment count: confirmed
+// 2026-09-20 against 7902 Hanover St (EagleView ground truth) that a roof
+// with fewer, larger segments can still carry real multi-pitch complexity
+// (a flat porch + main + steeper accent section) that density alone misses.
+//
+// Small-segment fraction: share of total area held in segments under 150
+// sq ft, GATED by densityNorm. This is the same fragmentation signal that
+// flagged tree-driven DSM noise vs. genuine complexity in the
+// Marquette/Hanover area-correction analysis -- it's noise-prone on its
+// own, so it only contributes once segment density is already elevated
+// rather than acting as a standalone complexity driver.
+//
+// Weights (0.5 / 0.3 / 0.2) and both sets of anchors are reasoned defaults,
+// not fit to Marquette/Hanover -- neither property's score lands at 0 or 1,
+// which is a sanity check, not validation. There's no ground-truth
+// waste-used data the way RoofScope/EagleView gave ground truth for area,
+// so revisit once real material-order-vs-estimate data exists.
+const COMPLEXITY_DENSITY_LO = 0.10 // segments per corrected square
+const COMPLEXITY_DENSITY_HI = 0.50
+const COMPLEXITY_PITCH_STDEV_LO = 0 // degrees
+const COMPLEXITY_PITCH_STDEV_HI = 8
+const COMPLEXITY_SMALL_SEGMENT_SQFT = 150
+const COMPLEXITY_WEIGHTS = { density: 0.5, pitch: 0.3, smallFrac: 0.2 }
+
+function clamp01(x: number): number {
+  return Math.max(0, Math.min(1, x))
+}
+
+function roofComplexityScore(
+  segments: { stats: { areaMeters2: number }; pitchDegrees: number }[],
+  correctedSquares: number
+): number {
+  const density = segments.length / correctedSquares
+  const densityNorm = clamp01((density - COMPLEXITY_DENSITY_LO) / (COMPLEXITY_DENSITY_HI - COMPLEXITY_DENSITY_LO))
+
+  const pitches = segments.map((s) => s.pitchDegrees)
+  const meanPitch = pitches.reduce((sum, p) => sum + p, 0) / pitches.length
+  const pitchStdev = Math.sqrt(pitches.reduce((sum, p) => sum + (p - meanPitch) ** 2, 0) / pitches.length)
+  const pitchNorm = clamp01((pitchStdev - COMPLEXITY_PITCH_STDEV_LO) / (COMPLEXITY_PITCH_STDEV_HI - COMPLEXITY_PITCH_STDEV_LO))
+
+  const totalAreaM2 = segments.reduce((sum, s) => sum + s.stats.areaMeters2, 0)
+  const smallAreaM2 = segments
+    .filter((s) => s.stats.areaMeters2 * 10.7639 < COMPLEXITY_SMALL_SEGMENT_SQFT)
+    .reduce((sum, s) => sum + s.stats.areaMeters2, 0)
+  const smallFracGated = (smallAreaM2 / totalAreaM2) * densityNorm
+
+  return clamp01(
+    COMPLEXITY_WEIGHTS.density * densityNorm +
+      COMPLEXITY_WEIGHTS.pitch * pitchNorm +
+      COMPLEXITY_WEIGHTS.smallFrac * smallFracGated
+  )
+}
+
+// complexityScore is null for the manual-entry fallback, which has no Solar
+// API segment data to score -- falls back to the middle of the material's
+// band as a neutral "no info" default.
+function resolveWasteFactor(config: RoofTypeConfig, complexityScore: number | null): number {
+  const { simple, high } = config.wasteFactorRange
+  if (complexityScore == null) return simple + (high - simple) / 2
+  return simple + complexityScore * (high - simple)
+}
+
 // Standing Seam prices by metallicColors membership (e.g. "Natural Metal");
 // every other roof type has a single flat retailPerSquare.
 function resolveRetailPerSquare(config: RoofTypeConfig, color?: string): number {
@@ -62,9 +138,9 @@ function resolveRetailPerSquare(config: RoofTypeConfig, color?: string): number 
 // material a real job needs beyond the bare roof area); high end adds the
 // configured margin on top (pricingConfig.estimateRange.highMultiplier,
 // currently 10%).
-function calculateEstimate(squares: number, config: RoofTypeConfig, color: string | undefined) {
+function calculateEstimate(squares: number, config: RoofTypeConfig, color: string | undefined, wasteFactor: number) {
   const pricePerSquare = resolveRetailPerSquare(config, color)
-  const adjustedSquares = squares * (1 + config.wasteFactor)
+  const adjustedSquares = squares * (1 + wasteFactor)
   const low = pricePerSquare * adjustedSquares
   const high = low * pricingConfig.estimateRange.highMultiplier
 
@@ -78,7 +154,7 @@ function formatDollars(n: number): string {
 // Roof types like Copper have no price estimate at all (tariffs/material
 // shortages) — callers get estimateMessage instead of estimateLow/estimateHigh,
 // never a $0 or blank range.
-function buildPriceFields(squares: number, config: RoofTypeConfig, color: string | undefined) {
+function buildPriceFields(squares: number, config: RoofTypeConfig, color: string | undefined, wasteFactor: number) {
   if (config.noPriceEstimate) {
     return {
       estimateLow: null,
@@ -87,7 +163,7 @@ function buildPriceFields(squares: number, config: RoofTypeConfig, color: string
       estimateMessage: pricingConfig.noPriceEstimateMessage,
     }
   }
-  const result = calculateEstimate(squares, config, color)
+  const result = calculateEstimate(squares, config, color, wasteFactor)
   return {
     estimateLow: formatDollars(result.low),
     estimateHigh: formatDollars(result.high),
@@ -142,7 +218,8 @@ export async function POST(req: NextRequest) {
     // differs.
     if (manualSqFt != null && !Number.isNaN(manualSqFt) && manualSqFt > 0) {
       const squares = squaresFromManualSqFt(manualSqFt, stories)
-      const priceFields = buildPriceFields(squares, config, color)
+      const wasteFactor = resolveWasteFactor(config, null)
+      const priceFields = buildPriceFields(squares, config, color, wasteFactor)
       return NextResponse.json({
         squares: Math.round(squares * 10) / 10,
         ...priceFields,
@@ -169,7 +246,7 @@ export async function POST(req: NextRequest) {
     const solarRes = await fetch(solarUrl)
     const solarData = await solarRes.json()
 
-    type Segment = { stats: { areaMeters2: number } }
+    type Segment = { stats: { areaMeters2: number }; pitchDegrees: number }
     const segments: Segment[] | undefined = solarData?.solarPotential?.roofSegmentStats
 
     if (!segments?.length) {
@@ -188,7 +265,9 @@ export async function POST(req: NextRequest) {
 
     const squares = (totalAreaM2 * 10.7639) / 100
 
-    const priceFields = buildPriceFields(squares, config, color)
+    const complexityScore = roofComplexityScore(segments, squares)
+    const wasteFactor = resolveWasteFactor(config, complexityScore)
+    const priceFields = buildPriceFields(squares, config, color, wasteFactor)
 
     return NextResponse.json({
       squares: Math.round(squares * 10) / 10,
