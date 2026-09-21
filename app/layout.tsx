@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import ScrollReset from "@/components/ScrollReset";
 import UTMCapture from "@/components/UTMCapture";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
+import MetaPixel from "@/components/MetaPixel";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -44,6 +45,7 @@ export default function RootLayout({
      ::-webkit-scrollbar-thumb { background: #27272A; border-radius: 3px; }
    `}</style>
         <GoogleAnalytics />
+        <MetaPixel />
         <ScrollReset />
         <Suspense fallback={null}>
           <UTMCapture />
