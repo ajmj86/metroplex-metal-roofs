@@ -170,6 +170,29 @@ const SLATE_THUMB_ZOOM = {
   European:      { scale: 2.05, origin: "50% 40%" },
   "Pine Green":  { scale: 2.05, origin: "50% 38%" },
   "Tuscan Clay": { scale: 2.05, origin: "50% 42%" },
+  /*
+   * The 7 width-variant colors below were originally left out of this map
+   * on the assumption that their source photos (cropped from Brava's
+   * width-comparison graphics) were already "tightly zoomed" enough. Not
+   * true at this component's 74px circular chip size: the object-fit:cover
+   * crop keeps every row from the source photo, so it gets squeezed down
+   * so far that Multi-Width's irregular tile widths and Standard's uniform
+   * ones render nearly indistinguishable -- confirmed live, the difference
+   * only became visible once the chip was clicked into the full-size
+   * ProductGallery modal. Scale 1.35 / origin 50% 30% (tuned by rendering
+   * actual candidate crops for all 7 colors, not picked by eye alone) crops
+   * down to roughly one full tile row instead of four+, which is enough to
+   * make the width irregularity itself legible at chip size for both
+   * widths -- one shared value, not per-color, since Brava's width-
+   * comparison photos share consistent framing across these 7 colors.
+   */
+  Arendale:         { scale: 1.35, origin: "50% 30%" },
+  Atlantic:         { scale: 1.35, origin: "50% 30%" },
+  Cottage:          { scale: 1.35, origin: "50% 30%" },
+  "Light Arendale": { scale: 1.35, origin: "50% 30%" },
+  Onyx:             { scale: 1.35, origin: "50% 30%" },
+  Sandstone:        { scale: 1.35, origin: "50% 30%" },
+  Victorian:        { scale: 1.35, origin: "50% 30%" },
 };
 /*
  * ── Spanish Barrel Tile / Cedar Shake badge-crop corrections ──
@@ -377,6 +400,23 @@ export default function ProductsSection({
       imageOrigin: zoom?.origin,
     };
   });
+  // The big hero photo above the swatch row is a single static
+  // representative shot per material (see heroMap/bravaHeroMap) that
+  // doesn't track color selection for any material -- deliberate, one
+  // "flavor" shot per tab. Slate's Width toggle is different: it's the
+  // one selector in this whole section whose entire purpose is changing
+  // what the tile pattern looks like, sitting directly above this same
+  // hero image, so leaving the hero permanently on Arendale-standard's
+  // photo while Multi-Width is selected read as broken, not as "one
+  // representative shot" -- confirmed live, the hero never changed no
+  // matter which width was active. Swaps the hero to Arendale's own
+  // standard/multi photo (still the same representative color heroMap.slate
+  // already used) to track slateWidth, same source data as the swatches.
+  const slateHeroColor = slateColorsRaw.find(c => c.name === "Arendale");
+  const slateHeroSrc = slateHasWidthVariants && slateHeroColor?.widthVariants
+    ? colorImageForWidth(slateHeroColor, slateWidth)
+    : heroMap.slate;
+
   const swatchDataByTabLive = activeTab === "slate"
     ? { ...swatchDataByTab, slate: { ...swatchDataByTab.slate, full: slateChips } }
     : swatchDataByTab;
@@ -558,7 +598,7 @@ export default function ProductsSection({
                     style={{display:"block",overflow:"hidden",cursor:"pointer",flex:"1 1 auto",minHeight:280}}
                   >
                     <img
-                      src={heroMap[activeTab]}
+                      src={activeTab === "slate" ? slateHeroSrc : heroMap[activeTab]}
                       alt={`${activeType.label} roof`}
                       loading="lazy"
                       decoding="async"
