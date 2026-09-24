@@ -1,0 +1,3427 @@
+{
+  "updatedAt": "2026-09-24T21:15:07.877Z",
+  "createdAt": "2026-07-27T19:29:39.784Z",
+  "id": "dwLhnSA9Cw6XGHe3",
+  "name": "Workflow 8 - Contract Draft Extraction",
+  "description": null,
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ghl-contract-quote-uploaded",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "n-webhook",
+      "name": "Webhook \u2013 GHL Contract Quote Uploaded",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "5c6d7e8f-9012-4a3b-8c4d-5e6f70819234"
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://services.leadconnectorhq.com/opportunities/{{ $json.body.customData.opportunityId }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Version",
+              "value": "2021-07-28"
+            }
+          ]
+        },
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth"
+      },
+      "id": "n-get-opp",
+      "name": "GHL \u2013 Get Opportunity",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        200,
+        0
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "EKDDJ0lTGjOvu7Ax",
+          "name": "GHL - Metroplex"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const VENDOR_QUOTE_ID = \"1uBuPucl5UvebEX4SZfZ\";\nconst LAST_PROCESSED_ID = \"rwUHPHY1y1gOkK8xxrU6\";\nconst QUOTES_COMPLETE_ID = \"4p6KBFM8K8ljYiw5Awwx\";\n\nconst opp = $json.opportunity || $json;\nconst customFields = opp.customFields || [];\n\nfunction fieldById(id) {\n  return customFields.find(f => f.id === id) || null;\n}\n\nconst vendorQuoteField = fieldById(VENDOR_QUOTE_ID);\nconst files = (vendorQuoteField?.fieldValueFiles || vendorQuoteField?.fieldValue || []).filter(f => !f.deleted);\n\nconst lastProcessedField = fieldById(LAST_PROCESSED_ID);\nconst lastProcessedValue = lastProcessedField ? (lastProcessedField.value ?? lastProcessedField.fieldValue ?? null) : null;\n\n// Identify the current file set by its URLs -- each GHL upload gets a unique\n// URL (embeds a per-file UUID), so this string changes iff the actual file(s)\n// change. Sorted so array reordering alone can't register as \"different\".\nconst currentFileIdentifier = files.map(f => f.url).sort().join('|');\n\nconst hasFiles = files.length > 0;\nconst fileAlreadyProcessed = hasFiles && Boolean(lastProcessedValue) && currentFileIdentifier === lastProcessedValue;\n\nlet skipReason = null;\nif (!hasFiles) skipReason = 'no_vendor_quote_files';\nelse if (fileAlreadyProcessed) skipReason = 'file_already_processed';\n\n// \"Quotes Complete\" is a single-option checkbox (option label \"Complete\").\n// GHL has been observed returning a custom field's value under different\n// keys depending on the API path (fieldValue, fieldValueString, or value) --\n// read all three defensively rather than assuming one shape.\nconst quotesCompleteField = fieldById(QUOTES_COMPLETE_ID);\nconst rawQuotesComplete = quotesCompleteField\n  ? (quotesCompleteField.fieldValue ?? quotesCompleteField.fieldValueString ?? quotesCompleteField.value ?? null)\n  : null;\nconst quotesComplete = Array.isArray(rawQuotesComplete)\n  ? rawQuotesComplete.some(v => String(v).toLowerCase().includes('complete'))\n  : typeof rawQuotesComplete === 'boolean'\n    ? rawQuotesComplete\n    : typeof rawQuotesComplete === 'string'\n      ? ['true', 'yes', 'complete'].includes(rawQuotesComplete.toLowerCase())\n      : false;\n\nreturn [{ json: {\n  opportunityId: opp.id,\n  contactId: opp.contactId,\n  shouldProceed: hasFiles && !fileAlreadyProcessed,\n  skipReason,\n  fileCount: files.length,\n  files: files.map(f => ({ name: f.meta?.name, url: f.url, size: f.meta?.size, mimetype: f.meta?.mimetype })),\n  currentFileIdentifier,\n  quotesComplete,\n} }];\n"
+      },
+      "id": "n-presence",
+      "name": "Code \u2013 Presence & Idempotency Check",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        400,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 1
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "c1",
+              "leftValue": "={{ $json.shouldProceed }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "n-if-proceed",
+      "name": "IF \u2013 Should Proceed?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        600,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { status: 'skipped', reason: $json.skipReason, opportunityId: $json.opportunityId } }}",
+        "options": {}
+      },
+      "id": "n-respond-skip",
+      "name": "Respond \u2013 Skipped",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        800,
+        150
+      ]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://services.leadconnectorhq.com/contacts/{{ $json.contactId }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Version",
+              "value": "2021-07-28"
+            }
+          ]
+        },
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth"
+      },
+      "id": "n-get-contact",
+      "name": "GHL \u2013 Get Contact",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        800,
+        -100
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "EKDDJ0lTGjOvu7Ax",
+          "name": "GHL - Metroplex"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const ROOF_TYPE_ID = \"ooxcklKOKGrDCRunZnh3\";\n\nconst presence = $('Code \u2013 Presence & Idempotency Check').first().json;\nconst contact = $json.contact || $json;\nconst customFields = contact.customFields || [];\nconst roofTypeField = customFields.find(f => f.id === ROOF_TYPE_ID) || null;\nconst rawRoofType = roofTypeField ? (roofTypeField.value ?? roofTypeField.fieldValue ?? null) : null;\n\n// Values seen live in production are inconsistent in format (e.g. \"standing_seam\"\n// vs \"Standing Seam Steel\"), so normalize before matching rather than relying on\n// an exact string.\nconst normalized = (rawRoofType || '').toLowerCase().replace(/[^a-z]/g, '');\nconst minExpectedFileCount = normalized.includes('stonecoat') ? 2 : 1;\n// A checked \"Quotes Complete\" box means the vendor deliberately combined\n// materials and labor into a single quote document instead of the usual\n// per-vendor files -- one file is enough regardless of roof type.\nconst expectedFileCount = presence.quotesComplete ? 1 : minExpectedFileCount;\nconst actualFileCount = presence.fileCount;\nconst complete = actualFileCount === expectedFileCount;\n\nreturn [{ json: {\n  opportunityId: presence.opportunityId,\n  contactId: presence.contactId,\n  files: presence.files,\n  rawRoofType,\n  quotesComplete: presence.quotesComplete,\n  expectedFileCount,\n  actualFileCount,\n  complete,\n} }];\n"
+      },
+      "id": "n-completeness",
+      "name": "Code \u2013 Completeness Check",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1000,
+        -100
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 1
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "c1",
+              "leftValue": "={{ $json.complete }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "n-if-complete",
+      "name": "IF \u2013 Complete?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1200,
+        -100
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://services.leadconnectorhq.com/contacts/{{ $json.contactId }}/tasks",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Version",
+              "value": "2021-07-28"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { \"title\": \"Vendor quote count mismatch on \" + $json.opportunityId, \"body\": \"Roof type \" + JSON.stringify($json.rawRoofType) + \" expects \" + $json.expectedFileCount + \" vendor quote file(s), but \" + $json.actualFileCount + \" were uploaded. Contract drafting was NOT auto-populated \u2014 review the Vendor Quote files and either add/remove a file or process manually.\", \"assignedTo\": \"ScQEgubPkgSmLURE4K2t\", \"dueDate\": new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(), \"completed\": false } }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth"
+      },
+      "id": "n-create-mismatch-task",
+      "name": "GHL \u2013 Create Mismatch Review Task",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1400,
+        50
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "EKDDJ0lTGjOvu7Ax",
+          "name": "GHL - Metroplex"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { status: 'incomplete', expectedFileCount: $('Code \u2013 Completeness Check').first().json.expectedFileCount, actualFileCount: $('Code \u2013 Completeness Check').first().json.actualFileCount, opportunityId: $('Code \u2013 Completeness Check').first().json.opportunityId } }}",
+        "options": {}
+      },
+      "id": "n-respond-incomplete",
+      "name": "Respond \u2013 Incomplete",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1600,
+        50
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "anthropic-version",
+              "value": "2023-06-01"
+            },
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $('Code \u2013 Build Claude Request').first().json.requestBody }}",
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true,
+              "fullResponse": true
+            }
+          }
+        },
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth"
+      },
+      "id": "n-claude-extract",
+      "name": "Claude \u2013 Extract Contract Data",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2200,
+        -300
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "NJN8AicEZdyLLNf2",
+          "name": "Anthropic Key"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const checked = $('Code \u2013 Check Claude Response').first().json;\nconst raw = checked.responseBody;\n\nconst textBlock = raw.content?.find(b => b.type === 'text');\nif (!textBlock) throw new Error('No text block in Claude response: ' + JSON.stringify(raw));\n\nconst cleaned = textBlock.text.replace(/```json|```/g, '').trim();\n\nlet parsed;\ntry {\n  parsed = JSON.parse(cleaned);\n} catch (e) {\n  throw new Error('Failed to parse Claude JSON: ' + cleaned);\n}\n\nreturn [{ json: {\n  opportunityId: checked.opportunityId,\n  contactId: checked.contactId,\n  scopeOfWork: parsed.scope_of_work ?? '',\n  vendorCost: parsed.vendor_cost ?? null,\n  extractionNotes: parsed.extraction_notes ?? 'None',\n} }];"
+      },
+      "id": "n-parse-claude",
+      "name": "Code \u2013 Parse Claude Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2200,
+        -300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Turn the files array (1 item) into N items (one per file), each\n// carrying the URL to fetch as binary via a real HTTP Request node --\n// n8n's binary data model already base64-encodes correctly, unlike\n// manually buffering inside a Code node (which corrupted the bytes).\nconst files = $json.files;\nreturn files.map((f, i) => ({ json: {\n  opportunityId: $json.opportunityId,\n  contactId: $json.contactId,\n  fileIndex: i,\n  fileName: f.name,\n  fileUrl: f.url,\n} }));"
+      },
+      "id": "n-files-to-items",
+      "name": "Code \u2013 Files To Items",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1400,
+        -300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $json.fileUrl }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "data"
+            }
+          }
+        }
+      },
+      "id": "n-fetch-binary",
+      "name": "HTTP \u2013 Fetch PDF Binary",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1600,
+        -300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const SYSTEM_PROMPT = `You are a contract-drafting assistant for Metroplex Metal Roofs, a metal roofing company serving DFW homeowners. You will be given one or two vendor quote PDF(s) for a single roofing job (two PDFs occur only for stone-coated steel jobs, where the underlayment/decking and the panels are quoted separately by different suppliers; every other roof type has exactly one PDF, which may combine materials and labor into a single document). Extract the following and return ONLY a valid JSON object with no preamble, no markdown, no backticks. The JSON must have exactly these keys:\n- scope_of_work: a clear, concise description of the materials and system covered by the quote(s), written for a customer-facing contract. Do not include vendor pricing or cost breakdowns.\n- vendor_cost: the total dollar amount for the job, as a plain number with no currency symbol or commas. If a document states its own combined/grand total, use that stated total for that document -- do NOT also add up that same document's line items, since the line items already make up the stated total and adding both double-counts the cost. Only sum line items yourself when a document has no clearly stated total. When two separate quote documents are attached (stone-coated steel jobs), add each document's total (stated or summed) together.\n- extraction_notes: any ambiguity, missing pricing, or issue encountered while reading the document(s), or \"None\" if everything was clear.`;\n\nconst items = $input.all();\nconst first = items[0].json;\n\nconst content = [];\nfor (let i = 0; i < items.length; i++) {\n  const item = items[i];\n  const binaryKey = Object.keys(item.binary || {})[0];\n  let buffer = await this.helpers.getBinaryDataBuffer(i, binaryKey);\n  // GHL's file-serving URL for Opportunity FILE_UPLOAD fields prepends\n  // ~76 bytes of internal object metadata before the real PDF bytes\n  // (confirmed live: a protobuf-looking hash+UUID header ahead of the\n  // %PDF- marker). Trim anything before the actual PDF header rather\n  // than trusting byte 0, since the prefix length isn''''t guaranteed.\n  const pdfStart = buffer.indexOf('%PDF');\n  if (pdfStart > 0) buffer = buffer.subarray(pdfStart);\n  else if (pdfStart === -1) throw new Error('No %PDF marker found in fetched file: ' + item.json.fileName);\n  content.push({ type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: buffer.toString('base64') } });\n}\ncontent.push({ type: 'text', text: 'Extract the scope of work and total vendor cost from the attached vendor quote(s) as instructed.' });\n\nreturn [{ json: {\n  opportunityId: first.opportunityId,\n  contactId: first.contactId,\n  requestBody: {\n    model: 'claude-sonnet-5',\n    max_tokens: 2048,\n    system: SYSTEM_PROMPT,\n    messages: [{ role: 'user', content }],\n  },\n} }];\n",
+        "mode": "runOnceForAllItems"
+      },
+      "id": "n-build-request",
+      "name": "Code \u2013 Build Claude Request",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1800,
+        -300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{ json: { attempt: 1, maxAttempts: 5 } }];"
+      },
+      "id": "n-jn-init",
+      "name": "Code \u2013 Init Job Number Attempt",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2400,
+        -300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "https://services.leadconnectorhq.com/locations/4rvwvGT5Ot8Dxyoo7UwS/customValues",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Version",
+              "value": "2021-07-28"
+            }
+          ]
+        },
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth"
+      },
+      "id": "n-jn-read",
+      "name": "GHL \u2013 Get Job Number Counter (Read)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2600,
+        -300
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "EKDDJ0lTGjOvu7Ax",
+          "name": "GHL - Metroplex"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const COUNTER_NAME = \"Job Number Counter\";\nconst values = $json.customValues || [];\nconst counter = values.find(v => v.name === COUNTER_NAME) || null;\n\nconst now = new Date();\nconst yy = String(now.getFullYear()).slice(-2);\nconst mm = String(now.getMonth() + 1).padStart(2, '0');\nconst currentYYMM = yy + mm;\n\nfunction computeNext(storedValue) {\n  let seq = 1;\n  if (storedValue) {\n    const [storedYYMM, storedSeqStr] = storedValue.split('-');\n    if (storedYYMM === currentYYMM) {\n      seq = parseInt(storedSeqStr, 10) + 1;\n    }\n  }\n  const newStoredValue = `${currentYYMM}-${String(seq).padStart(3, '0')}`;\n  const jobNumber = `${currentYYMM}${String(seq).padStart(3, '0')}`;\n  return { newStoredValue, jobNumber };\n}\n\nconst readValue = counter ? counter.value : null;\nconst candidate = computeNext(readValue);\n\nlet prior;\ntry {\n  prior = $('Code \u2013 Prepare Job Number Retry').first().json;\n} catch (e) {\n  prior = $('Code \u2013 Init Job Number Attempt').first().json;\n}\n\nreturn [{ json: {\n  counterId: counter ? counter.id : null,\n  readValue,\n  candidateNewStoredValue: candidate.newStoredValue,\n  candidateJobNumber: candidate.jobNumber,\n  attempt: prior.attempt,\n  maxAttempts: prior.maxAttempts,\n} }];"
+      },
+      "id": "n-jn-compute",
+      "name": "Code \u2013 Compute Job Number Candidate",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2800,
+        -300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "https://services.leadconnectorhq.com/locations/4rvwvGT5Ot8Dxyoo7UwS/customValues",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Version",
+              "value": "2021-07-28"
+            }
+          ]
+        },
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth"
+      },
+      "id": "n-jn-verify",
+      "name": "GHL \u2013 Get Job Number Counter (Verify Read)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3000,
+        -300
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "EKDDJ0lTGjOvu7Ax",
+          "name": "GHL - Metroplex"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const COUNTER_NAME = \"Job Number Counter\";\nconst compute = $('Code \u2013 Compute Job Number Candidate').first().json;\nconst values = $json.customValues || [];\nconst counter = values.find(v => v.name === COUNTER_NAME) || null;\nconst verifyReadValue = counter ? counter.value : null;\n\nconst collisionDetected = verifyReadValue !== compute.readValue;\n\nreturn [{ json: {\n  counterId: counter ? counter.id : compute.counterId,\n  finalStoredValue: compute.candidateNewStoredValue,\n  finalJobNumber: compute.candidateJobNumber,\n  collisionDetected,\n  attempt: compute.attempt,\n  maxAttempts: compute.maxAttempts,\n} }];"
+      },
+      "id": "n-jn-check",
+      "name": "Code \u2013 Check Job Number Collision",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3200,
+        -300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 1
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "c1",
+              "leftValue": "={{ $json.collisionDetected }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "n-jn-if-collision",
+      "name": "IF \u2013 Job Number Collision Detected?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3400,
+        -300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 1
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "c1",
+              "leftValue": "={{ $json.attempt }}",
+              "rightValue": "={{ $json.maxAttempts }}",
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "n-jn-if-exhausted",
+      "name": "IF \u2013 Job Number Attempts Exhausted?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3600,
+        -400
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const prev = $json;\nreturn [{ json: {\n  attempt: prev.attempt + 1,\n  maxAttempts: prev.maxAttempts,\n  delayMs: Math.floor(Math.random() * 250) + 50,\n} }];"
+      },
+      "id": "n-jn-prepare-retry",
+      "name": "Code \u2013 Prepare Job Number Retry",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3600,
+        -200
+      ]
+    },
+    {
+      "parameters": {
+        "resume": "timeInterval",
+        "unit": "seconds",
+        "amount": "={{ $json.delayMs / 1000 }}"
+      },
+      "id": "n-jn-wait",
+      "name": "Wait \u2013 Job Number Backoff",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        3800,
+        -200
+      ],
+      "webhookId": "8f90a1b2-3456-4c7d-8e9f-0a1b2c3d4e5f"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { status: 'job_number_generation_failed', attemptsUsed: $json.attempt, opportunityId: $('Code \u2013 Parse Claude Response').first().json.opportunityId } }}",
+        "options": {
+          "responseCode": 500
+        }
+      },
+      "id": "n-jn-respond-failed",
+      "name": "Respond \u2013 Job Number Failed",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        3800,
+        -400
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 1
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "c1",
+              "leftValue": "={{ $json.counterId }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "n-jn-if-exists",
+      "name": "IF \u2013 Job Number Counter Exists?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3600,
+        -100
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://services.leadconnectorhq.com/locations/4rvwvGT5Ot8Dxyoo7UwS/customValues/{{ $json.counterId }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Version",
+              "value": "2021-07-28"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { \"name\": \"Job Number Counter\", \"value\": $json.finalStoredValue } }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth"
+      },
+      "id": "n-jn-update",
+      "name": "GHL \u2013 Update Job Number Counter",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3800,
+        -50
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "EKDDJ0lTGjOvu7Ax",
+          "name": "GHL - Metroplex"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://services.leadconnectorhq.com/locations/4rvwvGT5Ot8Dxyoo7UwS/customValues",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Version",
+              "value": "2021-07-28"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { \"name\": \"Job Number Counter\", \"value\": $json.finalStoredValue } }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth"
+      },
+      "id": "n-jn-create",
+      "name": "GHL \u2013 Create Job Number Counter",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3800,
+        50
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "EKDDJ0lTGjOvu7Ax",
+          "name": "GHL - Metroplex"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const extraction = $('Code \u2013 Parse Claude Response').first().json;\nconst jn = $('Code \u2013 Check Job Number Collision').first().json;\nconst presence = $('Code \u2013 Presence & Idempotency Check').first().json;\n\nreturn [{ json: {\n  opportunityId: extraction.opportunityId,\n  contactId: extraction.contactId,\n  scopeOfWork: extraction.scopeOfWork,\n  vendorCost: extraction.vendorCost,\n  jobNumber: jn.finalJobNumber,\n  fileIdentifier: presence.currentFileIdentifier,\n} }];\n"
+      },
+      "id": "n-write-prep",
+      "name": "Code \u2013 Prepare Opportunity Write-Back",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4000,
+        -50
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://services.leadconnectorhq.com/opportunities/{{ $json.opportunityId }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Version",
+              "value": "2021-07-28"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { customFields: [ { \"id\": \"5PY5to63fsK6zLeTkeXi\", \"field_value\": $json.scopeOfWork }, { \"id\": \"18PFqjEqlAuMotSx4GKF\", \"field_value\": $json.vendorCost }, { \"id\": \"CWBkt6xFQjdU97R5bKUC\", \"field_value\": $json.jobNumber }, { \"id\": \"aHtcxuPqiwH8H0sK3Pj6\", \"field_value\": \"yes\" }, { \"id\": \"rwUHPHY1y1gOkK8xxrU6\", \"field_value\": $json.fileIdentifier }, { \"id\": \"UmqzaACSH0ySo3NseIpD\", \"field_value\": \"no\" } ] } }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth"
+      },
+      "id": "n-write-opp",
+      "name": "GHL \u2013 Write Scope/Cost/JobNumber to Opportunity",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4200,
+        -50
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "EKDDJ0lTGjOvu7Ax",
+          "name": "GHL - Metroplex"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "https://services.leadconnectorhq.com/opportunities/search",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "location_id",
+              "value": "4rvwvGT5Ot8Dxyoo7UwS"
+            },
+            {
+              "name": "limit",
+              "value": "100"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Version",
+              "value": "2021-07-28"
+            }
+          ]
+        },
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth"
+      },
+      "id": "n-dup-list",
+      "name": "GHL \u2013 List Opportunities (Duplicate Check)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4400,
+        -50
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "EKDDJ0lTGjOvu7Ax",
+          "name": "GHL - Metroplex"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const JOB_NUMBER_ID = \"CWBkt6xFQjdU97R5bKUC\";\nconst prep = $('Code \u2013 Prepare Opportunity Write-Back').first().json;\nconst opportunities = $json.opportunities || [];\n\nconst matches = opportunities.filter(opp => {\n  if (opp.id === prep.opportunityId) return false;\n  const cf = (opp.customFields || []).find(f => f.id === JOB_NUMBER_ID);\n  const val = cf ? (cf.value ?? cf.fieldValue ?? cf.fieldValueString ?? cf.fieldValueNumber) : null;\n  return val === prep.jobNumber;\n});\n\nreturn [{ json: {\n  opportunityId: prep.opportunityId,\n  contactId: prep.contactId,\n  jobNumber: prep.jobNumber,\n  isDuplicate: matches.length > 0,\n  duplicateOpportunityIds: matches.map(m => m.id),\n} }];"
+      },
+      "id": "n-dup-check",
+      "name": "Code \u2013 Check Job Number Duplicate",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4600,
+        -50
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 1
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "c1",
+              "leftValue": "={{ $json.isDuplicate }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "n-dup-if",
+      "name": "IF \u2013 Job Number Is Duplicate?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        4800,
+        -50
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://services.leadconnectorhq.com/contacts/{{ $json.contactId }}/tasks",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Version",
+              "value": "2021-07-28"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { \"title\": \"Duplicate job number detected: \" + $json.jobNumber, \"body\": \"Opportunity \" + $json.opportunityId + \" was assigned job number \" + $json.jobNumber + \", which also appears on: \" + $json.duplicateOpportunityIds.join(', ') + \". This can happen under rare simultaneous uploads. Manually assign a unique job number to one of these opportunities before sending a contract.\", \"assignedTo\": \"ScQEgubPkgSmLURE4K2t\", \"dueDate\": new Date(Date.now() + 4 * 60 * 60 * 1000).toISOString(), \"completed\": false } }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth"
+      },
+      "id": "n-dup-task",
+      "name": "GHL \u2013 Create Duplicate Job Number Task",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        5000,
+        -150
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "EKDDJ0lTGjOvu7Ax",
+          "name": "GHL - Metroplex"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { status: 'extracted_and_written_duplicate_flagged', opportunityId: $('Code \u2013 Check Job Number Duplicate').first().json.opportunityId, jobNumber: $('Code \u2013 Check Job Number Duplicate').first().json.jobNumber, duplicateOpportunityIds: $('Code \u2013 Check Job Number Duplicate').first().json.duplicateOpportunityIds } }}",
+        "options": {}
+      },
+      "id": "n-respond-dup",
+      "name": "Respond \u2013 Success With Duplicate Warning",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        5200,
+        -150
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { status: 'extracted_and_written', opportunityId: $json.opportunityId, jobNumber: $json.jobNumber } }}",
+        "options": {}
+      },
+      "id": "n-respond-success",
+      "name": "Respond \u2013 Success",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        5000,
+        50
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 1
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "c1",
+              "leftValue": "={{ $json.skipReason }}",
+              "rightValue": "no_vendor_quote_files",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "c2",
+              "leftValue": "={{ $json.alreadyRetried }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "notEqual",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "n-if-file-retry-eligible",
+      "name": "IF \u2013 No Files (Retry Eligible)?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        600,
+        250
+      ]
+    },
+    {
+      "parameters": {
+        "resume": "timeInterval",
+        "unit": "seconds",
+        "amount": 12
+      },
+      "id": "n-wait-file-visibility",
+      "name": "Wait \u2013 File Visibility Retry",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        800,
+        250
+      ],
+      "webhookId": "f1a2b3c4d5e6-4qrs2-rstq3-f12346e7f8a9"
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://services.leadconnectorhq.com/opportunities/{{ $json.opportunityId }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Version",
+              "value": "2021-07-28"
+            }
+          ]
+        },
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth"
+      },
+      "id": "n-get-opp-retry",
+      "name": "GHL \u2013 Get Opportunity (Retry)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1000,
+        250
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "EKDDJ0lTGjOvu7Ax",
+          "name": "GHL - Metroplex"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const VENDOR_QUOTE_ID = \"1uBuPucl5UvebEX4SZfZ\";\nconst LAST_PROCESSED_ID = \"rwUHPHY1y1gOkK8xxrU6\";\nconst QUOTES_COMPLETE_ID = \"4p6KBFM8K8ljYiw5Awwx\";\n\nconst opp = $json.opportunity || $json;\nconst customFields = opp.customFields || [];\n\nfunction fieldById(id) {\n  return customFields.find(f => f.id === id) || null;\n}\n\nconst vendorQuoteField = fieldById(VENDOR_QUOTE_ID);\nconst files = (vendorQuoteField?.fieldValueFiles || vendorQuoteField?.fieldValue || []).filter(f => !f.deleted);\n\nconst lastProcessedField = fieldById(LAST_PROCESSED_ID);\nconst lastProcessedValue = lastProcessedField ? (lastProcessedField.value ?? lastProcessedField.fieldValue ?? null) : null;\n\nconst currentFileIdentifier = files.map(f => f.url).sort().join('|');\n\nconst hasFiles = files.length > 0;\nconst fileAlreadyProcessed = hasFiles && Boolean(lastProcessedValue) && currentFileIdentifier === lastProcessedValue;\n\nlet skipReason = null;\nif (!hasFiles) skipReason = 'no_vendor_quote_files';\nelse if (fileAlreadyProcessed) skipReason = 'file_already_processed';\n\n// \"Quotes Complete\" is a single-option checkbox (option label \"Complete\").\n// GHL has been observed returning a custom field's value under different\n// keys depending on the API path (fieldValue, fieldValueString, or value) --\n// read all three defensively rather than assuming one shape.\nconst quotesCompleteField = fieldById(QUOTES_COMPLETE_ID);\nconst rawQuotesComplete = quotesCompleteField\n  ? (quotesCompleteField.fieldValue ?? quotesCompleteField.fieldValueString ?? quotesCompleteField.value ?? null)\n  : null;\nconst quotesComplete = Array.isArray(rawQuotesComplete)\n  ? rawQuotesComplete.some(v => String(v).toLowerCase().includes('complete'))\n  : typeof rawQuotesComplete === 'boolean'\n    ? rawQuotesComplete\n    : typeof rawQuotesComplete === 'string'\n      ? ['true', 'yes', 'complete'].includes(rawQuotesComplete.toLowerCase())\n      : false;\n\nreturn [{ json: {\n  opportunityId: opp.id,\n  contactId: opp.contactId,\n  shouldProceed: hasFiles && !fileAlreadyProcessed,\n  skipReason,\n  fileCount: files.length,\n  files: files.map(f => ({ name: f.meta?.name, url: f.url, size: f.meta?.size, mimetype: f.meta?.mimetype })),\n  currentFileIdentifier,\n  quotesComplete,\n  // Set once so the retry-eligibility check never loops a second time --\n  // this is a single, bounded re-check, not an open-ended retry loop.\n  alreadyRetried: true,\n} }];\n"
+      },
+      "id": "n-presence-retry",
+      "name": "Code \u2013 Presence & Idempotency Check (Retry)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1200,
+        250
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{ json: { attempt: 1, maxAttempts: 4 } }];"
+      },
+      "id": "n-claude-init",
+      "name": "Code \u2013 Init Claude Attempt",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2000,
+        -400
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const buildRequest = $('Code \u2013 Build Claude Request').first().json;\nconst response = $json; // { statusCode, headers, body } due to fullResponse:true\nconst statusCode = response.statusCode;\nconst isSuccess = statusCode >= 200 && statusCode < 300;\n\n// Anthropic's documented transient/retryable statuses: 429 (rate limit), 500/502/503/504\n// (server-side issues), 529 (overloaded -- the exact status seen in the real failure\n// this fix addresses). Anything else (e.g. 400 bad request) is not retryable -- retrying\n// an identical malformed request would just fail again the same way.\nconst TRANSIENT_STATUSES = [429, 500, 502, 503, 504, 529];\nconst isTransient = TRANSIENT_STATUSES.includes(statusCode);\n\nlet prior;\ntry {\n  prior = $('Code \u2013 Prepare Claude Retry').first().json;\n} catch (e) {\n  prior = $('Code \u2013 Init Claude Attempt').first().json;\n}\n\nreturn [{ json: {\n  opportunityId: buildRequest.opportunityId,\n  contactId: buildRequest.contactId,\n  isSuccess,\n  isTransient,\n  statusCode,\n  responseBody: response.body,\n  attempt: prior.attempt,\n  maxAttempts: prior.maxAttempts,\n} }];"
+      },
+      "id": "n-check-claude",
+      "name": "Code \u2013 Check Claude Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2400,
+        -300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 1
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "c1",
+              "leftValue": "={{ $json.isSuccess }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "n-if-claude-success",
+      "name": "IF \u2013 Claude Succeeded?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2600,
+        -300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 1
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "c1",
+              "leftValue": "={{ $json.isTransient }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "c2",
+              "leftValue": "={{ $json.attempt }}",
+              "rightValue": "={{ $json.maxAttempts }}",
+              "operator": {
+                "type": "number",
+                "operation": "lt"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "n-if-claude-retryable",
+      "name": "IF \u2013 Claude Transient & Retryable?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2800,
+        -150
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const prev = $json;\nconst BACKOFF_SECONDS = [5, 15, 30];\nconst delaySeconds = BACKOFF_SECONDS[prev.attempt - 1] ?? 30;\nreturn [{ json: {\n  ...prev,\n  attempt: prev.attempt + 1,\n  delaySeconds,\n} }];"
+      },
+      "id": "n-prepare-claude-retry",
+      "name": "Code \u2013 Prepare Claude Retry",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3000,
+        -150
+      ]
+    },
+    {
+      "parameters": {
+        "resume": "timeInterval",
+        "unit": "seconds",
+        "amount": "={{ $json.delaySeconds }}"
+      },
+      "id": "n-wait-claude-retry",
+      "name": "Wait \u2013 Claude Retry Backoff",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        3200,
+        -150
+      ],
+      "webhookId": "a2b3c4d5e6f7-4stu3-tuvr4-a23457f8a9b0"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://services.leadconnectorhq.com/contacts/{{ $json.contactId }}/tasks",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Version",
+              "value": "2021-07-28"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { \"title\": \"Contract draft extraction failed on \" + $json.opportunityId, \"body\": \"Claude extraction failed with status \" + $json.statusCode + \" after \" + $json.attempt + \" attempt(s): \" + JSON.stringify($json.responseBody).slice(0, 500) + \". Vendor Quote file is uploaded but Scope of Work/Job Number/Vendor Cost were not extracted. Re-upload the file (or edit an unrelated opportunity field) to re-trigger, or process manually.\", \"assignedTo\": \"ScQEgubPkgSmLURE4K2t\", \"dueDate\": new Date(Date.now() + 4 * 60 * 60 * 1000).toISOString(), \"completed\": false } }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth"
+      },
+      "id": "n-claude-failure-task",
+      "name": "GHL \u2013 Create Claude Failure Task",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3000,
+        -50
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "EKDDJ0lTGjOvu7Ax",
+          "name": "GHL - Metroplex"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { status: 'claude_extraction_failed', opportunityId: $('Code \u2013 Check Claude Response').first().json.opportunityId, statusCode: $('Code \u2013 Check Claude Response').first().json.statusCode, attemptsUsed: $('Code \u2013 Check Claude Response').first().json.attempt } }}",
+        "options": {
+          "responseCode": 502
+        }
+      },
+      "id": "n-respond-claude-failed",
+      "name": "Respond \u2013 Claude Extraction Failed",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        3200,
+        -50
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook \u2013 GHL Contract Quote Uploaded": {
+      "main": [
+        [
+          {
+            "node": "GHL \u2013 Get Opportunity",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GHL \u2013 Get Opportunity": {
+      "main": [
+        [
+          {
+            "node": "Code \u2013 Presence & Idempotency Check",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code \u2013 Presence & Idempotency Check": {
+      "main": [
+        [
+          {
+            "node": "IF \u2013 Should Proceed?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF \u2013 Should Proceed?": {
+      "main": [
+        [
+          {
+            "node": "GHL \u2013 Get Contact",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "IF \u2013 No Files (Retry Eligible)?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GHL \u2013 Get Contact": {
+      "main": [
+        [
+          {
+            "node": "Code \u2013 Completeness Check",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code \u2013 Completeness Check": {
+      "main": [
+        [
+          {
+            "node": "IF \u2013 Complete?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF \u2013 Complete?": {
+      "main": [
+        [
+          {
+            "node": "Code \u2013 Files To Items",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "GHL \u2013 Create Mismatch Review Task",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GHL \u2013 Create Mismatch Review Task": {
+      "main": [
+        [
+          {
+            "node": "Respond \u2013 Incomplete",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claude \u2013 Extract Contract Data": {
+      "main": [
+        [
+          {
+            "node": "Code \u2013 Check Claude Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code \u2013 Parse Claude Response": {
+      "main": [
+        [
+          {
+            "node": "Code \u2013 Init Job Number Attempt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code \u2013 Files To Items": {
+      "main": [
+        [
+          {
+            "node": "HTTP \u2013 Fetch PDF Binary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP \u2013 Fetch PDF Binary": {
+      "main": [
+        [
+          {
+            "node": "Code \u2013 Build Claude Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code \u2013 Build Claude Request": {
+      "main": [
+        [
+          {
+            "node": "Code \u2013 Init Claude Attempt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code \u2013 Init Job Number Attempt": {
+      "main": [
+        [
+          {
+            "node": "GHL \u2013 Get Job Number Counter (Read)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GHL \u2013 Get Job Number Counter (Read)": {
+      "main": [
+        [
+          {
+            "node": "Code \u2013 Compute Job Number Candidate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code \u2013 Compute Job Number Candidate": {
+      "main": [
+        [
+          {
+            "node": "GHL \u2013 Get Job Number Counter (Verify Read)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GHL \u2013 Get Job Number Counter (Verify Read)": {
+      "main": [
+        [
+          {
+            "node": "Code \u2013 Check Job Number Collision",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code \u2013 Check Job Number Collision": {
+      "main": [
+        [
+          {
+            "node": "IF \u2013 Job Number Collision Detected?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF \u2013 Job Number Collision Detected?": {
+      "main": [
+        [
+          {
+            "node": "IF \u2013 Job Number Attempts Exhausted?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "IF \u2013 Job Number Counter Exists?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF \u2013 Job Number Attempts Exhausted?": {
+      "main": [
+        [
+          {
+            "node": "Respond \u2013 Job Number Failed",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code \u2013 Prepare Job Number Retry",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code \u2013 Prepare Job Number Retry": {
+      "main": [
+        [
+          {
+            "node": "Wait \u2013 Job Number Backoff",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait \u2013 Job Number Backoff": {
+      "main": [
+        [
+          {
+            "node": "GHL \u2013 Get Job Number Counter (Read)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF \u2013 Job Number Counter Exists?": {
+      "main": [
+        [
+          {
+            "node": "GHL \u2013 Update Job Number Counter",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "GHL \u2013 Create Job Number Counter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GHL \u2013 Update Job Number Counter": {
+      "main": [
+        [
+          {
+            "node": "Code \u2013 Prepare Opportunity Write-Back",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GHL \u2013 Create Job Number Counter": {
+      "main": [
+        [
+          {
+            "node": "Code \u2013 Prepare Opportunity Write-Back",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code \u2013 Prepare Opportunity Write-Back": {
+      "main": [
+        [
+          {
+            "node": "GHL \u2013 Write Scope/Cost/JobNumber to Opportunity",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GHL \u2013 Write Scope/Cost/JobNumber to Opportunity": {
+      "main": [
+        [
+          {
+            "node": "GHL \u2013 List Opportunities (Duplicate Check)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GHL \u2013 List Opportunities (Duplicate Check)": {
+      "main": [
+        [
+          {
+            "node": "Code \u2013 Check Job Number Duplicate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code \u2013 Check Job Number Duplicate": {
+      "main": [
+        [
+          {
+            "node": "IF \u2013 Job Number Is Duplicate?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF \u2013 Job Number Is Duplicate?": {
+      "main": [
+        [
+          {
+            "node": "GHL \u2013 Create Duplicate Job Number Task",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond \u2013 Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GHL \u2013 Create Duplicate Job Number Task": {
+      "main": [
+        [
+          {
+            "node": "Respond \u2013 Success With Duplicate Warning",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF \u2013 No Files (Retry Eligible)?": {
+      "main": [
+        [
+          {
+            "node": "Wait \u2013 File Visibility Retry",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond \u2013 Skipped",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait \u2013 File Visibility Retry": {
+      "main": [
+        [
+          {
+            "node": "GHL \u2013 Get Opportunity (Retry)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GHL \u2013 Get Opportunity (Retry)": {
+      "main": [
+        [
+          {
+            "node": "Code \u2013 Presence & Idempotency Check (Retry)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code \u2013 Presence & Idempotency Check (Retry)": {
+      "main": [
+        [
+          {
+            "node": "IF \u2013 Should Proceed?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code \u2013 Init Claude Attempt": {
+      "main": [
+        [
+          {
+            "node": "Claude \u2013 Extract Contract Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code \u2013 Check Claude Response": {
+      "main": [
+        [
+          {
+            "node": "IF \u2013 Claude Succeeded?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF \u2013 Claude Succeeded?": {
+      "main": [
+        [
+          {
+            "node": "Code \u2013 Parse Claude Response",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "IF \u2013 Claude Transient & Retryable?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF \u2013 Claude Transient & Retryable?": {
+      "main": [
+        [
+          {
+            "node": "Code \u2013 Prepare Claude Retry",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "GHL \u2013 Create Claude Failure Task",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code \u2013 Prepare Claude Retry": {
+      "main": [
+        [
+          {
+            "node": "Wait \u2013 Claude Retry Backoff",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait \u2013 Claude Retry Backoff": {
+      "main": [
+        [
+          {
+            "node": "Claude \u2013 Extract Contract Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GHL \u2013 Create Claude Failure Task": {
+      "main": [
+        [
+          {
+            "node": "Respond \u2013 Claude Extraction Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": null,
+  "nodeGroups": [],
+  "pinData": null,
+  "versionId": "154c70e9-f66b-4190-a5ab-9835505220c2",
+  "activeVersionId": "154c70e9-f66b-4190-a5ab-9835505220c2",
+  "versionCounter": 20,
+  "triggerCount": 1,
+  "sourceWorkflowId": null,
+  "shared": [
+    {
+      "updatedAt": "2026-07-27T19:29:39.786Z",
+      "createdAt": "2026-07-27T19:29:39.786Z",
+      "role": "workflow:owner",
+      "workflowId": "dwLhnSA9Cw6XGHe3",
+      "projectId": "bXOHSh2a6SC9lJsr",
+      "project": {
+        "updatedAt": "2026-09-23T02:33:23.785Z",
+        "createdAt": "2026-06-22T15:06:30.869Z",
+        "id": "bXOHSh2a6SC9lJsr",
+        "name": "Andrew ajmj86@gmail.com <ajmj86@gmail.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "customTelemetryTags": [],
+        "creatorId": "566add4a-1769-4697-9ff9-05a7787c3cb6"
+      }
+    }
+  ],
+  "tags": [],
+  "activeVersion": {
+    "updatedAt": "2026-09-24T21:15:07.879Z",
+    "createdAt": "2026-09-24T21:15:07.879Z",
+    "versionId": "154c70e9-f66b-4190-a5ab-9835505220c2",
+    "workflowId": "dwLhnSA9Cw6XGHe3",
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "ghl-contract-quote-uploaded",
+          "responseMode": "responseNode",
+          "options": {}
+        },
+        "id": "n-webhook",
+        "name": "Webhook \u2013 GHL Contract Quote Uploaded",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          0,
+          0
+        ],
+        "webhookId": "5c6d7e8f-9012-4a3b-8c4d-5e6f70819234"
+      },
+      {
+        "parameters": {
+          "method": "GET",
+          "url": "=https://services.leadconnectorhq.com/opportunities/{{ $json.body.customData.opportunityId }}",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Version",
+                "value": "2021-07-28"
+              }
+            ]
+          },
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "httpHeaderAuth"
+        },
+        "id": "n-get-opp",
+        "name": "GHL \u2013 Get Opportunity",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          200,
+          0
+        ],
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": "EKDDJ0lTGjOvu7Ax",
+            "name": "GHL - Metroplex"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "const VENDOR_QUOTE_ID = \"1uBuPucl5UvebEX4SZfZ\";\nconst LAST_PROCESSED_ID = \"rwUHPHY1y1gOkK8xxrU6\";\nconst QUOTES_COMPLETE_ID = \"4p6KBFM8K8ljYiw5Awwx\";\n\nconst opp = $json.opportunity || $json;\nconst customFields = opp.customFields || [];\n\nfunction fieldById(id) {\n  return customFields.find(f => f.id === id) || null;\n}\n\nconst vendorQuoteField = fieldById(VENDOR_QUOTE_ID);\nconst files = (vendorQuoteField?.fieldValueFiles || vendorQuoteField?.fieldValue || []).filter(f => !f.deleted);\n\nconst lastProcessedField = fieldById(LAST_PROCESSED_ID);\nconst lastProcessedValue = lastProcessedField ? (lastProcessedField.value ?? lastProcessedField.fieldValue ?? null) : null;\n\n// Identify the current file set by its URLs -- each GHL upload gets a unique\n// URL (embeds a per-file UUID), so this string changes iff the actual file(s)\n// change. Sorted so array reordering alone can't register as \"different\".\nconst currentFileIdentifier = files.map(f => f.url).sort().join('|');\n\nconst hasFiles = files.length > 0;\nconst fileAlreadyProcessed = hasFiles && Boolean(lastProcessedValue) && currentFileIdentifier === lastProcessedValue;\n\nlet skipReason = null;\nif (!hasFiles) skipReason = 'no_vendor_quote_files';\nelse if (fileAlreadyProcessed) skipReason = 'file_already_processed';\n\n// \"Quotes Complete\" is a single-option checkbox (option label \"Complete\").\n// GHL has been observed returning a custom field's value under different\n// keys depending on the API path (fieldValue, fieldValueString, or value) --\n// read all three defensively rather than assuming one shape.\nconst quotesCompleteField = fieldById(QUOTES_COMPLETE_ID);\nconst rawQuotesComplete = quotesCompleteField\n  ? (quotesCompleteField.fieldValue ?? quotesCompleteField.fieldValueString ?? quotesCompleteField.value ?? null)\n  : null;\nconst quotesComplete = Array.isArray(rawQuotesComplete)\n  ? rawQuotesComplete.some(v => String(v).toLowerCase().includes('complete'))\n  : typeof rawQuotesComplete === 'boolean'\n    ? rawQuotesComplete\n    : typeof rawQuotesComplete === 'string'\n      ? ['true', 'yes', 'complete'].includes(rawQuotesComplete.toLowerCase())\n      : false;\n\nreturn [{ json: {\n  opportunityId: opp.id,\n  contactId: opp.contactId,\n  shouldProceed: hasFiles && !fileAlreadyProcessed,\n  skipReason,\n  fileCount: files.length,\n  files: files.map(f => ({ name: f.meta?.name, url: f.url, size: f.meta?.size, mimetype: f.meta?.mimetype })),\n  currentFileIdentifier,\n  quotesComplete,\n} }];\n"
+        },
+        "id": "n-presence",
+        "name": "Code \u2013 Presence & Idempotency Check",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          400,
+          0
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "loose",
+              "version": 1
+            },
+            "combinator": "and",
+            "conditions": [
+              {
+                "id": "c1",
+                "leftValue": "={{ $json.shouldProceed }}",
+                "rightValue": true,
+                "operator": {
+                  "type": "boolean",
+                  "operation": "true",
+                  "singleValue": true
+                }
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "n-if-proceed",
+        "name": "IF \u2013 Should Proceed?",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          600,
+          0
+        ]
+      },
+      {
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "={{ { status: 'skipped', reason: $json.skipReason, opportunityId: $json.opportunityId } }}",
+          "options": {}
+        },
+        "id": "n-respond-skip",
+        "name": "Respond \u2013 Skipped",
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.1,
+        "position": [
+          800,
+          150
+        ]
+      },
+      {
+        "parameters": {
+          "method": "GET",
+          "url": "=https://services.leadconnectorhq.com/contacts/{{ $json.contactId }}",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Version",
+                "value": "2021-07-28"
+              }
+            ]
+          },
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "httpHeaderAuth"
+        },
+        "id": "n-get-contact",
+        "name": "GHL \u2013 Get Contact",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          800,
+          -100
+        ],
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": "EKDDJ0lTGjOvu7Ax",
+            "name": "GHL - Metroplex"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "const ROOF_TYPE_ID = \"ooxcklKOKGrDCRunZnh3\";\n\nconst presence = $('Code \u2013 Presence & Idempotency Check').first().json;\nconst contact = $json.contact || $json;\nconst customFields = contact.customFields || [];\nconst roofTypeField = customFields.find(f => f.id === ROOF_TYPE_ID) || null;\nconst rawRoofType = roofTypeField ? (roofTypeField.value ?? roofTypeField.fieldValue ?? null) : null;\n\n// Values seen live in production are inconsistent in format (e.g. \"standing_seam\"\n// vs \"Standing Seam Steel\"), so normalize before matching rather than relying on\n// an exact string.\nconst normalized = (rawRoofType || '').toLowerCase().replace(/[^a-z]/g, '');\nconst minExpectedFileCount = normalized.includes('stonecoat') ? 2 : 1;\n// A checked \"Quotes Complete\" box means the vendor deliberately combined\n// materials and labor into a single quote document instead of the usual\n// per-vendor files -- one file is enough regardless of roof type.\nconst expectedFileCount = presence.quotesComplete ? 1 : minExpectedFileCount;\nconst actualFileCount = presence.fileCount;\nconst complete = actualFileCount === expectedFileCount;\n\nreturn [{ json: {\n  opportunityId: presence.opportunityId,\n  contactId: presence.contactId,\n  files: presence.files,\n  rawRoofType,\n  quotesComplete: presence.quotesComplete,\n  expectedFileCount,\n  actualFileCount,\n  complete,\n} }];\n"
+        },
+        "id": "n-completeness",
+        "name": "Code \u2013 Completeness Check",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1000,
+          -100
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "loose",
+              "version": 1
+            },
+            "combinator": "and",
+            "conditions": [
+              {
+                "id": "c1",
+                "leftValue": "={{ $json.complete }}",
+                "rightValue": true,
+                "operator": {
+                  "type": "boolean",
+                  "operation": "true",
+                  "singleValue": true
+                }
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "n-if-complete",
+        "name": "IF \u2013 Complete?",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          1200,
+          -100
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "=https://services.leadconnectorhq.com/contacts/{{ $json.contactId }}/tasks",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Version",
+                "value": "2021-07-28"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ { \"title\": \"Vendor quote count mismatch on \" + $json.opportunityId, \"body\": \"Roof type \" + JSON.stringify($json.rawRoofType) + \" expects \" + $json.expectedFileCount + \" vendor quote file(s), but \" + $json.actualFileCount + \" were uploaded. Contract drafting was NOT auto-populated \u2014 review the Vendor Quote files and either add/remove a file or process manually.\", \"assignedTo\": \"ScQEgubPkgSmLURE4K2t\", \"dueDate\": new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(), \"completed\": false } }}",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "httpHeaderAuth"
+        },
+        "id": "n-create-mismatch-task",
+        "name": "GHL \u2013 Create Mismatch Review Task",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          1400,
+          50
+        ],
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": "EKDDJ0lTGjOvu7Ax",
+            "name": "GHL - Metroplex"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "={{ { status: 'incomplete', expectedFileCount: $('Code \u2013 Completeness Check').first().json.expectedFileCount, actualFileCount: $('Code \u2013 Completeness Check').first().json.actualFileCount, opportunityId: $('Code \u2013 Completeness Check').first().json.opportunityId } }}",
+          "options": {}
+        },
+        "id": "n-respond-incomplete",
+        "name": "Respond \u2013 Incomplete",
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.1,
+        "position": [
+          1600,
+          50
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://api.anthropic.com/v1/messages",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "anthropic-version",
+                "value": "2023-06-01"
+              },
+              {
+                "name": "content-type",
+                "value": "application/json"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ $('Code \u2013 Build Claude Request').first().json.requestBody }}",
+          "options": {
+            "response": {
+              "response": {
+                "neverError": true,
+                "fullResponse": true
+              }
+            }
+          },
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "httpHeaderAuth"
+        },
+        "id": "n-claude-extract",
+        "name": "Claude \u2013 Extract Contract Data",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          2200,
+          -300
+        ],
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": "NJN8AicEZdyLLNf2",
+            "name": "Anthropic Key"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "const checked = $('Code \u2013 Check Claude Response').first().json;\nconst raw = checked.responseBody;\n\nconst textBlock = raw.content?.find(b => b.type === 'text');\nif (!textBlock) throw new Error('No text block in Claude response: ' + JSON.stringify(raw));\n\nconst cleaned = textBlock.text.replace(/```json|```/g, '').trim();\n\nlet parsed;\ntry {\n  parsed = JSON.parse(cleaned);\n} catch (e) {\n  throw new Error('Failed to parse Claude JSON: ' + cleaned);\n}\n\nreturn [{ json: {\n  opportunityId: checked.opportunityId,\n  contactId: checked.contactId,\n  scopeOfWork: parsed.scope_of_work ?? '',\n  vendorCost: parsed.vendor_cost ?? null,\n  extractionNotes: parsed.extraction_notes ?? 'None',\n} }];"
+        },
+        "id": "n-parse-claude",
+        "name": "Code \u2013 Parse Claude Response",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          2200,
+          -300
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "// Turn the files array (1 item) into N items (one per file), each\n// carrying the URL to fetch as binary via a real HTTP Request node --\n// n8n's binary data model already base64-encodes correctly, unlike\n// manually buffering inside a Code node (which corrupted the bytes).\nconst files = $json.files;\nreturn files.map((f, i) => ({ json: {\n  opportunityId: $json.opportunityId,\n  contactId: $json.contactId,\n  fileIndex: i,\n  fileName: f.name,\n  fileUrl: f.url,\n} }));"
+        },
+        "id": "n-files-to-items",
+        "name": "Code \u2013 Files To Items",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1400,
+          -300
+        ]
+      },
+      {
+        "parameters": {
+          "method": "GET",
+          "url": "={{ $json.fileUrl }}",
+          "options": {
+            "response": {
+              "response": {
+                "responseFormat": "file",
+                "outputPropertyName": "data"
+              }
+            }
+          }
+        },
+        "id": "n-fetch-binary",
+        "name": "HTTP \u2013 Fetch PDF Binary",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          1600,
+          -300
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "const SYSTEM_PROMPT = `You are a contract-drafting assistant for Metroplex Metal Roofs, a metal roofing company serving DFW homeowners. You will be given one or two vendor quote PDF(s) for a single roofing job (two PDFs occur only for stone-coated steel jobs, where the underlayment/decking and the panels are quoted separately by different suppliers; every other roof type has exactly one PDF, which may combine materials and labor into a single document). Extract the following and return ONLY a valid JSON object with no preamble, no markdown, no backticks. The JSON must have exactly these keys:\n- scope_of_work: a clear, concise description of the materials and system covered by the quote(s), written for a customer-facing contract. Do not include vendor pricing or cost breakdowns.\n- vendor_cost: the total dollar amount for the job, as a plain number with no currency symbol or commas. If a document states its own combined/grand total, use that stated total for that document -- do NOT also add up that same document's line items, since the line items already make up the stated total and adding both double-counts the cost. Only sum line items yourself when a document has no clearly stated total. When two separate quote documents are attached (stone-coated steel jobs), add each document's total (stated or summed) together.\n- extraction_notes: any ambiguity, missing pricing, or issue encountered while reading the document(s), or \"None\" if everything was clear.`;\n\nconst items = $input.all();\nconst first = items[0].json;\n\nconst content = [];\nfor (let i = 0; i < items.length; i++) {\n  const item = items[i];\n  const binaryKey = Object.keys(item.binary || {})[0];\n  let buffer = await this.helpers.getBinaryDataBuffer(i, binaryKey);\n  // GHL's file-serving URL for Opportunity FILE_UPLOAD fields prepends\n  // ~76 bytes of internal object metadata before the real PDF bytes\n  // (confirmed live: a protobuf-looking hash+UUID header ahead of the\n  // %PDF- marker). Trim anything before the actual PDF header rather\n  // than trusting byte 0, since the prefix length isn''''t guaranteed.\n  const pdfStart = buffer.indexOf('%PDF');\n  if (pdfStart > 0) buffer = buffer.subarray(pdfStart);\n  else if (pdfStart === -1) throw new Error('No %PDF marker found in fetched file: ' + item.json.fileName);\n  content.push({ type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: buffer.toString('base64') } });\n}\ncontent.push({ type: 'text', text: 'Extract the scope of work and total vendor cost from the attached vendor quote(s) as instructed.' });\n\nreturn [{ json: {\n  opportunityId: first.opportunityId,\n  contactId: first.contactId,\n  requestBody: {\n    model: 'claude-sonnet-5',\n    max_tokens: 2048,\n    system: SYSTEM_PROMPT,\n    messages: [{ role: 'user', content }],\n  },\n} }];\n",
+          "mode": "runOnceForAllItems"
+        },
+        "id": "n-build-request",
+        "name": "Code \u2013 Build Claude Request",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1800,
+          -300
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "return [{ json: { attempt: 1, maxAttempts: 5 } }];"
+        },
+        "id": "n-jn-init",
+        "name": "Code \u2013 Init Job Number Attempt",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          2400,
+          -300
+        ]
+      },
+      {
+        "parameters": {
+          "method": "GET",
+          "url": "https://services.leadconnectorhq.com/locations/4rvwvGT5Ot8Dxyoo7UwS/customValues",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Version",
+                "value": "2021-07-28"
+              }
+            ]
+          },
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "httpHeaderAuth"
+        },
+        "id": "n-jn-read",
+        "name": "GHL \u2013 Get Job Number Counter (Read)",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          2600,
+          -300
+        ],
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": "EKDDJ0lTGjOvu7Ax",
+            "name": "GHL - Metroplex"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "const COUNTER_NAME = \"Job Number Counter\";\nconst values = $json.customValues || [];\nconst counter = values.find(v => v.name === COUNTER_NAME) || null;\n\nconst now = new Date();\nconst yy = String(now.getFullYear()).slice(-2);\nconst mm = String(now.getMonth() + 1).padStart(2, '0');\nconst currentYYMM = yy + mm;\n\nfunction computeNext(storedValue) {\n  let seq = 1;\n  if (storedValue) {\n    const [storedYYMM, storedSeqStr] = storedValue.split('-');\n    if (storedYYMM === currentYYMM) {\n      seq = parseInt(storedSeqStr, 10) + 1;\n    }\n  }\n  const newStoredValue = `${currentYYMM}-${String(seq).padStart(3, '0')}`;\n  const jobNumber = `${currentYYMM}${String(seq).padStart(3, '0')}`;\n  return { newStoredValue, jobNumber };\n}\n\nconst readValue = counter ? counter.value : null;\nconst candidate = computeNext(readValue);\n\nlet prior;\ntry {\n  prior = $('Code \u2013 Prepare Job Number Retry').first().json;\n} catch (e) {\n  prior = $('Code \u2013 Init Job Number Attempt').first().json;\n}\n\nreturn [{ json: {\n  counterId: counter ? counter.id : null,\n  readValue,\n  candidateNewStoredValue: candidate.newStoredValue,\n  candidateJobNumber: candidate.jobNumber,\n  attempt: prior.attempt,\n  maxAttempts: prior.maxAttempts,\n} }];"
+        },
+        "id": "n-jn-compute",
+        "name": "Code \u2013 Compute Job Number Candidate",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          2800,
+          -300
+        ]
+      },
+      {
+        "parameters": {
+          "method": "GET",
+          "url": "https://services.leadconnectorhq.com/locations/4rvwvGT5Ot8Dxyoo7UwS/customValues",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Version",
+                "value": "2021-07-28"
+              }
+            ]
+          },
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "httpHeaderAuth"
+        },
+        "id": "n-jn-verify",
+        "name": "GHL \u2013 Get Job Number Counter (Verify Read)",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          3000,
+          -300
+        ],
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": "EKDDJ0lTGjOvu7Ax",
+            "name": "GHL - Metroplex"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "const COUNTER_NAME = \"Job Number Counter\";\nconst compute = $('Code \u2013 Compute Job Number Candidate').first().json;\nconst values = $json.customValues || [];\nconst counter = values.find(v => v.name === COUNTER_NAME) || null;\nconst verifyReadValue = counter ? counter.value : null;\n\nconst collisionDetected = verifyReadValue !== compute.readValue;\n\nreturn [{ json: {\n  counterId: counter ? counter.id : compute.counterId,\n  finalStoredValue: compute.candidateNewStoredValue,\n  finalJobNumber: compute.candidateJobNumber,\n  collisionDetected,\n  attempt: compute.attempt,\n  maxAttempts: compute.maxAttempts,\n} }];"
+        },
+        "id": "n-jn-check",
+        "name": "Code \u2013 Check Job Number Collision",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          3200,
+          -300
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "loose",
+              "version": 1
+            },
+            "combinator": "and",
+            "conditions": [
+              {
+                "id": "c1",
+                "leftValue": "={{ $json.collisionDetected }}",
+                "rightValue": true,
+                "operator": {
+                  "type": "boolean",
+                  "operation": "true",
+                  "singleValue": true
+                }
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "n-jn-if-collision",
+        "name": "IF \u2013 Job Number Collision Detected?",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          3400,
+          -300
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "loose",
+              "version": 1
+            },
+            "combinator": "and",
+            "conditions": [
+              {
+                "id": "c1",
+                "leftValue": "={{ $json.attempt }}",
+                "rightValue": "={{ $json.maxAttempts }}",
+                "operator": {
+                  "type": "number",
+                  "operation": "gte"
+                }
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "n-jn-if-exhausted",
+        "name": "IF \u2013 Job Number Attempts Exhausted?",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          3600,
+          -400
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "const prev = $json;\nreturn [{ json: {\n  attempt: prev.attempt + 1,\n  maxAttempts: prev.maxAttempts,\n  delayMs: Math.floor(Math.random() * 250) + 50,\n} }];"
+        },
+        "id": "n-jn-prepare-retry",
+        "name": "Code \u2013 Prepare Job Number Retry",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          3600,
+          -200
+        ]
+      },
+      {
+        "parameters": {
+          "resume": "timeInterval",
+          "unit": "seconds",
+          "amount": "={{ $json.delayMs / 1000 }}"
+        },
+        "id": "n-jn-wait",
+        "name": "Wait \u2013 Job Number Backoff",
+        "type": "n8n-nodes-base.wait",
+        "typeVersion": 1.1,
+        "position": [
+          3800,
+          -200
+        ],
+        "webhookId": "8f90a1b2-3456-4c7d-8e9f-0a1b2c3d4e5f"
+      },
+      {
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "={{ { status: 'job_number_generation_failed', attemptsUsed: $json.attempt, opportunityId: $('Code \u2013 Parse Claude Response').first().json.opportunityId } }}",
+          "options": {
+            "responseCode": 500
+          }
+        },
+        "id": "n-jn-respond-failed",
+        "name": "Respond \u2013 Job Number Failed",
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.1,
+        "position": [
+          3800,
+          -400
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "loose",
+              "version": 1
+            },
+            "combinator": "and",
+            "conditions": [
+              {
+                "id": "c1",
+                "leftValue": "={{ $json.counterId }}",
+                "rightValue": "",
+                "operator": {
+                  "type": "string",
+                  "operation": "notEmpty",
+                  "singleValue": true
+                }
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "n-jn-if-exists",
+        "name": "IF \u2013 Job Number Counter Exists?",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          3600,
+          -100
+        ]
+      },
+      {
+        "parameters": {
+          "method": "PUT",
+          "url": "=https://services.leadconnectorhq.com/locations/4rvwvGT5Ot8Dxyoo7UwS/customValues/{{ $json.counterId }}",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Version",
+                "value": "2021-07-28"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ { \"name\": \"Job Number Counter\", \"value\": $json.finalStoredValue } }}",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "httpHeaderAuth"
+        },
+        "id": "n-jn-update",
+        "name": "GHL \u2013 Update Job Number Counter",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          3800,
+          -50
+        ],
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": "EKDDJ0lTGjOvu7Ax",
+            "name": "GHL - Metroplex"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://services.leadconnectorhq.com/locations/4rvwvGT5Ot8Dxyoo7UwS/customValues",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Version",
+                "value": "2021-07-28"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ { \"name\": \"Job Number Counter\", \"value\": $json.finalStoredValue } }}",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "httpHeaderAuth"
+        },
+        "id": "n-jn-create",
+        "name": "GHL \u2013 Create Job Number Counter",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          3800,
+          50
+        ],
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": "EKDDJ0lTGjOvu7Ax",
+            "name": "GHL - Metroplex"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "const extraction = $('Code \u2013 Parse Claude Response').first().json;\nconst jn = $('Code \u2013 Check Job Number Collision').first().json;\nconst presence = $('Code \u2013 Presence & Idempotency Check').first().json;\n\nreturn [{ json: {\n  opportunityId: extraction.opportunityId,\n  contactId: extraction.contactId,\n  scopeOfWork: extraction.scopeOfWork,\n  vendorCost: extraction.vendorCost,\n  jobNumber: jn.finalJobNumber,\n  fileIdentifier: presence.currentFileIdentifier,\n} }];\n"
+        },
+        "id": "n-write-prep",
+        "name": "Code \u2013 Prepare Opportunity Write-Back",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          4000,
+          -50
+        ]
+      },
+      {
+        "parameters": {
+          "method": "PUT",
+          "url": "=https://services.leadconnectorhq.com/opportunities/{{ $json.opportunityId }}",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Version",
+                "value": "2021-07-28"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ { customFields: [ { \"id\": \"5PY5to63fsK6zLeTkeXi\", \"field_value\": $json.scopeOfWork }, { \"id\": \"18PFqjEqlAuMotSx4GKF\", \"field_value\": $json.vendorCost }, { \"id\": \"CWBkt6xFQjdU97R5bKUC\", \"field_value\": $json.jobNumber }, { \"id\": \"aHtcxuPqiwH8H0sK3Pj6\", \"field_value\": \"yes\" }, { \"id\": \"rwUHPHY1y1gOkK8xxrU6\", \"field_value\": $json.fileIdentifier }, { \"id\": \"UmqzaACSH0ySo3NseIpD\", \"field_value\": \"no\" } ] } }}",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "httpHeaderAuth"
+        },
+        "id": "n-write-opp",
+        "name": "GHL \u2013 Write Scope/Cost/JobNumber to Opportunity",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          4200,
+          -50
+        ],
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": "EKDDJ0lTGjOvu7Ax",
+            "name": "GHL - Metroplex"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "method": "GET",
+          "url": "https://services.leadconnectorhq.com/opportunities/search",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {
+                "name": "location_id",
+                "value": "4rvwvGT5Ot8Dxyoo7UwS"
+              },
+              {
+                "name": "limit",
+                "value": "100"
+              }
+            ]
+          },
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Version",
+                "value": "2021-07-28"
+              }
+            ]
+          },
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "httpHeaderAuth"
+        },
+        "id": "n-dup-list",
+        "name": "GHL \u2013 List Opportunities (Duplicate Check)",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          4400,
+          -50
+        ],
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": "EKDDJ0lTGjOvu7Ax",
+            "name": "GHL - Metroplex"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "const JOB_NUMBER_ID = \"CWBkt6xFQjdU97R5bKUC\";\nconst prep = $('Code \u2013 Prepare Opportunity Write-Back').first().json;\nconst opportunities = $json.opportunities || [];\n\nconst matches = opportunities.filter(opp => {\n  if (opp.id === prep.opportunityId) return false;\n  const cf = (opp.customFields || []).find(f => f.id === JOB_NUMBER_ID);\n  const val = cf ? (cf.value ?? cf.fieldValue ?? cf.fieldValueString ?? cf.fieldValueNumber) : null;\n  return val === prep.jobNumber;\n});\n\nreturn [{ json: {\n  opportunityId: prep.opportunityId,\n  contactId: prep.contactId,\n  jobNumber: prep.jobNumber,\n  isDuplicate: matches.length > 0,\n  duplicateOpportunityIds: matches.map(m => m.id),\n} }];"
+        },
+        "id": "n-dup-check",
+        "name": "Code \u2013 Check Job Number Duplicate",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          4600,
+          -50
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "loose",
+              "version": 1
+            },
+            "combinator": "and",
+            "conditions": [
+              {
+                "id": "c1",
+                "leftValue": "={{ $json.isDuplicate }}",
+                "rightValue": true,
+                "operator": {
+                  "type": "boolean",
+                  "operation": "true",
+                  "singleValue": true
+                }
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "n-dup-if",
+        "name": "IF \u2013 Job Number Is Duplicate?",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          4800,
+          -50
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "=https://services.leadconnectorhq.com/contacts/{{ $json.contactId }}/tasks",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Version",
+                "value": "2021-07-28"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ { \"title\": \"Duplicate job number detected: \" + $json.jobNumber, \"body\": \"Opportunity \" + $json.opportunityId + \" was assigned job number \" + $json.jobNumber + \", which also appears on: \" + $json.duplicateOpportunityIds.join(', ') + \". This can happen under rare simultaneous uploads. Manually assign a unique job number to one of these opportunities before sending a contract.\", \"assignedTo\": \"ScQEgubPkgSmLURE4K2t\", \"dueDate\": new Date(Date.now() + 4 * 60 * 60 * 1000).toISOString(), \"completed\": false } }}",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "httpHeaderAuth"
+        },
+        "id": "n-dup-task",
+        "name": "GHL \u2013 Create Duplicate Job Number Task",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          5000,
+          -150
+        ],
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": "EKDDJ0lTGjOvu7Ax",
+            "name": "GHL - Metroplex"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "={{ { status: 'extracted_and_written_duplicate_flagged', opportunityId: $('Code \u2013 Check Job Number Duplicate').first().json.opportunityId, jobNumber: $('Code \u2013 Check Job Number Duplicate').first().json.jobNumber, duplicateOpportunityIds: $('Code \u2013 Check Job Number Duplicate').first().json.duplicateOpportunityIds } }}",
+          "options": {}
+        },
+        "id": "n-respond-dup",
+        "name": "Respond \u2013 Success With Duplicate Warning",
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.1,
+        "position": [
+          5200,
+          -150
+        ]
+      },
+      {
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "={{ { status: 'extracted_and_written', opportunityId: $json.opportunityId, jobNumber: $json.jobNumber } }}",
+          "options": {}
+        },
+        "id": "n-respond-success",
+        "name": "Respond \u2013 Success",
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.1,
+        "position": [
+          5000,
+          50
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "loose",
+              "version": 1
+            },
+            "combinator": "and",
+            "conditions": [
+              {
+                "id": "c1",
+                "leftValue": "={{ $json.skipReason }}",
+                "rightValue": "no_vendor_quote_files",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                }
+              },
+              {
+                "id": "c2",
+                "leftValue": "={{ $json.alreadyRetried }}",
+                "rightValue": true,
+                "operator": {
+                  "type": "boolean",
+                  "operation": "notEqual",
+                  "singleValue": true
+                }
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "n-if-file-retry-eligible",
+        "name": "IF \u2013 No Files (Retry Eligible)?",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          600,
+          250
+        ]
+      },
+      {
+        "parameters": {
+          "resume": "timeInterval",
+          "unit": "seconds",
+          "amount": 12
+        },
+        "id": "n-wait-file-visibility",
+        "name": "Wait \u2013 File Visibility Retry",
+        "type": "n8n-nodes-base.wait",
+        "typeVersion": 1.1,
+        "position": [
+          800,
+          250
+        ],
+        "webhookId": "f1a2b3c4d5e6-4qrs2-rstq3-f12346e7f8a9"
+      },
+      {
+        "parameters": {
+          "method": "GET",
+          "url": "=https://services.leadconnectorhq.com/opportunities/{{ $json.opportunityId }}",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Version",
+                "value": "2021-07-28"
+              }
+            ]
+          },
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "httpHeaderAuth"
+        },
+        "id": "n-get-opp-retry",
+        "name": "GHL \u2013 Get Opportunity (Retry)",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          1000,
+          250
+        ],
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": "EKDDJ0lTGjOvu7Ax",
+            "name": "GHL - Metroplex"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "jsCode": "const VENDOR_QUOTE_ID = \"1uBuPucl5UvebEX4SZfZ\";\nconst LAST_PROCESSED_ID = \"rwUHPHY1y1gOkK8xxrU6\";\nconst QUOTES_COMPLETE_ID = \"4p6KBFM8K8ljYiw5Awwx\";\n\nconst opp = $json.opportunity || $json;\nconst customFields = opp.customFields || [];\n\nfunction fieldById(id) {\n  return customFields.find(f => f.id === id) || null;\n}\n\nconst vendorQuoteField = fieldById(VENDOR_QUOTE_ID);\nconst files = (vendorQuoteField?.fieldValueFiles || vendorQuoteField?.fieldValue || []).filter(f => !f.deleted);\n\nconst lastProcessedField = fieldById(LAST_PROCESSED_ID);\nconst lastProcessedValue = lastProcessedField ? (lastProcessedField.value ?? lastProcessedField.fieldValue ?? null) : null;\n\nconst currentFileIdentifier = files.map(f => f.url).sort().join('|');\n\nconst hasFiles = files.length > 0;\nconst fileAlreadyProcessed = hasFiles && Boolean(lastProcessedValue) && currentFileIdentifier === lastProcessedValue;\n\nlet skipReason = null;\nif (!hasFiles) skipReason = 'no_vendor_quote_files';\nelse if (fileAlreadyProcessed) skipReason = 'file_already_processed';\n\n// \"Quotes Complete\" is a single-option checkbox (option label \"Complete\").\n// GHL has been observed returning a custom field's value under different\n// keys depending on the API path (fieldValue, fieldValueString, or value) --\n// read all three defensively rather than assuming one shape.\nconst quotesCompleteField = fieldById(QUOTES_COMPLETE_ID);\nconst rawQuotesComplete = quotesCompleteField\n  ? (quotesCompleteField.fieldValue ?? quotesCompleteField.fieldValueString ?? quotesCompleteField.value ?? null)\n  : null;\nconst quotesComplete = Array.isArray(rawQuotesComplete)\n  ? rawQuotesComplete.some(v => String(v).toLowerCase().includes('complete'))\n  : typeof rawQuotesComplete === 'boolean'\n    ? rawQuotesComplete\n    : typeof rawQuotesComplete === 'string'\n      ? ['true', 'yes', 'complete'].includes(rawQuotesComplete.toLowerCase())\n      : false;\n\nreturn [{ json: {\n  opportunityId: opp.id,\n  contactId: opp.contactId,\n  shouldProceed: hasFiles && !fileAlreadyProcessed,\n  skipReason,\n  fileCount: files.length,\n  files: files.map(f => ({ name: f.meta?.name, url: f.url, size: f.meta?.size, mimetype: f.meta?.mimetype })),\n  currentFileIdentifier,\n  quotesComplete,\n  // Set once so the retry-eligibility check never loops a second time --\n  // this is a single, bounded re-check, not an open-ended retry loop.\n  alreadyRetried: true,\n} }];\n"
+        },
+        "id": "n-presence-retry",
+        "name": "Code \u2013 Presence & Idempotency Check (Retry)",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1200,
+          250
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "return [{ json: { attempt: 1, maxAttempts: 4 } }];"
+        },
+        "id": "n-claude-init",
+        "name": "Code \u2013 Init Claude Attempt",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          2000,
+          -400
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "const buildRequest = $('Code \u2013 Build Claude Request').first().json;\nconst response = $json; // { statusCode, headers, body } due to fullResponse:true\nconst statusCode = response.statusCode;\nconst isSuccess = statusCode >= 200 && statusCode < 300;\n\n// Anthropic's documented transient/retryable statuses: 429 (rate limit), 500/502/503/504\n// (server-side issues), 529 (overloaded -- the exact status seen in the real failure\n// this fix addresses). Anything else (e.g. 400 bad request) is not retryable -- retrying\n// an identical malformed request would just fail again the same way.\nconst TRANSIENT_STATUSES = [429, 500, 502, 503, 504, 529];\nconst isTransient = TRANSIENT_STATUSES.includes(statusCode);\n\nlet prior;\ntry {\n  prior = $('Code \u2013 Prepare Claude Retry').first().json;\n} catch (e) {\n  prior = $('Code \u2013 Init Claude Attempt').first().json;\n}\n\nreturn [{ json: {\n  opportunityId: buildRequest.opportunityId,\n  contactId: buildRequest.contactId,\n  isSuccess,\n  isTransient,\n  statusCode,\n  responseBody: response.body,\n  attempt: prior.attempt,\n  maxAttempts: prior.maxAttempts,\n} }];"
+        },
+        "id": "n-check-claude",
+        "name": "Code \u2013 Check Claude Response",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          2400,
+          -300
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "loose",
+              "version": 1
+            },
+            "combinator": "and",
+            "conditions": [
+              {
+                "id": "c1",
+                "leftValue": "={{ $json.isSuccess }}",
+                "rightValue": true,
+                "operator": {
+                  "type": "boolean",
+                  "operation": "true",
+                  "singleValue": true
+                }
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "n-if-claude-success",
+        "name": "IF \u2013 Claude Succeeded?",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          2600,
+          -300
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "loose",
+              "version": 1
+            },
+            "combinator": "and",
+            "conditions": [
+              {
+                "id": "c1",
+                "leftValue": "={{ $json.isTransient }}",
+                "rightValue": true,
+                "operator": {
+                  "type": "boolean",
+                  "operation": "true",
+                  "singleValue": true
+                }
+              },
+              {
+                "id": "c2",
+                "leftValue": "={{ $json.attempt }}",
+                "rightValue": "={{ $json.maxAttempts }}",
+                "operator": {
+                  "type": "number",
+                  "operation": "lt"
+                }
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "n-if-claude-retryable",
+        "name": "IF \u2013 Claude Transient & Retryable?",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          2800,
+          -150
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "const prev = $json;\nconst BACKOFF_SECONDS = [5, 15, 30];\nconst delaySeconds = BACKOFF_SECONDS[prev.attempt - 1] ?? 30;\nreturn [{ json: {\n  ...prev,\n  attempt: prev.attempt + 1,\n  delaySeconds,\n} }];"
+        },
+        "id": "n-prepare-claude-retry",
+        "name": "Code \u2013 Prepare Claude Retry",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          3000,
+          -150
+        ]
+      },
+      {
+        "parameters": {
+          "resume": "timeInterval",
+          "unit": "seconds",
+          "amount": "={{ $json.delaySeconds }}"
+        },
+        "id": "n-wait-claude-retry",
+        "name": "Wait \u2013 Claude Retry Backoff",
+        "type": "n8n-nodes-base.wait",
+        "typeVersion": 1.1,
+        "position": [
+          3200,
+          -150
+        ],
+        "webhookId": "a2b3c4d5e6f7-4stu3-tuvr4-a23457f8a9b0"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "=https://services.leadconnectorhq.com/contacts/{{ $json.contactId }}/tasks",
+          "sendHeaders": true,
+          "headerParameters": {
+            "parameters": [
+              {
+                "name": "Version",
+                "value": "2021-07-28"
+              }
+            ]
+          },
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ { \"title\": \"Contract draft extraction failed on \" + $json.opportunityId, \"body\": \"Claude extraction failed with status \" + $json.statusCode + \" after \" + $json.attempt + \" attempt(s): \" + JSON.stringify($json.responseBody).slice(0, 500) + \". Vendor Quote file is uploaded but Scope of Work/Job Number/Vendor Cost were not extracted. Re-upload the file (or edit an unrelated opportunity field) to re-trigger, or process manually.\", \"assignedTo\": \"ScQEgubPkgSmLURE4K2t\", \"dueDate\": new Date(Date.now() + 4 * 60 * 60 * 1000).toISOString(), \"completed\": false } }}",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "httpHeaderAuth"
+        },
+        "id": "n-claude-failure-task",
+        "name": "GHL \u2013 Create Claude Failure Task",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          3000,
+          -50
+        ],
+        "credentials": {
+          "httpHeaderAuth": {
+            "id": "EKDDJ0lTGjOvu7Ax",
+            "name": "GHL - Metroplex"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "={{ { status: 'claude_extraction_failed', opportunityId: $('Code \u2013 Check Claude Response').first().json.opportunityId, statusCode: $('Code \u2013 Check Claude Response').first().json.statusCode, attemptsUsed: $('Code \u2013 Check Claude Response').first().json.attempt } }}",
+          "options": {
+            "responseCode": 502
+          }
+        },
+        "id": "n-respond-claude-failed",
+        "name": "Respond \u2013 Claude Extraction Failed",
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.1,
+        "position": [
+          3200,
+          -50
+        ]
+      }
+    ],
+    "connections": {
+      "Webhook \u2013 GHL Contract Quote Uploaded": {
+        "main": [
+          [
+            {
+              "node": "GHL \u2013 Get Opportunity",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "GHL \u2013 Get Opportunity": {
+        "main": [
+          [
+            {
+              "node": "Code \u2013 Presence & Idempotency Check",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code \u2013 Presence & Idempotency Check": {
+        "main": [
+          [
+            {
+              "node": "IF \u2013 Should Proceed?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "IF \u2013 Should Proceed?": {
+        "main": [
+          [
+            {
+              "node": "GHL \u2013 Get Contact",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "IF \u2013 No Files (Retry Eligible)?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "GHL \u2013 Get Contact": {
+        "main": [
+          [
+            {
+              "node": "Code \u2013 Completeness Check",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code \u2013 Completeness Check": {
+        "main": [
+          [
+            {
+              "node": "IF \u2013 Complete?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "IF \u2013 Complete?": {
+        "main": [
+          [
+            {
+              "node": "Code \u2013 Files To Items",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "GHL \u2013 Create Mismatch Review Task",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "GHL \u2013 Create Mismatch Review Task": {
+        "main": [
+          [
+            {
+              "node": "Respond \u2013 Incomplete",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Claude \u2013 Extract Contract Data": {
+        "main": [
+          [
+            {
+              "node": "Code \u2013 Check Claude Response",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code \u2013 Parse Claude Response": {
+        "main": [
+          [
+            {
+              "node": "Code \u2013 Init Job Number Attempt",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code \u2013 Files To Items": {
+        "main": [
+          [
+            {
+              "node": "HTTP \u2013 Fetch PDF Binary",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "HTTP \u2013 Fetch PDF Binary": {
+        "main": [
+          [
+            {
+              "node": "Code \u2013 Build Claude Request",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code \u2013 Build Claude Request": {
+        "main": [
+          [
+            {
+              "node": "Code \u2013 Init Claude Attempt",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code \u2013 Init Job Number Attempt": {
+        "main": [
+          [
+            {
+              "node": "GHL \u2013 Get Job Number Counter (Read)",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "GHL \u2013 Get Job Number Counter (Read)": {
+        "main": [
+          [
+            {
+              "node": "Code \u2013 Compute Job Number Candidate",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code \u2013 Compute Job Number Candidate": {
+        "main": [
+          [
+            {
+              "node": "GHL \u2013 Get Job Number Counter (Verify Read)",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "GHL \u2013 Get Job Number Counter (Verify Read)": {
+        "main": [
+          [
+            {
+              "node": "Code \u2013 Check Job Number Collision",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code \u2013 Check Job Number Collision": {
+        "main": [
+          [
+            {
+              "node": "IF \u2013 Job Number Collision Detected?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "IF \u2013 Job Number Collision Detected?": {
+        "main": [
+          [
+            {
+              "node": "IF \u2013 Job Number Attempts Exhausted?",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "IF \u2013 Job Number Counter Exists?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "IF \u2013 Job Number Attempts Exhausted?": {
+        "main": [
+          [
+            {
+              "node": "Respond \u2013 Job Number Failed",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Code \u2013 Prepare Job Number Retry",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code \u2013 Prepare Job Number Retry": {
+        "main": [
+          [
+            {
+              "node": "Wait \u2013 Job Number Backoff",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Wait \u2013 Job Number Backoff": {
+        "main": [
+          [
+            {
+              "node": "GHL \u2013 Get Job Number Counter (Read)",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "IF \u2013 Job Number Counter Exists?": {
+        "main": [
+          [
+            {
+              "node": "GHL \u2013 Update Job Number Counter",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "GHL \u2013 Create Job Number Counter",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "GHL \u2013 Update Job Number Counter": {
+        "main": [
+          [
+            {
+              "node": "Code \u2013 Prepare Opportunity Write-Back",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "GHL \u2013 Create Job Number Counter": {
+        "main": [
+          [
+            {
+              "node": "Code \u2013 Prepare Opportunity Write-Back",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code \u2013 Prepare Opportunity Write-Back": {
+        "main": [
+          [
+            {
+              "node": "GHL \u2013 Write Scope/Cost/JobNumber to Opportunity",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "GHL \u2013 Write Scope/Cost/JobNumber to Opportunity": {
+        "main": [
+          [
+            {
+              "node": "GHL \u2013 List Opportunities (Duplicate Check)",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "GHL \u2013 List Opportunities (Duplicate Check)": {
+        "main": [
+          [
+            {
+              "node": "Code \u2013 Check Job Number Duplicate",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code \u2013 Check Job Number Duplicate": {
+        "main": [
+          [
+            {
+              "node": "IF \u2013 Job Number Is Duplicate?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "IF \u2013 Job Number Is Duplicate?": {
+        "main": [
+          [
+            {
+              "node": "GHL \u2013 Create Duplicate Job Number Task",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Respond \u2013 Success",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "GHL \u2013 Create Duplicate Job Number Task": {
+        "main": [
+          [
+            {
+              "node": "Respond \u2013 Success With Duplicate Warning",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "IF \u2013 No Files (Retry Eligible)?": {
+        "main": [
+          [
+            {
+              "node": "Wait \u2013 File Visibility Retry",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Respond \u2013 Skipped",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Wait \u2013 File Visibility Retry": {
+        "main": [
+          [
+            {
+              "node": "GHL \u2013 Get Opportunity (Retry)",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "GHL \u2013 Get Opportunity (Retry)": {
+        "main": [
+          [
+            {
+              "node": "Code \u2013 Presence & Idempotency Check (Retry)",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code \u2013 Presence & Idempotency Check (Retry)": {
+        "main": [
+          [
+            {
+              "node": "IF \u2013 Should Proceed?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code \u2013 Init Claude Attempt": {
+        "main": [
+          [
+            {
+              "node": "Claude \u2013 Extract Contract Data",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code \u2013 Check Claude Response": {
+        "main": [
+          [
+            {
+              "node": "IF \u2013 Claude Succeeded?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "IF \u2013 Claude Succeeded?": {
+        "main": [
+          [
+            {
+              "node": "Code \u2013 Parse Claude Response",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "IF \u2013 Claude Transient & Retryable?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "IF \u2013 Claude Transient & Retryable?": {
+        "main": [
+          [
+            {
+              "node": "Code \u2013 Prepare Claude Retry",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "GHL \u2013 Create Claude Failure Task",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code \u2013 Prepare Claude Retry": {
+        "main": [
+          [
+            {
+              "node": "Wait \u2013 Claude Retry Backoff",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Wait \u2013 Claude Retry Backoff": {
+        "main": [
+          [
+            {
+              "node": "Claude \u2013 Extract Contract Data",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "GHL \u2013 Create Claude Failure Task": {
+        "main": [
+          [
+            {
+              "node": "Respond \u2013 Claude Extraction Failed",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "nodeGroups": [],
+    "authors": "Andrew ajmj86@gmail.com",
+    "name": null,
+    "description": null,
+    "autosaved": false,
+    "workflowPublishHistory": [
+      {
+        "createdAt": "2026-09-24T21:15:07.922Z",
+        "id": 396,
+        "workflowId": "dwLhnSA9Cw6XGHe3",
+        "versionId": "154c70e9-f66b-4190-a5ab-9835505220c2",
+        "event": "activated",
+        "userId": "566add4a-1769-4697-9ff9-05a7787c3cb6"
+      },
+      {
+        "createdAt": "2026-09-24T21:15:07.914Z",
+        "id": 395,
+        "workflowId": "dwLhnSA9Cw6XGHe3",
+        "versionId": "154c70e9-f66b-4190-a5ab-9835505220c2",
+        "event": "deactivated",
+        "userId": "566add4a-1769-4697-9ff9-05a7787c3cb6"
+      }
+    ]
+  }
+}
