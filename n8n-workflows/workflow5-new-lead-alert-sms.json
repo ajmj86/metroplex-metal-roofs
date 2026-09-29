@@ -1,0 +1,94 @@
+{
+  "active": true,
+  "connections": {
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "Code – Build Alert Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code – Build Alert Message": {
+      "main": [
+        [
+          {
+            "node": "GHL – Send Alert SMS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "name": "Workflow 5 – New Lead Alert SMS",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "passParameters"
+      },
+      "id": "node-trigger",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const input = $('Execute Workflow Trigger').first().json;\nconst andrewContactId = 'vKJiakihiqLs3DXR6kfe';\n\nconst firstName = input.firstName || '';\nconst lastName = input.lastName || '';\nconst phone = input.phone || 'N/A';\nconst address = input.address || 'N/A';\nconst source = input.source || 'Unknown';\nconst roofType = input.selected_roof_type || 'N/A';\nconst roofSize = (input.roofSize !== undefined && input.roofSize !== null && input.roofSize !== '')\n  ? `${input.roofSize} squares`\n  : 'N/A';\nconst reason = input.project_reason || 'N/A';\nconst timeline = input.homeowner_timeline || 'N/A';\nconst insurance = input.insurance_claim_status || 'N/A';\n\nconst message = `New ${source} lead: ${firstName} ${lastName}\nPhone: ${phone}\nAddress: ${address}\nRoof: ${roofType}\nSize: ${roofSize}\nReason: ${reason}\nTimeline: ${timeline}\nInsurance: ${insurance}`;\n\nreturn [{ json: { andrewContactId, message } }];\n"
+      },
+      "id": "node-build-message",
+      "name": "Code – Build Alert Message",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        680,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://services.leadconnectorhq.com/conversations/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Version",
+              "value": "2021-07-28"
+            }
+          ]
+        },
+        "sendBody": true,
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "specifyBody": "json",
+        "jsonBody": "={{ { \"contactId\": $json.andrewContactId, \"type\": \"SMS\", \"message\": $json.message } }}"
+      },
+      "id": "node-send-sms",
+      "name": "GHL – Send Alert SMS",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        900,
+        300
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "EKDDJ0lTGjOvu7Ax",
+          "name": "GHL - Metroplex"
+        }
+      }
+    }
+  ],
+  "pinData": null,
+  "settings": {
+    "executionOrder": "v1"
+  }
+}
