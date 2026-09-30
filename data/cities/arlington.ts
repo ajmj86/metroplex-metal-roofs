@@ -13,7 +13,7 @@ export const ARLINGTON_DATA: CityData = {
   heroHeadline: "Arlington Weathers Every Season —\nYour Roof Should Too",
   heroSub: "Between Fort Worth and Dallas, Arlington sits directly in the path of North Texas's worst hail seasons. Metal roofing ends the cycle of asphalt replacement for good.",
 
-  localContext: "Arlington's mix of established mid-century neighborhoods and newer master-planned communities like Viridian gives the city one of the widest ranges of roofing needs in the Mid-Cities. Tarrant County storm exposure hits North and South Arlington alike, and with the city's older housing stock aging past its original shingle life expectancy, more homeowners are opting to replace once and be done rather than reroof with asphalt every 12 to 15 years.",
+  localContext: "Arlington's mix of established mid-century neighborhoods and newer master-planned communities like Viridian gives the city one of the widest ranges of roofing needs in the Mid-Cities. Tarrant County storm exposure hits North and South Arlington alike, and with the city's older housing stock aging past its original shingle life expectancy, more homeowners are opting to replace once and be done rather than reroof with asphalt every 12 to 20 years.",
 
   hoaNote: "Viridian's architectural review process is well-established and metal roofing in approved profiles is already common throughout the community. Older, non-HOA neighborhoods across North and South Arlington have no such restrictions. Where an HOA does apply, we provide full documentation — material samples, color chips, and manufacturer spec sheets — at no additional cost.",
 

@@ -13,7 +13,7 @@ export const MESQUITE_DATA: CityData = {
   heroHeadline: "Mesquite Homes Have Weathered\nEnough Hail Seasons on Asphalt",
   heroSub: "From Town East Estates to the newer builds in Solterra, Mesquite homeowners are switching to a roof that outlasts the storm cycle instead of getting replaced by it.",
 
-  localContext: "Mesquite's established East Dallas neighborhoods carry some of the area's oldest roofing stock, much of it already replaced once with asphalt after prior hail seasons. Dallas County's hail corridor runs directly through Mesquite, and with newer master-planned communities like Solterra bringing a wave of new construction to the city, metal roofing is increasingly the default choice for homeowners who don't want to repeat a reroof cycle every 12 to 15 years.",
+  localContext: "Mesquite's established East Dallas neighborhoods carry some of the area's oldest roofing stock, much of it already replaced once with asphalt after prior hail seasons. Dallas County's hail corridor runs directly through Mesquite, and with newer master-planned communities like Solterra bringing a wave of new construction to the city, metal roofing is increasingly the default choice for homeowners who don't want to repeat a reroof cycle every 12 to 20 years.",
 
   hoaNote: "Solterra maintains an active HOA with standard architectural review for exterior changes, and metal roofing in approved profiles is already common in the community. Older neighborhoods like Town East Estates and Casa View Heights typically have no HOA restrictions. Where documentation is required, we provide material samples, color chips, and manufacturer spec sheets at no additional cost.",
 
