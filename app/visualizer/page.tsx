@@ -442,7 +442,9 @@ export default function VisualizerPage() {
         if (!cancelled && data.recognized) {
           setReturningContact(data)
           setAddress(data.address)
-          setGateData(d => ({ ...d, firstName: data.firstName, phone: data.phone, email: data.email }))
+          // GHL returns E.164 ("+12145550152"); the form expects 10 digits, so a
+          // recognized contact failed validation and got stuck without this.
+          setGateData(d => ({ ...d, firstName: data.firstName, phone: formatPhone(data.phone || ''), email: data.email }))
           setStep('welcome-back')
           return
         }
@@ -668,7 +670,7 @@ export default function VisualizerPage() {
         if (rvData.recognized) {
           setReturningContact(rvData)
           setAddress(rvData.address)
-          setGateData(d => ({ ...d, firstName: rvData.firstName, phone: rvData.phone, email: rvData.email }))
+          setGateData(d => ({ ...d, firstName: rvData.firstName, phone: formatPhone(rvData.phone || ''), email: rvData.email }))
           setStep('welcome-back')
           return
         }
