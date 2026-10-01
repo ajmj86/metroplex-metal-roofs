@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createOpportunity } from '@/lib/ghl'
 import { formatFormValue } from '@/lib/formatFormValue'
+import { estimateForLead, type PricedConfig } from '@/lib/estimate'
+import { getProductStyle } from '@/lib/roofProducts'
+import pricingConfig from '@/config/pricing.json'
 
 export const maxDuration = 15
 
@@ -17,13 +20,20 @@ export const maxDuration = 15
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json()
-    const { contactId, firstName, lastName, address, reason, timeline } = body as {
+    const { contactId, firstName, lastName, address, reason, timeline, selectedRoofType, product, color, netSquares, manualSqFt, stories, roofSizeSource } = body as {
       contactId?: string
       firstName?: string
       lastName?: string
       address?: string
       reason?: string
       timeline?: string
+      selectedRoofType?: string
+      product?: string
+      color?: string
+      netSquares?: number | null
+      manualSqFt?: number | null
+      stories?: string
+      roofSizeSource?: string
     }
 
     if (!contactId) {
@@ -38,7 +48,21 @@ export async function POST(req: NextRequest) {
     const detailParts = [address, formatFormValue('reason', reason), formatFormValue('timeline', timeline)].filter(Boolean)
     const name = detailParts.length ? `${who} - ${detailParts.join(' / ')}` : who
 
-    const opportunity = await createOpportunity({ contactId, name, source: 'visualizer' })
+    // Server-side recompute (never a browser price): low end becomes the
+    // opportunity's value. Anything but a clean priced result leaves it unset.
+    const est = estimateForLead(pricingConfig.roofTypes as Record<string, PricedConfig>, {
+      roofType: selectedRoofType,
+      style: selectedRoofType && product ? getProductStyle(selectedRoofType, product) : null,
+      color,
+      netSquares: typeof netSquares === 'number' ? netSquares : null,
+      manualSqFt: typeof manualSqFt === 'number' ? manualSqFt : null,
+      stories,
+      roofSizeSource,
+    })
+    const opportunity = await createOpportunity({
+      contactId, name, source: 'visualizer',
+      monetaryValue: est.status === 'priced' ? est.low : undefined,
+    })
     if (!opportunity) {
       return NextResponse.json({ error: 'Failed to create opportunity' }, { status: 502 })
     }

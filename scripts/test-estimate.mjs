@@ -2,7 +2,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
-import { computeEstimate, isAreaInRange } from '../lib/estimate.ts'
+import { computeEstimate, isAreaInRange, estimateForLead, squaresFromManualSqFt } from '../lib/estimate.ts'
 
 const cfg = JSON.parse(readFileSync(new URL('../config/pricing.json', import.meta.url), 'utf8'))
 const roofTypes = cfg.roofTypes
@@ -71,4 +71,58 @@ test('area gate: under 800 / over 8,000 sq ft is out of range', () => {
   assert.equal(isAreaInRange(sqftToM2(8010)), false)
   assert.equal(isAreaInRange(sqftToM2(800.5)), true)
   assert.equal(isAreaInRange(sqftToM2(7990)), true)
+})
+
+// ── Server-side lead recompute (opportunity value = low, whole dollars) ──
+const LEAD_CASES = [
+  ['stone-coated', { roofType: 'stone_coated_steel' }, 70399, 76799],
+  ['standing seam metallic', { roofType: 'standing_seam', color: 'Natural Metal' }, 57599, 62398],
+  ['standing seam other', { roofType: 'standing_seam', color: 'Charcoal' }, 67199, 72798],
+  ['r-panel', { roofType: 'r_panel' }, 45599, 49398],
+  ['brava slate', { roofType: 'synthetic_slate', style: 'slate' }, 89699, 95159],
+  ['brava shake', { roofType: 'synthetic_slate', style: 'cedar_shake' }, 87399, 92719],
+  ['brava spanish barrel', { roofType: 'synthetic_slate', style: 'spanish_barrel_tile' }, 92045, 97647],
+]
+for (const [name, inp, low, high] of LEAD_CASES) {
+  test(`lead recompute: ${name} @ 40 net squares -> ${low}/${high}`, () => {
+    const r = estimateForLead(roofTypes, { ...inp, netSquares: 40 })
+    assert.deepEqual(r, { status: 'priced', low, high })
+  })
+}
+
+test('lead recompute: copper -> none (custom quote), never a value', () => {
+  assert.deepEqual(estimateForLead(roofTypes, { roofType: 'copper_standing_seam', netSquares: 40 }), { status: 'none' })
+})
+
+test('lead recompute: missing/invalid inputs -> unavailable, no NaN', () => {
+  const bad = [
+    { roofType: 'r_panel' }, // no squares
+    { roofType: 'r_panel', netSquares: null },
+    { roofType: 'r_panel', netSquares: NaN },
+    { roofType: 'r_panel', netSquares: -5 },
+    { roofType: 'r_panel', netSquares: 7 }, // < 800 sq ft
+    { roofType: 'r_panel', netSquares: 81 }, // > 8,000 sq ft
+    { roofType: 'r_panel', netSquares: 'abc' },
+    { netSquares: 40 }, // no material
+    { roofType: 'nope', netSquares: 40 },
+    { roofType: 'r_panel', roofSizeSource: 'manual' },
+    { roofType: 'r_panel', roofSizeSource: 'manual', manualSqFt: 0 },
+    { roofType: 'r_panel', roofSizeSource: 'manual', manualSqFt: 1e9 },
+  ]
+  for (const b of bad) assert.deepEqual(estimateForLead(roofTypes, b), { status: 'unavailable' }, JSON.stringify(b))
+})
+
+test('lead recompute: manual path matches /api/roof-size manual math for all story options', () => {
+  for (const stories of ['one', 'two', 'unknown', undefined]) {
+    const r = estimateForLead(roofTypes, { roofType: 'r_panel', roofSizeSource: 'manual', manualSqFt: 2200, stories })
+    const e = computeEstimate(roofTypes, squaresFromManualSqFt(2200, stories), 'r_panel')
+    assert.equal(r.status, 'priced')
+    assert.equal(r.low, Math.round(e.low))
+    assert.ok(r.low < r.high)
+  }
+})
+
+test('lead recompute: browser-supplied price fields are ignored', () => {
+  const r = estimateForLead(roofTypes, { roofType: 'r_panel', netSquares: 40, estimateLow: 1, estimateHigh: 2 })
+  assert.equal(r.low, 45599)
 })

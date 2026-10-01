@@ -49,6 +49,7 @@ const PHONE_TEL = 'tel:+1' + PHONE.replace(/\D/g, '')
 
 type RoofResult = {
   squares: number | null
+  netSquares?: number | null // unrounded; the server recomputes the lead's price from this
   estimateLow: string | null
   estimateHigh: string | null
   noPriceEstimate: boolean
@@ -404,6 +405,7 @@ export default function VisualizerPage() {
       const d = await res.json()
       return {
         squares: d.squares ?? null,
+        netSquares: d.netSquares ?? null,
         estimateLow: d.estimateLow ?? null,
         estimateHigh: d.estimateHigh ?? null,
         noPriceEstimate: d.noPriceEstimate ?? false,
@@ -843,6 +845,10 @@ export default function VisualizerPage() {
       leadOrigin: 'visualizer',
       utm: { source: utm.source, medium: utm.medium, campaign: utm.campaign, content: utm.content, term: utm.term },
       estimatedRoofSize: squares,
+      netSquares: roof?.netSquares ?? null,
+      // Returning contact + different address: n8n must not re-value the old
+      // property's opportunity; /api/create-opportunity values the new one.
+      newPropertyOpportunity: !!returningContact,
       estimateRange: noPrice ? (message ?? undefined) : (low && high ? `${low} - ${high}` : undefined),
       // '' (not undefined) on success so the API/n8n layer can tell "solar worked
       // this time" apart from "this field wasn't touched" and clear a stale
@@ -881,6 +887,10 @@ export default function VisualizerPage() {
           address,
           reason: data.reason,
           timeline: data.timeline,
+          selectedRoofType: selType,
+          product: selProduct,
+          color: selColor,
+          netSquares: roof?.netSquares ?? null,
         }),
       }).catch(() => { /* non-blocking — lead-intake already succeeded */ })
     }
@@ -911,6 +921,14 @@ export default function VisualizerPage() {
     setEstimateHigh(high)
     setNoPriceEstimate(noPrice)
     setEstimateMessage(message)
+    // Best-effort: refresh the value on the contact's existing opportunity if the
+    // estimate changed (server recomputes the price; contact comes from the cookie).
+    if (roof?.netSquares != null) {
+      fetch('/api/update-opportunity-value', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ selectedRoofType: selType, product: selProduct, color: selColor, netSquares: roof.netSquares }),
+      }).catch(() => { /* non-blocking */ })
+    }
     const u = readUtm()
     trackEvent('visualizer_complete', {
       channel: u.medium, utm_source: u.source, utm_campaign: u.campaign, utm_content: u.content, utm_term: u.term,
@@ -977,11 +995,21 @@ export default function VisualizerPage() {
           leadOrigin: 'visualizer',
           utm: { source: utmSource, medium: utmMedium, campaign: utmCampaign, content: utmContent, term: utmTerm },
           estimatedRoofSize: data.squares,
+          manualSqFt: sqFt,
+          stories: manualStories || 'unknown',
+          newPropertyOpportunity: !!returningContact,
           estimateRange: data.noPriceEstimate ? (data.estimateMessage ?? undefined) : `${data.estimateLow} - ${data.estimateHigh}`,
           roofSizeSource: 'manual',
           suppressAlert: true,
         }),
       }).catch(() => { /* estimate already shown to user regardless */ })
+      if (returningContact) {
+        // Case B: n8n skipped re-valuing (new property); value the new opportunity directly.
+        fetch('/api/update-opportunity-value', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ selectedRoofType: selType, product: selProduct, color: selColor, roofSizeSource: 'manual', manualSqFt: sqFt, stories: manualStories || 'unknown' }),
+        }).catch(() => { /* non-blocking */ })
+      }
     } catch {
       setManualError('Something went wrong calculating your estimate. Please try again.')
     } finally {

@@ -177,3 +177,9 @@ export function resolveSelection(
     width: resolvedWidth,
   };
 }
+
+// The style key (e.g. cedar_shake) a product belongs to -- lets the server
+// price a lead from the `product` it already carries without a new field.
+export function getProductStyle(roofType: string, product: string): string | null {
+  return roofProducts[roofType]?.products?.[product]?.style ?? null;
+}

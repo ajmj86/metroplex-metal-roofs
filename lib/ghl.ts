@@ -114,6 +114,8 @@ export async function createOpportunity(params: {
   contactId: string
   name: string
   source: string
+  // Whole dollars (low end of the visualizer estimate); omitted when unknown.
+  monetaryValue?: number
 }): Promise<{ id: string } | null> {
   const apiKey = process.env.GHL_API_KEY
   const locationId = process.env.GHL_LOCATION_ID
@@ -137,6 +139,7 @@ export async function createOpportunity(params: {
         status: 'open',
         contactId: params.contactId,
         source: params.source,
+        ...(params.monetaryValue && params.monetaryValue > 0 ? { monetaryValue: params.monetaryValue } : {}),
       }),
     })
     if (!res.ok) {
@@ -148,5 +151,40 @@ export async function createOpportunity(params: {
   } catch (err) {
     console.error('[ghl] createOpportunity failed:', err)
     return null
+  }
+}
+
+// Case A returning visitor (same address, never re-submits a lead): refresh the
+// value on the contact's existing visualizer opportunity when the estimate
+// changed. Picks the contact's most recently created OPEN opportunity in the
+// visualizer pipeline and only writes if it is still in the visualizer stage or
+// has no value yet -- never clobbers a value on a deal that has moved on.
+// Best-effort: returns false on any failure, never throws.
+export async function refreshOpportunityValue(contactId: string, monetaryValue: number): Promise<boolean> {
+  const apiKey = process.env.GHL_API_KEY
+  const locationId = process.env.GHL_LOCATION_ID
+  const pipelineId = process.env.GHL_PIPELINE_ID
+  const stageId = process.env.GHL_STAGE_ID
+  if (!apiKey || !locationId || !pipelineId || !stageId || !(monetaryValue > 0)) return false
+  try {
+    const qs = new URLSearchParams({ location_id: locationId, pipeline_id: pipelineId, contact_id: contactId })
+    const res = await fetch(`${GHL_BASE}/opportunities/search?${qs}`, { headers: authHeaders(apiKey) })
+    if (!res.ok) return false
+    const data = await res.json()
+    const opps: Array<{ id: string; contactId?: string; status?: string; pipelineStageId?: string; monetaryValue?: number; createdAt?: string }> =
+      Array.isArray(data?.opportunities) ? data.opportunities : []
+    const mine = opps
+      .filter((o) => o.contactId === contactId && o.status === 'open')
+      .sort((a, b) => String(b.createdAt ?? '').localeCompare(String(a.createdAt ?? '')))[0]
+    if (!mine) return false
+    if (mine.pipelineStageId !== stageId && (mine.monetaryValue ?? 0) > 0) return false
+    if (mine.monetaryValue === monetaryValue) return true
+    const put = await fetch(`${GHL_BASE}/opportunities/${mine.id}`, {
+      method: 'PUT', headers: authHeaders(apiKey), body: JSON.stringify({ monetaryValue }),
+    })
+    return put.ok
+  } catch (err) {
+    console.error('[ghl] refreshOpportunityValue failed:', err)
+    return false
   }
 }
