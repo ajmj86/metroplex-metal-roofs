@@ -2,12 +2,54 @@ import { NextRequest, NextResponse } from 'next/server';
 import { formatFormValue } from '@/lib/formatFormValue';
 import { getRoofTypeLabel } from '@/lib/roofProducts';
 import { signVisitorToken } from '@/lib/visitorToken';
+import { alertAndrew } from '@/lib/alerts';
 
 const VISITOR_COOKIE = 'mmr_visitor';
 
-export const maxDuration = 30;
+// Two attempts x N8N_TIMEOUT_MS plus the fallback alert must fit in this.
+export const maxDuration = 45;
 
 const N8N_WEBHOOK_URL = process.env.N8N_WEBHOOK_VISUALIZER;
+
+// A full lead normally round-trips n8n in ~3-8s. Anything past this is treated
+// as a failed attempt rather than letting the visitor stare at a spinner.
+const N8N_TIMEOUT_MS = 15_000;
+const N8N_RETRY_DELAY_MS = 1_500;
+
+const str = (v: unknown, max = 200) => (typeof v === 'string' ? v.trim().slice(0, max) : '');
+
+type N8nOutcome =
+  | { ok: true; status: number; body: string; json: { contactId?: string } | null }
+  | { ok: false; retryable: boolean; reason: string; status: number | null; body: string };
+
+// One POST to the n8n lead webhook, classified. n8n answers a failed lead with
+// a non-2xx {ok:false,...}, but older/other failure modes (workflow crashed
+// before responding) come back as HTTP 200 with an EMPTY body -- that used to
+// be indistinguishable from success here, which is how leads vanished.
+async function postToN8n(payload: unknown, partial: boolean): Promise<N8nOutcome> {
+  let res: Response;
+  try {
+    res = await fetch(N8N_WEBHOOK_URL as string, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+      signal: AbortSignal.timeout(N8N_TIMEOUT_MS),
+    });
+  } catch (err) {
+    return { ok: false, retryable: true, reason: `network error/timeout: ${err instanceof Error ? err.message : String(err)}`, status: null, body: '' };
+  }
+  const body = await res.text();
+  if (!res.ok) {
+    return { ok: false, retryable: res.status >= 500, reason: `n8n returned HTTP ${res.status}`, status: res.status, body };
+  }
+  let json: { ok?: boolean; contactId?: string } | null = null;
+  try { json = body ? JSON.parse(body) : null; } catch { json = null; }
+  if (partial) return { ok: true, status: res.status, body, json };
+  if (!json) return { ok: false, retryable: true, reason: 'n8n returned an empty or unparseable body', status: res.status, body };
+  if (json.ok === false) return { ok: false, retryable: false, reason: 'n8n reported ok:false', status: res.status, body };
+  if (!json.contactId || typeof json.contactId !== 'string') return { ok: false, retryable: true, reason: 'n8n response has no contactId', status: res.status, body };
+  return { ok: true, status: res.status, body, json };
+}
 
 type AddressComponents = { streetAddress?: string; city?: string; state?: string; postalCode?: string };
 
@@ -43,9 +85,28 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
+    const isPartial = body.partial === true;
     const parsed = parseAddress(body.address || '', body.addressComponents);
 
-    const payload = body.partial === true ? body : {
+    // Partial (abandonment) captures are whitelisted rather than forwarded raw:
+    // they come from a sendBeacon with no validation, and n8n treats any
+    // contact info on them as best-effort only (never overwrites a full lead).
+    const payload = isPartial ? {
+      partial: true,
+      leadOrigin: 'visualizer_partial',
+      address: str(body.address, 300),
+      roofType: str(body.roofType, 60) || null,
+      colorSelected: str(body.colorSelected, 60) || null,
+      timestamp: str(body.timestamp, 40),
+      firstName: str(body.firstName, 60),
+      lastName: str(body.lastName, 60),
+      email: str(body.email, 120),
+      phone: str(body.phone, 30),
+      utm: {
+        source: str(body.utm?.source), medium: str(body.utm?.medium), campaign: str(body.utm?.campaign),
+        content: str(body.utm?.content), term: str(body.utm?.term),
+      },
+    } : {
       contact: {
         firstName: body.firstName || '',
         lastName: body.lastName || '',
@@ -97,40 +158,44 @@ export async function POST(req: NextRequest) {
 
     console.log('[lead-intake] forwarding payload to n8n:', payload);
 
-    const n8nRes = await fetch(N8N_WEBHOOK_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    });
-
-    const n8nBody = await n8nRes.text();
-    console.log('[lead-intake] n8n response status:', n8nRes.status, 'body:', n8nBody);
-
-    if (!n8nRes.ok) {
-      return NextResponse.json({ error: 'Lead intake workflow failed' }, { status: 502 });
+    let outcome = await postToN8n(payload, isPartial);
+    if (!outcome.ok && outcome.retryable) {
+      console.warn('[lead-intake] n8n attempt 1 failed, retrying once:', outcome.reason, outcome.status, outcome.body.slice(0, 300));
+      await new Promise((r) => setTimeout(r, N8N_RETRY_DELAY_MS));
+      outcome = await postToN8n(payload, isPartial);
     }
 
-    const res = NextResponse.json({ success: true });
-
-    // Issue the returning-visitor cookie on real (non-partial) submissions only —
-    // partial/beforeunload captures and the visualizer_render email-only calls
-    // never reach this branch (see payload.partial above), so this only fires
-    // for a completed contact/opportunity submission.
-    if (body.partial !== true) {
-      try {
-        const n8nJson = JSON.parse(n8nBody);
-        if (n8nJson?.contactId) {
-          res.cookies.set(VISITOR_COOKIE, signVisitorToken(n8nJson.contactId), {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'lax',
-            maxAge: 60 * 60 * 24 * 180,
-            path: '/',
-          });
-        }
-      } catch (err) {
-        console.error('[lead-intake] failed to parse n8n response for cookie issuance:', err);
+    if (!outcome.ok) {
+      console.error('[lead-intake] FAILED', {
+        reason: outcome.reason, status: outcome.status, n8nBody: outcome.body.slice(0, 500),
+        partial: isPartial, leadOrigin: body.leadOrigin ?? null,
+      });
+      // A partial is best-effort. A full lead that didn't reach GHL is a
+      // customer who believes they're in the system: tell Andrew immediately,
+      // with enough detail to call them back.
+      if (!isPartial) {
+        const c = (payload as { contact: { firstName: string; lastName: string; phone: string; email: string } }).contact;
+        const f = (payload as { fields: { property_address?: string; selected_roof_type?: string } }).fields;
+        await alertAndrew(
+          `🚨 LEAD NOT SAVED — visualizer could not reach the CRM (${outcome.reason}). Call/text them back: ` +
+          `${c.firstName} ${c.lastName} · ${c.phone} · ${c.email} · ${f.property_address || 'no address'} · ${f.selected_roof_type || 'no roof choice'}`
+        );
       }
+      return NextResponse.json({ ok: false, error: 'Lead intake failed' }, { status: 502 });
+    }
+
+    const res = NextResponse.json({ ok: true, success: true });
+
+    // Issue the returning-visitor cookie on real (non-partial) submissions only.
+    // outcome.json.contactId is guaranteed for non-partial by postToN8n.
+    if (!isPartial && outcome.json?.contactId) {
+      res.cookies.set(VISITOR_COOKIE, signVisitorToken(outcome.json.contactId), {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        maxAge: 60 * 60 * 24 * 180,
+        path: '/',
+      });
     }
 
     return res;
