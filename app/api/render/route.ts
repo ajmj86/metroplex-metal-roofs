@@ -4,6 +4,7 @@ import Anthropic from '@anthropic-ai/sdk';
 import { put } from '@vercel/blob';
 import { randomUUID } from 'crypto';
 import { getRoofTypeLabel, resolveSelection } from '@/lib/roofProducts';
+import { alertAndrew } from '@/lib/alerts';
 
 export const maxDuration = 120;
 
@@ -48,7 +49,16 @@ async function fireRenderEmailWebhook(payload: Record<string, unknown>): Promise
         body: JSON.stringify(payload),
       });
       if (res.ok) return;
-      console.error(`[render] fireRenderEmailWebhook attempt ${attempt} got non-OK response:`, res.status, await res.text());
+      const failBody = await res.text();
+      console.error(`[render] fireRenderEmailWebhook attempt ${attempt} got non-OK response:`, res.status, failBody);
+      // n8n answers 404 {reason:'contact_not_found'} only after its own ~45s
+      // search-and-retry for the lead's GHL contact, and it has already
+      // failed that execution (so its error workflow texted Andrew).
+      // Retrying would just burn the rest of this function's time budget.
+      if (res.status === 404 && failBody.includes('contact_not_found')) {
+        console.error('[render] render email skipped — no GHL contact for this lead (n8n alerted)', { email: payload.email });
+        return;
+      }
     } catch (err) {
       console.error(`[render] fireRenderEmailWebhook attempt ${attempt} failed:`, err);
     }
@@ -60,30 +70,6 @@ async function fireRenderEmailWebhook(payload: Record<string, unknown>): Promise
   await alertAndrew(
     `⚠ Render email failed to send for ${firstName || 'a lead'} (${email || 'no email'}) after ${RENDER_EMAIL_WEBHOOK_MAX_ATTEMPTS} attempts. They saw their render in-browser but won't get the follow-up email — forward it manually: ${renderUrl || '(no render URL)'}`
   );
-}
-
-// Same GHL contactId + conversations/messages SMS pattern as n8n Workflow 5
-// ("New Lead Alert SMS"), called directly since these failures happen before
-// or outside of any n8n workflow ever getting invoked.
-const ANDREW_CONTACT_ID = 'cIvwP7gZ7JQX45gmU23Z';
-
-async function alertAndrew(message: string): Promise<void> {
-  const apiKey = process.env.GHL_API_KEY;
-  if (!apiKey) { console.warn('[render] GHL_API_KEY not set — could not send alert:', message); return }
-  try {
-    const res = await fetch('https://services.leadconnectorhq.com/conversations/messages', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        Version: '2021-07-28',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ contactId: ANDREW_CONTACT_ID, type: 'SMS', message }),
-    });
-    if (!res.ok) console.error('[render] alertAndrew got non-OK response:', res.status, await res.text());
-  } catch (err) {
-    console.error('[render] alertAndrew failed:', err);
-  }
 }
 
 async function alertAndrewOfRenderFailure(details: { firstName?: string; email?: string; address: string }): Promise<void> {

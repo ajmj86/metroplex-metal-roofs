@@ -39,6 +39,40 @@ const LOADING_PHRASES = [
 
 const TX_BOUNDS = { north: 36.5, south: 25.8, east: -93.5, west: -106.6 }
 
+// If Google Places hasn't attached within this long the address step stops
+// requiring a suggestion and accepts the typed address (see canContinueAddress).
+const PLACES_LOAD_TIMEOUT_MS = 5000
+// /api/roof-size (geocode + Solar) is a nice-to-have for the estimate; it must
+// never be able to hold up or block lead capture.
+const ROOF_SIZE_TIMEOUT_MS = 8000
+const PHONE_TEL = 'tel:+1' + PHONE.replace(/\D/g, '')
+
+type RoofResult = {
+  squares: number | null
+  estimateLow: string | null
+  estimateHigh: string | null
+  noPriceEstimate: boolean
+  estimateMessage: string | null
+  solarFailureReason: string | null
+}
+
+// UTM attribution. Reads the CURRENT url first (UTMCapture in the root layout
+// writes sessionStorage in an effect that can land after this page's first
+// effects, so relying on sessionStorage alone dropped the landing UTMs from
+// the very first events), then falls back to what UTMCapture stored.
+function readUtm() {
+  const out = { source: '', medium: '', campaign: '', content: '', term: '' }
+  try {
+    const sp = new URLSearchParams(window.location.search)
+    for (const k of Object.keys(out) as (keyof typeof out)[]) {
+      const fromUrl = sp.get('utm_' + k)
+      if (fromUrl) { out[k] = fromUrl; try { sessionStorage.setItem('utm_' + k, fromUrl) } catch {} }
+      else out[k] = sessionStorage.getItem('utm_' + k) || ''
+    }
+  } catch { /* storage blocked: attribution is best-effort */ }
+  return out
+}
+
 type GoogleAddressComponent = { long_name: string; short_name: string; types: string[] }
 
 // Pulls city/state/zip out of Google's own structured address_components
@@ -240,6 +274,17 @@ export default function VisualizerPage() {
   const addrRef = useRef<HTMLInputElement>(null)
   const acAttached = useRef(false)
   const gateSubmittedRef = useRef(false)
+  // Places fallback: false-happy-path until Places fails to load (or the visitor
+  // explicitly opts to use the address as typed), then a typed address is accepted.
+  const [placesFailed, setPlacesFailed] = useState(false)
+  const [plainAddressOk, setPlainAddressOk] = useState(false)
+  const [showPlainLink, setShowPlainLink] = useState(false)
+  // True after /api/lead-intake failed twice: the form stays put with a call-us message.
+  const [leadSubmitFailed, setLeadSubmitFailed] = useState(false)
+  // /api/roof-size starts when the gate opens so it's long finished by submit time.
+  const roofSizePromiseRef = useRef<Promise<RoofResult | null> | null>(null)
+  const lastPartialRef = useRef('')
+  const contactFormViewedRef = useRef(false)
 
   // select step
   const [satelliteUrl, setSatelliteUrl] = useState<string | null>(null)
@@ -258,6 +303,8 @@ export default function VisualizerPage() {
     smsConsent: false, emailConsent: false,
   })
   const [contactErrors, setContactErrors] = useState<Record<string, string>>({})
+  const gateDataRef = useRef(gateData)
+  useEffect(() => { gateDataRef.current = gateData })
   const [gateLoading, setGateLoading] = useState(false)
   // tracks which choice was just selected (for animation flash)
   const [pendingChoice, setPendingChoice] = useState<string | null>(null)
@@ -285,12 +332,9 @@ export default function VisualizerPage() {
 
   // ── GA4: visualizer session start ───────────────────────────────────────────
   useEffect(() => {
+    const u = readUtm()
     trackEvent('visualizer_start', {
-      channel: sessionStorage.getItem('utm_medium') || '',
-      utm_source: sessionStorage.getItem('utm_source') || '',
-      utm_campaign: sessionStorage.getItem('utm_campaign') || '',
-      utm_content: sessionStorage.getItem('utm_content') || '',
-      utm_term: sessionStorage.getItem('utm_term') || '',
+      channel: u.medium, utm_source: u.source, utm_campaign: u.campaign, utm_content: u.content, utm_term: u.term,
     })
   }, [])
 
@@ -315,16 +359,75 @@ export default function VisualizerPage() {
       })
       acAttached.current = true
     }
-    if ((window as any).google?.maps?.places) { attach(); return }
+    // Never dead-end the funnel: if Places can't load (blocked script, bad
+    // connection, key/referrer rejection) the address step falls back to
+    // accepting a typed address instead of a permanently disabled button.
+    const failTimer = setTimeout(() => { if (!acAttached.current) setPlacesFailed(true) }, PLACES_LOAD_TIMEOUT_MS)
+    const onScriptError = () => setPlacesFailed(true)
+    ;(window as unknown as { gm_authFailure?: () => void }).gm_authFailure = onScriptError // Google calls this on key/referrer rejection
+    const cleanupTimer = () => clearTimeout(failTimer)
+    if ((window as any).google?.maps?.places) { attach(); return cleanupTimer }
     const existing = document.querySelector<HTMLScriptElement>('script[data-google-maps-places]')
-    if (existing) { existing.addEventListener('load', attach); return () => existing.removeEventListener('load', attach) }
+    if (existing) {
+      existing.addEventListener('load', attach); existing.addEventListener('error', onScriptError)
+      return () => { cleanupTimer(); existing.removeEventListener('load', attach); existing.removeEventListener('error', onScriptError) }
+    }
     const s = document.createElement('script')
     s.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places`
     s.async = true; s.defer = true; s.dataset.googleMapsPlaces = 'true'
-    s.addEventListener('load', attach)
+    s.addEventListener('load', attach); s.addEventListener('error', onScriptError)
     document.head.appendChild(s)
-    return () => s.removeEventListener('load', attach)
+    return () => { cleanupTimer(); s.removeEventListener('load', attach); s.removeEventListener('error', onScriptError) }
   }, [step])
+
+  // Offer "use the address as typed" if the visitor has typed a full-looking
+  // address but hasn't picked a suggestion after a few seconds. setState only
+  // ever runs inside the timeout callback (typing resets it in onChange).
+  useEffect(() => {
+    if (step !== 'address' || addressComponents || plainAddressOk || address.trim().length < 8) return
+    const t = setTimeout(() => setShowPlainLink(true), 6000)
+    return () => clearTimeout(t)
+  }, [step, address, addressComponents, plainAddressOk])
+
+  // ── Roof size prefetch ─────────────────────────────────────────────────────
+  // Starts as soon as the gate opens (address + material + color are all known),
+  // so by the time the visitor finishes the quiz and the contact form it has
+  // long resolved and adds ZERO delay to lead capture. Failure/timeout => null.
+  async function fetchRoofSize(): Promise<RoofResult | null> {
+    try {
+      const res = await fetch('/api/roof-size', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ address, roofType: selType, color: selColor }),
+        signal: AbortSignal.timeout(ROOF_SIZE_TIMEOUT_MS),
+      })
+      const d = await res.json()
+      return {
+        squares: d.squares ?? null,
+        estimateLow: d.estimateLow ?? null,
+        estimateHigh: d.estimateHigh ?? null,
+        noPriceEstimate: d.noPriceEstimate ?? false,
+        estimateMessage: d.estimateMessage ?? null,
+        solarFailureReason: d.solarFailureReason ?? null,
+      }
+    } catch {
+      return null // non-blocking: lead capture proceeds without a roof size
+    }
+  }
+  useEffect(() => {
+    if (step === 'address' || step === 'select') roofSizePromiseRef.current = null
+    if (step === 'gate' && !roofSizePromiseRef.current) roofSizePromiseRef.current = fetchRoofSize()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [step])
+
+  // ── GA4: contact form viewed (once per gate visit) ─────────────────────────
+  useEffect(() => {
+    if (step !== 'gate') { contactFormViewedRef.current = false; return }
+    if (gateScreen === 4 && !contactFormViewedRef.current) {
+      contactFormViewedRef.current = true
+      trackEvent('visualizer_contact_form_viewed', { roof_type: selType || '' })
+    }
+  }, [step, gateScreen, selType])
 
   // ── Silent returning-visitor check (cookie-only) ────────────────────────────
   // Runs once on mount, before anything else renders (step starts at
@@ -339,7 +442,9 @@ export default function VisualizerPage() {
         if (!cancelled && data.recognized) {
           setReturningContact(data)
           setAddress(data.address)
-          setGateData(d => ({ ...d, firstName: data.firstName, phone: data.phone, email: data.email }))
+          // GHL returns E.164 ("+12145550152"); the form expects 10 digits, so a
+          // recognized contact failed validation and got stuck without this.
+          setGateData(d => ({ ...d, firstName: data.firstName, phone: formatPhone(data.phone || ''), email: data.email }))
           setStep('welcome-back')
           return
         }
@@ -362,6 +467,7 @@ export default function VisualizerPage() {
   useEffect(() => {
     if (step !== 'loading') return
     let cancelled = false
+    trackEvent('visualizer_render_started', { roof_type: selType || '' })
     ;(async () => {
       try {
         const res = await fetch('/api/render', {
@@ -387,9 +493,11 @@ export default function VisualizerPage() {
           // don't assume success just because the fetch itself didn't throw.
           if (res.ok && data.image) {
             setRenderUrl(data.image)
+            trackEvent('visualizer_render_complete', { roof_type: selType || '' })
           } else {
             console.error('[visualizer] render request failed:', res.status, data?.error)
             setRenderUrl(null)
+            trackEvent('visualizer_render_failed', { roof_type: selType || '', status: res.status })
           }
           setStep('results')
         }
@@ -397,6 +505,7 @@ export default function VisualizerPage() {
         if (!cancelled) {
           console.error('[visualizer] render request threw:', err)
           setRenderUrl(null)
+          trackEvent('visualizer_render_failed', { roof_type: selType || '', status: 0 })
           setStep('results')
         }
       }
@@ -464,42 +573,66 @@ export default function VisualizerPage() {
     if (colorParam && colors.some(c => c.name === colorParam)) setSelColor(colorParam)
   }, [])
 
-  // ── Partial lead capture on tab close / navigation away during gate ────────
+  // ── Partial lead capture when the visitor leaves during the gate ───────────
+  // beforeunload does not fire reliably on mobile (iOS Safari never fires it on
+  // swipe-away/tab-close), so this listens to pagehide + visibilitychange and
+  // sends with sendBeacon, which survives the page going away. It now carries
+  // whatever contact info has been typed so the partial is actually followable.
+  // visibilitychange->hidden fires on every app switch on a phone, so that
+  // trigger only sends once there is a valid phone/email to capture; pagehide
+  // (a real exit) always sends, but identical payloads are only sent once.
   useEffect(() => {
     if (step !== 'gate') return
 
-    function handleUnload() {
+    function sendPartial(trigger: 'pagehide' | 'hidden') {
       if (gateSubmittedRef.current) return
-      fetch('/api/lead-intake', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        keepalive: true,
-        body: JSON.stringify({
-          partial: true,
-          leadOrigin: 'visualizer_partial',
-          address,
-          roofType: selType,
-          colorSelected: selColor,
-          timestamp: new Date().toISOString(),
-          utm: {
-            source: sessionStorage.getItem('utm_source') || '',
-            medium: sessionStorage.getItem('utm_medium') || '',
-            campaign: sessionStorage.getItem('utm_campaign') || '',
-            content: sessionStorage.getItem('utm_content') || '',
-            term: sessionStorage.getItem('utm_term') || '',
-          },
-        }),
-      }).catch(() => {})
+      const g = gateDataRef.current
+      const phoneOk = g.phone.replace(/\D/g, '').length === 10
+      const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(g.email.trim())
+      if (trigger === 'hidden' && !phoneOk && !emailOk) return
+      const payload = {
+        partial: true,
+        leadOrigin: 'visualizer_partial',
+        address,
+        roofType: selType,
+        colorSelected: selColor,
+        firstName: g.firstName.trim(),
+        lastName: g.lastName.trim(),
+        phone: phoneOk ? g.phone : '',
+        email: emailOk ? g.email.trim() : '',
+        utm: readUtm(),
+      }
+      const key = JSON.stringify(payload)
+      if (key === lastPartialRef.current) return
+      lastPartialRef.current = key
+      const body = JSON.stringify({ ...payload, timestamp: new Date().toISOString() })
+      let queued = false
+      try {
+        queued = !!navigator.sendBeacon && navigator.sendBeacon('/api/lead-intake', new Blob([body], { type: 'application/json' }))
+      } catch { queued = false }
+      if (!queued) {
+        fetch('/api/lead-intake', { method: 'POST', headers: { 'Content-Type': 'application/json' }, keepalive: true, body }).catch(() => {})
+      }
     }
 
-    window.addEventListener('beforeunload', handleUnload)
-    return () => window.removeEventListener('beforeunload', handleUnload)
+    const onVisibility = () => { if (document.visibilityState === 'hidden') sendPartial('hidden') }
+    const onPageHide = () => sendPartial('pagehide')
+    document.addEventListener('visibilitychange', onVisibility)
+    window.addEventListener('pagehide', onPageHide)
+    return () => {
+      document.removeEventListener('visibilitychange', onVisibility)
+      window.removeEventListener('pagehide', onPageHide)
+    }
   }, [step, address, selType, selColor])
+
+  const canContinueAddress =
+    !locating && (!!addressComponents || ((placesFailed || plainAddressOk) && address.trim().length >= 6))
 
   // ── Handlers ───────────────────────────────────────────────────────────────
   async function handleVisualize() {
     if (!address.trim()) { setAddrError('Please enter your home address.'); return }
     setAddrError(''); setLocating(true)
+    trackEvent('visualizer_address_selected', { method: addressComponents ? 'places' : 'plain_text' })
     try {
       const res = await fetch('/api/resolve-image', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
@@ -537,7 +670,7 @@ export default function VisualizerPage() {
         if (rvData.recognized) {
           setReturningContact(rvData)
           setAddress(rvData.address)
-          setGateData(d => ({ ...d, firstName: rvData.firstName, phone: rvData.phone, email: rvData.email }))
+          setGateData(d => ({ ...d, firstName: rvData.firstName, phone: formatPhone(rvData.phone || ''), email: rvData.email }))
           setStep('welcome-back')
           return
         }
@@ -552,6 +685,7 @@ export default function VisualizerPage() {
 
   function handleChoice(field: keyof GateData, value: string) {
     setPendingChoice(value)
+    trackEvent(`visualizer_quiz_${gateScreen + 1}`, { roof_type: selType || '' })
     // Compute the merged object explicitly rather than relying on the
     // `gateData` state variable being fresh by the time the timeout below
     // fires — needed because a recognized returning contact (Case B) submits
@@ -576,19 +710,25 @@ export default function VisualizerPage() {
   }
 
   function formatPhone(raw: string): string {
-    const digits = raw.replace(/\D/g, '').slice(0, 10)
+    let all = raw.replace(/\D/g, '')
+    // "+1 (214) 555-0147" / "1-214-555-0147" pasted or autofilled: drop the
+    // country code BEFORE truncating, or the last digit(s) get cut and a wrong
+    // number still looks valid. (Only strips once there are >10 digits so
+    // typing a number digit-by-digit is unaffected.)
+    if (all.length > 10 && all.startsWith('1')) all = all.slice(1)
+    const digits = all.slice(0, 10)
     if (digits.length < 4) return digits
     if (digits.length < 7) return `(${digits.slice(0,3)}) ${digits.slice(3)}`
     return `(${digits.slice(0,3)}) ${digits.slice(3,6)}-${digits.slice(6)}`
   }
 
-  function validateContact(data: GateData = gateData) {
+  function validateContact(data: GateData = gateData, requireLastName = true) {
     const e: Record<string, string> = {}
 
     if (!data.firstName.trim())
       e.firstName = 'Required'
 
-    if (!data.lastName.trim())
+    if (requireLastName && !data.lastName.trim())
       e.lastName = 'Required'
 
     const digits = data.phone.replace(/\D/g, '')
@@ -605,39 +745,65 @@ export default function VisualizerPage() {
     return e
   }
 
+  // POST the lead and only report success if /api/lead-intake says it was saved.
+  // The server already retries n8n and texts Andrew on failure (a 502 means
+  // that happened), so the browser retries once only for network drops / other
+  // 5xx -- re-sending after a 502 would just repeat the same alerts.
+  async function submitLeadWithRetry(payload: Record<string, unknown>): Promise<boolean> {
+    for (let attempt = 1; attempt <= 2; attempt++) {
+      let retryable = true
+      try {
+        const res = await fetch('/api/lead-intake', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+          signal: AbortSignal.timeout(50_000),
+        })
+        if (res.ok) {
+          const j = await res.json().catch(() => null)
+          if (!j || j.ok !== false) return true
+        } else {
+          console.error('[visualizer] /api/lead-intake failed, attempt', attempt, 'status', res.status)
+          if (res.status === 502) retryable = false
+        }
+      } catch (err) {
+        console.error('[visualizer] /api/lead-intake threw, attempt', attempt, err)
+      }
+      if (!retryable || attempt === 2) break
+      await new Promise((r) => setTimeout(r, 1200))
+    }
+    return false
+  }
+
   // overrideGateData: used only by handleChoice's Case-B auto-submit (skips
   // the contact-info screen for a recognized returning contact), so the
   // just-selected timeline value is used immediately rather than waiting for
   // the `gateData` state to catch up on the next render.
   async function handleContactSubmit(overrideGateData?: GateData) {
     const data = overrideGateData ?? gateData
+    // A recognized returning contact has no stored last name; don't block them.
+    const e = validateContact(data, !overrideGateData)
+    if (Object.keys(e).length) {
+      setContactErrors(e)
+      // The auto-submit path skips the contact screen; show it so errors are visible.
+      if (overrideGateData) setGateScreen(GATE_SCREENS.length)
+      return
+    }
+    setContactErrors({})
+    // Only now that validation passed and a submit is really being attempted:
+    // this suppresses the abandonment capture, so it must not be set earlier,
+    // and it is reset below if the submit fails so a retry works.
     gateSubmittedRef.current = true
-    const e = validateContact(data)
-    if (Object.keys(e).length) { setContactErrors(e); return }
+    setLeadSubmitFailed(false)
     setGateLoading(true)
 
-    let squares: number | null = null
-    let low: string | null = null
-    let high: string | null = null
-    let noPrice = false
-    let message: string | null = null
-    let failureReason: string | null = null
-    try {
-      const roofRes = await fetch('/api/roof-size', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ address, roofType: selType, color: selColor }),
-      })
-      const roofData = await roofRes.json()
-      squares = roofData.squares
-      low = roofData.estimateLow
-      high = roofData.estimateHigh
-      noPrice = roofData.noPriceEstimate ?? false
-      message = roofData.estimateMessage ?? null
-      failureReason = roofData.solarFailureReason ?? null
-    } catch {
-      // non-blocking — continue to lead-intake regardless
-    }
+    // Prefetched when the gate opened; bounded by its own 8s timeout either way.
+    const roof = await (roofSizePromiseRef.current ?? fetchRoofSize())
+    const squares = roof?.squares ?? null
+    const low = roof?.estimateLow ?? null
+    const high = roof?.estimateHigh ?? null
+    const noPrice = roof?.noPriceEstimate ?? false
+    const message = roof?.estimateMessage ?? null
+    const failureReason = roof?.solarFailureReason ?? null
     setRoofSquares(squares)
     setEstimateLow(low)
     setEstimateHigh(high)
@@ -645,79 +811,82 @@ export default function VisualizerPage() {
     setEstimateMessage(message)
     setSolarFailureReason(failureReason)
 
-    const utmSource = sessionStorage.getItem('utm_source') || ''
-    const utmMedium = sessionStorage.getItem('utm_medium') || ''
-    const utmCampaign = sessionStorage.getItem('utm_campaign') || ''
-    const utmContent = sessionStorage.getItem('utm_content') || ''
-    const utmTerm = sessionStorage.getItem('utm_term') || ''
+    const utm = readUtm()
     trackEvent('visualizer_complete', {
-      channel: utmMedium,
-      utm_source: utmSource,
-      utm_campaign: utmCampaign,
-      utm_content: utmContent,
-      utm_term: utmTerm,
+      channel: utm.medium,
+      utm_source: utm.source,
+      utm_campaign: utm.campaign,
+      utm_content: utm.content,
+      utm_term: utm.term,
     })
 
-    try {
-      await fetch('/api/lead-intake', {
+    const saved = await submitLeadWithRetry({
+      firstName: data.firstName,
+      lastName: data.lastName,
+      phone: data.phone,
+      email: data.email,
+      smsConsent: data.smsConsent,
+      emailConsent: data.emailConsent,
+      address,
+      // Present only when this exact address string came from an actual
+      // Places selection (see extractAddressComponents) -- absent means
+      // the visitor typed/edited it by hand and the API should treat
+      // city/state/zip as unverified rather than guess-parsing them.
+      addressComponents,
+      currentRoofType: data.currentRoofType,
+      reason: data.reason,
+      insuranceClaim: data.insuranceClaim,
+      timeline: data.timeline,
+      selectedRoofType: selType,
+      product: selProduct,
+      color: selColor,
+      leadOrigin: 'visualizer',
+      utm: { source: utm.source, medium: utm.medium, campaign: utm.campaign, content: utm.content, term: utm.term },
+      estimatedRoofSize: squares,
+      estimateRange: noPrice ? (message ?? undefined) : (low && high ? `${low} - ${high}` : undefined),
+      // '' (not undefined) on success so the API/n8n layer can tell "solar worked
+      // this time" apart from "this field wasn't touched" and clear a stale
+      // failure reason from an earlier visit instead of leaving it stuck.
+      solarFailureReason: failureReason ?? '',
+      roofSizeSource: squares != null ? 'solar' : undefined,
+    })
+
+    if (!saved) {
+      // Block here rather than render in the background: the render costs money,
+      // its follow-up email needs the GHL contact that doesn't exist, and
+      // showing results without a saved lead is exactly the silent loss this
+      // fixes. The form values are untouched so "Try again" resubmits them.
+      gateSubmittedRef.current = false
+      setLeadSubmitFailed(true)
+      setGateLoading(false)
+      if (overrideGateData) setGateScreen(GATE_SCREENS.length)
+      trackEvent('visualizer_lead_failed', { roof_type: selType || '' })
+      return
+    }
+    trackEvent('visualizer_lead_submitted', { roof_type: selType || '' })
+
+    // Case B only (returning contact, different address — see the
+    // welcome-back / "not this property" flow): n8n's own opportunity
+    // dedupe is contact-only, not address-aware, so it would reuse the
+    // existing opportunity instead of creating a new one for this property.
+    // Called strictly after /api/lead-intake resolves so n8n's own dedupe
+    // search has already completed — no race between the two writes.
+    if (returningContact) {
+      await fetch('/api/create-opportunity', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          contactId: returningContact.contactId,
           firstName: data.firstName,
           lastName: data.lastName,
-          phone: data.phone,
-          email: data.email,
-          smsConsent: data.smsConsent,
-          emailConsent: data.emailConsent,
           address,
-          // Present only when this exact address string came from an actual
-          // Places selection (see extractAddressComponents) -- absent means
-          // the visitor typed/edited it by hand and the API should treat
-          // city/state/zip as unverified rather than guess-parsing them.
-          addressComponents,
-          currentRoofType: data.currentRoofType,
           reason: data.reason,
-          insuranceClaim: data.insuranceClaim,
           timeline: data.timeline,
-          selectedRoofType: selType,
-          product: selProduct,
-          color: selColor,
-          leadOrigin: 'visualizer',
-          utm: { source: utmSource, medium: utmMedium, campaign: utmCampaign, content: utmContent, term: utmTerm },
-          estimatedRoofSize: squares,
-          estimateRange: noPrice ? (message ?? undefined) : (low && high ? `${low} - ${high}` : undefined),
-          // '' (not undefined) on success so the API/n8n layer can tell "solar worked
-          // this time" apart from "this field wasn't touched" and clear a stale
-          // failure reason from an earlier visit instead of leaving it stuck.
-          solarFailureReason: failureReason ?? '',
-          roofSizeSource: squares != null ? 'solar' : undefined,
         }),
-      })
-
-      // Case B only (returning contact, different address — see the
-      // welcome-back / "not this property" flow): n8n's own opportunity
-      // dedupe is contact-only, not address-aware, so it would reuse the
-      // existing opportunity instead of creating a new one for this property.
-      // Called strictly after /api/lead-intake resolves so n8n's own dedupe
-      // search has already completed — no race between the two writes.
-      if (returningContact) {
-        await fetch('/api/create-opportunity', {
-          method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contactId: returningContact.contactId,
-            firstName: data.firstName,
-            lastName: data.lastName,
-            address,
-            reason: data.reason,
-            timeline: data.timeline,
-          }),
-        }).catch(() => { /* non-blocking — lead-intake already succeeded */ })
-      }
-    } catch { /* advance anyway */ }
-    finally {
-      setGateLoading(false)
-      setPhraseIdx(0)
-      setStep('loading')
+      }).catch(() => { /* non-blocking — lead-intake already succeeded */ })
     }
+    setGateLoading(false)
+    setPhraseIdx(0)
+    setStep('loading')
   }
 
   // ── Case A: recognized contact, confirmed same address ──────────────────────
@@ -730,37 +899,21 @@ export default function VisualizerPage() {
   // first-time render.
   async function handleReturningSameAddressSubmit() {
     setGateLoading(true)
-    let squares: number | null = null
-    let low: string | null = null
-    let high: string | null = null
-    let noPrice = false
-    let message: string | null = null
-    try {
-      const roofRes = await fetch('/api/roof-size', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ address, roofType: selType, color: selColor }),
-      })
-      const roofData = await roofRes.json()
-      squares = roofData.squares
-      low = roofData.estimateLow
-      high = roofData.estimateHigh
-      noPrice = roofData.noPriceEstimate ?? false
-      message = roofData.estimateMessage ?? null
-    } catch {
-      // non-blocking — render step still proceeds without a price
-    }
+    // Same 8s-capped helper as the main path; failure just means no price shown.
+    const roof = await fetchRoofSize()
+    const squares = roof?.squares ?? null
+    const low = roof?.estimateLow ?? null
+    const high = roof?.estimateHigh ?? null
+    const noPrice = roof?.noPriceEstimate ?? false
+    const message = roof?.estimateMessage ?? null
     setRoofSquares(squares)
     setEstimateLow(low)
     setEstimateHigh(high)
     setNoPriceEstimate(noPrice)
     setEstimateMessage(message)
+    const u = readUtm()
     trackEvent('visualizer_complete', {
-      channel: sessionStorage.getItem('utm_medium') || '',
-      utm_source: sessionStorage.getItem('utm_source') || '',
-      utm_campaign: sessionStorage.getItem('utm_campaign') || '',
-      utm_content: sessionStorage.getItem('utm_content') || '',
-      utm_term: sessionStorage.getItem('utm_term') || '',
+      channel: u.medium, utm_source: u.source, utm_campaign: u.campaign, utm_content: u.content, utm_term: u.term,
     })
     setGateLoading(false)
     setPhraseIdx(0)
@@ -793,11 +946,8 @@ export default function VisualizerPage() {
       setNoPriceEstimate(data.noPriceEstimate ?? false)
       setEstimateMessage(data.estimateMessage ?? null)
 
-      const utmSource = sessionStorage.getItem('utm_source') || ''
-      const utmMedium = sessionStorage.getItem('utm_medium') || ''
-      const utmCampaign = sessionStorage.getItem('utm_campaign') || ''
-      const utmContent = sessionStorage.getItem('utm_content') || ''
-      const utmTerm = sessionStorage.getItem('utm_term') || ''
+      const mu = readUtm()
+      const utmSource = mu.source, utmMedium = mu.medium, utmCampaign = mu.campaign, utmContent = mu.content, utmTerm = mu.term
       trackEvent('visualizer_complete', {
         channel: utmMedium,
         utm_source: utmSource,
@@ -989,12 +1139,15 @@ export default function VisualizerPage() {
                   Enter your address and choose a material. We&apos;ll render your home with your selected roofing material and give you a price range — in under 60 seconds. No upload required.
                 </p>
               </div>
-              {!addrError && address.trim() && !addressComponents && (
+              {placesFailed && !addressComponents && (
+                <div style={{ fontSize: 11, color: C.accentLight, marginBottom: 6 }}>Address suggestions aren&apos;t available right now — type your full address (street, city, state) and continue.</div>
+              )}
+              {!placesFailed && !addrError && address.trim() && !addressComponents && (
                 // Above the input, not below -- the Places suggestion dropdown
                 // renders directly under the box and would cover a message
                 // placed there, hiding the exact instruction the user needs
                 // while that dropdown is open.
-                <div style={{ fontSize: 11, color: C.accentLight, marginBottom: 6 }}>Select your address from the list above to continue.</div>
+                <div style={{ fontSize: 11, color: C.accentLight, marginBottom: 6 }}>Select your address from the list below to continue.</div>
               )}
               <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 8, padding: 6, display: 'flex', gap: 6, alignItems: 'center', flexWrap: 'wrap', marginBottom: 8 }}>
                 <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', minWidth: 180 }}>
@@ -1007,13 +1160,13 @@ export default function VisualizerPage() {
                     // Editing by hand invalidates any previously-selected Places
                     // suggestion -- clears addressComponents so a since-modified
                     // string never gets treated as trustworthy structured data.
-                    onChange={e => { setAddress(e.target.value); setAddrError(''); setAddressComponents(null) }}
+                    onChange={e => { setAddress(e.target.value); setAddrError(''); setAddressComponents(null); setShowPlainLink(false) }}
                     // Requires an actual Places selection (addressComponents),
                     // not just non-empty text -- a free-typed partial address
                     // can geocode to a plausible but wrong DFW city with no
                     // error at all, which is worse than a blank field because
                     // nothing downstream flags it.
-                    onKeyDown={e => e.key === 'Enter' && !locating && !!addressComponents && handleVisualize()}
+                    onKeyDown={e => e.key === 'Enter' && canContinueAddress && handleVisualize()}
                     placeholder="Enter your home address…"
                     autoComplete="off"
                     style={{ flex: 1, background: 'none', border: 'none', outline: 'none', color: C.white, fontSize: 14, fontFamily: "'Outfit',sans-serif" }}
@@ -1021,13 +1174,21 @@ export default function VisualizerPage() {
                 </div>
                 <button
                   onClick={handleVisualize}
-                  disabled={locating || !addressComponents}
-                  style={{ padding: '13px 22px', background: C.accent, color: C.black, fontSize: 11, letterSpacing: 1.5, textTransform: 'uppercase', fontWeight: 600, borderRadius: 6, whiteSpace: 'nowrap', opacity: (locating || !addressComponents) ? 0.45 : 1, cursor: (locating || !addressComponents) ? 'not-allowed' : 'pointer', border: 'none', fontFamily: "'Outfit',sans-serif", transition: 'background 0.2s' }}
-                  onMouseEnter={e => { if (!locating && addressComponents) e.currentTarget.style.background = C.accentLight }}
+                  disabled={!canContinueAddress}
+                  style={{ padding: '13px 22px', background: C.accent, color: C.black, fontSize: 11, letterSpacing: 1.5, textTransform: 'uppercase', fontWeight: 600, borderRadius: 6, whiteSpace: 'nowrap', opacity: !canContinueAddress ? 0.45 : 1, cursor: !canContinueAddress ? 'not-allowed' : 'pointer', border: 'none', fontFamily: "'Outfit',sans-serif", transition: 'background 0.2s' }}
+                  onMouseEnter={e => { if (canContinueAddress) e.currentTarget.style.background = C.accentLight }}
                   onMouseLeave={e => { e.currentTarget.style.background = C.accent }}
                 >{locating ? 'Locating…' : 'Visualize My Roof →'}</button>
               </div>
               {addrError && <div style={{ fontSize: 11, color: '#F87171', marginBottom: 8 }}>{addrError}</div>}
+              {showPlainLink && !addressComponents && !plainAddressOk && !placesFailed && (
+                <div style={{ textAlign: 'center', marginBottom: 8 }}>
+                  <button
+                    onClick={() => setPlainAddressOk(true)}
+                    style={{ fontSize: 11, color: C.accentLight, background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline', fontFamily: "'Outfit',sans-serif" }}
+                  >Can&apos;t find your address in the list? Use it as typed</button>
+                </div>
+              )}
               {locating && (
                 <div style={{ textAlign: 'center', marginTop: 12, fontSize: 13, color: C.muted }}>
                   Locating <span style={{ color: C.accentLight }}>{address}</span>…
@@ -1303,6 +1464,7 @@ export default function VisualizerPage() {
               <button
                 onClick={() => {
                   window.scrollTo(0, 0)
+                  trackEvent('visualizer_material_selected', { roof_type: selType || '', material_type: selMaterialType || '' })
                   if (returningSameAddress) {
                     handleReturningSameAddressSubmit()
                   } else {
@@ -1427,14 +1589,14 @@ export default function VisualizerPage() {
                         <div style={{ display: 'flex', gap: 12, marginBottom: 12 }}>
                           <div style={{ flex: 1 }}>
                             <div style={labelStyle}>First Name *</div>
-                            <input value={gateData.firstName}
+                            <input value={gateData.firstName} name="firstName" autoComplete="given-name"
                               onChange={e => setGateData(d => ({ ...d, firstName: e.target.value }))}
                               placeholder="Jane" style={iStyle} />
                             {contactErrors.firstName && <div style={errStyle}>{contactErrors.firstName}</div>}
                           </div>
                           <div style={{ flex: 1 }}>
                             <div style={labelStyle}>Last Name *</div>
-                            <input value={gateData.lastName}
+                            <input value={gateData.lastName} name="lastName" autoComplete="family-name"
                               onChange={e => setGateData(d => ({ ...d, lastName: e.target.value }))}
                               placeholder="Doe" style={iStyle} />
                             {contactErrors.lastName && <div style={errStyle}>{contactErrors.lastName}</div>}
@@ -1442,14 +1604,14 @@ export default function VisualizerPage() {
                         </div>
                         <div style={{ marginBottom: 12 }}>
                           <div style={labelStyle}>Phone *</div>
-                          <input value={gateData.phone} type="tel"
+                          <input value={gateData.phone} type="tel" name="phone" inputMode="tel" autoComplete="tel"
                             onChange={e => setGateData(d => ({ ...d, phone: formatPhone(e.target.value) }))}
                             placeholder="(817) 555-0100" style={iStyle} />
                           {contactErrors.phone && <div style={errStyle}>{contactErrors.phone}</div>}
                         </div>
                         <div style={{ marginBottom: 16 }}>
                           <div style={labelStyle}>Email *</div>
-                          <input value={gateData.email} type="email"
+                          <input value={gateData.email} type="email" name="email" inputMode="email" autoComplete="email"
                             onChange={e => setGateData(d => ({ ...d, email: e.target.value }))}
                             placeholder="jane@email.com" style={iStyle} />
                           {contactErrors.email && <div style={errStyle}>{contactErrors.email}</div>}
@@ -1473,6 +1635,12 @@ export default function VisualizerPage() {
                         <div style={{ fontSize: 13, color: C.muted, lineHeight: 1.7, marginBottom: 16, padding: '10px 12px', background: C.surface, borderRadius: 4, border: `1px solid ${C.border}` }}>
                           By submitting this form, you agree to be contacted regarding your roofing inquiry. Check the box above to also receive text messages. Your information is never sold or shared with third parties.
                         </div>
+                        {leadSubmitFailed && (
+                          <div role="alert" style={{ fontSize: 13, color: C.white, lineHeight: 1.6, marginBottom: 12, padding: '12px 14px', background: C.surface, borderRadius: 4, border: '1px solid #F87171' }}>
+                            We couldn&apos;t save your details just now — nothing is lost on your end. Please tap Try again, or call us at{' '}
+                            <a href={PHONE_TEL} style={{ color: C.accent, textDecoration: 'underline' }}>{PHONE}</a>{' '}and we&apos;ll take care of you.
+                          </div>
+                        )}
                         <button
                           onClick={() => handleContactSubmit()}
                           disabled={gateLoading || !formReady}
@@ -1487,7 +1655,7 @@ export default function VisualizerPage() {
                           }}
                           onMouseEnter={e => { if (!gateLoading && formReady) e.currentTarget.style.background = C.accentLight }}
                           onMouseLeave={e => { e.currentTarget.style.background = gateLoading || !formReady ? C.border : C.accent }}
-                        >{gateLoading ? 'Submitting…' : 'Generate My Visualization →'}</button>
+                        >{gateLoading ? 'Submitting…' : leadSubmitFailed ? 'Try Again →' : 'Generate My Visualization →'}</button>
                       </>
                     )
                   })()}
