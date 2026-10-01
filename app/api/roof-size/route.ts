@@ -1,19 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import pricingConfig from '@/config/pricing.json'
+import { computeEstimate, isAreaInRange, resolveMaterialConfig, type PricedConfig } from '@/lib/estimate'
 
 export const maxDuration = 30
 
-type RoofTypeKey = keyof typeof pricingConfig.roofTypes
-
-type RoofTypeConfig = {
-  label: string
-  retailPerSquare?: number
-  retailPerSquareMetallic?: number
-  retailPerSquareStandard?: number
-  metallicColors?: string[]
-  noPriceEstimate?: boolean
-  wasteFactorRange: { simple: number; high: number }
-}
+const roofTypes = pricingConfig.roofTypes as Record<string, PricedConfig>
 
 // Google Solar API's per-segment area sum doesn't track professional aerial
 // measurement (RoofScope/EagleView) in a consistent direction -- confirmed
@@ -46,11 +37,11 @@ type RoofTypeConfig = {
 // tree-heavy roof.
 const AREA_CORRECTION_FACTOR = pricingConfig.roofSizeCalibration.areaCorrectionFactor
 
-// Waste-factor complexity scoring -- reuses the same `segments` array
-// pulled for the area correction above (no second Solar API call). Instead
-// of one flat wasteFactor per material, each material now has a
-// [simple, high] band (config/pricing.json's wasteFactorRange) and the
-// roof's complexity score (0-1) picks a point in that band.
+// Roof complexity scoring -- reuses the same `segments` array pulled for the
+// area correction above (no second Solar API call). As of the low/high
+// waste-multiplier pricing change this score NO LONGER AFFECTS PRICE (price
+// comes from config/pricing.json wasteLow/wasteHigh via lib/estimate.ts); it
+// is still computed and logged for analytics only.
 //
 // Density: segments per CORRECTED square (post area-correction, not raw --
 // stays on the same "believed" roof size as the rest of the pipeline).
@@ -113,61 +104,29 @@ function roofComplexityScore(
   )
 }
 
-// complexityScore is null for the manual-entry fallback, which has no Solar
-// API segment data to score -- falls back to the middle of the material's
-// band as a neutral "no info" default.
-function resolveWasteFactor(config: RoofTypeConfig, complexityScore: number | null): number {
-  const { simple, high } = config.wasteFactorRange
-  if (complexityScore == null) return simple + (high - simple) / 2
-  return simple + complexityScore * (high - simple)
-}
-
-// Standing Seam prices by metallicColors membership (e.g. "Natural Metal");
-// every other roof type has a single flat retailPerSquare.
-function resolveRetailPerSquare(config: RoofTypeConfig, color?: string): number {
-  if (config.retailPerSquareMetallic != null && config.retailPerSquareStandard != null) {
-    const isMetallic = !!color && (config.metallicColors ?? []).includes(color)
-    return isMetallic ? config.retailPerSquareMetallic : config.retailPerSquareStandard
-  }
-  return config.retailPerSquare ?? 0
-}
-
-// Returns raw numbers instead of pre-formatted USD strings so formatDollars()
-// below can do its own whole-dollar formatting. Low end is the material's
-// configured rate times roof size adjusted for waste (offcuts/overlap
-// material a real job needs beyond the bare roof area); high end adds the
-// configured margin on top (pricingConfig.estimateRange.highMultiplier,
-// currently 10%).
-function calculateEstimate(squares: number, config: RoofTypeConfig, color: string | undefined, wasteFactor: number) {
-  const pricePerSquare = resolveRetailPerSquare(config, color)
-  const adjustedSquares = squares * (1 + wasteFactor)
-  const low = pricePerSquare * adjustedSquares
-  const high = low * pricingConfig.estimateRange.highMultiplier
-
-  return { low, high }
-}
-
 function formatDollars(n: number): string {
   return '$' + Math.round(n).toLocaleString('en-US')
 }
 
 // Roof types like Copper have no price estimate at all (tariffs/material
 // shortages) — callers get estimateMessage instead of estimateLow/estimateHigh,
-// never a $0 or blank range.
-function buildPriceFields(squares: number, config: RoofTypeConfig, color: string | undefined, wasteFactor: number) {
-  if (config.noPriceEstimate) {
+// never a $0 or blank range. An unknown/unpriceable material also returns
+// empty low/high (never NaN/undefined strings).
+function buildPriceFields(netSquares: number, roofType: string, color: string | undefined, style: string | undefined) {
+  const result = computeEstimate(roofTypes, netSquares, roofType, color, style)
+  if (!result.priced) {
+    const noEstimate = result.reason === 'no_estimate'
     return {
       estimateLow: null,
       estimateHigh: null,
-      noPriceEstimate: true as const,
-      estimateMessage: pricingConfig.noPriceEstimateMessage,
+      noPriceEstimate: noEstimate as boolean,
+      estimateMessage: noEstimate ? pricingConfig.noPriceEstimateMessage : null,
     }
   }
-  const result = calculateEstimate(squares, config, color, wasteFactor)
   return {
     estimateLow: formatDollars(result.low),
     estimateHigh: formatDollars(result.high),
-    noPriceEstimate: false as const,
+    noPriceEstimate: false as boolean,
     estimateMessage: null,
   }
 }
@@ -205,12 +164,11 @@ export async function POST(req: NextRequest) {
     const color: string | undefined = body?.color
     const manualSqFt: number | undefined = body?.manualSqFt != null ? Number(body.manualSqFt) : undefined
     const stories: string | undefined = body?.stories
+    const style: string | undefined = typeof body?.style === 'string' ? body.style : undefined
 
-    if (!roofType || !(roofType in pricingConfig.roofTypes)) {
+    if (!roofType || !resolveMaterialConfig(roofTypes, roofType, style)) {
       return NextResponse.json(emptyResult())
     }
-
-    const config = pricingConfig.roofTypes[roofType as RoofTypeKey] as RoofTypeConfig
 
     // Manual fallback path — bypasses geocode/Solar entirely. Uses the same
     // buildPriceFields() and live config/pricing.json as the Solar path, so
@@ -218,8 +176,7 @@ export async function POST(req: NextRequest) {
     // differs.
     if (manualSqFt != null && !Number.isNaN(manualSqFt) && manualSqFt > 0) {
       const squares = squaresFromManualSqFt(manualSqFt, stories)
-      const wasteFactor = resolveWasteFactor(config, null)
-      const priceFields = buildPriceFields(squares, config, color, wasteFactor)
+      const priceFields = buildPriceFields(squares, roofType, color, style)
       return NextResponse.json({
         squares: Math.round(squares * 10) / 10,
         ...priceFields,
@@ -258,16 +215,17 @@ export async function POST(req: NextRequest) {
     const totalAreaM2 = rawAreaM2 * AREA_CORRECTION_FACTOR
 
     // Confidence check: must be between 800 and 8,000 sq ft
-    if (totalAreaM2 < 74.3 || totalAreaM2 > 743) {
+    if (!isAreaInRange(totalAreaM2)) {
       console.error('[roof-size] Roof area out of confidence range:', totalAreaM2, 'sqm for', address, `(${lat}, ${lng})`)
       return NextResponse.json(emptyResult('area_out_of_range'))
     }
 
     const squares = (totalAreaM2 * 10.7639) / 100
 
+    // Analytics/logging only -- does not feed pricing (see comment above).
     const complexityScore = roofComplexityScore(segments, squares)
-    const wasteFactor = resolveWasteFactor(config, complexityScore)
-    const priceFields = buildPriceFields(squares, config, color, wasteFactor)
+    console.log('[roof-size] complexity', { roofType, style, squares: Math.round(squares * 10) / 10, complexityScore: Math.round(complexityScore * 1000) / 1000 })
+    const priceFields = buildPriceFields(squares, roofType, color, style)
 
     return NextResponse.json({
       squares: Math.round(squares * 10) / 10,

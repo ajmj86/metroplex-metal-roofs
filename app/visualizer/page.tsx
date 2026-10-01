@@ -398,7 +398,7 @@ export default function VisualizerPage() {
       const res = await fetch('/api/roof-size', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ address, roofType: selType, color: selColor }),
+        body: JSON.stringify({ address, roofType: selType, style: selStyle, color: selColor }),
         signal: AbortSignal.timeout(ROOF_SIZE_TIMEOUT_MS),
       })
       const d = await res.json()
@@ -933,7 +933,7 @@ export default function VisualizerPage() {
       const res = await fetch('/api/roof-size', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ roofType: selType, color: selColor, manualSqFt: sqFt, stories: manualStories || 'unknown' }),
+        body: JSON.stringify({ roofType: selType, style: selStyle, color: selColor, manualSqFt: sqFt, stories: manualStories || 'unknown' }),
       })
       const data = await res.json()
       if (data.squares == null || (!data.noPriceEstimate && (!data.estimateLow || !data.estimateHigh))) {
