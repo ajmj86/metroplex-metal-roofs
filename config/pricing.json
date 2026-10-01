@@ -5,35 +5,53 @@
       "retailPerSquareMetallic": 1199.97,
       "retailPerSquareStandard": 1399.97,
       "metallicColors": ["Natural Metal"],
-      "wasteFactorRange": { "simple": 0.05, "high": 0.20 }
+      "wasteLow": 1.20,
+      "wasteHigh": 1.30
     },
     "copper_standing_seam": {
       "label": "Copper Standing Seam",
-      "noPriceEstimate": true,
-      "wasteFactorRange": { "simple": 0.05, "high": 0.20 }
+      "noPriceEstimate": true
     },
     "r_panel": {
       "label": "R-Panel",
       "retailPerSquare": 949.97,
-      "wasteFactorRange": { "simple": 0.03, "high": 0.14 }
+      "wasteLow": 1.20,
+      "wasteHigh": 1.30
     },
     "stone_coated_steel": {
       "label": "Stone-Coated Steel",
-      "retailPerSquare": 1499.97,
-      "wasteFactorRange": { "simple": 0.03, "high": 0.15 }
+      "retailPerSquare": 1599.97,
+      "wasteLow": 1.10,
+      "wasteHigh": 1.20
     },
     "synthetic_slate": {
       "label": "Synthetic Slate",
-      "retailPerSquare": 1949.97,
-      "wasteFactorRange": { "simple": 0.05, "high": 0.15 }
+      "defaultStyle": "slate",
+      "styles": {
+        "slate": {
+          "label": "Brava Slate",
+          "retailPerSquare": 1949.97,
+          "wasteLow": 1.15,
+          "wasteHigh": 1.22
+        },
+        "cedar_shake": {
+          "label": "Brava Shake",
+          "retailPerSquare": 1899.97,
+          "wasteLow": 1.15,
+          "wasteHigh": 1.22
+        },
+        "spanish_barrel_tile": {
+          "label": "Brava Spanish Barrel",
+          "retailPerSquare": 2000.97,
+          "wasteLow": 1.15,
+          "wasteHigh": 1.22
+        }
+      }
     }
   },
   "tearOff": {
     "label": "Tear-Off of Existing Asphalt Shingles",
     "retailPerSquare": 300
-  },
-  "estimateRange": {
-    "highMultiplier": 1.10
   },
   "roofSizeCalibration": {
     "areaCorrectionFactor": 0.917

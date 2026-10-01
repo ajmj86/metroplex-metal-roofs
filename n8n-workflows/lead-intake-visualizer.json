@@ -1,458 +1,4 @@
 {
-  "active": true,
-  "connections": {
-    "Webhook – Lead Intake (Visualizer)": {
-      "main": [
-        [
-          {
-            "node": "Config – GHL IDs",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Config – GHL IDs": {
-      "main": [
-        [
-          {
-            "node": "IF – Render Email?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "IF – Required Fields Present?": {
-      "main": [
-        [
-          {
-            "node": "Build Contact Payload (Filter Nulls)",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Build Partial Contact Payload",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Build Contact Payload (Filter Nulls)": {
-      "main": [
-        [
-          {
-            "node": "Search Contact By Email",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Search Contact By Email": {
-      "main": [
-        [
-          {
-            "node": "IF – Contact Exists?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "IF – Contact Exists?": {
-      "main": [
-        [
-          {
-            "node": "Update Contact (PUT)",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Create Contact (POST)",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Create Contact (POST)": {
-      "main": [
-        [
-          {
-            "node": "Normalize Contact Result",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Normalize Contact Result": {
-      "main": [
-        [
-          {
-            "node": "IF – Has Tags To Add?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Create Opportunity": {
-      "main": [
-        [
-          {
-            "node": "Normalize Opportunity Result",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "IF – Insurance Claim (not cash)?": {
-      "main": [
-        [
-          {
-            "node": "Add Insurance Claim Tag",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "IF – Suppress Alert?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Add Insurance Claim Tag": {
-      "main": [
-        [
-          {
-            "node": "IF – Suppress Alert?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Execute Workflow – New Lead Alert SMS": {
-      "main": [
-        [
-          {
-            "node": "Respond – 200 OK",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Update Contact (PUT)": {
-      "main": [
-        [
-          {
-            "node": "Normalize Contact Result",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Build Partial Contact Payload": {
-      "main": [
-        [
-          {
-            "node": "Create Partial Contact (POST)",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Create Partial Contact (POST)": {
-      "main": [
-        [
-          {
-            "node": "Respond – 200 Partial",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "IF – Render Email?": {
-      "main": [
-        [
-          {
-            "node": "Wait – Before Render Search",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "IF – Required Fields Present?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "GHL – Search Contact by Email (Render)": {
-      "main": [
-        [
-          {
-            "node": "IF – Render Contact Found?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "IF – Render Contact Found?": {
-      "main": [
-        [
-          {
-            "node": "GHL – Send Render Email",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Wait – Before Render Search Retry",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "GHL – Send Render Email": {
-      "main": [
-        [
-          {
-            "node": "Respond – 200 Render Email",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Search Opportunities For Contact": {
-      "main": [
-        [
-          {
-            "node": "Check Existing Opportunity",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Check Existing Opportunity": {
-      "main": [
-        [
-          {
-            "node": "Switch – Opportunity Action",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Switch – Opportunity Action": {
-      "main": [
-        [
-          {
-            "node": "Build Opportunity Payload",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Update Opportunity Stage",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Normalize Opportunity Result",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Update Opportunity Stage": {
-      "main": [
-        [
-          {
-            "node": "Normalize Opportunity Result",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Normalize Opportunity Result": {
-      "main": [
-        [
-          {
-            "node": "IF – Insurance Claim (not cash)?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Wait – Before Render Search": {
-      "main": [
-        [
-          {
-            "node": "GHL – Search Contact by Email (Render)",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Wait – Before Render Search Retry": {
-      "main": [
-        [
-          {
-            "node": "GHL – Search Contact by Email (Render) - Retry",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "GHL – Search Contact by Email (Render) - Retry": {
-      "main": [
-        [
-          {
-            "node": "IF – Render Contact Found? (Retry)",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "IF – Render Contact Found? (Retry)": {
-      "main": [
-        [
-          {
-            "node": "GHL – Send Render Email",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Respond – 200 Render Email (No Contact)",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "IF – Suppress Alert?": {
-      "main": [
-        [
-          {
-            "node": "Respond – 200 OK",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Execute Workflow – New Lead Alert SMS",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "IF – Has SMS Inquiry Tag?": {
-      "main": [
-        [
-          {
-            "node": "GHL – Remove SMS Inquiry Tag",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Search Opportunities For Contact",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "GHL – Remove SMS Inquiry Tag": {
-      "main": [
-        [
-          {
-            "node": "Search Opportunities For Contact",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "IF – Has Tags To Add?": {
-      "main": [
-        [
-          {
-            "node": "GHL – Add Tags (Update Path)",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "IF – Has SMS Inquiry Tag?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "GHL – Add Tags (Update Path)": {
-      "main": [
-        [
-          {
-            "node": "IF – Has SMS Inquiry Tag?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Build Opportunity Payload": {
-      "main": [
-        [
-          {
-            "node": "Create Opportunity",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    }
-  },
   "name": "Lead Intake – Visualizer",
   "nodes": [
     {
@@ -554,7 +100,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const webhookData = $('Webhook – Lead Intake (Visualizer)').first().json.body;\nconst configData = $('Config – GHL IDs').first().json;\nconst contact = webhookData.contact || {};\nconst fields = webhookData.fields || {};\nconst utm = webhookData.utm || {};\n\nconst FIELD_IDS = {\n  current_roof_type: 'Vo7YnqmuZnhV2U66uKJA',\n  project_reason: 'prLMUoMzKClcfmBzDH3R',\n  insurance_claim_status: 'tpAq0AZMqWJZeTy3dPsS',\n  homeowner_timeline: '7F3CKSSVRj7jdHKoq87X',\n  property_address: 'acFCeylcy8uhep3stymL',\n  selected_roof_type: 'ooxcklKOKGrDCRunZnh3',\n  estimated_roof_size: 'S3E1cQMFQ2vD2Ec1nSAR',\n  estimate_range: 'cEjn1x0nid6taqIaQxKt',\n  solar_failure_reason: 'BGNa09wcBsV8K1wJaWpz',\n  roof_size_source: 'DM5heXbAUYr0bzz7qmpZ',\n};\nconst UTM_FIELD_IDS = {\n  source: 'NNZiielScQomx8VDF7q8',\n  medium: 'ELW45zGCkwQkpUV2TnEW',\n  campaign: 'VrI3HZtaymdTdf0lggfD',\n  content: 'PGjESDF2GrVJD8bneg4j',\n};\n\nconst isEmpty = (v) => v === null || v === undefined || v === '';\n\n// Base contact fields — never-null-write: only include keys that are actually present\nconst contactFields = {};\nfor (const key of ['firstName', 'lastName', 'email', 'phone', 'address1', 'city', 'state', 'postalCode']) {\n  if (!isEmpty(contact[key])) contactFields[key] = contact[key];\n}\n\n// solar_failure_reason is a clearable field: the visualizer now sends it as an\n// explicit '' (not omitted) when Solar succeeds, specifically so a stale\n// failure reason from an earlier failed visit gets overwritten back to blank\n// instead of sitting there forever looking like Solar is still broken. Every\n// other field keeps the normal \"omitted/empty = don't touch\" behavior.\nconst CLEARABLE_FIELDS = new Set(['solar_failure_reason']);\n\nconst customFields = [];\nfor (const [key, id] of Object.entries(FIELD_IDS)) {\n  const v = fields[key];\n  if (!isEmpty(v) || (CLEARABLE_FIELDS.has(key) && v === '')) {\n    customFields.push({ id, value: v });\n  }\n}\nfor (const [key, id] of Object.entries(UTM_FIELD_IDS)) {\n  if (!isEmpty(utm[key])) customFields.push({ id, value: utm[key] });\n}\nif (customFields.length) contactFields.customFields = customFields;\n// 'Visualizer Lead' is applied unconditionally on every full submission --\n// this is what WF1A's native GHL trigger now filters on (replacing a\n// non-functional 'Lead Source = Visualizer' condition), so it has to land on\n// every contact reaching this path, not just some.\nconst baseTags = Array.isArray(webhookData.tags) ? webhookData.tags : [];\nconst withVisualizerLead = [...baseTags, 'Visualizer Lead'];\nconst allTags = webhookData.smsConsent === true ? [...withVisualizerLead, 'SMS Consent'] : withVisualizerLead;\n\n// Tags are set on contactPayloadCreate (brand-new contact, nothing to clobber) but\n// deliberately left OFF contactPayloadUpdate — GHL's PUT /contacts/{id} replaces the\n// entire tags array, so including it here would silently wipe any tags the contact\n// already had (e.g. 'sms inquiry', manual CRM tags). Existing contacts get any new\n// tags added additively via the dedicated Add Tags endpoint instead (see updateTags).\nconst contactPayloadCreate = { ...contactFields, locationId: configData.locationId };\nif (allTags.length) contactPayloadCreate.tags = allTags;\nconst contactPayloadUpdate = { ...contactFields };\nconst updateTags = allTags;\n\nreturn [{\n  json: {\n    email: contact.email,\n    contactPayloadCreate,\n    contactPayloadUpdate,\n    updateTags,\n    rawFields: fields,\n    locationId: configData.locationId,\n    pipelineId: configData.pipelineId,\n    stageId: configData.stageId,\n    firstName: contact.firstName || '',\n    lastName: contact.lastName || '',\n    phone: contact.phone || '',\n    source: webhookData.source || 'visualizer',\n  },\n}];\n"
+        "jsCode": "const webhookData = $('Webhook – Lead Intake (Visualizer)').first().json.body;\nconst configData = $('Config – GHL IDs').first().json;\nconst contact = webhookData.contact || {};\nconst fields = webhookData.fields || {};\nconst utm = webhookData.utm || {};\n\nconst FIELD_IDS = {\n  current_roof_type: 'Vo7YnqmuZnhV2U66uKJA',\n  project_reason: 'prLMUoMzKClcfmBzDH3R',\n  insurance_claim_status: 'tpAq0AZMqWJZeTy3dPsS',\n  homeowner_timeline: '7F3CKSSVRj7jdHKoq87X',\n  property_address: 'acFCeylcy8uhep3stymL',\n  selected_roof_type: 'ooxcklKOKGrDCRunZnh3',\n  estimated_roof_size: 'S3E1cQMFQ2vD2Ec1nSAR',\n  estimate_range: 'cEjn1x0nid6taqIaQxKt',\n  solar_failure_reason: 'BGNa09wcBsV8K1wJaWpz',\n  roof_size_source: 'DM5heXbAUYr0bzz7qmpZ',\n};\nconst UTM_FIELD_IDS = {\n  source: 'NNZiielScQomx8VDF7q8',\n  medium: 'ELW45zGCkwQkpUV2TnEW',\n  campaign: 'VrI3HZtaymdTdf0lggfD',\n  content: 'PGjESDF2GrVJD8bneg4j',\n};\n\n// Normalize to E.164 so GHL's duplicate search / create see one canonical\n// number no matter how the visitor typed it (\"(214) 555-0147\", \"1-214-...\").\nconst toE164 = (raw) => {\n  let d = String(raw || '').replace(/\\D/g, '');\n  if (d.length === 11 && d.startsWith('1')) d = d.slice(1);\n  return d.length === 10 ? '+1' + d : '';\n};\nconst phoneE164 = toE164(contact.phone);\n\nconst isEmpty = (v) => v === null || v === undefined || v === '';\n\n// Base contact fields — never-null-write: only include keys that are actually present\nconst contactFields = {};\nfor (const key of ['firstName', 'lastName', 'email', 'phone', 'address1', 'city', 'state', 'postalCode']) {\n  if (!isEmpty(contact[key])) contactFields[key] = contact[key];\n}\n\n// solar_failure_reason is a clearable field: the visualizer now sends it as an\n// explicit '' (not omitted) when Solar succeeds, specifically so a stale\n// failure reason from an earlier failed visit gets overwritten back to blank\n// instead of sitting there forever looking like Solar is still broken. Every\n// other field keeps the normal \"omitted/empty = don't touch\" behavior.\nconst CLEARABLE_FIELDS = new Set(['solar_failure_reason']);\n\nconst customFields = [];\nfor (const [key, id] of Object.entries(FIELD_IDS)) {\n  const v = fields[key];\n  if (!isEmpty(v) || (CLEARABLE_FIELDS.has(key) && v === '')) {\n    customFields.push({ id, value: v });\n  }\n}\nfor (const [key, id] of Object.entries(UTM_FIELD_IDS)) {\n  if (!isEmpty(utm[key])) customFields.push({ id, value: utm[key] });\n}\nif (phoneE164) contactFields.phone = phoneE164;\nif (customFields.length) contactFields.customFields = customFields;\n// 'Visualizer Lead' is applied unconditionally on every full submission --\n// this is what WF1A's native GHL trigger now filters on (replacing a\n// non-functional 'Lead Source = Visualizer' condition), so it has to land on\n// every contact reaching this path, not just some.\nconst baseTags = Array.isArray(webhookData.tags) ? webhookData.tags : [];\nconst withVisualizerLead = [...baseTags, 'Visualizer Lead'];\nconst allTags = webhookData.smsConsent === true ? [...withVisualizerLead, 'SMS Consent'] : withVisualizerLead;\n\n// Tags are set on contactPayloadCreate (brand-new contact, nothing to clobber) but\n// deliberately left OFF contactPayloadUpdate — GHL's PUT /contacts/{id} replaces the\n// entire tags array, so including it here would silently wipe any tags the contact\n// already had (e.g. 'sms inquiry', manual CRM tags). Existing contacts get any new\n// tags added additively via the dedicated Add Tags endpoint instead (see updateTags).\nconst contactPayloadCreate = { ...contactFields, locationId: configData.locationId };\nif (allTags.length) contactPayloadCreate.tags = allTags;\nconst contactPayloadUpdate = { ...contactFields };\nconst updateTags = allTags;\n\nreturn [{\n  json: {\n    email: contact.email,\n    contactPayloadCreate,\n    contactPayloadUpdate,\n    updateTags,\n    rawFields: fields,\n    locationId: configData.locationId,\n    pipelineId: configData.pipelineId,\n    stageId: configData.stageId,\n    firstName: contact.firstName || '',\n    lastName: contact.lastName || '',\n    phone: contact.phone || '',\n    phoneE164,\n    source: webhookData.source || 'visualizer',\n  },\n}];\n"
       },
       "id": "04baa7bb-21a6-40fe-8774-e4cfe3cc4915",
       "name": "Build Contact Payload (Filter Nulls)",
@@ -677,15 +223,16 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        3296,
-        2336
+        3416,
+        2420
       ],
       "credentials": {
         "httpHeaderAuth": {
           "id": "EKDDJ0lTGjOvu7Ax",
           "name": "GHL - Metroplex"
         }
-      }
+      },
+      "onError": "continueErrorOutput"
     },
     {
       "parameters": {
@@ -744,7 +291,8 @@
           "name": "GHL - Metroplex"
         }
       },
-      "notes": "pipelineId / stageId come from the Config node."
+      "notes": "pipelineId / stageId come from the Config node.",
+      "onError": "continueErrorOutput"
     },
     {
       "parameters": {
@@ -865,7 +413,7 @@
     {
       "parameters": {
         "respondWith": "json",
-        "responseBody": "={{ { \"success\": true, \"contactId\": $json.contactId } }}",
+        "responseBody": "={{ { \"ok\": true, \"success\": true, \"contactId\": $('Normalize Opportunity Result').first().json.contactId } }}",
         "options": {
           "responseCode": 200
         }
@@ -912,11 +460,12 @@
           "id": "EKDDJ0lTGjOvu7Ax",
           "name": "GHL - Metroplex"
         }
-      }
+      },
+      "onError": "continueErrorOutput"
     },
     {
       "parameters": {
-        "jsCode": "const webhookData = $('Webhook – Lead Intake (Visualizer)').first().json.body;\nconst configData = $('Config – GHL IDs').first().json;\n\n// The real beforeunload/abandonment payload from the visualizer's gate step\n// is flat -- { partial, leadOrigin, address, roofType, colorSelected,\n// timestamp } -- not nested under contact/fields like a full submission.\n// This previously read webhookData.contact.firstName and\n// webhookData.fields.property_address/selected_roof_type, none of which\n// exist on the real payload, so the contact payload built here was always\n// just { locationId, tags: ['Visualizer Partial'] } -- which GHL rejects\n// outright (422: \"Contacts without email, phone, firstName and lastName are\n// not allowed\"), silently swallowed by this node's continueOnFail setting.\n// Confirmed live 2026-07-31.\n\nconst FIELD_IDS = {\n  property_address: 'acFCeylcy8uhep3stymL',\n  selected_roof_type: 'ooxcklKOKGrDCRunZnh3',\n};\n\nconst ROOF_TYPE_LABELS = {\n  standing_seam: 'Standing Seam Steel',\n  copper_standing_seam: 'Copper Standing Seam',\n  r_panel: 'R-Panel',\n  stone_coated_steel: 'Stone-Coated Steel',\n};\n\nconst isEmpty = (v) => v === null || v === undefined || v === '';\n\nconst customFields = [];\nif (!isEmpty(webhookData.address)) {\n  customFields.push({ id: FIELD_IDS.property_address, value: webhookData.address });\n}\nif (!isEmpty(webhookData.roofType)) {\n  const label = ROOF_TYPE_LABELS[webhookData.roofType] || webhookData.roofType;\n  customFields.push({ id: FIELD_IDS.selected_roof_type, value: label });\n}\n\n// A partial submission never captures a name, email, or phone -- GHL requires\n// at least one of firstName/lastName/email/phone to create a contact at all\n// (confirmed live: firstName alone is sufficient). Use a clearly-synthetic\n// placeholder so this satisfies GHL while staying obviously distinguishable\n// from a real named lead in the contact list.\nconst contactPayload = {\n  firstName: 'Visualizer Partial Lead',\n  locationId: configData.locationId,\n  tags: ['Visualizer Partial'],\n};\nif (customFields.length) contactPayload.customFields = customFields;\n\nreturn [{ json: { contactPayload, locationId: configData.locationId } }];"
+        "jsCode": "const webhookData = $('Webhook – Lead Intake (Visualizer)').first().json.body;\nconst configData = $('Config – GHL IDs').first().json;\n\n// The real beforeunload/abandonment payload from the visualizer's gate step\n// is flat -- { partial, leadOrigin, address, roofType, colorSelected,\n// timestamp } -- not nested under contact/fields like a full submission.\n// This previously read webhookData.contact.firstName and\n// webhookData.fields.property_address/selected_roof_type, none of which\n// exist on the real payload, so the contact payload built here was always\n// just { locationId, tags: ['Visualizer Partial'] } -- which GHL rejects\n// outright (422: \"Contacts without email, phone, firstName and lastName are\n// not allowed\"), silently swallowed by this node's continueOnFail setting.\n// Confirmed live 2026-07-31.\n\nconst FIELD_IDS = {\n  property_address: 'acFCeylcy8uhep3stymL',\n  selected_roof_type: 'ooxcklKOKGrDCRunZnh3',\n};\n\nconst ROOF_TYPE_LABELS = {\n  standing_seam: 'Standing Seam Steel',\n  copper_standing_seam: 'Copper Standing Seam',\n  r_panel: 'R-Panel',\n  stone_coated_steel: 'Stone-Coated Steel',\n  synthetic_slate: 'Synthetic Slate',\n};\n\nconst isEmpty = (v) => v === null || v === undefined || v === '';\n\nconst customFields = [];\nif (!isEmpty(webhookData.address)) {\n  customFields.push({ id: FIELD_IDS.property_address, value: webhookData.address });\n}\nif (!isEmpty(webhookData.roofType)) {\n  const label = ROOF_TYPE_LABELS[webhookData.roofType] || webhookData.roofType;\n  customFields.push({ id: FIELD_IDS.selected_roof_type, value: label });\n}\n\n// A partial submission never captures a name, email, or phone -- GHL requires\n// at least one of firstName/lastName/email/phone to create a contact at all\n// (confirmed live: firstName alone is sufficient). Use a clearly-synthetic\n// placeholder so this satisfies GHL while staying obviously distinguishable\n// from a real named lead in the contact list.\nconst toE164 = (raw) => {\n  let d = String(raw || '').replace(/\\D/g, '');\n  if (d.length === 11 && d.startsWith('1')) d = d.slice(1);\n  return d.length === 10 ? '+1' + d : '';\n};\nconst email = String(webhookData.email || '').trim();\nconst phoneE164 = toE164(webhookData.phone);\nconst firstName = String(webhookData.firstName || '').trim();\nconst lastName = String(webhookData.lastName || '').trim();\n\n// UTM attribution on abandoned sessions too (same custom fields the full path writes).\nconst UTM_FIELD_IDS = {\n  source: 'NNZiielScQomx8VDF7q8',\n  medium: 'ELW45zGCkwQkpUV2TnEW',\n  campaign: 'VrI3HZtaymdTdf0lggfD',\n  content: 'PGjESDF2GrVJD8bneg4j',\n};\nconst utm = webhookData.utm || {};\nfor (const [k, id] of Object.entries(UTM_FIELD_IDS)) {\n  if (!isEmpty(utm[k])) customFields.push({ id, value: utm[k] });\n}\n\n// A partial now carries whatever contact info the visitor had typed. GHL needs\n// at least one identifier, so the synthetic name is only the last resort.\n// Deliberately NO 'Visualizer Lead' / 'SMS Consent' tag: a partial must never\n// trigger the lead-response workflows (prospect email/text).\nconst contactPayload = {\n  firstName: firstName || 'Visualizer Partial Lead',\n  locationId: configData.locationId,\n  tags: ['Visualizer Partial'],\n};\nif (lastName) contactPayload.lastName = lastName;\nif (email) contactPayload.email = email;\nif (phoneE164) contactPayload.phone = phoneE164;\nif (customFields.length) contactPayload.customFields = customFields;\n\n// If this person already exists (a full lead, or an earlier partial) the\n// partial must change NOTHING -- the next nodes look them up first and no-op.\nconst qs = ['locationId=' + encodeURIComponent(configData.locationId)];\nif (email) qs.push('email=' + encodeURIComponent(email));\nif (phoneE164) qs.push('number=' + encodeURIComponent(phoneE164));\nconst searchUrl = 'https://services.leadconnectorhq.com/contacts/search/duplicate?' + qs.join('&');\n\nreturn [{ json: { contactPayload, locationId: configData.locationId, searchUrl, hasIdentity: !!(email || phoneE164) } }];\n"
       },
       "id": "partial-payload-builder",
       "name": "Build Partial Contact Payload",
@@ -944,7 +493,7 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ $json.contactPayload }}",
+        "jsonBody": "={{ $('Build Partial Contact Payload').item.json.contactPayload }}",
         "options": {}
       },
       "id": "partial-contact-create",
@@ -952,7 +501,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        2816,
+        3056,
         2624
       ],
       "credentials": {
@@ -967,7 +516,7 @@
     {
       "parameters": {
         "respondWith": "json",
-        "responseBody": "={{ { \"success\": true, \"partial\": true, \"contactId\": $json.contact?.id || null } }}",
+        "responseBody": "={{ { \"ok\": true, \"success\": true, \"partial\": true, \"contactId\": $json.contact?.id || null } }}",
         "options": {
           "responseCode": 200
         }
@@ -977,7 +526,7 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.4,
       "position": [
-        3056,
+        3296,
         2624
       ]
     },
@@ -1143,7 +692,7 @@
     {
       "parameters": {
         "respondWith": "json",
-        "responseBody": "={{ { \"success\": true, \"renderEmail\": true } }}",
+        "responseBody": "={{ { \"ok\": true, \"success\": true, \"renderEmail\": true } }}",
         "options": {
           "responseCode": 200
         }
@@ -1160,13 +709,13 @@
     {
       "parameters": {
         "respondWith": "json",
-        "responseBody": "={{ { \"success\": true, \"renderEmail\": false, \"reason\": \"contact_not_found\" } }}",
+        "responseBody": "={{ { \"ok\": false, \"success\": false, \"renderEmail\": false, \"reason\": \"contact_not_found\" } }}",
         "options": {
-          "responseCode": 200
+          "responseCode": 404
         }
       },
       "id": "2929cc5d-75a3-4c52-95e5-3f9ec253f220",
-      "name": "Respond – 200 Render Email (No Contact)",
+      "name": "Respond – 404 Render Email (No Contact)",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.4,
       "position": [
@@ -1360,7 +909,8 @@
           "id": "EKDDJ0lTGjOvu7Ax",
           "name": "GHL - Metroplex"
         }
-      }
+      },
+      "onError": "continueErrorOutput"
     },
     {
       "parameters": {
@@ -1537,7 +1087,7 @@
           "conditions": [
             {
               "id": "c1",
-              "leftValue": "={{ ($('Search Contact By Email').first().json.contact?.tags || []).join('|') }}",
+              "leftValue": "={{ (($('Search Contact By Email').first().json.contact?.tags) || ($('Search Contact By Phone').isExecuted ? $('Search Contact By Phone').first().json.contact?.tags : null) || []).join('|') }}",
               "rightValue": "sms inquiry",
               "operator": {
                 "type": "string",
@@ -1673,12 +1223,968 @@
         3596,
         2224
       ]
+    },
+    {
+      "parameters": {
+        "url": "https://services.leadconnectorhq.com/contacts/search/duplicate",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "locationId",
+              "value": "={{ $('Build Contact Payload (Filter Nulls)').item.json.locationId }}"
+            },
+            {
+              "name": "number",
+              "value": "={{ $('Build Contact Payload (Filter Nulls)').item.json.phoneE164 }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Version",
+              "value": "2021-07-28"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          }
+        }
+      },
+      "id": "1a9e0820-d753-4cc6-bf1c-24f5eef20aa7",
+      "name": "Search Contact By Phone",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3056,
+        2420
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "EKDDJ0lTGjOvu7Ax",
+          "name": "GHL - Metroplex"
+        }
+      },
+      "continueOnFail": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 1
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "c1",
+              "leftValue": "={{ $json.contact?.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "00ed3854-4980-49ca-9419-5b9c7e372e10",
+      "name": "IF – Contact Exists By Phone?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3176,
+        2420
+      ]
+    },
+    {
+      "id": "e75e22cf-eedd-41c6-b458-17556dc562bf",
+      "name": "Code – Build Lead Failure",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4056,
+        2560
+      ],
+      "parameters": {
+        "jsCode": "// Reached only from a critical GHL write's error output. Builds a compact,\n// PII-light failure record, then the next nodes respond non-2xx to the site\n// and fail the execution so the error workflow texts Andrew.\nconst raw = $json.error !== undefined ? $json.error : $json;\nconst detail = String(typeof raw === 'string' ? raw : (raw && (raw.description || raw.message)) || JSON.stringify(raw)).replace(/\\s+/g, ' ').slice(0, 240);\nreturn [{ json: { ok: false, error: 'lead_save_failed', detail } }];"
+      }
+    },
+    {
+      "id": "0010db17-4fd3-45de-9f5a-d2c90de6b8d1",
+      "name": "Respond – 500 Lead Failure",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        4296,
+        2560
+      ],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { \"ok\": false, \"success\": false, \"error\": $json.error, \"detail\": $json.detail } }}",
+        "options": {
+          "responseCode": 500
+        }
+      }
+    },
+    {
+      "id": "f684d0b5-6301-4e64-a9df-18622a38a1a2",
+      "name": "Stop – Fail Execution (Lead)",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        4536,
+        2560
+      ],
+      "parameters": {
+        "errorMessage": "={{ $('Code – Build Lead Failure').item.json.error + ': ' + $('Code – Build Lead Failure').item.json.detail }}"
+      }
+    },
+    {
+      "id": "dab8f292-dcf5-402c-8134-171b7b4a44d5",
+      "name": "Stop – Fail Execution (Render Email)",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        3296,
+        2000
+      ],
+      "parameters": {
+        "errorMessage": "render_email_contact_not_found: no GHL contact found for the render email after retry (lead save may have failed)"
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.searchUrl }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Version",
+              "value": "2021-07-28"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          }
+        }
+      },
+      "id": "9b774b5f-6c72-4733-b43c-d94519828c03",
+      "name": "Search Existing (Partial)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2696,
+        2624
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "EKDDJ0lTGjOvu7Ax",
+          "name": "GHL - Metroplex"
+        }
+      },
+      "continueOnFail": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 1
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "c1",
+              "leftValue": "={{ $json.contact?.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "364b47f6-6ae6-4f63-a557-c56550d21aa1",
+      "name": "IF – Partial Contact Exists?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2816,
+        2624
+      ]
+    },
+    {
+      "id": "f32cb2a8-e040-4359-8d65-279e7a4e31c2",
+      "name": "Respond – 200 Partial (Existing, No Change)",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        3056,
+        2760
+      ],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { \"ok\": true, \"success\": true, \"partial\": true, \"existing\": true, \"contactId\": $json.contact?.id || null } }}",
+        "options": {
+          "responseCode": 200
+        }
+      }
+    },
+    {
+      "id": "fc8fa398-83eb-4a25-8c31-074c46bb9b45",
+      "name": "Code – Extract Duplicate Contact",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3536,
+        2500
+      ],
+      "parameters": {
+        "jsCode": "// Create Contact (POST) failed. If it failed ONLY because GHL already has this\n// person (phone/email match that our searches missed, e.g. index lag after a\n// double-submit), GHL names the existing contact in the error -- adopt it and\n// update instead of failing the lead.\nconst raw = $json.error !== undefined ? $json.error : $json;\nconst s = (typeof raw === 'string' ? raw : JSON.stringify(raw)).replace(/\\\\/g, '');\nconst dup = /does not allow duplicated contacts/i.test(s);\nconst m = s.match(/\"contactId\":\"([A-Za-z0-9]{12,})\"/);\nif (dup && m) return [{ json: { contact: { id: m[1] }, duplicateRecovered: true } }];\nreturn [{ json: { error: raw } }];"
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 1
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "c1",
+              "leftValue": "={{ $json.contact?.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "98afa7c5-e5d7-4868-bdc2-4097fdc3c223",
+      "name": "IF – Duplicate Recovered?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3656,
+        2500
+      ]
+    },
+    {
+      "id": "a684da79-040b-4382-8562-0c7d4a9dc0d9",
+      "name": "Code – Extract Duplicate Opportunity",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3896,
+        2640
+      ],
+      "parameters": {
+        "jsCode": "// Create Opportunity failed. If GHL says the contact already has an open\n// opportunity in this pipeline (concurrent double-submit), adopt it instead\n// of failing the lead -- GHL names the existing id in the error meta.\nconst raw = $json.error !== undefined ? $json.error : $json;\nconst s = (typeof raw === 'string' ? raw : JSON.stringify(raw)).replace(/\\\\/g, '');\nconst m = s.match(/\"existingId\":\"([A-Za-z0-9]{12,})\"/);\nif (/OPPORTUNITY_NO_DUPLICATE|duplicate opportunity/i.test(s) && m) {\n  const contactId = $('Check Existing Opportunity').first().json.contactId;\n  return [{ json: { duplicateRecovered: true, contactId, opportunity: { id: m[1], contactId } } }];\n}\nreturn [{ json: { error: raw } }];"
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 1
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "c1",
+              "leftValue": "={{ $json.duplicateRecovered }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f797c224-e95d-482a-beba-3dde700238b8",
+      "name": "IF – Duplicate Opportunity Recovered?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        4016,
+        2640
+      ]
     }
   ],
-  "pinData": {},
+  "connections": {
+    "Webhook – Lead Intake (Visualizer)": {
+      "main": [
+        [
+          {
+            "node": "Config – GHL IDs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Config – GHL IDs": {
+      "main": [
+        [
+          {
+            "node": "IF – Render Email?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF – Required Fields Present?": {
+      "main": [
+        [
+          {
+            "node": "Build Contact Payload (Filter Nulls)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Build Partial Contact Payload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Contact Payload (Filter Nulls)": {
+      "main": [
+        [
+          {
+            "node": "Search Contact By Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Contact By Email": {
+      "main": [
+        [
+          {
+            "node": "IF – Contact Exists?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF – Contact Exists?": {
+      "main": [
+        [
+          {
+            "node": "Update Contact (PUT)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Search Contact By Phone",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Contact (POST)": {
+      "main": [
+        [
+          {
+            "node": "Normalize Contact Result",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code – Extract Duplicate Contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Contact Result": {
+      "main": [
+        [
+          {
+            "node": "IF – Has Tags To Add?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Opportunity": {
+      "main": [
+        [
+          {
+            "node": "Normalize Opportunity Result",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code – Extract Duplicate Opportunity",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF – Insurance Claim (not cash)?": {
+      "main": [
+        [
+          {
+            "node": "Add Insurance Claim Tag",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "IF – Suppress Alert?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add Insurance Claim Tag": {
+      "main": [
+        [
+          {
+            "node": "IF – Suppress Alert?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow – New Lead Alert SMS": {
+      "main": [
+        [
+          {
+            "node": "Respond – 200 OK",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Contact (PUT)": {
+      "main": [
+        [
+          {
+            "node": "Normalize Contact Result",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code – Build Lead Failure",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Partial Contact Payload": {
+      "main": [
+        [
+          {
+            "node": "Search Existing (Partial)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Partial Contact (POST)": {
+      "main": [
+        [
+          {
+            "node": "Respond – 200 Partial",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF – Render Email?": {
+      "main": [
+        [
+          {
+            "node": "Wait – Before Render Search",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "IF – Required Fields Present?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GHL – Search Contact by Email (Render)": {
+      "main": [
+        [
+          {
+            "node": "IF – Render Contact Found?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF – Render Contact Found?": {
+      "main": [
+        [
+          {
+            "node": "GHL – Send Render Email",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait – Before Render Search Retry",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GHL – Send Render Email": {
+      "main": [
+        [
+          {
+            "node": "Respond – 200 Render Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Opportunities For Contact": {
+      "main": [
+        [
+          {
+            "node": "Check Existing Opportunity",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Existing Opportunity": {
+      "main": [
+        [
+          {
+            "node": "Switch – Opportunity Action",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch – Opportunity Action": {
+      "main": [
+        [
+          {
+            "node": "Build Opportunity Payload",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update Opportunity Stage",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Normalize Opportunity Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Opportunity Stage": {
+      "main": [
+        [
+          {
+            "node": "Normalize Opportunity Result",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code – Build Lead Failure",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Opportunity Result": {
+      "main": [
+        [
+          {
+            "node": "IF – Insurance Claim (not cash)?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait – Before Render Search": {
+      "main": [
+        [
+          {
+            "node": "GHL – Search Contact by Email (Render)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait – Before Render Search Retry": {
+      "main": [
+        [
+          {
+            "node": "GHL – Search Contact by Email (Render) - Retry",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GHL – Search Contact by Email (Render) - Retry": {
+      "main": [
+        [
+          {
+            "node": "IF – Render Contact Found? (Retry)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF – Render Contact Found? (Retry)": {
+      "main": [
+        [
+          {
+            "node": "GHL – Send Render Email",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond – 404 Render Email (No Contact)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF – Suppress Alert?": {
+      "main": [
+        [
+          {
+            "node": "Respond – 200 OK",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Execute Workflow – New Lead Alert SMS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF – Has SMS Inquiry Tag?": {
+      "main": [
+        [
+          {
+            "node": "GHL – Remove SMS Inquiry Tag",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Search Opportunities For Contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GHL – Remove SMS Inquiry Tag": {
+      "main": [
+        [
+          {
+            "node": "Search Opportunities For Contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF – Has Tags To Add?": {
+      "main": [
+        [
+          {
+            "node": "GHL – Add Tags (Update Path)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "IF – Has SMS Inquiry Tag?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GHL – Add Tags (Update Path)": {
+      "main": [
+        [
+          {
+            "node": "IF – Has SMS Inquiry Tag?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Opportunity Payload": {
+      "main": [
+        [
+          {
+            "node": "Create Opportunity",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Contact By Phone": {
+      "main": [
+        [
+          {
+            "node": "IF – Contact Exists By Phone?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF – Contact Exists By Phone?": {
+      "main": [
+        [
+          {
+            "node": "Update Contact (PUT)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create Contact (POST)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code – Build Lead Failure": {
+      "main": [
+        [
+          {
+            "node": "Respond – 500 Lead Failure",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond – 500 Lead Failure": {
+      "main": [
+        [
+          {
+            "node": "Stop – Fail Execution (Lead)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond – 404 Render Email (No Contact)": {
+      "main": [
+        [
+          {
+            "node": "Stop – Fail Execution (Render Email)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Existing (Partial)": {
+      "main": [
+        [
+          {
+            "node": "IF – Partial Contact Exists?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF – Partial Contact Exists?": {
+      "main": [
+        [
+          {
+            "node": "Respond – 200 Partial (Existing, No Change)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create Partial Contact (POST)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code – Extract Duplicate Contact": {
+      "main": [
+        [
+          {
+            "node": "IF – Duplicate Recovered?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF – Duplicate Recovered?": {
+      "main": [
+        [
+          {
+            "node": "Update Contact (PUT)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code – Build Lead Failure",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code – Extract Duplicate Opportunity": {
+      "main": [
+        [
+          {
+            "node": "IF – Duplicate Opportunity Recovered?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF – Duplicate Opportunity Recovered?": {
+      "main": [
+        [
+          {
+            "node": "Normalize Opportunity Result",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code – Build Lead Failure",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "settings": {
     "executionOrder": "v1",
     "binaryMode": "separate",
-    "availableInMCP": false
+    "availableInMCP": false,
+    "errorWorkflow": "1UnVQylBRYH8OsAK"
   }
 }

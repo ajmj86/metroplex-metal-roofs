@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { formatFormValue } from '@/lib/formatFormValue';
-import { getRoofTypeLabel } from '@/lib/roofProducts';
+import { getProductLabel, getRoofTypeLabel } from '@/lib/roofProducts';
 import { signVisitorToken } from '@/lib/visitorToken';
 import { alertAndrew } from '@/lib/alerts';
 
@@ -75,6 +75,13 @@ function parseAddress(full: string, components?: AddressComponents | null) {
   };
 }
 
+function selectedRoofTypeLabel(roofType: string, product?: string | null): string {
+  const base = getRoofTypeLabel(roofType);
+  if (roofType !== 'synthetic_slate' || !product) return base;
+  const productLabel = getProductLabel(roofType, product);
+  return productLabel ? `${base} – ${productLabel}` : base;
+}
+
 // Forwards the visualizer lead payload to the n8n Lead Intake workflow.
 // Kept server-side so the webhook URL never ships to the browser.
 export async function POST(req: NextRequest) {
@@ -122,7 +129,9 @@ export async function POST(req: NextRequest) {
         project_reason: formatFormValue('reason', body.reason),
         insurance_claim_status: formatFormValue('insuranceClaim', body.insuranceClaim),
         homeowner_timeline: formatFormValue('timeline', body.timeline),
-        selected_roof_type: body.selectedRoofType ? getRoofTypeLabel(body.selectedRoofType) : '',
+        // Synthetic slate prices differ per Brava profile (slate / shake /
+        // Spanish barrel), so the GHL field + alert carry the profile too.
+        selected_roof_type: body.selectedRoofType ? selectedRoofTypeLabel(body.selectedRoofType, body.product) : '',
         property_address: body.address || '',
         estimated_roof_size: body.estimatedRoofSize != null
           ? String(Math.round(body.estimatedRoofSize * 10) / 10)
