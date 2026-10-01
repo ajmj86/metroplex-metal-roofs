@@ -1638,7 +1638,7 @@ export default function VisualizerPage() {
                         {leadSubmitFailed && (
                           <div role="alert" style={{ fontSize: 13, color: C.white, lineHeight: 1.6, marginBottom: 12, padding: '12px 14px', background: C.surface, borderRadius: 4, border: '1px solid #F87171' }}>
                             We couldn&apos;t save your details just now — nothing is lost on your end. Please tap Try again, or call us at{' '}
-                            <a href={PHONE_TEL} style={{ color: C.accent, textDecoration: 'underline' }}>{PHONE}</a> and we&apos;ll take care of you.
+                            <a href={PHONE_TEL} style={{ color: C.accent, textDecoration: 'underline' }}>{PHONE}</a>{' '}and we&apos;ll take care of you.
                           </div>
                         )}
                         <button
