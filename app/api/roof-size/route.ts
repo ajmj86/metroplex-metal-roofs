@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import pricingConfig from '@/config/pricing.json'
-import { computeEstimate, isAreaInRange, resolveMaterialConfig, type PricedConfig } from '@/lib/estimate'
+import { computeEstimate, isAreaInRange, resolveMaterialConfig, squaresFromManualSqFt, type PricedConfig } from '@/lib/estimate'
 
 export const maxDuration = 30
 
@@ -144,17 +144,6 @@ function emptyResult(solarFailureReason?: SolarFailureReason) {
   }
 }
 
-// Manual fallback: same story-count-to-footprint heuristic as the old
-// (deleted) /api/estimate route — a one-story home's roof is close to its
-// full living-space footprint (no stacking), a two-story home's footprint
-// is roughly half its living space, "not sure" splits the difference.
-function squaresFromManualSqFt(sqFt: number, stories: string | undefined): number {
-  let multiplier = 1.05
-  if (stories === 'one') multiplier = 1.30
-  else if (stories === 'two') multiplier = 0.80
-  return (sqFt * multiplier) / 100
-}
-
 export async function POST(req: NextRequest) {
   let address: string | undefined
   try {
@@ -179,6 +168,7 @@ export async function POST(req: NextRequest) {
       const priceFields = buildPriceFields(squares, roofType, color, style)
       return NextResponse.json({
         squares: Math.round(squares * 10) / 10,
+        netSquares: squares,
         ...priceFields,
         solarFailureReason: null,
       })
@@ -229,6 +219,9 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       squares: Math.round(squares * 10) / 10,
+      // Unrounded net squares: the lead path recomputes its own price from this
+      // (server-side) so the opportunity value matches the displayed range.
+      netSquares: squares,
       ...priceFields,
       solarFailureReason: null,
     })

@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { formatFormValue } from '@/lib/formatFormValue';
-import { getProductLabel, getRoofTypeLabel } from '@/lib/roofProducts';
+import { getProductLabel, getProductStyle, getRoofTypeLabel } from '@/lib/roofProducts';
+import pricingConfig from '@/config/pricing.json';
+import { estimateForLead, type PricedConfig } from '@/lib/estimate';
 import { signVisitorToken } from '@/lib/visitorToken';
 import { alertAndrew } from '@/lib/alerts';
 
@@ -82,6 +84,25 @@ function selectedRoofTypeLabel(roofType: string, product?: string | null): strin
   return productLabel ? `${base} – ${productLabel}` : base;
 }
 
+function leadEstimateFields(body: Record<string, unknown>) {
+  const roofType = typeof body.selectedRoofType === 'string' ? body.selectedRoofType : undefined;
+  const product = typeof body.product === 'string' ? body.product : undefined;
+  const est = estimateForLead(pricingConfig.roofTypes as Record<string, PricedConfig>, {
+    roofType,
+    style: roofType && product ? getProductStyle(roofType, product) : null,
+    color: typeof body.color === 'string' ? body.color : undefined,
+    netSquares: typeof body.netSquares === 'number' ? body.netSquares : null,
+    manualSqFt: typeof body.manualSqFt === 'number' ? body.manualSqFt : null,
+    stories: typeof body.stories === 'string' ? body.stories : undefined,
+    roofSizeSource: typeof body.roofSizeSource === 'string' ? body.roofSizeSource : undefined,
+  });
+  return {
+    estimateStatus: est.status,
+    estimateLow: est.status === 'priced' ? est.low : null,
+    estimateHigh: est.status === 'priced' ? est.high : null,
+  };
+}
+
 // Forwards the visualizer lead payload to the n8n Lead Intake workflow.
 // Kept server-side so the webhook URL never ships to the browser.
 export async function POST(req: NextRequest) {
@@ -160,6 +181,14 @@ export async function POST(req: NextRequest) {
         // leads that hit this before the fix (2026-09-15).
         ...(body.address && !parsed.city ? ['Address Needs Verification'] : []),
       ],
+      // Recomputed server-side (lib/estimate.ts) from the roof size + material
+      // this lead carries -- never a browser-supplied price. n8n sets the GHL
+      // opportunity value from estimateLow and prints the range in the alert.
+      // status: priced | none (copper -> "custom quote") | unavailable (omit).
+      ...leadEstimateFields(body),
+      // Returning contact submitting a NEW property: n8n must not overwrite the
+      // old property's opportunity value; /api/create-opportunity values the new one.
+      newPropertyOpportunity: body.newPropertyOpportunity === true,
       source: 'visualizer',
       suppressAlert: body.suppressAlert === true,
       smsConsent: body.smsConsent === true,

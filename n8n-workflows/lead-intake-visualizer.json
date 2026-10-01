@@ -393,7 +393,10 @@
             "project_reason": "={{ $('Build Contact Payload (Filter Nulls)').item.json.rawFields.project_reason }}",
             "homeowner_timeline": "={{ $('Build Contact Payload (Filter Nulls)').item.json.rawFields.homeowner_timeline }}",
             "insurance_claim_status": "={{ $('Build Contact Payload (Filter Nulls)').item.json.rawFields.insurance_claim_status }}",
-            "roofSize": "={{ $('Build Contact Payload (Filter Nulls)').item.json.rawFields.estimated_roof_size }}"
+            "roofSize": "={{ $('Build Contact Payload (Filter Nulls)').item.json.rawFields.estimated_roof_size }}",
+            "estimateStatus": "={{ $('Webhook – Lead Intake (Visualizer)').first().json.body.estimateStatus }}",
+            "estimateLow": "={{ $('Webhook – Lead Intake (Visualizer)').first().json.body.estimateLow }}",
+            "estimateHigh": "={{ $('Webhook – Lead Intake (Visualizer)').first().json.body.estimateHigh }}"
           }
         },
         "options": {}
@@ -781,7 +784,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const search = $(\"Search Opportunities For Contact\").first().json;\nconst cfg = $(\"Config – GHL IDs\").first().json;\nconst built = $(\"Build Contact Payload (Filter Nulls)\").first().json;\nconst normalized = $(\"Normalize Contact Result\").first().json;\nconst opportunities = Array.isArray(search.opportunities) ? search.opportunities : [];\n// Defense in depth: never trust a result that doesn't actually belong to this\n// contact — a missing/blank contactId upstream should fail safe (create new),\n// not silently adopt whatever opportunity the search happens to return.\nconst existing = opportunities.find(o => o.contactId === normalized.contactId) || null;\nlet opportunityAction = 'create';\nlet opportunityId = null;\nif (existing && existing.id) {\n  opportunityId = existing.id;\n  opportunityAction = (existing.pipelineStageId === cfg.stageId) ? 'updateStage' : 'noop';\n}\nreturn [{ json: { contactId: normalized.contactId, firstName: built.firstName,\n  lastName: built.lastName, phone: built.phone, source: built.source,\n  locationId: built.locationId, pipelineId: built.pipelineId, stageId: built.stageId,\n  opportunityAction, opportunityId } }];"
+        "jsCode": "const search = $(\"Search Opportunities For Contact\").first().json;\nconst cfg = $(\"Config – GHL IDs\").first().json;\nconst built = $(\"Build Contact Payload (Filter Nulls)\").first().json;\nconst normalized = $(\"Normalize Contact Result\").first().json;\nconst opportunities = Array.isArray(search.opportunities) ? search.opportunities : [];\n// Defense in depth: never trust a result that doesn't actually belong to this\n// contact — a missing/blank contactId upstream should fail safe (create new),\n// not silently adopt whatever opportunity the search happens to return.\nconst existing = opportunities.find(o => o.contactId === normalized.contactId) || null;\nlet opportunityAction = 'create';\nlet opportunityId = null;\nlet existingMonetaryValue = 0;\nif (existing && existing.id) {\n  opportunityId = existing.id;\n  existingMonetaryValue = Number(existing.monetaryValue) || 0;\n  opportunityAction = (existing.pipelineStageId === cfg.stageId) ? 'updateStage' : 'noop';\n}\nreturn [{ json: { contactId: normalized.contactId, firstName: built.firstName,\n  lastName: built.lastName, phone: built.phone, source: built.source,\n  locationId: built.locationId, pipelineId: built.pipelineId, stageId: built.stageId,\n  opportunityAction, opportunityId, existingMonetaryValue } }];"
       },
       "id": "edb5797b-1b30-4e25-8bc9-1c3e9d97311e",
       "name": "Check Existing Opportunity",
@@ -1213,7 +1216,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const webhookData = $('Webhook – Lead Intake (Visualizer)').first().json.body;\nconst utm = webhookData.utm || {};\nconst d = $json; // output of Check Existing Opportunity: contactId, firstName, lastName, phone, source, locationId, pipelineId, stageId\n\nconst OPPORTUNITY_FIELD_IDS = {\n  route_code: 'jY9FyUMmjcjOvImF4GW6',\n  campaign_name: 'ifPE6rhmD5wUsq58ttmM',\n};\n// Opportunity-level Lead Source is a curated SINGLE_OPTIONS dropdown (EDDM /\n// Facebook Ads / YouTube Ads / Google Ads) -- unlike the plain-text UTM\n// fields, this needs an explicit slug->label map, and an unrecognized/empty\n// utm_source must leave the field unset rather than guess or default to one\n// of the four options.\nconst LEAD_SOURCE_FIELD_ID = 'DGRy6EHziji2kevcDXpE';\nconst LEAD_SOURCE_MAP = {\n  eddm: 'EDDM',\n  facebook: 'Facebook Ads',\n  youtube: 'YouTube Ads',\n  google: 'Google Ads',\n};\n\nconst isEmpty = (v) => v === null || v === undefined || v === '';\n\nconst customFields = [];\nif (!isEmpty(utm.content)) customFields.push({ id: OPPORTUNITY_FIELD_IDS.route_code, value: utm.content });\nif (!isEmpty(utm.campaign)) customFields.push({ id: OPPORTUNITY_FIELD_IDS.campaign_name, value: utm.campaign });\nconst leadSourceLabel = LEAD_SOURCE_MAP[utm.source];\nif (leadSourceLabel) customFields.push({ id: LEAD_SOURCE_FIELD_ID, value: leadSourceLabel });\n\nconst name = (d.firstName + ' ' + d.lastName + ' - ' + d.source.charAt(0).toUpperCase() + d.source.slice(1) + ' Lead').trim();\n\nconst body = {\n  pipelineId: d.pipelineId,\n  locationId: d.locationId,\n  pipelineStageId: d.stageId,\n  name,\n  status: 'open',\n  contactId: d.contactId,\n  source: d.source,\n};\nif (customFields.length) body.customFields = customFields;\n\nreturn [{ json: { ...d, body } }];"
+        "jsCode": "const webhookData = $('Webhook – Lead Intake (Visualizer)').first().json.body;\nconst utm = webhookData.utm || {};\nconst d = $json; // output of Check Existing Opportunity: contactId, firstName, lastName, phone, source, locationId, pipelineId, stageId\n\nconst OPPORTUNITY_FIELD_IDS = {\n  route_code: 'jY9FyUMmjcjOvImF4GW6',\n  campaign_name: 'ifPE6rhmD5wUsq58ttmM',\n};\n// Opportunity-level Lead Source is a curated SINGLE_OPTIONS dropdown (EDDM /\n// Facebook Ads / YouTube Ads / Google Ads) -- unlike the plain-text UTM\n// fields, this needs an explicit slug->label map, and an unrecognized/empty\n// utm_source must leave the field unset rather than guess or default to one\n// of the four options.\nconst LEAD_SOURCE_FIELD_ID = 'DGRy6EHziji2kevcDXpE';\nconst LEAD_SOURCE_MAP = {\n  eddm: 'EDDM',\n  facebook: 'Facebook Ads',\n  youtube: 'YouTube Ads',\n  google: 'Google Ads',\n};\n\nconst isEmpty = (v) => v === null || v === undefined || v === '';\n\nconst customFields = [];\nif (!isEmpty(utm.content)) customFields.push({ id: OPPORTUNITY_FIELD_IDS.route_code, value: utm.content });\nif (!isEmpty(utm.campaign)) customFields.push({ id: OPPORTUNITY_FIELD_IDS.campaign_name, value: utm.campaign });\nconst leadSourceLabel = LEAD_SOURCE_MAP[utm.source];\nif (leadSourceLabel) customFields.push({ id: LEAD_SOURCE_FIELD_ID, value: leadSourceLabel });\n\nconst name = (d.firstName + ' ' + d.lastName + ' - ' + d.source.charAt(0).toUpperCase() + d.source.slice(1) + ' Lead').trim();\n\nconst body = {\n  pipelineId: d.pipelineId,\n  locationId: d.locationId,\n  pipelineStageId: d.stageId,\n  name,\n  status: 'open',\n  contactId: d.contactId,\n  source: d.source,\n};\nif (customFields.length) body.customFields = customFields;\n// Opportunity value = LOW end of the visualizer estimate, whole dollars, no\n// symbol. estimateLow is recomputed server-side in /api/lead-intake (never a\n// browser price). Copper / out-of-range / missing inputs => leave it unset.\nconst estLow = webhookData.estimateLow;\nif (webhookData.estimateStatus === 'priced' && typeof estLow === 'number' && Number.isFinite(estLow) && estLow > 0) {\n  body.monetaryValue = Math.round(estLow);\n}\n\nreturn [{ json: { ...d, body } }];"
       },
       "id": "build-opportunity-payload",
       "name": "Build Opportunity Payload",
@@ -1549,6 +1552,102 @@
         4016,
         2640
       ]
+    },
+    {
+      "id": "1ff6489f-3be8-4dd4-b1fc-506e0e30d86d",
+      "name": "Prepare Opportunity Value Update",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4256,
+        2400
+      ],
+      "parameters": {
+        "jsCode": "// Decide whether an EXISTING (reused) opportunity needs its value refreshed.\n// A freshly created opportunity already carries monetaryValue (Build Opportunity\n// Payload), so only the reuse paths land here: updateStage, noop, and the\n// duplicate-recovered create.\nconst input = $json;\nconst body = $('Webhook – Lead Intake (Visualizer)').first().json.body || {};\nconst check = $('Check Existing Opportunity').first().json;\nconst low = body.estimateLow;\nconst valid = body.estimateStatus === 'priced' && typeof low === 'number' && Number.isFinite(low) && low > 0;\n// Returning contact submitting a NEW property: the reused opportunity belongs to\n// the old property -- /api/create-opportunity values the new one instead.\nconst skip = body.newPropertyOpportunity === true;\nconst created = check.opportunityAction === 'create' && !input.duplicateRecovered;\nconst id = (input.opportunity && input.opportunity.id) || input.opportunityId || check.opportunityId || null;\nlet needs = valid && !skip && !created && !!id;\n// An opportunity that already moved past the visualizer stage (noop) keeps any\n// value someone entered; it only gets a value if it has none.\nif (needs && check.opportunityAction === 'noop' && Number(check.existingMonetaryValue || 0) > 0) needs = false;\nreturn [{ json: { ...input, _oppValue: { needs, id, value: valid ? Math.round(low) : null } } }];\n"
+      }
+    },
+    {
+      "id": "be34df1e-90ac-4ca8-a484-ab4686220c60",
+      "name": "IF – Opportunity Value Update Needed?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        4496,
+        2400
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 1
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "c1",
+              "leftValue": "={{ $json._oppValue.needs }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://services.leadconnectorhq.com/opportunities/{{ $json._oppValue.id }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Version",
+              "value": "2021-07-28"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { \"monetaryValue\": $json._oppValue.value } }}",
+        "options": {}
+      },
+      "id": "ede8d58f-33f7-4310-9171-57bd35bebd66",
+      "name": "Update Opportunity Value",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4736,
+        2280
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "EKDDJ0lTGjOvu7Ax",
+          "name": "GHL - Metroplex"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "id": "ee2fc95a-cb20-490b-85e8-7ff964703171",
+      "name": "Restore After Value Update",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4976,
+        2280
+      ],
+      "parameters": {
+        "jsCode": "// Value update is best-effort (failure swallowed upstream). Re-emit the normalized\n// opportunity result so downstream nodes see exactly the shape they always have.\nreturn [{ json: $('Normalize Opportunity Result').first().json }];\n"
+      }
     }
   ],
   "connections": {
@@ -1886,7 +1985,7 @@
       "main": [
         [
           {
-            "node": "IF – Insurance Claim (not cash)?",
+            "node": "Prepare Opportunity Value Update",
             "type": "main",
             "index": 0
           }
@@ -2174,6 +2273,64 @@
         [
           {
             "node": "Code – Build Lead Failure",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Opportunity Value Update": {
+      "main": [
+        [
+          {
+            "node": "IF – Opportunity Value Update Needed?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF – Opportunity Value Update Needed?": {
+      "main": [
+        [
+          {
+            "node": "Update Opportunity Value",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "IF – Insurance Claim (not cash)?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Opportunity Value": {
+      "main": [
+        [
+          {
+            "node": "Restore After Value Update",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Restore After Value Update",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Restore After Value Update": {
+      "main": [
+        [
+          {
+            "node": "IF – Insurance Claim (not cash)?",
             "type": "main",
             "index": 0
           }
