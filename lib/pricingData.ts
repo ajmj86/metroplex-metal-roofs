@@ -23,19 +23,8 @@ export const ROOFING_PRICING: RoofingPriceRow[] = [
   { material: 'Copper', lowPerSqFt: 25, highPerSqFt: 40, highIsPlus: true },
 ]
 
-// Representative roof size used to compute the sample total-cost column --
-// the midpoint of the 3,000-4,000 sq ft range these figures were validated
-// against.
-export const PRICING_SAMPLE_SQFT = 3500
-
 export function formatCurrency(n: number): string {
   return `$${n.toLocaleString('en-US')}`
-}
-
-export function sampleTotalRange(row: RoofingPriceRow, sqft: number = PRICING_SAMPLE_SQFT): string {
-  const low = formatCurrency(Math.round(row.lowPerSqFt * sqft))
-  const high = formatCurrency(Math.round(row.highPerSqFt * sqft))
-  return `${low}–${high}${row.highIsPlus ? '+' : ''}`
 }
 
 export function perSqFtRange(row: RoofingPriceRow): string {

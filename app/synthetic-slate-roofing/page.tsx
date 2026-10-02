@@ -83,7 +83,7 @@ const FAQS = [
   },
   {
     q: 'How much does synthetic slate roofing cost per square foot in DFW?',
-    a: 'Synthetic slate installed cost runs about $18–$22 per square foot in the Dallas–Fort Worth market, landing between exposed-fastener metal and copper on the price spectrum — roughly comparable to standing seam steel. On a representative 3,500 sq ft roof, that works out to about $63,000–$77,000 installed. Your exact number depends on roof size, pitch, and complexity — request a free estimate for your specific home.',
+    a: 'Synthetic slate installed cost runs about $18–$22 per square foot in the Dallas–Fort Worth market, landing between exposed-fastener metal and copper on the price spectrum — roughly comparable to standing seam steel. Your exact number depends on roof size, pitch, and complexity — request a free estimate for your specific home.',
   },
 ]
 

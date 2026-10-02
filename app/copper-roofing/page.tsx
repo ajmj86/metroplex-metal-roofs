@@ -38,7 +38,7 @@ const FAQS = [
   },
   {
     q: 'How much does copper roofing cost per square foot in DFW?',
-    a: 'Copper runs about $25–$40+ per square foot installed in the Dallas–Fort Worth market — the highest cost of any material we install, reflecting both the raw material and the specialized installation it requires. On a representative 3,500 sq ft roof, that works out to roughly $87,500–$140,000+ installed. Full copper roofs are most common on estate-level homes; many homeowners use copper selectively as an accent (dormers, entries, bay windows) alongside a standing seam main roof.',
+    a: 'Copper runs about $25–$40+ per square foot installed in the Dallas–Fort Worth market — the highest cost of any material we install, reflecting both the raw material and the specialized installation it requires. Full copper roofs are most common on estate-level homes; many homeowners use copper selectively as an accent (dormers, entries, bay windows) alongside a standing seam main roof.',
   },
   {
     q: 'Does copper roofing require maintenance?',

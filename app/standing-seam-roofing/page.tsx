@@ -54,7 +54,7 @@ const FAQS = [
   },
   {
     q: 'How much does standing seam metal roofing cost per square foot in DFW?',
-    a: 'Standard standing seam runs about $12–$18 per square foot installed in the Dallas–Fort Worth market; premium 24-gauge standing seam runs $15–$22+ per square foot. On a representative 3,500 sq ft roof, that works out to roughly $42,000–$63,000 for standard gauge, or $52,500–$77,000+ for premium 24-gauge. Your exact number depends on roof size, pitch, and complexity — request a free estimate for your specific home.',
+    a: 'Standard standing seam runs about $12–$18 per square foot installed in the Dallas–Fort Worth market; premium 24-gauge standing seam runs $15–$22+ per square foot. Your exact number depends on roof size, pitch, and complexity — request a free estimate for your specific home.',
   },
 ]
 
