@@ -12,7 +12,6 @@ import ProductsSection from '@/components/ProductsSection'
 import PricingTable from '@/components/PricingTable'
 import { ASSESSMENT_CATEGORIES } from '@/lib/assessment'
 import { GALLERY_ITEMS } from '@/lib/gallery'
-import { ROI_STAT } from '@/lib/roiCalculator'
 
 /*
   ══════════════════════════════════════
@@ -100,7 +99,6 @@ export default function CityPage({ city }: { city: CityData }) {
     { val: 35,  suffix: '%',     label: 'Insurance Savings' },
     { val: 25,  suffix: '%',     label: 'Energy Cost Reduction' },
     { val: 55,  suffix: '%',     label: 'Cost Recouped at Resale' },
-    ROI_STAT,
   ]
 
   const steps = [
@@ -253,7 +251,7 @@ export default function CityPage({ city }: { city: CityData }) {
               />
             </Reveal>
             <div style={{ borderTop: `1px solid ${C.border}`, borderBottom: `1px solid ${C.border}`, background: C.surface, marginBottom: 48 }}>
-              <div className="inner grid-5">
+              <div className="inner grid-4">
                 {whyMetal.map((s, i) => (
                   <Reveal key={s.label} delay={i * 0.07}>
                     <StatItem stat={s} showBorder={i < whyMetal.length - 1}/>
@@ -262,7 +260,7 @@ export default function CityPage({ city }: { city: CityData }) {
               </div>
               <div style={{ borderTop: `1px solid ${C.border}`, padding: '8px 24px', textAlign: 'center' }}>
                 <p style={{ fontSize: 10, color: C.muted, maxWidth: 640, margin: '8px auto', lineHeight: 1.6, fontFamily: "'Outfit',sans-serif" }}>
-                  Figures represent accepted industry ranges but will vary by home, carrier, and installation. Individual results will vary, and actual savings are not guaranteed. Consult a local real estate professional for market-specific figures and your insurance and utility providers for personalized savings. The ROI calculation is based on 20-yr cost comparison of avoided replacement, insurance and energy savings vs. upfront investment.
+                  Figures represent accepted industry ranges but will vary by home, carrier, and installation. Individual results will vary, and actual savings are not guaranteed. Consult a local real estate professional for market-specific figures and your insurance and utility providers for personalized savings.
                 </p>
               </div>
             </div>
