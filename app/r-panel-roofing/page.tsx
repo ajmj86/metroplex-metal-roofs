@@ -48,7 +48,7 @@ const FAQS = [
   },
   {
     q: 'How much does R-panel metal roofing cost per square foot in DFW?',
-    a: 'R-panel is the most affordable metal roofing system we install, running about $7–$11 per square foot installed in the Dallas–Fort Worth market. On a representative 3,500 sq ft roof, that works out to roughly $24,500–$38,500 installed. Your exact number depends on roof size, pitch, and complexity — request a free estimate for your specific home.',
+    a: 'R-panel is the most affordable metal roofing system we install, running about $7–$11 per square foot installed in the Dallas–Fort Worth market. Your exact number depends on roof size, pitch, and complexity — request a free estimate for your specific home.',
   },
 ]
 

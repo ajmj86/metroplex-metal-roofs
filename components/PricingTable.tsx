@@ -1,5 +1,5 @@
 import { C } from './brand'
-import { ROOFING_PRICING, PRICING_SAMPLE_SQFT, perSqFtRange, sampleTotalRange } from '@/lib/pricingData'
+import { ROOFING_PRICING, perSqFtRange } from '@/lib/pricingData'
 
 /*
  * Deliberately a plain presentational component -- no hooks, no event
@@ -27,11 +27,11 @@ export default function PricingTable({
       {intro && (
         <p style={{ fontSize: 15, color: C.mutedLight, lineHeight: 1.8, maxWidth: 720, marginBottom: 32 }}>{intro}</p>
       )}
-      <div style={{ overflowX: 'auto', border: `1px solid ${C.border}`, borderRadius: 8 }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 560 }}>
+      <div style={{ overflowX: 'auto', border: `1px solid ${C.border}`, borderRadius: 8, maxWidth: 680 }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 0 }}>
           <thead>
             <tr style={{ background: C.surface }}>
-              {['Material', '$ / Sq Ft Installed', `Est. Total (${PRICING_SAMPLE_SQFT.toLocaleString('en-US')} Sq Ft Roof)`].map((h, i) => (
+              {['Material', '$ / Sq Ft Installed*'].map((h, i) => (
                 <th key={h} style={{
                   textAlign: i === 0 ? 'left' : 'right',
                   padding: '16px 20px',
@@ -50,17 +50,32 @@ export default function PricingTable({
                 <td style={{ padding: '16px 20px', fontSize: 14, color: C.mutedLight, textAlign: 'right', borderBottom: i < ROOFING_PRICING.length - 1 ? `1px solid ${C.border}` : 'none', whiteSpace: 'nowrap' }}>
                   {perSqFtRange(row)}
                 </td>
-                <td style={{ padding: '16px 20px', fontSize: 14, color: C.mutedLight, textAlign: 'right', borderBottom: i < ROOFING_PRICING.length - 1 ? `1px solid ${C.border}` : 'none', whiteSpace: 'nowrap' }}>
-                  {sampleTotalRange(row)}
-                </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      <p style={{ fontSize: 11, color: C.muted, lineHeight: 1.7, marginTop: 16, maxWidth: 720 }}>
-        DFW-wide installed-cost ranges as of 2026, for material and labor combined. Sample totals assume a {PRICING_SAMPLE_SQFT.toLocaleString('en-US')} sq ft roof with typical pitch and access — actual cost depends on your roof&apos;s exact size, slope, tear-off needs, and site conditions. Get a free satellite-based estimate for your home&apos;s specific number.
+      <p style={{ fontSize: 12, color: C.mutedLight, lineHeight: 1.7, marginTop: 16, maxWidth: 720 }}>
+        *Rates are per sq ft of gross roofing material, which includes waste and overage (typically 10–30% depending on material and roof complexity). Get an estimate for your exact roof with our{' '}
+        <a href="/visualizer" style={{ color: C.accent, textDecoration: 'underline' }}>free visualizer</a>.
       </p>
+      <p style={{ fontSize: 11, color: C.muted, lineHeight: 1.7, marginTop: 8, maxWidth: 720 }}>
+        DFW-wide installed-cost ranges as of 2026, for material and labor combined — actual cost depends on your roof&apos;s exact size, slope, tear-off needs, and site conditions.
+      </p>
+      {/* Plain <a> + CSS class (no handlers) so this stays a boundary-agnostic component;
+          .cta-btn (brand globalStyles) makes it full-width on mobile. */}
+      <style>{`.pt-cta:hover{background:${C.accentLight} !important}`}</style>
+      <a
+        href="/visualizer"
+        className="cta-btn pt-cta"
+        style={{
+          display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 10, marginTop: 24,
+          padding: '15px 32px', background: C.accent, color: C.black,
+          fontSize: 12, letterSpacing: 2, textTransform: 'uppercase',
+          fontWeight: 600, borderRadius: 2, transition: 'background 0.2s',
+          textDecoration: 'none', fontFamily: "'Outfit',sans-serif",
+        }}
+      >Get My Instant Estimate</a>
     </div>
   )
 }

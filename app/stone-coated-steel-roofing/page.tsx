@@ -52,7 +52,7 @@ const FAQS = [
   },
   {
     q: 'How much does stone-coated steel roofing cost per square foot in DFW?',
-    a: 'Stone-coated steel runs about $10–$16 per square foot installed in the Dallas–Fort Worth market. On a representative 3,500 sq ft roof, that works out to roughly $35,000–$56,000 installed. Your exact number depends on roof size, pitch, and complexity — request a free estimate for your specific home.',
+    a: 'Stone-coated steel runs about $10–$16 per square foot installed in the Dallas–Fort Worth market. Your exact number depends on roof size, pitch, and complexity — request a free estimate for your specific home.',
   },
 ]
 
