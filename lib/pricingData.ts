@@ -19,7 +19,7 @@ export const ROOFING_PRICING: RoofingPriceRow[] = [
   { material: 'Stone-Coated Steel', lowPerSqFt: 10, highPerSqFt: 16, highIsPlus: false },
   { material: 'Standing Seam Steel', lowPerSqFt: 12, highPerSqFt: 18, highIsPlus: false },
   { material: 'Premium 24-Gauge Standing Seam', lowPerSqFt: 15, highPerSqFt: 22, highIsPlus: true },
-  { material: 'Synthetic Slate (Composite)', lowPerSqFt: 18, highPerSqFt: 20, highIsPlus: false },
+  { material: 'Synthetic Slate (Composite)', lowPerSqFt: 18, highPerSqFt: 22, highIsPlus: false },
   { material: 'Copper', lowPerSqFt: 25, highPerSqFt: 40, highIsPlus: true },
 ]
 
