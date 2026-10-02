@@ -12,7 +12,6 @@ import PricingTable from '@/components/PricingTable'
 import { ASSESSMENT_CATEGORIES } from '@/lib/assessment'
 import { GALLERY_ITEMS } from '@/lib/gallery'
 import { HOME_FAQS } from '@/components/HomeFAQSchema'
-import { ROI_STAT } from '@/lib/roiCalculator'
 
 /* ── Image Placeholder ── */
 const ImgPlaceholder = ({ label, tag, style={} }) => (
@@ -369,7 +368,6 @@ const stats = [
   {val:35,  suffix:"%",     label:"Insurance Savings"},
   {val:25,  suffix:"%",     label:"Energy Cost Reduction"},
   {val:55,  suffix:"%",     label:"Cost Recouped at Resale"},
-  ROI_STAT,
 ];
 const steps = [
   {n:"01",title:"Visualize Your Roof",   time:"~60 seconds",           href:"/visualizer",body:"Enter your address. Our AI visualizer pulls a street-level image of your home and renders it with your chosen metal roof style and color — before you commit to anything."},
@@ -436,7 +434,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
 
       {/* ── STATS ── */}
       <section style={{borderTop:`1px solid ${C.border}`,background:C.surface}}>
-        <div className="inner grid-5">
+        <div className="inner grid-4">
           {stats.map((s,i)=>(
             <Reveal key={s.label} delay={i*0.07}>
               <StatItem stat={s} showBorder={i<stats.length-1} className="stat-border"/>
@@ -446,7 +444,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
       </section>
       <div style={{borderTop:`1px solid ${C.border}`,borderBottom:`1px solid ${C.border}`,background:C.surface,padding:"8px 24px",textAlign:"center"}}>
         <p style={{fontFamily:"'Outfit',sans-serif",fontSize:10,color:C.muted,maxWidth:640,margin:"8px auto",lineHeight:1.6}}>
-          Figures represent accepted industry ranges but will vary by home, carrier, and installation. Individual results will vary, and actual savings are not guaranteed. Consult a local real estate professional for market-specific figures and your insurance and utility providers for personalized savings. The ROI calculation is based on 20-yr cost comparison of avoided replacement, insurance and energy savings vs. upfront investment.
+          Figures represent accepted industry ranges but will vary by home, carrier, and installation. Individual results will vary, and actual savings are not guaranteed. Consult a local real estate professional for market-specific figures and your insurance and utility providers for personalized savings.
         </p>
       </div>
 
