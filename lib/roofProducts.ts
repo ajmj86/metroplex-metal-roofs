@@ -183,3 +183,12 @@ export function resolveSelection(
 export function getProductStyle(roofType: string, product: string): string | null {
   return roofProducts[roofType]?.products?.[product]?.style ?? null;
 }
+
+// Label shown to Andrew/GHL for a selection. Synthetic slate names the Brava
+// profile too, since its price differs per profile.
+export function getSelectedRoofLabel(roofType: string, product?: string | null): string {
+  const base = getRoofTypeLabel(roofType);
+  if (roofType !== 'synthetic_slate' || !product) return base;
+  const productLabel = getProductLabel(roofType, product);
+  return productLabel ? `${base} \u2013 ${productLabel}` : base;
+}
