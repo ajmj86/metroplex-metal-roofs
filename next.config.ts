@@ -5,6 +5,19 @@ const nextConfig: NextConfig = {
   // require) — bundling it breaks that lookup on Vercel, so keep it external.
   serverExternalPackages: ["pdfkit"],
 
+  // /visualizer?form=full is the long-form variant (4 quiz screens) kept for
+  // reference/A-B use -- keep it out of search results; the default (short) page
+  // stays indexable. Matches on the query string, so /visualizer is unaffected.
+  async headers() {
+    return [
+      {
+        source: "/visualizer",
+        has: [{ type: "query", key: "form", value: "full" }],
+        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
+      },
+    ];
+  },
+
   async redirects() {
     return [
       {
