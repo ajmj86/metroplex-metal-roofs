@@ -1,11 +1,12 @@
 'use client'
 
 import React from 'react'
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useSyncExternalStore } from 'react'
 import { C, fonts, globalStyles, PHONE, EMAIL } from '@/components/brand'
 import SiteNav from '@/components/SiteNav'
 import { SiteFooter } from '@/components/SiteFooter'
 import { trackEvent } from '@/lib/analytics'
+import { getFormVariant } from '@/lib/formVariant'
 import {
   ROOF_TYPE_ORDER,
   MATERIAL_TYPE_GROUPS,
@@ -26,6 +27,11 @@ import {
 type Step = 'checking' | 'welcome-back' | 'address' | 'select' | 'gate' | 'loading' | 'results'
 
 const STEP_LABELS = ['Address', 'Roof Type', 'About You', 'Rendering', 'Results']
+// ?form= is read on the client only (server snapshot '' -> short); no state/effect needed.
+const subscribeNoop = () => () => {}
+const readSearch = () => window.location.search
+const readSearchServer = () => ''
+
 const STEP_KEYS: Step[] = ['address', 'select', 'gate', 'loading', 'results']
 
 const LOADING_PHRASES = [
@@ -296,8 +302,16 @@ export default function VisualizerPage() {
   const [selColor, setSelColor] = useState<string | null>(null)
   const [selWidth, setSelWidth] = useState<TileWidth | null>(null)
 
+  // Form variant: short (default) skips the 4 quiz screens; ?form=full keeps them.
+  // In the short flow the quiz fields stay '' so lead-intake/n8n see "not answered"
+  // (never written to GHL, alert shows N/A, no tag/routing change).
+  const formVariant = getFormVariant(useSyncExternalStore(subscribeNoop, readSearch, readSearchServer))
+  const isShort = formVariant === 'short'
+
   // gate step
   const [gateScreen, setGateScreen] = useState(0)
+  // Gate screen actually shown: short flow goes straight to the contact form.
+  const gs = isShort ? GATE_SCREENS.length : gateScreen
   const [gateData, setGateData] = useState<GateData>({
     currentRoofType: '', reason: '', insuranceClaim: '', timeline: '',
     firstName: '', lastName: '', phone: '', email: '',
@@ -425,11 +439,11 @@ export default function VisualizerPage() {
   // ── GA4: contact form viewed (once per gate visit) ─────────────────────────
   useEffect(() => {
     if (step !== 'gate') { contactFormViewedRef.current = false; return }
-    if (gateScreen === 4 && !contactFormViewedRef.current) {
+    if (gs === 4 && !contactFormViewedRef.current) {
       contactFormViewedRef.current = true
       trackEvent('visualizer_contact_form_viewed', { roof_type: selType || '' })
     }
-  }, [step, gateScreen, selType])
+  }, [step, gs, selType])
 
   // ── Silent returning-visitor check (cookie-only) ────────────────────────────
   // Runs once on mount, before anything else renders (step starts at
@@ -1496,6 +1510,10 @@ export default function VisualizerPage() {
                   if (returningSameAddress) {
                     handleReturningSameAddressSubmit()
                   } else {
+                    // Short flow + recognized contact (Case B, new property): there is
+                    // no quiz screen to finish, so submit straight away -- the same
+                    // auto-submit the full flow triggers after its last quiz answer.
+                    if (isShort && returningContact) setAutoSubmitData({ ...gateData })
                     setStep('gate')
                   }
                 }}
@@ -1531,7 +1549,7 @@ export default function VisualizerPage() {
                 <div style={{ height: 3, background: C.card }}>
                   <div style={{
                     height: '100%',
-                    width: `${((gateScreen + 1) / 5) * 100}%`,
+                    width: `${((gs + 1) / 5) * 100}%`,
                     background: C.accent,
                     transition: 'width 0.35s ease',
                   }} />
@@ -1540,8 +1558,8 @@ export default function VisualizerPage() {
                 <div style={{ padding: 'clamp(24px,4vw,36px)' }}>
 
                   {/* Screens 0–3: choice cards */}
-                  {gateScreen < 4 && (() => {
-                    const screen = GATE_SCREENS[gateScreen]
+                  {gs < 4 && (() => {
+                    const screen = GATE_SCREENS[gs]
                     return (
                       <>
                         <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 26, fontWeight: 700, color: C.white, lineHeight: 1.25, marginBottom: 8 }}>
@@ -1596,7 +1614,7 @@ export default function VisualizerPage() {
                   })()}
 
                   {/* Screen 4: contact form */}
-                  {gateScreen === 4 && (() => {
+                  {gs === 4 && (() => {
                     const labelStyle = { fontSize: 10, letterSpacing: 2, textTransform: 'uppercase' as const, color: C.muted, marginBottom: 6 }
                     const errStyle = { fontSize: 11, color: '#F87171', marginTop: 4 }
                     const formReady =
@@ -1692,7 +1710,7 @@ export default function VisualizerPage() {
               </div>
 
               {/* Back button (below card, screens 1–4) */}
-              {gateScreen > 0 && (
+              {gs > 0 && !isShort && (
                 <button
                   onClick={() => setGateScreen(s => s - 1)}
                   style={{ marginTop: 16, fontSize: 11, color: C.muted, letterSpacing: 1, textTransform: 'uppercase', cursor: 'pointer', background: 'none', border: 'none', padding: '8px 0', textDecoration: 'underline', fontFamily: "'Outfit',sans-serif" }}
@@ -1700,7 +1718,7 @@ export default function VisualizerPage() {
                   ← Back
                 </button>
               )}
-              {gateScreen === 0 && (
+              {(gs === 0 || isShort) && (
                 <button
                   onClick={() => setStep('select')}
                   style={{ marginTop: 16, fontSize: 11, color: C.muted, letterSpacing: 1, textTransform: 'uppercase', cursor: 'pointer', background: 'none', border: 'none', padding: '8px 0', textDecoration: 'underline', fontFamily: "'Outfit',sans-serif" }}
