@@ -27,7 +27,7 @@ export default function PricingTable({
       {intro && (
         <p style={{ fontSize: 15, color: C.mutedLight, lineHeight: 1.8, maxWidth: 720, marginBottom: 32 }}>{intro}</p>
       )}
-      <div style={{ overflowX: 'auto', border: `1px solid ${C.border}`, borderRadius: 8 }}>
+      <div style={{ overflowX: 'auto', border: `1px solid ${C.border}`, borderRadius: 8, maxWidth: 680 }}>
         <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 0 }}>
           <thead>
             <tr style={{ background: C.surface }}>
