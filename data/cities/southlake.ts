@@ -1,3 +1,4 @@
+import { FAQ_RATE } from '@/lib/pricingData'
 import type { CityData } from '@/components/CityPage'
 
 export const SOUTHLAKE_DATA: CityData = {
@@ -61,7 +62,7 @@ export const SOUTHLAKE_DATA: CityData = {
     },
     {
       q: 'How much does a standing seam metal roof cost in Southlake, TX?',
-      a: 'Standing seam metal roofing in Southlake typically ranges from $18,000 to $72,000 depending on roof size, pitch, and complexity — with most homes in the 20 to 40 square range. We provide a satellite-based ballpark range from your roof\'s measured size — not a guess from the driveway — refined into a firm number after your free on-site assessment. By material, that runs about $12–$18/sq ft for standard standing seam and $15–$22+/sq ft for premium 24-gauge — see our full pricing table above for a size-based cost breakdown across all materials, including R-panel and stone-coated steel.',
+      a: `Standing seam metal roofing in Southlake is priced by the square foot, and your total depends on roof size, pitch, and complexity — with most homes in the 20 to 40 square range. We provide a satellite-based ballpark range from your roof\'s measured size — not a guess from the driveway — refined into a firm number after your free on-site assessment. By material, that runs about ${FAQ_RATE.standingSeam()}/sq ft for standard standing seam and ${FAQ_RATE.premiumStandingSeam()}/sq ft for premium 24-gauge — see our pricing table above for rates across all materials, including R-panel and stone-coated steel, or use our free visualizer for an exact number for your roof.`,
     },
     {
       q: 'Will my Southlake HOA approve a metal roof?',

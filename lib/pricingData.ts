@@ -30,3 +30,25 @@ export function formatCurrency(n: number): string {
 export function perSqFtRange(row: RoofingPriceRow): string {
   return `$${row.lowPerSqFt}–$${row.highPerSqFt}${row.highIsPlus ? '+' : ''}`
 }
+
+// Per-material rate text for FAQ copy, so city/home/slate FAQs quote the same
+// numbers as the pricing table instead of hardcoding them.
+export function rateOf(material: string): string {
+  const row = ROOFING_PRICING.find((r) => r.material === material)
+  if (!row) throw new Error(`pricingData: unknown material "${material}"`)
+  return perSqFtRange(row)
+}
+
+export const FAQ_RATE = {
+  rPanel: () => rateOf('R-Panel / Exposed-Fastener Steel'),
+  stoneCoated: () => rateOf('Stone-Coated Steel'),
+  standingSeam: () => rateOf('Standing Seam Steel'),
+  premiumStandingSeam: () => rateOf('Premium 24-Gauge Standing Seam'),
+  slate: () => rateOf('Synthetic Slate (Composite)'),
+  copper: () => rateOf('Copper'),
+}
+
+// "By material" sentence fragment used by the city FAQs.
+export function cityFaqMaterialRates(): string {
+  return `about ${FAQ_RATE.rPanel()}/sq ft for R-panel, ${FAQ_RATE.stoneCoated()}/sq ft for stone-coated steel, ${FAQ_RATE.standingSeam()}/sq ft for standing seam, and ${FAQ_RATE.premiumStandingSeam()}/sq ft for premium 24-gauge standing seam`
+}

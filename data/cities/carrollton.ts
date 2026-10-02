@@ -1,3 +1,4 @@
+import { cityFaqMaterialRates } from '@/lib/pricingData'
 import type { CityData } from '@/components/CityPage'
 
 export const CARROLLTON_DATA: CityData = {
@@ -52,7 +53,7 @@ export const CARROLLTON_DATA: CityData = {
     },
     {
       q: 'How much does a metal roof cost in Carrollton?',
-      a: 'Metal roofing in Carrollton typically ranges from $17,000 to $68,000 depending on roof size, pitch, and material. We provide a satellite-based ballpark range from your roof\'s measured size — not a guess from the driveway — refined into a firm number after your free on-site assessment. By material, that typically breaks down to about $7–$11/sq ft for R-panel, $10–$16/sq ft for stone-coated steel, $12–$18/sq ft for standing seam, and $15–$22+/sq ft for premium 24-gauge standing seam — see our full pricing table above for a size-based cost breakdown.',
+      a: `Metal roofing in Carrollton is priced by the square foot, and your total depends on roof size, pitch, and material. We provide a satellite-based ballpark range from your roof\'s measured size — not a guess from the driveway — refined into a firm number after your free on-site assessment. By material, that typically breaks down to ${cityFaqMaterialRates()} — see our pricing table above for the full breakdown, or use our free visualizer for an exact number for your roof.`,
     },
     {
       q: 'Will my Castle Hills or Indian Creek HOA approve a metal roof?',

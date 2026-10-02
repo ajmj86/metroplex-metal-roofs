@@ -5,6 +5,7 @@ import { SiteFooter } from '@/components/SiteFooter'
 import { C, fonts, globalStyles } from '@/components/brand'
 import PricingTable from '@/components/PricingTable'
 import { BRAVA_PROFILES } from '@/lib/bravaColors'
+import { FAQ_RATE } from '@/lib/pricingData'
 
 const BASE_URL = 'https://www.metroplexmetalroofs.com'
 const BOOKING_URL = 'https://api.leadconnectorhq.com/widget/booking/gG1ruFfEWkUXO7eIB8NR'
@@ -83,7 +84,7 @@ const FAQS = [
   },
   {
     q: 'How much does synthetic slate roofing cost per square foot in DFW?',
-    a: 'Synthetic slate installed cost runs about $18–$22 per square foot in the Dallas–Fort Worth market, landing between exposed-fastener metal and copper on the price spectrum — roughly comparable to standing seam steel. Your exact number depends on roof size, pitch, and complexity — request a free estimate for your specific home.',
+    a: `Synthetic slate installed cost runs about ${FAQ_RATE.slate()} per square foot in the Dallas–Fort Worth market — a premium option priced above standard standing seam steel (${FAQ_RATE.standingSeam()}) and below copper (${FAQ_RATE.copper()}). Your exact number depends on roof size, pitch, and complexity — request a free estimate for your specific home.`,
   },
 ]
 
@@ -361,7 +362,7 @@ export default function SyntheticSlateRoofingPage() {
           <div className="inner">
             <PricingTable
               title="Synthetic Slate & Metal Roofing Costs in DFW"
-              intro="Synthetic slate lands mid-pack — more than exposed-fastener metal, comparable to standing seam, well below real slate or copper. Installed cost by material, based on current DFW-wide market rates."
+              intro="Synthetic slate is a premium option — priced above standard standing seam and exposed-fastener metal, but well below real slate or copper. Installed cost by material, based on current DFW-wide market rates."
             />
           </div>
         </section>
