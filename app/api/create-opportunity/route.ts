@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createOpportunity } from '@/lib/ghl'
+import { createOpportunity, getContact } from '@/lib/ghl'
+import { alertAndrew } from '@/lib/alerts'
+import { createOpportunityForCaseB } from '@/lib/caseB'
 import { formatFormValue } from '@/lib/formatFormValue'
 import { estimateForLead, type PricedConfig } from '@/lib/estimate'
-import { getProductStyle } from '@/lib/roofProducts'
+import { getProductStyle, getSelectedRoofLabel } from '@/lib/roofProducts'
 import pricingConfig from '@/config/pricing.json'
 
 export const maxDuration = 15
@@ -59,15 +61,18 @@ export async function POST(req: NextRequest) {
       stories,
       roofSizeSource,
     })
-    const opportunity = await createOpportunity({
-      contactId, name, source: 'visualizer',
-      monetaryValue: est.status === 'priced' ? est.low : undefined,
-    })
-    if (!opportunity) {
-      return NextResponse.json({ error: 'Failed to create opportunity' }, { status: 502 })
-    }
-
-    return NextResponse.json({ success: true, opportunityId: opportunity.id })
+    // A duplicate-blocked create (GHL: one opportunity per contact in this
+    // pipeline) is handled here: {created:false} + one alert to Andrew, old
+    // opportunity untouched. Any other failure is still a 502.
+    const { status, body: resBody } = await createOpportunityForCaseB(
+      { createOpportunity, alertAndrew, getContactPhone: async (id) => (await getContact(id))?.phone ?? null },
+      {
+        contactId, name, firstName, lastName, address,
+        roofLabel: selectedRoofType ? getSelectedRoofLabel(selectedRoofType, product) : undefined,
+        estimate: est,
+      }
+    )
+    return NextResponse.json(resBody, { status })
   } catch (err) {
     console.error('[create-opportunity]', err)
     return NextResponse.json({ error: 'Failed to create opportunity' }, { status: 500 })

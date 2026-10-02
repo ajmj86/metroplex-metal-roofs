@@ -5,6 +5,8 @@
 // n8n-workflows/lead-intake-visualizer.json ("Search Contact By Email",
 // "Create Opportunity") so this stays consistent with what n8n already does.
 
+import type { CreateOppResult } from '@/lib/caseB'
+
 const GHL_BASE = 'https://services.leadconnectorhq.com'
 const GHL_VERSION = '2021-07-28'
 
@@ -116,7 +118,7 @@ export async function createOpportunity(params: {
   source: string
   // Whole dollars (low end of the visualizer estimate); omitted when unknown.
   monetaryValue?: number
-}): Promise<{ id: string } | null> {
+}): Promise<CreateOppResult> {
   const apiKey = process.env.GHL_API_KEY
   const locationId = process.env.GHL_LOCATION_ID
   const pipelineId = process.env.GHL_PIPELINE_ID
@@ -125,7 +127,7 @@ export async function createOpportunity(params: {
     console.warn('[ghl] Missing GHL env vars — cannot create opportunity', {
       hasApiKey: !!apiKey, hasLocationId: !!locationId, hasPipelineId: !!pipelineId, hasStageId: !!stageId,
     })
-    return null
+    return { ok: false, duplicate: false }
   }
   try {
     const res = await fetch(`${GHL_BASE}/opportunities/`, {
@@ -143,14 +145,22 @@ export async function createOpportunity(params: {
       }),
     })
     if (!res.ok) {
-      console.error('[ghl] createOpportunity got non-OK response:', res.status, await res.text())
-      return null
+      const text = await res.text()
+      // GHL allows one opportunity per contact in this pipeline: a second create
+      // is a handled outcome (Case B), not an error -- see lib/caseB.ts.
+      if (res.status === 400 && /OPPORTUNITY_NO_DUPLICATE/.test(text)) {
+        let existingId: string | null = null
+        try { existingId = JSON.parse(text)?.meta?.existingId ?? null } catch { /* keep null */ }
+        return { ok: false, duplicate: true, existingId }
+      }
+      console.error('[ghl] createOpportunity got non-OK response:', res.status, text)
+      return { ok: false, duplicate: false }
     }
     const data = await res.json()
-    return data?.opportunity?.id ? { id: data.opportunity.id } : null
+    return data?.opportunity?.id ? { ok: true, id: data.opportunity.id } : { ok: false, duplicate: false }
   } catch (err) {
     console.error('[ghl] createOpportunity failed:', err)
-    return null
+    return { ok: false, duplicate: false }
   }
 }
 

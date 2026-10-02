@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "node --test scripts/test-estimate.mjs"
+    "test": "node --test scripts/test-estimate.mjs scripts/test-caseB.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.106.0",
