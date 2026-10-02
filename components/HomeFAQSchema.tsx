@@ -11,6 +11,8 @@
  * FAQS.map(...) in synthetic-slate-roofing/page.tsx and
  * city.faqs.map(...) in CityPageSchema.tsx -- one array, no drift.
  */
+import { FAQ_RATE } from '@/lib/pricingData'
+
 export interface HomeFAQ {
   q: string
   a: string
@@ -27,7 +29,7 @@ export const HOME_FAQS: HomeFAQ[] = [
   },
   {
     q: 'How much does a new roof cost with Metroplex Metal Roofs?',
-    a: 'Installed cost ranges from about $7 per square foot for R-panel up to $40+ per square foot for copper, depending on material — see the pricing table above for a full breakdown by system. Most DFW homeowners land between $25,000 and $70,000 for a full metal or synthetic slate roof, refined into a firm number after a free satellite-based estimate.',
+    a: `Installed cost is priced per square foot and ranges from about ${FAQ_RATE.rPanel()}/sq ft for R-panel up to ${FAQ_RATE.copper()}/sq ft for copper, depending on material — see the pricing table above for a full breakdown by system. Your total depends on your roof's size, pitch, and complexity, so use our free visualizer for an exact number, refined into a firm number after a free satellite-based estimate.`,
   },
   {
     q: 'How long does a metal or synthetic slate roof last?',
