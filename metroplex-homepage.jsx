@@ -441,7 +441,6 @@ const HomePage = () => {
     {val:50,suffix:"+ yrs",label:"Roof Lifespan"},
     {val:35,suffix:"%",    label:"Insurance Savings"},
     {val:15,suffix:"%",    label:"Energy Cost Reduction"},
-    {val:340,suffix:"%",   label:"ROI vs. Asphalt"},
   ];
 
   const steps = [
@@ -520,10 +519,10 @@ const HomePage = () => {
 
       {/* ── STATS ── */}
       <section style={{borderTop:`1px solid ${C.border}`,borderBottom:`1px solid ${C.border}`,background:C.surface}}>
-        <div className="inner grid-4">
+        <div className="inner grid-3">
           {stats.map((s,i)=>(
             <Reveal key={s.label} delay={i*0.07}>
-              <div className="stat-border" style={{padding:"44px 32px",borderRight:i<3?`1px solid ${C.border}`:"none",textAlign:"center"}}>
+              <div className="stat-border" style={{padding:"44px 32px",borderRight:i<stats.length-1?`1px solid ${C.border}`:"none",textAlign:"center"}}>
                 <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(40px,4vw,52px)",fontWeight:700,color:C.accent,lineHeight:1,marginBottom:8}}>
                   <Counter to={s.val} suffix={s.suffix}/>
                 </div>
