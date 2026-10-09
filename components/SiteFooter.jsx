@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import { C, LEGAL_ENTITY, DBA_NAME, YEAR, Logo } from "./brand";
+import { useUtmHref } from "@/lib/useUtmHref";
 
 export function SiteFooter({ setActiveTab = () => {}, setPage = null }) {
+  const utm = useUtmHref();   // the footer "Free Roof Visualizer" link is a CTA: carry the stored UTMs
   const footerLinks = {
     "Standing Seam":      {href:"/#products", onClick:(e)=>{e.preventDefault();setActiveTab("standing");setTimeout(()=>{const el=document.getElementById("products");if(el)el.scrollIntoView({behavior:"smooth"});},200);}},
     "Copper Roofing":     {href:"/#products", onClick:(e)=>{e.preventDefault();setActiveTab("copper");setTimeout(()=>{const el=document.getElementById("products");if(el)el.scrollIntoView({behavior:"smooth"});},200);}},
@@ -68,7 +70,7 @@ export function SiteFooter({ setActiveTab = () => {}, setPage = null }) {
                   onMouseLeave:(e)=>e.currentTarget.style.color=C.muted,
                 };
                 if (fl?.href?.startsWith("/") && !fl.onClick) {
-                  return <Link key={l} href={fl.href} style={linkStyle} {...hoverProps}>{l}</Link>;
+                  return <Link key={l} href={fl.href.startsWith("/visualizer") ? utm(fl.href) : fl.href} style={linkStyle} {...hoverProps}>{l}</Link>;
                 }
                 return (
                   <a key={l} href={fl?.href ?? "#"}

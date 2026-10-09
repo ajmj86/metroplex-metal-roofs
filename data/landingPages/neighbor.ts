@@ -1,4 +1,5 @@
 import type { LandingPageData } from '@/lib/landingPageTypes'
+import { HERO_FOOTNOTE } from '@/lib/landingPageFootnotes'
 
 // Addressed-mail (Campaign 2) "your neighbor just got Brava" page. The {street}
 // and {town} tokens are filled client-side by LandingPageHero.tsx from the
@@ -20,9 +21,8 @@ export const NEIGHBOR_DATA: LandingPageData = {
     subhead:
       'A Brava synthetic slate roof was just installed on {street}. Enter your address to see the same roof on your house, with a real price range, in under 60 seconds.',
     backgroundImageSrc: '/products/synthetic_slate/slate/washington.jpg',
-    trustBullets: ['50-Year Lifespan', 'Class 4 Impact Rated', 'Insurance Discount Eligible'],
-    trustBulletFootnote:
-      'Insurance discounts vary by home, roof system, and carrier — confirm eligibility with your insurance provider.',
+    trustBullets: ['50-Year Lifespan', 'Class 4 Impact Rated', 'Insurance Discount Eligible*'],
+    trustBulletFootnote: HERO_FOOTNOTE,
   },
   trustStats: [
     { val: 50, suffix: '+ yrs', label: 'Roof Lifespan' },

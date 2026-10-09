@@ -7,7 +7,8 @@ import { SiteFooter } from '@/components/SiteFooter'
 import { C, fonts, globalStyles } from '@/components/brand'
 import Counter from '@/components/Counter'
 import StatItem from '@/components/StatItem'
-import { STAT_FOOTNOTE } from '@/lib/landingPageFootnotes'
+import { HERO_FOOTNOTE, STAT_FOOTNOTE } from '@/lib/landingPageFootnotes'
+import { useUtmHref } from '@/lib/useUtmHref'
 import ProductGallery from '@/components/ProductGallery'
 import ProductsSection from '@/components/ProductsSection'
 import PricingTable from '@/components/PricingTable'
@@ -94,6 +95,7 @@ const SHead = ({ eyebrow, title, sub, center=false }: { eyebrow?: string; title:
 /* ── Main component ── */
 export default function CityPage({ city }: { city: CityData }) {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
+  const utm = useUtmHref()   // appends stored UTMs to internal CTA links
 
   const whyMetal = [
     { val: 50,  suffix: '+ yrs', label: 'Roof Lifespan' },
@@ -188,7 +190,7 @@ export default function CityPage({ city }: { city: CityData }) {
                   {city.heroSub}
                 </p>
                 <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', animation: 'fadeUp 0.7s ease 0.3s both' }}>
-                  <a href="/visualizer"
+                  <a href={utm("/visualizer")}
                     style={{ padding: '15px 32px', background: C.accent, color: C.black, fontSize: 12, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 600, borderRadius: 2, transition: 'all 0.2s', whiteSpace: 'nowrap', textDecoration: 'none' }}
                     onMouseEnter={e => (e.currentTarget.style.background = C.accentLight)}
                     onMouseLeave={e => (e.currentTarget.style.background = C.accent)}
@@ -207,7 +209,7 @@ export default function CityPage({ city }: { city: CityData }) {
                       <span style={{ fontSize: 12, color: C.muted }}>{t}</span>
                     </div>
                   ))}
-                  <span style={{ fontSize: 10, color: C.muted, opacity: 0.7, marginTop: 2 }}>{STAT_FOOTNOTE}</span>
+                  <span style={{ fontSize: 10, color: C.muted, opacity: 0.7, marginTop: 2 }}>{HERO_FOOTNOTE}</span>
                 </div>
               </div>
 
@@ -261,9 +263,6 @@ export default function CityPage({ city }: { city: CityData }) {
               </div>
               <div style={{ borderTop: `1px solid ${C.border}`, padding: '8px 24px', textAlign: 'center' }}>
                 <p data-testid="stat-footnote" style={{ fontSize: 10, color: C.muted, opacity: 0.8, maxWidth: 640, margin: '8px auto', lineHeight: 1.6, fontFamily: "'Outfit',sans-serif" }}>{STAT_FOOTNOTE}</p>
-                <p style={{ fontSize: 10, color: C.muted, maxWidth: 640, margin: '8px auto', lineHeight: 1.6, fontFamily: "'Outfit',sans-serif" }}>
-                  Figures represent accepted industry ranges but will vary by home, carrier, and installation. Individual results will vary, and actual savings are not guaranteed. Consult a local real estate professional for market-specific figures and your insurance and utility providers for personalized savings.
-                </p>
               </div>
             </div>
 
@@ -407,7 +406,7 @@ export default function CityPage({ city }: { city: CityData }) {
                     const isExternal = s.href?.startsWith('http')
                     const Tag = s.href ? 'a' : 'div'
                     const linkProps = s.href ? {
-                      href: s.href,
+                      href: utm(s.href),
                       ...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {}),
                       style: { textDecoration: 'none', display: 'block', height: '100%' },
                     } : { style: { height: '100%' } }
@@ -576,7 +575,7 @@ export default function CityPage({ city }: { city: CityData }) {
                 See your home with a metal roof before you commit to anything. Satellite-based estimate. No obligation.
               </p>
               <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
-                <a href="/visualizer"
+                <a href={utm("/visualizer")}
                   style={{ padding: '15px 36px', background: C.accent, color: C.black, fontSize: 12, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 600, borderRadius: 2, transition: 'all 0.2s', whiteSpace: 'nowrap', textDecoration: 'none' }}
                   onMouseEnter={e => (e.currentTarget.style.background = C.accentLight)}
                   onMouseLeave={e => (e.currentTarget.style.background = C.accent)}

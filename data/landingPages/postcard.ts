@@ -1,5 +1,5 @@
 import type { LandingPageData } from '@/lib/landingPageTypes'
-import { STAT_FOOTNOTE } from '@/lib/landingPageFootnotes'
+import { HERO_FOOTNOTE } from '@/lib/landingPageFootnotes'
 
 // Stat strip: lifespan matches Homepage.jsx's `stats`. Insurance premium savings
 // and energy cost reduction are shown as ranges via the `display` override
@@ -35,7 +35,7 @@ export const POSTCARD_DATA: LandingPageData = {
     // Same bullet-row/footnote pattern as Homepage.jsx's hero trust-bar,
     // rendered via the shared HeroTrustBullets component.
     trustBullets: ['50-Year Lifespan', 'Insurance Discount Eligible*', 'Class 4 Impact Rated'],
-    trustBulletFootnote: STAT_FOOTNOTE,
+    trustBulletFootnote: HERO_FOOTNOTE,
   },
   trustStats: [
     { val: 50, suffix: '+ yrs', label: 'Roof Lifespan' },

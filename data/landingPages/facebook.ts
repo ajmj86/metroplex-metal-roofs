@@ -1,5 +1,5 @@
 import type { LandingPageData } from '@/lib/landingPageTypes'
-import { STAT_FOOTNOTE } from '@/lib/landingPageFootnotes'
+import { HERO_FOOTNOTE } from '@/lib/landingPageFootnotes'
 
 export const FACEBOOK_DATA: LandingPageData = {
   slug: 'facebook',
@@ -16,7 +16,7 @@ export const FACEBOOK_DATA: LandingPageData = {
     microcopy: 'See your home in metal and get a free price range — no photo upload, no obligation.',
     backgroundImageSrc: '/MMR Hero Pic.png',
     trustBullets: ['50-Year Lifespan', 'Insurance Discount Eligible*', 'Class 4 Impact Rated'],
-    trustBulletFootnote: STAT_FOOTNOTE,
+    trustBulletFootnote: HERO_FOOTNOTE,
   },
   trustStats: [
     { val: 50, suffix: '+ yrs', label: 'Roof Lifespan' },

@@ -6,7 +6,8 @@ import { C, LEGAL_ENTITY, DBA_NAME, PHONE, YEAR, fonts, globalStyles, Logo } fro
 import { SiteFooter } from "./SiteFooter";
 import Hero from '@/components/Hero'
 import StatItem from '@/components/StatItem'
-import { STAT_FOOTNOTE } from '@/lib/landingPageFootnotes'
+import { HERO_FOOTNOTE, STAT_FOOTNOTE } from '@/lib/landingPageFootnotes'
+import { useUtmHref } from '@/lib/useUtmHref'
 import ProductGallery from '@/components/ProductGallery'
 import ProductsSection from '@/components/ProductsSection'
 import PricingTable from '@/components/PricingTable'
@@ -76,6 +77,7 @@ const NAV_LINKS = [
 /* ── Nav ── */
 const Nav = ({ scrolled }) => {
   const [mOpen, setMOpen] = useState(false);
+  const utm = useUtmHref();   // appends stored UTMs to internal links (not external, not bare #hash)
   return (
     <>
       <nav style={{
@@ -94,13 +96,13 @@ const Nav = ({ scrolled }) => {
         {/* Desktop links */}
         <div className="nav-links" style={{display:"flex",gap:28,alignItems:"center"}}>
           {NAV_LINKS.map(l=>(
-            <a key={l.label} href={l.href}
+            <a key={l.label} href={utm(l.href)}
               style={{fontSize:11,letterSpacing:2,textTransform:"uppercase",color:C.mutedLight,fontWeight:500,transition:"color 0.2s",whiteSpace:"nowrap"}}
               onMouseEnter={e=>e.currentTarget.style.color=C.accent}
               onMouseLeave={e=>e.currentTarget.style.color=C.mutedLight}
             >{l.label}</a>
           ))}
-          <a href="/visualizer" style={{padding:"9px 22px",background:C.accent,color:C.black,fontSize:11,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"background 0.2s",whiteSpace:"nowrap"}}
+          <a href={utm("/visualizer")} style={{padding:"9px 22px",background:C.accent,color:C.black,fontSize:11,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"background 0.2s",whiteSpace:"nowrap"}}
             onMouseEnter={e=>e.currentTarget.style.background=C.accentLight}
             onMouseLeave={e=>e.currentTarget.style.background=C.accent}
           >Free Visualizer + Estimate</a>
@@ -182,11 +184,11 @@ const Nav = ({ scrolled }) => {
       {mOpen && (
         <div style={{position:"fixed",top:84,left:0,right:0,bottom:0,zIndex:199,background:"rgba(9,9,10,0.98)",display:"flex",flexDirection:"column",padding:"32px 24px",gap:4,overflowY:"auto"}}>
           {NAV_LINKS.map(l=>(
-            <a key={l.label} href={l.href} onClick={()=>setMOpen(false)}
+            <a key={l.label} href={utm(l.href)} onClick={()=>setMOpen(false)}
               style={{padding:"16px 0",fontSize:18,letterSpacing:2,textTransform:"uppercase",color:C.mutedLight,fontFamily:"'Cormorant Garamond',serif",borderBottom:`1px solid ${C.border}`}}
             >{l.label}</a>
           ))}
-          <a href="/visualizer" onClick={()=>setMOpen(false)} className="cta-btn" style={{marginTop:24,padding:"16px",background:C.accent,color:C.black,fontSize:12,letterSpacing:2,textTransform:"uppercase",fontWeight:700,borderRadius:4,textAlign:"center"}}>
+          <a href={utm("/visualizer")} onClick={()=>setMOpen(false)} className="cta-btn" style={{marginTop:24,padding:"16px",background:C.accent,color:C.black,fontSize:12,letterSpacing:2,textTransform:"uppercase",fontWeight:700,borderRadius:4,textAlign:"center"}}>
             Free Visualizer + Estimate
           </a>
         </div>
@@ -403,6 +405,7 @@ const galleryItems = GALLERY_ITEMS;
    HOME
 ═══════════════════════════════ */
 const HomePage = ({ activeTab, setActiveTab }) => {
+  const utm = useUtmHref();   // appends stored UTMs to internal CTA links
 
   const [lightboxIndex, setLightboxIndex] = useState(null);
   return (
@@ -429,7 +432,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
         ctaHref="/visualizer"
         microcopy="See your home in metal and get a free price range — no photo upload, no obligation."
         trustBullets={["50-Year Lifespan","Insurance Discount Eligible*","10-Year Workmanship Warranty"]}
-        trustBulletFootnote={STAT_FOOTNOTE}
+        trustBulletFootnote={HERO_FOOTNOTE}
         backgroundImageSrc="/MMR Hero Pic.png"
       />
 
@@ -444,10 +447,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
         </div>
       </section>
       <div style={{borderTop:`1px solid ${C.border}`,borderBottom:`1px solid ${C.border}`,background:C.surface,padding:"8px 24px",textAlign:"center"}}>
-        <p data-testid="stat-footnote" style={{fontFamily:"'Outfit',sans-serif",fontSize:10,color:C.muted,opacity:0.8,maxWidth:640,margin:"8px auto",lineHeight:1.6}}>{STAT_FOOTNOTE}</p>
-        <p style={{fontFamily:"'Outfit',sans-serif",fontSize:10,color:C.muted,maxWidth:640,margin:"8px auto",lineHeight:1.6}}>
-          Figures represent accepted industry ranges but will vary by home, carrier, and installation. Individual results will vary, and actual savings are not guaranteed. Consult a local real estate professional for market-specific figures and your insurance and utility providers for personalized savings.
-        </p>
+        <p data-testid="stat-footnote" style={{fontFamily:"'Outfit',sans-serif",fontSize:10,color:C.muted,maxWidth:640,margin:"8px auto",lineHeight:1.6}}>{STAT_FOOTNOTE}</p>
       </div>
 
       {/* ── ECONOMICS ── */}
@@ -575,7 +575,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
                     For a home in the $700K–$1M range, the real question isn't whether you can afford metal — it's whether paying for asphalt again makes any sense at all.
                   </p>
                 </div>
-                <a href="/visualizer" className="cta-btn" style={{display:"inline-flex",alignItems:"center",gap:10,padding:"16px 32px",background:C.accent,color:C.black,fontSize:11,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"all 0.2s",whiteSpace:"nowrap",flexShrink:0}}
+                <a href={utm("/visualizer")} className="cta-btn" style={{display:"inline-flex",alignItems:"center",gap:10,padding:"16px 32px",background:C.accent,color:C.black,fontSize:11,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"all 0.2s",whiteSpace:"nowrap",flexShrink:0}}
                   onMouseEnter={e=>e.currentTarget.style.background=C.accentLight}
                   onMouseLeave={e=>e.currentTarget.style.background=C.accent}
                 >Get Your Roof Rendering & Estimate →</a>
@@ -658,7 +658,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
           <div className="grid-5" style={{gap:2}}>
             {steps.map((step,i)=>{
               const Tag = step.href ? 'a' : 'div';
-              const linkProps = step.href ? {href:step.href,...(step.href.startsWith('http')?{target:"_blank",rel:"noopener noreferrer"}:{})} : {};
+              const linkProps = step.href ? {href:utm(step.href),...(step.href.startsWith('http')?{target:"_blank",rel:"noopener noreferrer"}:{})} : {};
               return (
               <Reveal key={step.n} delay={i*0.09}>
                 <Tag {...linkProps} style={{padding:"40px 28px",background:C.card,border:`1px solid ${C.border}`,borderRadius:4,height:"100%",transition:"border-color 0.3s",...(step.href?{display:"block",textDecoration:"none"}:{})}}
@@ -913,7 +913,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
               We use satellite imagery to measure your roof's size — not a guess from the driveway. Your ballpark range gets refined into a firm number after your free on-site assessment, where we account for slope, roof levels, and every detail of your specific project.
             </p>
             <div style={{display:"flex",gap:14,justifyContent:"center",flexWrap:"wrap"}}>
-              <a href="/visualizer" className="cta-btn" style={{padding:"16px 36px",background:C.accent,color:C.black,fontSize:12,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"all 0.2s"}}
+              <a href={utm("/visualizer")} className="cta-btn" style={{padding:"16px 36px",background:C.accent,color:C.black,fontSize:12,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"all 0.2s"}}
                 onMouseEnter={e=>e.currentTarget.style.background=C.accentLight}
                 onMouseLeave={e=>e.currentTarget.style.background=C.accent}
               >Get Your Roof Rendering & Estimate →</a>

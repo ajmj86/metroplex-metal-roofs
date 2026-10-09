@@ -14,7 +14,7 @@ test('renders merged town and street from params', async ({ page }) => {
   await expect(page.getByText('What a Brava roof typically runs on homes like yours.')).toBeVisible()
   const text = await page.locator('body').innerText()
   expect(text).not.toMatch(/undefined|\{town\}|\{street\}|null/)
-  await expect(page.getByRole('link', { name: /Free Visualizer/ }).first()).toHaveAttribute('href', '/visualizer?roofType=synthetic_slate&style=slate')
+  await expect(page.getByRole('link', { name: /Free Visualizer/ }).first()).toHaveAttribute('href', /^\/visualizer\?roofType=synthetic_slate&style=slate&.*utm_content=CV01/)   // Brava pre-select kept, UTMs appended
 })
 
 test('falls back without params', async ({ page }) => {

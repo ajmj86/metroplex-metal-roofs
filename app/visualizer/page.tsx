@@ -6,6 +6,7 @@ import { C, fonts, globalStyles, PHONE, EMAIL } from '@/components/brand'
 import SiteNav from '@/components/SiteNav'
 import { SiteFooter } from '@/components/SiteFooter'
 import { trackEvent } from '@/lib/analytics'
+import { readStoredUtm, writeStoredUtm, type StoredUtm } from '@/lib/utm'
 import { getFormVariant } from '@/lib/formVariant'
 import {
   ROOF_TYPE_ORDER,
@@ -66,16 +67,21 @@ type RoofResult = {
 // UTM attribution. Reads the CURRENT url first (UTMCapture in the root layout
 // writes sessionStorage in an effect that can land after this page's first
 // effects, so relying on sessionStorage alone dropped the landing UTMs from
-// the very first events), then falls back to what UTMCapture stored.
+// the very first events), then falls back to what UTMCapture stored
+// (sessionStorage, then the first-party mmr_utm cookie).
 function readUtm() {
   const out = { source: '', medium: '', campaign: '', content: '', term: '' }
   try {
     const sp = new URLSearchParams(window.location.search)
+    const stored = readStoredUtm()
+    const fromUrl: StoredUtm = {}
     for (const k of Object.keys(out) as (keyof typeof out)[]) {
-      const fromUrl = sp.get('utm_' + k)
-      if (fromUrl) { out[k] = fromUrl; try { sessionStorage.setItem('utm_' + k, fromUrl) } catch {} }
-      else out[k] = sessionStorage.getItem('utm_' + k) || ''
+      const key = ('utm_' + k) as 'utm_source'
+      const v = sp.get(key)
+      if (v) { out[k] = v; fromUrl[key] = v }
+      else out[k] = stored[key] || ''
     }
+    if (Object.keys(fromUrl).length) writeStoredUtm(fromUrl)
   } catch { /* storage blocked: attribution is best-effort */ }
   return out
 }

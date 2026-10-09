@@ -25,6 +25,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { C } from "./brand";
+import { useUtmHref } from "@/lib/useUtmHref";
 import ProductGallery from "./ProductGallery";
 import {
   STANDING_SEAM_COLORS, R_PANEL_COLORS, STONE_COLORS, STONE_PROFILE_TILES, STONE_SHINGLE_TILES,
@@ -363,6 +364,7 @@ export default function ProductsSection({
   activeTab: controlledActiveTab = undefined,
   onTabChange = undefined,
 }) {
+  const utm = useUtmHref();   // visualizer CTAs carry the stored UTMs
   const [internalTab, setInternalTab] = useState(initialTab);
   const activeTab = controlledActiveTab ?? internalTab;
   const setActiveTab = onTabChange ?? setInternalTab;
@@ -477,7 +479,7 @@ export default function ProductsSection({
           <span style={{color:C.white,fontWeight:600,fontSize:16}}>{modalItem?.name}</span>
         </div>
       )}
-      <a href={swatchModalHref} className="cta-btn"
+      <a href={utm(swatchModalHref)} className="cta-btn"
         style={{display:"inline-flex",alignItems:"center",gap:8,padding:"13px 26px",background:C.accent,color:C.black,fontSize:11,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"background 0.2s"}}
         onMouseEnter={e=>e.currentTarget.style.background=C.accentLight}
         onMouseLeave={e=>e.currentTarget.style.background=C.accent}
@@ -594,7 +596,7 @@ export default function ProductsSection({
                 {/* Image panel */}
                 <div style={{display:"flex",flexDirection:"column",height:"100%",minWidth:0}}>
                   <a
-                    href={materialVisualizerHref(activeTab)}
+                    href={utm(materialVisualizerHref(activeTab))}
                     style={{display:"block",overflow:"hidden",cursor:"pointer",flex:"1 1 auto",minHeight:280}}
                   >
                     <img
@@ -686,7 +688,7 @@ export default function ProductsSection({
                     </div>
                   </div>
                   <div style={{display:"flex",flexDirection:"column",gap:14}}>
-                    <a href={materialVisualizerHref(activeTab)} className="cta-btn"
+                    <a href={utm(materialVisualizerHref(activeTab))} className="cta-btn"
                       style={{display:"inline-flex",alignItems:"center",justifyContent:"center",gap:8,padding:"14px 24px",background:C.accent,color:C.black,fontSize:11,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"background 0.2s",width:"fit-content"}}
                       onMouseEnter={e=>e.currentTarget.style.background=C.accentLight}
                       onMouseLeave={e=>e.currentTarget.style.background=C.accent}
