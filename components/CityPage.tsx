@@ -260,6 +260,7 @@ export default function CityPage({ city }: { city: CityData }) {
                 ))}
               </div>
               <div style={{ borderTop: `1px solid ${C.border}`, padding: '8px 24px', textAlign: 'center' }}>
+                <p data-testid="stat-footnote" style={{ fontSize: 10, color: C.muted, opacity: 0.8, maxWidth: 640, margin: '8px auto', lineHeight: 1.6, fontFamily: "'Outfit',sans-serif" }}>{STAT_FOOTNOTE}</p>
                 <p style={{ fontSize: 10, color: C.muted, maxWidth: 640, margin: '8px auto', lineHeight: 1.6, fontFamily: "'Outfit',sans-serif" }}>
                   Figures represent accepted industry ranges but will vary by home, carrier, and installation. Individual results will vary, and actual savings are not guaranteed. Consult a local real estate professional for market-specific figures and your insurance and utility providers for personalized savings.
                 </p>
