@@ -42,7 +42,7 @@ const FAQS = [
   },
   {
     q: 'Does standing seam qualify for insurance discounts in DFW?',
-    a: 'Yes. Standing seam carries a Class 4 impact resistance rating — the highest available — which qualifies for meaningful premium discounts from most Texas carriers. In hail-prone North Texas counties, many homeowners see 20–35% reductions on their wind/hail premium after switching.',
+    a: 'Yes. Standing seam carries a Class 4 impact resistance rating — the highest available — which qualifies for meaningful premium discounts from most Texas carriers. In hail-prone North Texas counties, many homeowners see 15–35% reductions on their wind/hail premium after switching, depending on carrier and policy.',
   },
   {
     q: 'Will my HOA approve a standing seam metal roof?',

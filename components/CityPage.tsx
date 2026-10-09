@@ -7,6 +7,7 @@ import { SiteFooter } from '@/components/SiteFooter'
 import { C, fonts, globalStyles } from '@/components/brand'
 import Counter from '@/components/Counter'
 import StatItem from '@/components/StatItem'
+import { STAT_FOOTNOTE } from '@/lib/landingPageFootnotes'
 import ProductGallery from '@/components/ProductGallery'
 import ProductsSection from '@/components/ProductsSection'
 import PricingTable from '@/components/PricingTable'
@@ -96,8 +97,8 @@ export default function CityPage({ city }: { city: CityData }) {
 
   const whyMetal = [
     { val: 50,  suffix: '+ yrs', label: 'Roof Lifespan' },
-    { val: 35,  suffix: '%',     label: 'Insurance Savings' },
-    { val: 25,  suffix: '%',     label: 'Energy Cost Reduction' },
+    { val: 35,  suffix: '%',     display: '15–35%', label: 'Insurance Premium Savings*' },
+    { val: 25,  suffix: '%',     display: '10–25%', label: 'Energy Cost Reduction*' },
     { val: 55,  suffix: '%',     label: 'Cost Recouped at Resale' },
   ]
 
@@ -194,19 +195,19 @@ export default function CityPage({ city }: { city: CityData }) {
                   >See Your Home With Metal →</a>
                 </div>
                 {/* Trust row — matches the homepage hero's trust-bar set
-                    exactly (50-Year Lifespan / Up to 35% Insurance Discount /
+                    exactly (50-Year Lifespan / Insurance Discount Eligible /
                     10-Year Workmanship Warranty), with Class 4 Hail Rating
                     kept as a 4th item since this layout uses four bullets.
                     Insurance-discount footnote matches the homepage's, added
                     there in the same pass since neither had one before. */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginTop: 48, paddingTop: 32, borderTop: `1px solid ${C.border}`, animation: 'fadeUp 0.7s ease 0.4s both' }}>
-                  {['50-Year Lifespan', 'Up to 35% Insurance Discount*', '10-Year Workmanship Warranty', 'Class 4 Hail Rating'].map(t => (
+                  {['50-Year Lifespan', 'Insurance Discount Eligible*', '10-Year Workmanship Warranty', 'Class 4 Hail Rating'].map(t => (
                     <div key={t} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                       <div style={{ width: 4, height: 4, borderRadius: '50%', background: C.accent, flexShrink: 0 }}/>
                       <span style={{ fontSize: 12, color: C.muted }}>{t}</span>
                     </div>
                   ))}
-                  <span style={{ fontSize: 10, color: C.muted, opacity: 0.7, marginTop: 2 }}>*Discount varies by home, roof system, and carrier — confirm eligibility with your insurance provider.</span>
+                  <span style={{ fontSize: 10, color: C.muted, opacity: 0.7, marginTop: 2 }}>{STAT_FOOTNOTE}</span>
                 </div>
               </div>
 

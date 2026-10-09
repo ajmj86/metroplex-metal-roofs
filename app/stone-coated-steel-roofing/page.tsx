@@ -44,7 +44,7 @@ const FAQS = [
   },
   {
     q: 'Does stone-coated steel qualify for insurance discounts in DFW?',
-    a: 'Yes. Stone-coated steel carries a Class 4 impact resistance rating — the highest available — which qualifies for meaningful premium discounts from most Texas carriers. In hail-prone North Texas counties, many homeowners see 20–35% reductions on their wind/hail premium.',
+    a: 'Yes. Stone-coated steel carries a Class 4 impact resistance rating — the highest available — which qualifies for meaningful premium discounts from most Texas carriers. In hail-prone North Texas counties, many homeowners see 15–35% reductions on their wind/hail premium, depending on carrier and policy.',
   },
   {
     q: 'How long does a stone-coated steel roof last?',
