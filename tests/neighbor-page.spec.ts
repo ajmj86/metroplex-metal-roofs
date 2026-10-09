@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 
-const UTM = 'utm_source=addressed&utm_medium=postcard&utm_campaign=campaign2_brava_neighbors&utm_content=CL01'
+const UTM = 'utm_source=addressed&utm_medium=postcard&utm_campaign=campaign2_brava_neighbors&utm_content=CV01'
 
 test('renders merged town and street from params', async ({ page }) => {
   await page.goto(`/lp/neighbor?town=Colleyville&street=Miramar%20Lane&${UTM}`)
@@ -31,10 +31,10 @@ test('is noindex', async ({ page }) => {
 })
 
 test('short URL lands on the page and UTM capture fires', async ({ page }) => {
-  await page.goto('/n/CL01')
+  await page.goto('/n/CV01')
   await expect(page).toHaveURL(/\/lp\/neighbor\?town=Colleyville/)
   await expect(page.getByText('Miramar Lane').first()).toBeVisible()
-  await expect.poll(() => page.evaluate(() => sessionStorage.getItem('utm_content'))).toBe('CL01')
+  await expect.poll(() => page.evaluate(() => sessionStorage.getItem('utm_content'))).toBe('CV01')
   expect(await page.evaluate(() => sessionStorage.getItem('utm_source'))).toBe('addressed')
   expect(await page.evaluate(() => sessionStorage.getItem('utm_campaign'))).toBe('campaign2_brava_neighbors')
   expect(await page.evaluate(() => sessionStorage.getItem('utm_medium'))).toBe('postcard')
