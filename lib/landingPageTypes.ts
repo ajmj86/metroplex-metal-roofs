@@ -1,6 +1,9 @@
 export interface TrustStat {
   val: number
   suffix?: string
+  // Optional display override (e.g. a range like '15–35%'): rendered as-is, no count-up animation.
+  // `val` stays the numeric fallback for anything that needs a single number.
+  display?: string
   label: string
 }
 

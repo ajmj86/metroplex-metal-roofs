@@ -7,6 +7,7 @@ import StatItem from '@/components/StatItem'
 import PricingTable from '@/components/PricingTable'
 import LandingCTAButton from '@/components/LandingCTAButton'
 import type { LandingPageData } from '@/lib/landingPageTypes'
+import { LANDING_STAT_FOOTNOTE } from '@/lib/landingPageFootnotes'
 
 /*
  * Shared template for every channel landing page (postcard today; Google
@@ -58,6 +59,9 @@ export default function LandingPage({ data }: { data: LandingPageData }) {
             ))}
           </div>
         </section>
+        <div style={{ borderTop: `1px solid ${C.border}`, background: C.surface, padding: '10px 24px', textAlign: 'center' }}>
+          <p data-testid="stat-footnote" style={{ fontSize: 10, color: C.muted, opacity: 0.8, maxWidth: 640, margin: '6px auto', lineHeight: 1.6 }}>{LANDING_STAT_FOOTNOTE}</p>
+        </div>
 
         {/* ── PRICING (optional) ── */}
         {data.showPricingTable && (
