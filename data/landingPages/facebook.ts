@@ -19,7 +19,8 @@ export const FACEBOOK_DATA: LandingPageData = {
   },
   trustStats: [
     { val: 50, suffix: '+ yrs', label: 'Roof Lifespan' },
-    { val: 35, suffix: '%', label: 'Insurance Savings' },
+    { val: 35, suffix: '%', display: '15–35%', label: 'Insurance Premium Savings*' },
+    { val: 25, suffix: '%', display: '10–25%', label: 'Energy Cost Reduction*' },
     { val: 4, label: 'Highest Class Impact Rating' },
   ],
   ctaLabel: 'Try the Free Visualizer',

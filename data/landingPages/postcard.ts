@@ -1,13 +1,12 @@
 import type { LandingPageData } from '@/lib/landingPageTypes'
 
-// Lifespan and insurance-savings values match Homepage.jsx's own `stats`
-// array exactly (StatItem-shaped, same numbers sitewide). Class 4 impact
-// rating isn't in that array in {val,suffix,label} form -- it's stated
-// sitewide only as trust-bullet text ("Class 4 Hail Rating" on the material
-// pages, "Class 4 impact-rated" on CityPage.tsx) -- so it's reshaped into
-// the same numeric StatItem shape here (val: 4, the real UL 2218 rating
-// class, not an invented number) rather than adding a 4th, differently-typed
-// section just for one stat.
+// Stat strip: lifespan matches Homepage.jsx's `stats`. Insurance premium savings
+// and energy cost reduction are shown as ranges via the `display` override
+// (landing pages only; the footnote under the strip lives in LandingPage.tsx).
+// Class 4 impact rating isn't a {val,suffix,label} stat on the homepage -- it's
+// stated sitewide only as trust-bullet text -- so it's reshaped into the same
+// numeric StatItem shape here (val: 4, the real UL 2218 rating class, not an
+// invented number).
 export const POSTCARD_DATA: LandingPageData = {
   slug: 'postcard',
   channel: 'postcard',
@@ -39,7 +38,8 @@ export const POSTCARD_DATA: LandingPageData = {
   },
   trustStats: [
     { val: 50, suffix: '+ yrs', label: 'Roof Lifespan' },
-    { val: 35, suffix: '%', label: 'Insurance Savings' },
+    { val: 35, suffix: '%', display: '15–35%', label: 'Insurance Premium Savings*' },
+    { val: 25, suffix: '%', display: '10–25%', label: 'Energy Cost Reduction*' },
     { val: 4, label: 'Highest Class Impact Rating' },
   ],
   ctaLabel: 'Free Visualizer + Estimate',
