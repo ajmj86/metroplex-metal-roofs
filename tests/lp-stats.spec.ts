@@ -45,7 +45,15 @@ for (const url of ['/', '/metal-roofing-frisco-tx']) {
     await expect(page.getByText('Energy Cost Reduction*', { exact: true })).toBeVisible()
     await expect(page.getByText('Cost Recouped at Resale')).toBeVisible()          // still a 4-stat strip
     await expect(page.getByText(HERO_BULLET, { exact: true })).toBeVisible()
-    await expect(page.getByText(FOOTNOTE, { exact: true })).toHaveCount(1)          // hero footnote, same constant
+    await expect(page.getByText(FOOTNOTE, { exact: true })).toHaveCount(2)          // hero footnote + stat-strip footnote, same constant
+    // the strip footnote sits directly under the stat strip (same section as the asterisks)
+    const strip = await page.locator('.grid-4').first().boundingBox()
+    const foot = await page.getByTestId('stat-footnote').boundingBox()
+    expect(strip && foot).toBeTruthy()
+    expect(foot!.y).toBeGreaterThanOrEqual(strip!.y + strip!.height - 1)
+    expect(foot!.y - (strip!.y + strip!.height)).toBeLessThan(40)
+    await expect(page.getByTestId('stat-footnote')).toHaveCount(1)
+    await expect(page.getByTestId('stat-footnote')).toHaveText(FOOTNOTE)
     await expect(page.getByText('Insurance Savings', { exact: true })).toHaveCount(0)
     const text = await page.locator('body').innerText()
     expect(text).not.toMatch(/Up to 35%|\b20–35%|undefined|NaN/)
@@ -89,4 +97,17 @@ test('general landing pages: hero bullet + hero footnote use the sitewide wordin
     await expect(page.getByText(FOOTNOTE, { exact: true }), u).toHaveCount(2)   // hero footnote + stat-strip footnote, same constant
     expect(await page.locator('body').innerText(), u).not.toContain('Up to 35%')
   }
+})
+
+test('/lp/google-insurance: 15–35% in title, subhead and bullet; required footnote verbatim', async ({ page }) => {
+  await page.goto('/lp/google-insurance')
+  expect(await page.title()).toBe('Class 4 Impact-Rated Roofing — 15–35% Insurance Discount | Metroplex Metal Roofs')
+  await expect(page.getByText('can qualify DFW homeowners for a 15–35% insurance discount*', { exact: false })).toBeVisible()
+  await expect(page.getByText('15–35% Insurance Premium Savings*', { exact: true })).toBeVisible()
+  await expect(page.getByText('*Actual discount varies by carrier and policy.', { exact: true })).toHaveCount(1)
+  await expect(page.getByText(FOOTNOTE, { exact: true })).toHaveCount(1)          // stat-strip footnote
+  await expect(page.getByText('10–25%', { exact: true })).toBeVisible()
+  const html = await page.content()
+  expect(html).not.toContain('Up to 35%')
+  expect(html).not.toContain('up to a 35%')
 })
