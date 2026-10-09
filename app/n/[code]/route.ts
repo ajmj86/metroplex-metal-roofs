@@ -1,4 +1,6 @@
+import { after } from 'next/server'
 import codes from '@/data/neighbor_codes.json'
+import { logQrScan } from '@/lib/qrScanLog'
 
 // Short-URL redirect for the Campaign 2 addressed-mail QR codes:
 // metroplexmetalroofs.com/n/{code} -> /lp/neighbor with town/street merge values and UTMs
@@ -14,7 +16,10 @@ export async function GET(
   { params }: { params: Promise<{ code: string }> },
 ) {
   const { code } = await params
+  const known = code.toUpperCase() in CODES
   const target = CODES[code.toUpperCase()] ?? FALLBACK
+  // Log the scan after the response is sent; logQrScan never throws, and a failure here can't affect the redirect.
+  try { after(() => logQrScan(request, code, known)) } catch {}
   // Redirect on the request's own origin (path + query of the mapped URL), so the apex, www and
   // preview deployments all stay on the host the visitor used.
   const t = new URL(target, request.url)
