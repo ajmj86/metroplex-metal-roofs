@@ -48,3 +48,5 @@ STYLE*.md
 .vercel.bak*
 metroplex-visualizer-diagnostic*
 metroplex-visualizer/tsconfig.tsbuildinfo
+test-results/
+playwright-report/
