@@ -10,7 +10,12 @@ import Hero from '@/components/Hero'
  * an ?area= param) into a plain string, then renders the exact same <Hero>
  * Homepage.jsx renders. All the actual hero structure/JSX lives in Hero.tsx
  * alone.
+ *
+ * Also fills optional {town} / {street} tokens in the eyebrow and subhead from
+ * ?town= / ?street= (the neighbor page's merge values), falling back to
+ * "your neighborhood" / "your street" -- text without tokens is untouched.
  */
+const clean = (v: string | null) => (v ?? '').replace(/[\u0000-\u001f<>]/g, '').trim().slice(0, 60)
 export default function LandingPageHero({
   eyebrowText,
   ...heroProps
@@ -28,10 +33,13 @@ export default function LandingPageHero({
 }) {
   const searchParams = useSearchParams()
   const area = searchParams.get('area')
+  const town = clean(searchParams.get('town')) || 'your neighborhood'
+  const street = clean(searchParams.get('street')) || 'your street'
+  const fill = (t: string) => t.replace(/\{town\}/g, town).replace(/\{street\}/g, street)
 
   const resolvedEyebrowText = area
     ? `Mailed to homes in ${area} · Dallas–Fort Worth`
-    : eyebrowText
+    : fill(eyebrowText)
 
-  return <Hero eyebrowText={resolvedEyebrowText} {...heroProps} />
+  return <Hero eyebrowText={resolvedEyebrowText} {...heroProps} subhead={fill(heroProps.subhead)} />
 }

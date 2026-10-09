@@ -1,10 +1,11 @@
 import codes from '@/data/neighbor_codes.json'
 
 // Short-URL redirect for the Campaign 2 addressed-mail QR codes:
-// metroplexmetalroofs.com/n/{code} -> full /lp/postcard URL with UTMs (utm_content = code).
-// Unknown codes still land on the postcard page, attributed to utm_content=unknown.
+// metroplexmetalroofs.com/n/{code} -> /lp/neighbor with town/street merge values and UTMs
+// (utm_content = code); the QR and printed short URL carry only the code.
+// Unknown codes still land on the neighbor page (generic copy), attributed to utm_content=unknown.
 const FALLBACK =
-  '/lp/postcard?utm_source=addressed&utm_medium=postcard&utm_campaign=campaign2_brava_neighbors&utm_content=unknown'
+  '/lp/neighbor?utm_source=addressed&utm_medium=postcard&utm_campaign=campaign2_brava_neighbors&utm_content=unknown'
 
 const CODES = codes as Record<string, string>
 
@@ -14,5 +15,8 @@ export async function GET(
 ) {
   const { code } = await params
   const target = CODES[code.toUpperCase()] ?? FALLBACK
-  return Response.redirect(new URL(target, request.url), 302)
+  // Redirect on the request's own origin (path + query of the mapped URL), so the apex, www and
+  // preview deployments all stay on the host the visitor used.
+  const t = new URL(target, request.url)
+  return Response.redirect(new URL(t.pathname + t.search, request.url), 302)
 }
