@@ -1,4 +1,5 @@
 import type { LandingPageData } from '@/lib/landingPageTypes'
+import { STAT_FOOTNOTE } from '@/lib/landingPageFootnotes'
 
 export const FACEBOOK_DATA: LandingPageData = {
   slug: 'facebook',
@@ -14,8 +15,8 @@ export const FACEBOOK_DATA: LandingPageData = {
     subhead: 'The only tool in DFW that renders YOUR actual home in metal and synthetic slate roofing — pick a material, pick a color, get a real price range in under 60 seconds.',
     microcopy: 'See your home in metal and get a free price range — no photo upload, no obligation.',
     backgroundImageSrc: '/MMR Hero Pic.png',
-    trustBullets: ['50-Year Lifespan', 'Up to 35% Insurance Discount*', 'Class 4 Impact Rated'],
-    trustBulletFootnote: '*Discount varies by home, roof system, and carrier — confirm eligibility with your insurance provider.',
+    trustBullets: ['50-Year Lifespan', 'Insurance Discount Eligible*', 'Class 4 Impact Rated'],
+    trustBulletFootnote: STAT_FOOTNOTE,
   },
   trustStats: [
     { val: 50, suffix: '+ yrs', label: 'Roof Lifespan' },

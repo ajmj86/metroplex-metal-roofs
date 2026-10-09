@@ -6,6 +6,7 @@ import { C, LEGAL_ENTITY, DBA_NAME, PHONE, YEAR, fonts, globalStyles, Logo } fro
 import { SiteFooter } from "./SiteFooter";
 import Hero from '@/components/Hero'
 import StatItem from '@/components/StatItem'
+import { STAT_FOOTNOTE } from '@/lib/landingPageFootnotes'
 import ProductGallery from '@/components/ProductGallery'
 import ProductsSection from '@/components/ProductsSection'
 import PricingTable from '@/components/PricingTable'
@@ -365,8 +366,8 @@ const VisualizerGate = () => {
 
 const stats = [
   {val:50,  suffix:"+ yrs", label:"Roof Lifespan"},
-  {val:35,  suffix:"%",     label:"Insurance Savings"},
-  {val:25,  suffix:"%",     label:"Energy Cost Reduction"},
+  {val:35,  suffix:"%",     display:"15–35%", label:"Insurance Premium Savings*"},
+  {val:25,  suffix:"%",     display:"10–25%", label:"Energy Cost Reduction*"},
   {val:55,  suffix:"%",     label:"Cost Recouped at Resale"},
 ];
 const steps = [
@@ -413,7 +414,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
        * Microcopy phrasing matches the established "no photo upload / no
        * obligation" claim already used on /visualizer and in the
        * returning-visitor widget above. The insurance-discount footnote
-       * exists because "Up to 35% Insurance Discount" previously had no
+       * exists because "Insurance Discount Eligible" previously had no
        * disclaimer of its own -- the only "varies by home/carrier"
        * qualifier lived in the separate Stats section further down, not
        * connected to this bullet at all (confirmed missing while auditing
@@ -427,8 +428,8 @@ const HomePage = ({ activeTab, setActiveTab }) => {
         ctaLabel="See Your Home With Metal →"
         ctaHref="/visualizer"
         microcopy="See your home in metal and get a free price range — no photo upload, no obligation."
-        trustBullets={["50-Year Lifespan","Up to 35% Insurance Discount*","10-Year Workmanship Warranty"]}
-        trustBulletFootnote="*Discount varies by home, roof system, and carrier — confirm eligibility with your insurance provider."
+        trustBullets={["50-Year Lifespan","Insurance Discount Eligible*","10-Year Workmanship Warranty"]}
+        trustBulletFootnote={STAT_FOOTNOTE}
         backgroundImageSrc="/MMR Hero Pic.png"
       />
 

@@ -404,7 +404,7 @@ export default function BrandGuidelines() {
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 20 }}>
                 {[
                   { pillar: "Permanence", message: "The last roof you'll ever put on your home.", proof: "50+ year lifespan vs. 15–20 for asphalt" },
-                  { pillar: "Financial Logic", message: "Insurance savings often offset the cost difference.", proof: "Up to 35% homeowner insurance discount" },
+                  { pillar: "Financial Logic", message: "Insurance savings often offset the cost difference.", proof: "15–35% homeowner insurance discount, carrier-dependent" },
                   { pillar: "DFW Weather", message: "Built for hail, heat, and North Texas storms.", proof: "Class 4 impact resistance rating" },
                   { pillar: "Craftsmanship", message: "Every installer is vetted. Every job is inspected.", proof: "Metal-specific experience required" },
                   { pillar: "Visual Transformation", message: "See your home with a metal roof before you commit.", proof: "AI visualizer — no imagination required" },

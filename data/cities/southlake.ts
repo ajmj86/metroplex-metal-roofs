@@ -70,7 +70,7 @@ export const SOUTHLAKE_DATA: CityData = {
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Tarrant County?',
-      a: 'Yes. Standing seam and stone-coated steel carry a Class 4 impact resistance rating — the highest available — which qualifies for significant premium discounts from most Texas carriers. In Tarrant County, where hail claims are common, many homeowners see 20–35% reductions on their wind/hail premium.',
+      a: 'Yes. Standing seam and stone-coated steel carry a Class 4 impact resistance rating — the highest available — which qualifies for significant premium discounts from most Texas carriers. In Tarrant County, where hail claims are common, many homeowners see 15–35% reductions on their wind/hail premium, depending on carrier and policy.',
     },
     {
       q: 'How long does metal roof installation take in Southlake?',

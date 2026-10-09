@@ -1,4 +1,5 @@
 import type { LandingPageData } from '@/lib/landingPageTypes'
+import { STAT_FOOTNOTE } from '@/lib/landingPageFootnotes'
 
 export const GOOGLE_COST_DATA: LandingPageData = {
   slug: 'google-cost',
@@ -14,8 +15,8 @@ export const GOOGLE_COST_DATA: LandingPageData = {
     subhead: 'Skip the vague estimate ranges — see your own home in metal or synthetic slate roofing and get a real price range built for your exact house, free, in under 60 seconds.',
     microcopy: 'See your home in metal and get a free price range — no photo upload, no obligation.',
     backgroundImageSrc: '/MMR Hero Pic.png',
-    trustBullets: ['50-Year Lifespan', 'Up to 35% Insurance Discount*', 'Class 4 Impact Rated'],
-    trustBulletFootnote: '*Discount varies by home, roof system, and carrier — confirm eligibility with your insurance provider.',
+    trustBullets: ['50-Year Lifespan', 'Insurance Discount Eligible*', 'Class 4 Impact Rated'],
+    trustBulletFootnote: STAT_FOOTNOTE,
   },
   trustStats: [
     { val: 50, suffix: '+ yrs', label: 'Roof Lifespan' },
