@@ -2,25 +2,23 @@
 
 import { useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
+import { CAPTURE_KEYS, readStoredUtm, writeStoredUtm, type StoredUtm } from '@/lib/utm'
 
+// Captures utm_* (plus fbclid, gclid and the QR "area") from the URL into sessionStorage and mirrors them into the first-party
+// mmr_utm cookie (30 days). When the URL carries none, it restores sessionStorage from that cookie so attribution survives a
+// new tab or a return visit. `area` is not a UTM param: it carries the neighborhood name a landing page's QR destination was
+// generated for (see HeroEyebrowLine.tsx).
 export default function UTMCapture() {
   const searchParams = useSearchParams()
 
   useEffect(() => {
-    const source = searchParams.get('utm_source')
-    const medium = searchParams.get('utm_medium')
-    const campaign = searchParams.get('utm_campaign')
-    const content = searchParams.get('utm_content')
-    const term = searchParams.get('utm_term')
-    // Not a UTM param -- carries the neighborhood/community name a landing
-    // page's QR destination URL was generated for (see HeroEyebrowLine.tsx).
-    const area = searchParams.get('area')
-    if (source) sessionStorage.setItem('utm_source', source)
-    if (medium) sessionStorage.setItem('utm_medium', medium)
-    if (campaign) sessionStorage.setItem('utm_campaign', campaign)
-    if (content) sessionStorage.setItem('utm_content', content)
-    if (term) sessionStorage.setItem('utm_term', term)
-    if (area) sessionStorage.setItem('area', area)
+    const captured: StoredUtm = {}
+    for (const k of CAPTURE_KEYS) {
+      const v = searchParams.get(k)
+      if (v) captured[k] = v
+    }
+    if (Object.keys(captured).length) writeStoredUtm(captured)
+    else readStoredUtm()   // empty sessionStorage -> restore from the cookie
   }, [searchParams])
 
   return null

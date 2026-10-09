@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import UtmLink from '@/components/UtmLink'
 import SiteNav from '@/components/SiteNav'
 import { SiteFooter } from '@/components/SiteFooter'
 import { C, fonts, globalStyles } from '@/components/brand'
@@ -150,9 +151,9 @@ export default function CopperRoofingPage() {
               <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="cta-btn copper-cta-primary"
                 style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '15px 32px', color: C.black, fontSize: 12, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 600, borderRadius: 2, whiteSpace: 'nowrap', textDecoration: 'none' }}
               >Get a Free Consultation →</a>
-              <Link href="/visualizer?roofType=copper_standing_seam" className="cta-btn copper-cta-secondary"
+              <UtmLink href="/visualizer?roofType=copper_standing_seam" className="cta-btn copper-cta-secondary"
                 style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '15px 32px', background: 'transparent', color: C.white, fontSize: 12, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 600, borderRadius: 2, whiteSpace: 'nowrap', textDecoration: 'none' }}
-              >See It On Your Home →</Link>
+              >See It On Your Home →</UtmLink>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginTop: 48, paddingTop: 32, borderTop: `1px solid ${C.border}` }}>
               {['100+ Year Lifespan', 'Natural, Self-Protecting Patina', 'Near-Zero Maintenance', '10-Year Workmanship Warranty'].map(t => (
@@ -268,9 +269,9 @@ export default function CopperRoofingPage() {
               <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="cta-btn copper-cta-primary"
                 style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '15px 32px', color: C.black, fontSize: 12, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 600, borderRadius: 2, whiteSpace: 'nowrap', textDecoration: 'none' }}
               >Get a Free Consultation →</a>
-              <Link href="/#products" className="cta-btn copper-cta-secondary"
+              <UtmLink href="/#products" className="cta-btn copper-cta-secondary"
                 style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '15px 32px', background: 'transparent', color: C.white, fontSize: 12, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 600, borderRadius: 2, whiteSpace: 'nowrap', textDecoration: 'none' }}
-              >Explore Our Other Systems</Link>
+              >Explore Our Other Systems</UtmLink>
             </div>
           </div>
         </section>

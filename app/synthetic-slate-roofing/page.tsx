@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import UtmLink from '@/components/UtmLink'
 import SiteNav from '@/components/SiteNav'
 import { SiteFooter } from '@/components/SiteFooter'
 import { C, fonts, globalStyles } from '@/components/brand'
@@ -289,7 +290,7 @@ export default function SyntheticSlateRoofingPage() {
               <p style={{ fontSize: 14, color: C.mutedLight, lineHeight: 1.7, margin: 0, flex: 1, minWidth: 240 }}>
                 All three Brava profiles — Spanish Barrel Tile, Cedar Shake, and Slate — are live in our Free Roof Visualizer, so you can see each one rendered on your own home before you decide.
               </p>
-              <a href="/visualizer" style={{ fontSize: 12, color: C.accent, letterSpacing: 1, textTransform: 'uppercase', textDecoration: 'underline', whiteSpace: 'nowrap', flexShrink: 0 }}>See it on your home →</a>
+              <UtmLink href="/visualizer" style={{ fontSize: 12, color: C.accent, letterSpacing: 1, textTransform: 'uppercase', textDecoration: 'underline', whiteSpace: 'nowrap', flexShrink: 0 }}>See it on your home →</UtmLink>
             </div>
           </div>
         </section>
@@ -409,9 +410,9 @@ export default function SyntheticSlateRoofingPage() {
               <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="cta-btn slate-cta-primary"
                 style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '15px 32px', color: C.black, fontSize: 12, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 600, borderRadius: 2, whiteSpace: 'nowrap', textDecoration: 'none' }}
               >Get a Free Consultation →</a>
-              <Link href="/#products" className="cta-btn slate-cta-secondary"
+              <UtmLink href="/#products" className="cta-btn slate-cta-secondary"
                 style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '15px 32px', background: 'transparent', color: C.white, fontSize: 12, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 600, borderRadius: 2, whiteSpace: 'nowrap', textDecoration: 'none' }}
-              >Explore Our Metal Roofing Systems</Link>
+              >Explore Our Metal Roofing Systems</UtmLink>
             </div>
           </div>
         </section>

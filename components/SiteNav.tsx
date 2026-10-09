@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import { C, Logo } from './brand'
+import { useUtmHref } from '@/lib/useUtmHref'
 
 // Order matches the homepage's actual top-to-bottom section order (the
 // canonical default every other page type falls back to) -- About Us stays
@@ -70,6 +71,7 @@ const LAST_CITY_KEY = 'mmr_last_city_slug'
 
 export default function SiteNav() {
   const [mOpen, setMOpen] = useState(false)
+  const utm = useUtmHref()   // appends stored UTMs to internal links (not external, not bare #hash)
   const pathname = usePathname()
   const isCityPage = pathname?.startsWith('/metal-roofing-') ?? false
   const citySlugMatch = pathname?.match(/^\/metal-roofing-(.+)-tx\/?$/)
@@ -123,18 +125,18 @@ export default function SiteNav() {
         display:"flex",alignItems:"center",justifyContent:"space-between",
         height:84,
       }}>
-        <Link href="/" className="nav-logo" style={{padding:0,flexShrink:0,display:"block",textDecoration:"none"}}>
+        <Link href={utm("/")} className="nav-logo" style={{padding:0,flexShrink:0,display:"block",textDecoration:"none"}}>
           <Logo size={1.25}/>
         </Link>
         <div className="sitenav-links" style={{display:"flex",gap:28,alignItems:"center"}}>
           {links.map(l=>(
-            <a key={l.label} href={l.href}
+            <a key={l.label} href={utm(l.href)}
               style={{fontSize:11,letterSpacing:2,textTransform:"uppercase",color:C.mutedLight,fontWeight:500,transition:"color 0.2s",textDecoration:"none",fontFamily:"'Outfit',sans-serif",whiteSpace:"nowrap"}}
               onMouseEnter={e=>e.currentTarget.style.color=C.accent}
               onMouseLeave={e=>e.currentTarget.style.color=C.mutedLight}
             >{l.label}</a>
           ))}
-          <a href="/visualizer"
+          <a href={utm("/visualizer")}
             style={{padding:"9px 22px",background:C.accent,color:C.black,fontSize:11,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"background 0.2s",whiteSpace:"nowrap",textDecoration:"none",fontFamily:"'Outfit',sans-serif"}}
             onMouseEnter={e=>e.currentTarget.style.background=C.accentLight}
             onMouseLeave={e=>e.currentTarget.style.background=C.accent}
@@ -191,11 +193,11 @@ export default function SiteNav() {
       {mOpen && (
         <div style={{position:"fixed",top:84,left:0,right:0,bottom:0,zIndex:199,background:"rgba(9,9,10,0.98)",display:"flex",flexDirection:"column",padding:"32px 24px",gap:4,overflowY:"auto"}}>
           {links.map(l=>(
-            <a key={l.label} href={l.href} onClick={()=>setMOpen(false)}
+            <a key={l.label} href={utm(l.href)} onClick={()=>setMOpen(false)}
               style={{padding:"16px 0",fontSize:18,letterSpacing:2,textTransform:"uppercase",color:C.mutedLight,fontFamily:"'Cormorant Garamond',serif",borderBottom:`1px solid ${C.border}`,textDecoration:"none"}}
             >{l.label}</a>
           ))}
-          <a href="/visualizer" onClick={()=>setMOpen(false)}
+          <a href={utm("/visualizer")} onClick={()=>setMOpen(false)}
             style={{marginTop:24,padding:"16px",background:C.accent,color:C.black,fontSize:12,letterSpacing:2,textTransform:"uppercase",fontWeight:700,borderRadius:4,textAlign:"center",textDecoration:"none",fontFamily:"'Outfit',sans-serif"}}
           >Free Visualizer + Estimate</a>
         </div>

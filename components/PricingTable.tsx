@@ -1,4 +1,5 @@
 import { C } from './brand'
+import UtmLink from '@/components/UtmLink'
 import { ROOFING_PRICING, perSqFtRange } from '@/lib/pricingData'
 
 /*
@@ -57,7 +58,7 @@ export default function PricingTable({
       </div>
       <p style={{ fontSize: 12, color: C.mutedLight, lineHeight: 1.7, marginTop: 16, maxWidth: 720 }}>
         *Rates are per sq ft of gross roofing material, which includes waste and overage (typically 10–30% depending on material and roof complexity). Get an estimate for your exact roof with our{' '}
-        <a href="/visualizer" style={{ color: C.accent, textDecoration: 'underline' }}>free visualizer</a>.
+        <UtmLink href="/visualizer" style={{ color: C.accent, textDecoration: 'underline' }}>free visualizer</UtmLink>.
       </p>
       <p style={{ fontSize: 11, color: C.muted, lineHeight: 1.7, marginTop: 8, maxWidth: 720 }}>
         DFW-wide installed-cost ranges as of 2026, for material and labor combined — actual cost depends on your roof&apos;s exact size, slope, tear-off needs, and site conditions.
@@ -65,7 +66,7 @@ export default function PricingTable({
       {/* Plain <a> + CSS class (no handlers) so this stays a boundary-agnostic component;
           .cta-btn (brand globalStyles) makes it full-width on mobile. */}
       <style>{`.pt-cta:hover{background:${C.accentLight} !important}`}</style>
-      <a
+      <UtmLink
         href="/visualizer"
         className="cta-btn pt-cta"
         style={{
@@ -75,7 +76,7 @@ export default function PricingTable({
           fontWeight: 600, borderRadius: 2, transition: 'background 0.2s',
           textDecoration: 'none', fontFamily: "'Outfit',sans-serif",
         }}
-      >Get My Instant Estimate</a>
+      >Get My Instant Estimate</UtmLink>
     </div>
   )
 }

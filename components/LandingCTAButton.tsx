@@ -1,6 +1,7 @@
 'use client'
 
 import { C } from '@/components/brand'
+import { useUtmHref } from '@/lib/useUtmHref'
 
 // Exact style block as the sitewide "Free Visualizer + Estimate" CTA in
 // SiteNav.tsx and Homepage.jsx, so a landing-page CTA is visually
@@ -12,9 +13,10 @@ export default function LandingCTAButton({
   label?: string
   href: string
 }) {
+  const utm = useUtmHref()
   return (
     <a
-      href={href}
+      href={utm(href)}
       className="cta-btn"
       style={{
         display: 'inline-flex', alignItems: 'center', gap: 10,
