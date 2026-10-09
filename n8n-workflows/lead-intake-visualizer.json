@@ -1648,6 +1648,104 @@
       "parameters": {
         "jsCode": "// Value update is best-effort (failure swallowed upstream). Re-emit the normalized\n// opportunity result so downstream nodes see exactly the shape they always have.\nreturn [{ json: $('Normalize Opportunity Result').first().json }];\n"
       }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Campaign attribution: link the new opportunity to its Mailer Route record (route_code == opportunity Route Code).\n// No Route Code on the opportunity -> stop silently.\nconst body = $('Build Opportunity Payload').first().json.body || {};\nconst cf = (body.customFields || []).find(f => f.id === 'jY9FyUMmjcjOvImF4GW6');\nconst routeCode = cf ? String(cf.value || '').trim() : '';\nconst oppId = ($json.opportunity && $json.opportunity.id) || $json.id;\nif (!routeCode || !oppId) return [];\nreturn [{ json: { routeCode, oppId, locationId: $('Config – GHL IDs').first().json.locationId } }];"
+      },
+      "id": "f61e6fa2-fe0c-488d-aa05-7d7f4ee2ee27",
+      "name": "Mailer Route – Route Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4016,
+        2744
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://services.leadconnectorhq.com/objects/custom_objects.mailer_route/records/search",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Version",
+              "value": "2021-07-28"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ locationId: $json.locationId, page: 1, pageLimit: 20, query: $json.routeCode }) }}",
+        "options": {}
+      },
+      "id": "7fd6f38c-2181-4f20-bb9c-77ca491e0ffe",
+      "name": "Mailer Route – Search",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4256,
+        2744
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "EKDDJ0lTGjOvu7Ax",
+          "name": "GHL - Metroplex"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Exact route_code match only (search is prefix-style). No match -> stop silently.\nconst ctx = $('Mailer Route – Route Code').first().json;\nconst hit = ($json.records || []).find(r => r.properties && r.properties.route_code === ctx.routeCode);\nif (!hit) return [];\nreturn [{ json: { ...ctx, recordId: hit.id } }];"
+      },
+      "id": "0c89e9de-4a85-47d3-b65d-d4a26109504d",
+      "name": "Mailer Route – Pick Match",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4496,
+        2744
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://services.leadconnectorhq.com/associations/relations",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Version",
+              "value": "2021-07-28"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ locationId: $json.locationId, associationId: '6a8c67b0826938ff4bf35730', firstRecordId: $json.recordId, secondRecordId: $json.oppId }) }}",
+        "options": {}
+      },
+      "id": "821fcd3c-9755-4e7a-93fe-7c31b9765572",
+      "name": "Mailer Route – Associate",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4736,
+        2744
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "EKDDJ0lTGjOvu7Ax",
+          "name": "GHL - Metroplex"
+        }
+      },
+      "onError": "continueRegularOutput"
     }
   ],
   "connections": {
@@ -1765,6 +1863,11 @@
         [
           {
             "node": "Normalize Opportunity Result",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Mailer Route – Route Code",
             "type": "main",
             "index": 0
           }
@@ -2331,6 +2434,39 @@
         [
           {
             "node": "IF – Insurance Claim (not cash)?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mailer Route – Route Code": {
+      "main": [
+        [
+          {
+            "node": "Mailer Route – Search",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mailer Route – Search": {
+      "main": [
+        [
+          {
+            "node": "Mailer Route – Pick Match",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mailer Route – Pick Match": {
+      "main": [
+        [
+          {
+            "node": "Mailer Route – Associate",
             "type": "main",
             "index": 0
           }
