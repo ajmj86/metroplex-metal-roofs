@@ -66,7 +66,7 @@ export const MESQUITE_DATA: CityData = {
       a: "Expect one to three days on site for most homes in Mesquite, based on the size and layout of the roof. A schedule tailored to your home comes with the proposal, well before installation day. Weather can shift the schedule slightly, and we keep you updated.",
     },
     {
-      q: 'What metal and Brava roofing style works best for Mesquite homes?',
+      q: "What metal and Brava roofing style suits Mesquite homes?",
       a: "A Mesquite roof can take several looks: standing seam panels, stone-coated steel, or one of three Brava profiles. Stone-coated steel is a strong match for the traditional ranch homes common in Town East Estates and Casa View Heights, while standing seam suits the more contemporary builds going up in Solterra. For the look of natural slate, shake, or tile, Brava offers three profiles in a durable composite. We are happy to compare options side by side during your free assessment.",
     },
     {

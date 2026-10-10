@@ -36,7 +36,7 @@ export const ARGYLE_DATA: CityData = {
       a: "Pricing for an Argyle metal roof is per square foot, shaped mostly by how large and steep the roof is and which system you select. Estate homes with larger footprints and more complex rooflines often carry a higher overall cost. You get a ballpark from satellite imagery of your own roof, not a guess from the curb, and a firm number after we inspect it in person. Use the pricing table above to compare systems, then put your address into the free visualizer for your own number. We explain every line of the proposal in person.",
     },
     {
-      q: 'What metal and Brava roofing options are best for Argyle estate homes?',
+      q: "What metal and Brava roofing options suit Argyle estate homes?",
       a: "In Argyle, the choice usually comes down to a shingle or shake look in stone-coated steel, a clean standing seam line, or a Brava profile. Standing seam is the most popular choice for Argyle estate properties due to its clean architectural lines and hidden fastener system. Copper is available for homeowners seeking the highest-tier permanent finish. Brava gives a premium alternative to metal, with slate, cedar shake, and Spanish barrel tile profiles. We set samples next to your siding or brick so you can see how each material reads in daylight.",
     },
     {
@@ -53,7 +53,7 @@ export const ARGYLE_DATA: CityData = {
     },
     {
       q: 'How does metal roofing handle Denton County storms in a rural area?',
-      a: "A Class 4 impact rating, the highest available, applies to our standing seam and stone-coated steel systems. In rural communities like Argyle where storm response services are farther away, having a roof that does not need emergency repair after every hail event is particularly valuable. Argyle homeowners deal with spring storms, so a Class 4 roof is a common upgrade after a claim. Ask about colors and profiles when we visit your home.",
+      a: "A Class 4 impact rating, the highest available, applies to our standing seam and stone-coated steel systems. In rural communities like Argyle, where storm response services are farther away, a roof built for hail season is particularly valuable. Argyle homeowners deal with spring storms, so a Class 4 roof is a common upgrade after a claim. Ask about colors and profiles when we visit your home.",
     },
     {
       q: "Will a metal roof tick or pop in the Argyle heat?",

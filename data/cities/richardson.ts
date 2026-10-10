@@ -42,7 +42,7 @@ export const RICHARDSON_DATA: CityData = {
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Richardson?',
-      a: "It can. Class 4 impact-rated metal is discounted by most Texas insurers, which helps offset the cost of a new roof. For a Richardson home, a quick call to your agent before choosing a material can pay off. We provide product documentation for your agent, and your insurance carrier sets the final discount.",
+      a: "It can. Class 4 impact-rated metal is discounted by most Texas insurers, which helps offset the cost of a new roof. For a Richardson home, it helps to talk with your agent before choosing a material. We provide product documentation for your agent, and your insurance carrier sets the final discount.",
     },
     {
       q: 'Will my Richardson HOA approve a metal roof?',

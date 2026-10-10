@@ -47,7 +47,7 @@ export const BURLESON_DATA: CityData = {
     },
     {
       q: 'How does metal roofing handle hail south of Fort Worth?',
-      a: "Class 4 is the highest impact rating available, and our standing seam and stone-coated steel systems carry it. Hail is a real concern across Johnson County, and most Texas insurers discount Class 4 roofs. Our team walks through coverage questions with your insurance carrier in mind.",
+      a: "Class 4 is the highest impact rating available, and our standing seam and stone-coated steel systems carry it. Hail is a real concern across Johnson County, and most Texas insurers discount Class 4 roofs. We can share product documentation if your agent asks for it.",
     },
     {
       q: 'What metal and Brava roofing styles are available in Burleson?',

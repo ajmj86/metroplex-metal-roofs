@@ -36,7 +36,7 @@ export const FATE_DATA: CityData = {
     },
     {
       q: 'Is metal roofing a good choice for new construction in Fate?',
-      a: "Builders in Fate have started specifying metal on new construction. Metal roofing is increasingly common on new construction throughout Fate and the surrounding Rockwall County area. Many homeowners in newer developments are upgrading from builder-grade shingles to standing seam or stone-coated steel after the first hail season. Buyers in Rockwall County often weigh storm resilience and lasting value when choosing.",
+      a: "Yes. Metal roofing is increasingly common on new construction throughout Fate and the surrounding Rockwall County area. Many homeowners in newer developments are upgrading from builder-grade shingles to standing seam or stone-coated steel after the first hail season. Buyers in Rockwall County often weigh storm resilience and lasting value when choosing.",
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Rockwall County?',
@@ -51,7 +51,7 @@ export const FATE_DATA: CityData = {
       a: "Most Fate homes are done in one to three days, though roof size and complexity can stretch that. We confirm the timeline for your roof up front, so you know what to expect. Weather can shift the schedule slightly, and we keep you updated.",
     },
     {
-      q: 'What metal and Brava roofing styles work best in Fate?',
+      q: "What metal and Brava roofing styles suit homes in Fate?",
       a: "A Fate roof can take several looks: standing seam panels, stone-coated steel, or one of three Brava profiles. Stone-coated steel in shingle and shake profiles is popular throughout Fate's newer traditional developments. Brava rounds out the options with slate, cedar shake, and Spanish barrel tile looks. We set samples next to your siding or brick so you can see how each material reads in daylight.",
     },
     {

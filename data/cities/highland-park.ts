@@ -58,7 +58,7 @@ export const HIGHLAND_PARK_DATA: CityData = {
     },
     {
       q: 'How much does a metal or Brava synthetic slate roof cost in Highland Park?',
-      a: "A Highland Park metal or Brava roof is quoted per square foot, with the final figure driven by roof size, pitch, and material. Cost depends on roof size, pitch, and complexity, and larger estate roofs with several rooflines cost more than a simple gable. Expect a ballpark based on satellite measurements first, followed by a firm figure after the free in-person assessment. For the complete picture, check the pricing table above or try the free visualizer with your address. Two similar-looking houses can price differently once the roof structure is measured.",
+      a: "A Highland Park metal or Brava roof is quoted per square foot, with the final figure driven by roof size, pitch, and material. Larger estate roofs with several rooflines cost more than a simple gable. Expect a ballpark based on satellite measurements first, followed by a firm figure after the free in-person assessment. For the complete picture, check the pricing table above or try the free visualizer with your address. Two similar-looking houses can price differently once the roof structure is measured.",
     },
     {
       q: 'How long does a roof replacement take on a larger Highland Park home?',

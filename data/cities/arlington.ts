@@ -54,7 +54,7 @@ export const ARLINGTON_DATA: CityData = {
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Arlington?',
-      a: "Most Texas insurers discount Class 4 roofs, so upgrading to a Class 4 metal roof in Arlington can reduce what you pay. For an Arlington home, a quick call to your agent before choosing a material can pay off. Because discounts vary, check with your insurance carrier and keep our documentation handy.",
+      a: "Most Texas insurers discount Class 4 roofs, so upgrading to a Class 4 metal roof in Arlington can reduce what you pay. For an Arlington home, it helps to talk with your agent before choosing a material. Because discounts vary, check with your insurance carrier and keep our documentation handy.",
     },
     {
       q: 'Will my Arlington HOA approve a metal roof?',
@@ -65,7 +65,7 @@ export const ARLINGTON_DATA: CityData = {
       a: "Most Arlington homes are done in one to three days, though roof size and complexity can stretch that. You will have a clear schedule for your own home as part of the estimate. Staging and material delivery are planned around your driveway and neighbors.",
     },
     {
-      q: 'What metal and Brava roofing styles work best for Arlington homes?',
+      q: 'What metal and Brava roofing styles suit Arlington homes?',
       a: "We offer standing seam, stone-coated steel, and Brava in Arlington, each suited to different rooflines. Standing seam suits the more contemporary builds going up in Viridian and other newer developments, while stone-coated steel is a strong match for the traditional ranch and mid-century homes common across North and South Arlington. If you lean toward a slate or tile appearance, Brava's three profiles are worth a look. We are happy to compare options side by side during your free assessment.",
     },
     {

@@ -37,7 +37,7 @@ export const ALLEN_DATA: CityData = {
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Allen?',
-      a: "Yes, a Class 4 impact-rated metal roof can lower your premium, since most Texas insurers discount Class 4 roofs. For Allen homeowners with median home values near $500,000, eliminating repeated asphalt replacements and qualifying for carrier discounts typically represents a strong long-term return on the upgrade. The size of the discount depends on your carrier and policy, so check with your insurance carrier.",
+      a: "Yes, a Class 4 impact-rated metal roof can lower your premium, since most Texas insurers discount Class 4 roofs. For Allen homeowners with median home values near $500,000, eliminating repeated asphalt replacements and qualifying for carrier discounts can be a sound long-term decision. The size of the discount depends on your carrier and policy, so check with your insurance carrier.",
     },
     {
       q: 'Will my Allen HOA approve a metal roof?',

@@ -90,6 +90,14 @@ const FAQS = [
     q: 'How long does a Brava roof last?',
     a: 'Brava is built as a long-term roof and is backed by a 50-year limited warranty from Brava. We do not quote an exact lifespan, since installation and care matter, but we are glad to walk through the warranty terms with you.',
   },
+  {
+    q: 'Should I choose metal or Brava for my home?',
+    a: 'Choose metal if you want a modern or classic metal look, and choose Brava if you want the character of slate, shake, or tile. Standing seam, stone-coated steel, and Brava all carry a Class 4 impact rating, so the decision comes down to style, your home\'s architecture, and any HOA guidelines. You can see both on your own home in the Free Roof Visualizer before you decide.',
+  },
+  {
+    q: 'How does Brava compare to natural slate on cost?',
+    a: 'Brava typically costs less than natural slate and is far lighter, so most homes need no added structural support. We confirm your roof deck and framing at the inspection, and a firm number follows your free assessment.',
+  },
 ]
 
 function SlateSchema() {

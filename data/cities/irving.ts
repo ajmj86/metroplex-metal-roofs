@@ -62,7 +62,7 @@ export const IRVING_DATA: CityData = {
       a: "For a typical Irving home the work takes about one to three days, depending on how big and complex the roof is. Communities with HOA staging or access requirements, like parts of Las Colinas, may need a bit more coordination, which we handle as part of scheduling. During the estimate we map out the days your roof will take, so there are no surprises. Your project lead checks in each day so you know where things stand.",
     },
     {
-      q: 'What metal and Brava roofing style works best for Irving homes?',
+      q: "What metal and Brava roofing style suits Irving homes?",
       a: "Whatever your Irving home's architecture, there is a metal or Brava profile to suit it. Standing seam is the most common choice in Las Colinas and Valley Ranch given the more contemporary architecture found there, while stone-coated steel suits the traditional ranch-style homes in the Heritage District and Northgate Heights. For the look of natural slate, shake, or tile, Brava offers three profiles in a durable composite. Both steel systems carry a Class 4 impact rating, and we bring samples so you can compare them on your own home.",
     },
     {

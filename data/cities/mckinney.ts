@@ -34,7 +34,7 @@ export const MCKINNEY_DATA: CityData = {
     },
     {
       q: 'How much does a metal roof cost in McKinney, TX?',
-      a: "Roof size, pitch, and material set the price of a metal roof in McKinney, which is figured per square foot. Most homes in McKinney\\'s established neighborhoods fall in the 25 to 40 square range. Our first number comes from satellite measurements of your actual roof, and the firm price follows your free on-site assessment. Compare systems in the pricing table above, and let the free visualizer work out a number for your home. Pitch, tear-off, and deck condition also factor into the final number.",
+      a: "Roof size, pitch, and material set the price of a metal roof in McKinney, which is figured per square foot. Most homes in McKinney's established neighborhoods fall in the 25 to 40 square range. Our first number comes from satellite measurements of your actual roof, and the firm price follows your free on-site assessment. Compare systems in the pricing table above, and let the free visualizer work out a number for your home. Pitch, tear-off, and deck condition also factor into the final number.",
     },
     {
       q: 'Is metal roofing common in McKinney master-planned communities?',
@@ -46,7 +46,7 @@ export const MCKINNEY_DATA: CityData = {
     },
     {
       q: 'Will my McKinney HOA approve a metal roof?',
-      a: "Whether your McKinney HOA approves depends on its architectural guidelines, and many accept metal and Brava in approved profiles and colors. We handle the full documentation package at no additional cost. We handle the submission with samples, color chips, and manufacturer spec sheets, at no extra charge.",
+      a: "Whether your McKinney HOA approves depends on its architectural guidelines, and many accept metal and Brava in approved profiles and colors. Communities such as Craig Ranch and Trinity Falls each have their own review process. We handle the submission with samples, color chips, and manufacturer spec sheets, at no extra charge.",
     },
     {
       q: 'How long does metal roof installation take in McKinney?',

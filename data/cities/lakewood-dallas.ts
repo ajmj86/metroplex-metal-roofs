@@ -52,11 +52,11 @@ export const LAKEWOOD_DALLAS_DATA: CityData = {
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Lakewood?',
-      a: "In many cases, yes. Metal roofing with a Class 4 impact rating is the type of roof most Texas insurers discount. After years of hail in North Texas, many Lakewood homeowners are looking at metal to stop repeat claims. The size of the discount depends on your carrier and policy, so check with your insurance carrier.",
+      a: "In many cases, yes. Metal roofing with a Class 4 impact rating is the type of roof most Texas insurers discount. After years of hail in North Texas, many Lakewood homeowners are looking at metal to reduce repeat claims. The size of the discount depends on your carrier and policy, so check with your insurance carrier.",
     },
     {
       q: 'How much does a metal or Brava synthetic slate roof cost in Lakewood?',
-      a: "Pricing for a Lakewood metal or Brava roof is per square foot, shaped mostly by how large and steep the roof is and which system you select. Cost depends on roof size, pitch, and complexity, and many Lakewood bungalows have smaller, simpler roofs than larger estate homes. The process begins with a satellite-measured range and ends with a firm number after our free on-site visit. Our pricing table above has the full breakdown, and the free visualizer shows a number for your own roof. There is no obligation at either step.",
+      a: "Pricing for a Lakewood metal or Brava roof is per square foot, shaped mostly by how large and steep the roof is and which system you select. Many Lakewood bungalows have smaller, simpler roofs than larger estate homes. The process begins with a satellite-measured range and ends with a firm number after our free on-site visit. Our pricing table above has the full breakdown, and the free visualizer shows a number for your own roof. There is no obligation at either step.",
     },
     {
       q: 'How does Brava compare to DaVinci roofing?',
@@ -65,7 +65,7 @@ export const LAKEWOOD_DALLAS_DATA: CityData = {
     },
     {
       q: "Does Brava synthetic slate curl or warp on a Lakewood roof?",
-      a: "Warping and curling come from how a roof is put on, not from Brava itself, so the safeguard is installing to Brava's published installation guide. Our crews follow that guide on every Brava roof in Lakewood. Ask to walk through the steps before you sign.",
+      a: "Warping and curling are usually tied to how a roof is put on rather than to Brava itself, so the safeguard is installing to Brava's published installation guide. Our crews follow that guide on every Brava roof in Lakewood. Ask to walk through the steps before you sign.",
     },
     {
       q: "What is oil canning, and should Lakewood homeowners worry about it?",

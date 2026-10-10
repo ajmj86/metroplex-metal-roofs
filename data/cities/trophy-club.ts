@@ -38,11 +38,11 @@ export const TROPHY_CLUB_DATA: CityData = {
     },
     {
       q: 'Will my Trophy Club HOA approve a metal roof?',
-      a: "Many HOAs in Trophy Club approve these profiles, and each association sets its own rules. Trophy Club approves standing seam and stone-coated steel roofing in pre-approved profiles and color palettes for homeowners who submit proper documentation. We handle the submission with samples, color chips, and manufacturer spec sheets, at no extra charge.",
+      a: "Many HOAs in Trophy Club approve these profiles, and each association sets its own rules. We handle the submission with samples, color chips, and manufacturer spec sheets, at no extra charge.",
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Trophy Club?',
-      a: "Yes, a Class 4 metal roof is a common way Trophy Club homeowners earn a premium discount, since most Texas insurers offer one. Trophy Club homeowners with median home values above $600,000 typically see meaningful financial benefits from both reduced annual premiums and eliminated deductible exposure. Because discounts vary, check with your insurance carrier and keep our documentation handy.",
+      a: "Yes, a Class 4 metal roof is a common way Trophy Club homeowners earn a premium discount, since most Texas insurers offer one. Trophy Club homeowners with median home values above $600,000 may see financial benefits from lower annual premiums and reduced deductible exposure. Because discounts vary, check with your insurance carrier and keep our documentation handy.",
     },
     {
       q: 'How long does metal roof installation take in Trophy Club?',
@@ -53,7 +53,7 @@ export const TROPHY_CLUB_DATA: CityData = {
       a: "Standing seam and stone-coated steel carry a Class 4 impact rating, the highest available. Hail is a real concern across Denton County, and most Texas insurers discount Class 4 roofs. Ask about colors and profiles when we visit your home.",
     },
     {
-      q: 'What metal and Brava roofing styles work best on Trophy Club homes?',
+      q: "What metal and Brava roofing styles suit Trophy Club homes?",
       a: "Trophy Club homeowners can choose from standing seam, stone-coated steel, and Brava synthetic slate, shake, or Spanish barrel tile. Standing seam is the most popular choice for Trophy Club's mix of traditional and contemporary golf-course architecture. Stone-coated steel in shake or shingle profiles is also widely chosen, particularly on homes with traditional architectural character. Homeowners drawn to natural slate, shake, or tile can compare Brava's three profiles with the steel options. You can preview any of these on your own address in our Free Roof Visualizer.",
     },
     {

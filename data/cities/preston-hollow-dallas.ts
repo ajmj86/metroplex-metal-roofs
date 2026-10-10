@@ -41,7 +41,7 @@ export const PRESTON_HOLLOW_DALLAS_DATA: CityData = {
     },
     {
       q: 'Is Preston Hollow a good fit for Brava synthetic slate or stone-coated steel?',
-      a: "In Preston Hollow, the choice usually comes down to a shingle or shake look in stone-coated steel, a clean standing seam line, or a Brava profile. Yes, both work well on Preston Hollow homes, from mid-century ranches to larger custom houses. Brava synthetic slate suits traditional and estate-style homes with the look of natural slate, shake, or tile, and stone-coated steel gives a shingle or shake look on a lasting roof. Brava rounds out the options with slate, cedar shake, and Spanish barrel tile looks. Ask for samples of metal and Brava during your inspection and judge them against your own roofline.",
+      a: "Yes, both work well on Preston Hollow homes, from mid-century ranches to larger custom houses. Brava synthetic slate suits traditional and estate-style homes with the look of natural slate, shake, or tile, and stone-coated steel gives a shingle or shake look on a lasting roof. Standing seam is a strong choice on contemporary builds, and we bring samples of metal and Brava so you can compare them on your own home.",
     },
     {
       q: 'Do large, complex roofs cost much more to replace with metal?',
@@ -49,7 +49,7 @@ export const PRESTON_HOLLOW_DALLAS_DATA: CityData = {
     },
     {
       q: 'Does my Preston Hollow home need HOA or design review for a new roof?',
-      a: "Approval depends on your Preston Hollow community's guidelines, and many HOAs accept metal and Brava profiles in approved colors. It depends on your block. Design review and permit requirements vary, and we handle the submission whichever applies. We help with the paperwork and submission, and the committee makes the final call.",
+      a: "Approval depends on your Preston Hollow community's guidelines, and many HOAs accept metal and Brava profiles in approved colors. Some blocks have an HOA or neighborhood association and others do not, so we confirm what applies at your address. Design review and permit requirements vary, and we handle the submission, though the final decision is your association's.",
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Preston Hollow?',

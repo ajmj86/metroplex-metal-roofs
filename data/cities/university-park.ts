@@ -57,11 +57,11 @@ export const UNIVERSITY_PARK_DATA: CityData = {
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in University Park?',
-      a: "A Class 4 impact rating is what carriers look for, and most Texas insurers discount roofs that have it. For a University Park home, a quick call to your agent before choosing a material can pay off. Every policy is different, so confirm the details with your insurance carrier before you decide.",
+      a: "A Class 4 impact rating is what carriers look for, and most Texas insurers discount roofs that have it. For a University Park home, it helps to talk with your agent before choosing a material. Every policy is different, so confirm the details with your insurance carrier before you decide.",
     },
     {
       q: 'How much does a metal or Brava synthetic slate roof cost in University Park?',
-      a: "A University Park metal or Brava roof is quoted per square foot, with the final figure driven by roof size, pitch, and material. Cost depends on roof size, pitch, and complexity, and many University Park roofs are moderate in size with several gables and dormers. You get a ballpark from satellite imagery of your own roof, not a guess from the curb, and a firm number after we inspect it in person. Compare systems in the pricing table above, and let the free visualizer work out a number for your home. Details like roof valleys and penetrations can shift the total.",
+      a: "A University Park metal or Brava roof is quoted per square foot, with the final figure driven by roof size, pitch, and material. Many University Park roofs are moderate in size with several gables and dormers. You get a ballpark from satellite imagery of your own roof, not a guess from the curb, and a firm number after we inspect it in person. Compare systems in the pricing table above, and let the free visualizer work out a number for your home. Details like roof valleys and penetrations can shift the total.",
     },
     {
       q: 'How does Brava compare to DaVinci roofing?',

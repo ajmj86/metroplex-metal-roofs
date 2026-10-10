@@ -38,7 +38,7 @@ export const KELLER_DATA: CityData = {
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Keller?',
-      a: "Yes, a Class 4 impact-rated metal roof can lower your premium, since most Texas insurers discount Class 4 roofs. For a Keller home, a quick call to your agent before choosing a material can pay off. Your insurance carrier decides the amount, so it is worth a quick call once you pick a material.",
+      a: "Yes, a Class 4 impact-rated metal roof can lower your premium, since most Texas insurers discount Class 4 roofs. For a Keller home, it helps to talk with your agent before choosing a material. Your insurance carrier decides the amount, so it is worth a quick call once you pick a material.",
     },
     {
       q: 'Will my Keller HOA approve a metal roof?',
@@ -50,7 +50,7 @@ export const KELLER_DATA: CityData = {
     },
     {
       q: 'How does a metal roof handle hail in Tarrant County?',
-      a: "A Class 4 impact rating, the highest available, applies to our standing seam and stone-coated steel systems. Hail is a real concern across Tarrant County, and most Texas insurers discount Class 4 roofs. The right product depends on your roofline and your comfort with the look.",
+      a: "A Class 4 impact rating, the highest available, applies to our standing seam and stone-coated steel systems. Hail is a real concern across Tarrant County, and most Texas insurers discount Class 4 roofs. We can go over finish and profile options during your inspection.",
     },
     {
       q: 'What metal and Brava roofing styles are popular in Keller?',

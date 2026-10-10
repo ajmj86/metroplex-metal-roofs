@@ -36,7 +36,7 @@ export const BLUFFVIEW_DALLAS_DATA: CityData = {
     },
     {
       q: 'Is metal a good choice for a home under mature trees?',
-      a: "Yes. Metal and stone-coated steel shed leaves and debris easily and hold up well to the extra debris that comes with mature trees. Trees still call for sensible maintenance, and we explain what to expect for your lot during the assessment.",
+      a: "Yes. Metal and stone-coated steel shed leaves and debris easily and hold up well under mature trees. Trees still call for sensible maintenance, and we explain what to expect for your lot during the assessment.",
     },
     {
       q: 'What roof style fits a 1960s ranch or traditional home in Bluffview?',
@@ -44,7 +44,7 @@ export const BLUFFVIEW_DALLAS_DATA: CityData = {
     },
     {
       q: 'How much does a metal or Brava synthetic slate roof cost in Bluffview?',
-      a: "A Bluffview metal or Brava roof is quoted per square foot, with the final figure driven by roof size, pitch, and material. Cost depends on roof size, pitch, and complexity, and most Bluffview homes fall in a mid-size range. We measure your roof by satellite to give a ballpark, then finalize a firm price once we have seen it during a free assessment. See the pricing table above for every material, or run our free visualizer for a figure specific to your house. There is no obligation at either step.",
+      a: "A Bluffview metal or Brava roof is quoted per square foot, with the final figure driven by roof size, pitch, and material. Most Bluffview homes fall in a mid-size range. We measure your roof by satellite to give a ballpark, then finalize a firm price once we have seen it during a free assessment. See the pricing table above for every material, or run our free visualizer for a figure specific to your house. There is no obligation at either step.",
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Bluffview?',
@@ -52,7 +52,7 @@ export const BLUFFVIEW_DALLAS_DATA: CityData = {
     },
     {
       q: 'Do I need a permit or HOA approval for a new roof in Bluffview?',
-      a: "HOA rules in Bluffview differ by neighborhood, and many associations permit metal or Brava in neutral, approved colors. Requirements vary by street and project, and we handle the submission either way. We confirm what applies to your address and prepare samples, color chips, and spec sheets. Most installs take one to three days once approvals are in place. Our team assembles the paperwork for your submission, though the final decision is your association's.",
+      a: "HOA rules in Bluffview differ by neighborhood, and many associations permit metal or Brava in neutral, approved colors. Permit and review requirements vary by street and project, and we handle the submission either way. We confirm what applies to your address and prepare samples, color chips, and spec sheets, though the final decision is your association's.",
     },
     {
       q: 'How does Brava compare to DaVinci roofing?',
@@ -61,7 +61,7 @@ export const BLUFFVIEW_DALLAS_DATA: CityData = {
     },
     {
       q: "Is Brava fire rated for Bluffview homes?",
-      a: "For a Bluffview home, Brava can be specified with a Class A fire rating, provided it goes on as a complete Brava roof system. What applies depends on the assembly and how it is installed, which we review together at the inspection.",
+      a: "A Class A fire rating is available with Brava for a Bluffview home when it goes on as a complete Brava roof system. What applies depends on the assembly and how it is installed, which we review together at the inspection.",
     },
     {
       q: "Is a metal roof louder than shingles in a Bluffview rainstorm?",

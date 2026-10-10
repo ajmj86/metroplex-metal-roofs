@@ -50,10 +50,10 @@ export const ROANOKE_DATA: CityData = {
     },
     {
       q: 'How does metal roofing handle Denton County storms?',
-      a: "Both steel systems we install carry a Class 4 impact rating, the highest level available. For Roanoke homes, asking your insurance carrier about a Class 4 discount is a sensible next step. Our team walks through coverage questions with your insurance carrier in mind.",
+      a: "Both steel systems we install carry a Class 4 impact rating, the highest level available. For Roanoke homes, asking your insurance carrier about a Class 4 discount is a sensible next step. We can share product documentation if your agent asks for it.",
     },
     {
-      q: 'What metal and Brava roofing styles work best in Roanoke?',
+      q: "What metal and Brava roofing styles suit homes in Roanoke?",
       a: "Style depends on the house, and for Roanoke we can match it with steel or with a Brava slate, shake, or tile profile. Standing seam and stone-coated steel are both popular in Roanoke. Standing seam suits contemporary and transitional architecture common throughout newer developments. For the look of natural slate, shake, or tile, Brava offers three profiles in a durable composite. You can preview any of these on your own address in our Free Roof Visualizer.",
     },
     {

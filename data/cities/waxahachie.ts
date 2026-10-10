@@ -50,7 +50,7 @@ export const WAXAHACHIE_DATA: CityData = {
       a: "One to three days covers most Waxahachie projects, and bigger or more intricate roofs may need a little more time. You will have a clear schedule for your own home as part of the estimate. Most homeowners stay in the house during the work.",
     },
     {
-      q: 'What metal and Brava roofing styles are best for Waxahachie homes?',
+      q: "What metal and Brava roofing styles suit Waxahachie homes?",
       a: "The right profile for a Waxahachie home depends on its architecture, and we install steel and Brava options to match. Stone-coated steel in shingle or shake profiles is particularly popular in Waxahachie for its ability to complement traditional and historic architecture. Brava rounds out the options with slate, cedar shake, and Spanish barrel tile looks. Both steel systems carry a Class 4 impact rating, and we bring samples so you can compare them on your own home.",
     },
     {

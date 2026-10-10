@@ -50,7 +50,7 @@ export const ANNA_DATA: CityData = {
       a: "A typical Anna roof takes one to three days to install, with larger or more complex roofs at the longer end. Your estimate includes a timeline specific to your property before any work begins. Most homeowners stay in the house during the work.",
     },
     {
-      q: 'What metal and Brava roofing styles work best in Anna?',
+      q: "What metal and Brava roofing styles suit homes in Anna?",
       a: "The right profile for an Anna home depends on its architecture, and we install steel and Brava options to match. Stone-coated steel and standing seam are both popular choices in Anna's newer developments. For the look of natural slate, shake, or tile, Brava offers three profiles in a durable composite. The Free Roof Visualizer lets you preview each option on your actual home before you decide.",
     },
     {

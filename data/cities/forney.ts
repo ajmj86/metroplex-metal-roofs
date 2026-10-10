@@ -50,7 +50,7 @@ export const FORNEY_DATA: CityData = {
       a: "Installation in Forney usually wraps up within one to three days, adjusted for roof size and complexity. During the estimate we map out the days your roof will take, so there are no surprises. We handle debris removal and a final walkthrough when the roof is complete.",
     },
     {
-      q: 'What metal and Brava roofing styles work best in Forney?',
+      q: "What metal and Brava roofing styles suit homes in Forney?",
       a: "Forney homeowners can choose from standing seam, stone-coated steel, and Brava synthetic slate, shake, or Spanish barrel tile. Stone-coated steel and standing seam are both popular choices in Forney. Brava gives a premium alternative to metal, with slate, cedar shake, and Spanish barrel tile profiles. The Free Roof Visualizer lets you preview each option on your actual home before you decide.",
     },
     {

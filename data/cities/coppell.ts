@@ -38,7 +38,7 @@ export const COPPELL_DATA: CityData = {
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Coppell?',
-      a: "In many cases, yes. Metal roofing with a Class 4 impact rating is the type of roof most Texas insurers discount. Coppell homeowners with median home values above $550,000 often see the largest financial benefit from eliminating repeated deductible exposure and qualifying for annual premium reductions. We suggest asking your insurance carrier for a quote that reflects the new roof.",
+      a: "In many cases, yes. Metal roofing with a Class 4 impact rating is the type of roof most Texas insurers discount. Coppell homeowners with median home values above $550,000 can benefit financially from fewer repeat claims and possible premium reductions. We suggest asking your insurance carrier for a quote that reflects the new roof.",
     },
     {
       q: 'Will my Coppell HOA approve a metal roof?',
@@ -53,7 +53,7 @@ export const COPPELL_DATA: CityData = {
       a: "Impact resistance is rated Class 4 on our standing seam and stone-coated steel, the top rating. Storm season in Dallas County is why many Coppell owners ask about impact ratings first. Textured stone-coated steel profiles also tend to hide marks well.",
     },
     {
-      q: 'What metal and Brava roofing options are best for established Coppell homes?',
+      q: "What metal and Brava roofing options suit established Coppell homes?",
       a: "In Coppell, the choice usually comes down to a shingle or shake look in stone-coated steel, a clean standing seam line, or a Brava profile. Standing seam and stone-coated steel are both popular in Coppell. Stone-coated steel in shingle profiles is widely chosen for older and established homes where traditional aesthetics are important. If you lean toward a slate or tile appearance, Brava's three profiles are worth a look. You can preview any of these on your own address in our Free Roof Visualizer.",
     },
     {

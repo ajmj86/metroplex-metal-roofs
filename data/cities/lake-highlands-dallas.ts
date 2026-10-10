@@ -47,7 +47,7 @@ export const LAKE_HIGHLANDS_DALLAS_DATA: CityData = {
     },
     {
       q: 'How much does a metal or Brava synthetic slate roof cost in Lake Highlands?',
-      a: "The cost of a metal or Brava roof in Lake Highlands comes down to roof size, pitch, and the material you choose, priced per square foot. Cost depends on roof size, pitch, and complexity, and many Lake Highlands ranches have simple, mid-size roofs. We measure your roof by satellite to give a ballpark, then finalize a firm price once we have seen it during a free assessment. All materials are listed in the pricing table above, and the free visualizer prices your specific roof. Two similar-looking houses can price differently once the roof structure is measured.",
+      a: "The cost of a metal or Brava roof in Lake Highlands comes down to roof size, pitch, and the material you choose, priced per square foot. Many Lake Highlands ranches have simple, mid-size roofs. We measure your roof by satellite to give a ballpark, then finalize a firm price once we have seen it during a free assessment. All materials are listed in the pricing table above, and the free visualizer prices your specific roof. Two similar-looking houses can price differently once the roof structure is measured.",
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Lake Highlands?',
@@ -55,7 +55,7 @@ export const LAKE_HIGHLANDS_DALLAS_DATA: CityData = {
     },
     {
       q: 'Does my Lake Highlands street have an HOA or need a permit for a new roof?',
-      a: "Many Lake Highlands HOAs approve metal and Brava roofs, though requirements vary from one community to the next. It depends on the street. Design review and permit requirements vary, and we handle the submission whichever applies. Samples, color chips, and spec sheets come with our free help preparing your submission.",
+      a: "Many Lake Highlands HOAs approve metal and Brava roofs, though requirements vary from one community to the next, and some streets have no HOA at all. Design review and permit requirements differ by address, and we handle the submission whichever applies. Samples, color chips, and spec sheets come with our free help preparing your submission.",
     },
     {
       q: 'How does Brava compare to DaVinci roofing?',

@@ -40,7 +40,7 @@ export const ROCKWALL_DATA: CityData = {
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Rockwall County?',
-      a: "Often it does, because most Texas insurers discount Class 4 roofs and metal systems carry that rating. Rockwall homeowners typically see meaningful annual premium reductions after upgrading, along with eliminated deductible exposure on future hail claims. The size of the discount depends on your carrier and policy, so check with your insurance carrier.",
+      a: "Often it does, because most Texas insurers discount Class 4 roofs and metal systems carry that rating. Rockwall homeowners may see lower annual premiums after upgrading, and Class 4 roofing can reduce deductible exposure on future hail claims. The size of the discount depends on your carrier and policy, so check with your insurance carrier.",
     },
     {
       q: 'Will my Rockwall HOA approve a metal roof?',

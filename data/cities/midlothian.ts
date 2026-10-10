@@ -51,7 +51,7 @@ export const MIDLOTHIAN_DATA: CityData = {
       a: "Most Midlothian homes are done in one to three days, though roof size and complexity can stretch that. During the estimate we map out the days your roof will take, so there are no surprises. Most homeowners stay in the house during the work.",
     },
     {
-      q: 'What metal and Brava roofing styles work best in Midlothian?',
+      q: "What metal and Brava roofing styles suit homes in Midlothian?",
       a: "Whatever your Midlothian home's architecture, there is a metal or Brava profile to suit it. Stone-coated steel and standing seam are both popular in Midlothian. Brava gives a premium alternative to metal, with slate, cedar shake, and Spanish barrel tile profiles. Ask for samples of metal and Brava during your inspection and judge them against your own roofline.",
     },
     {

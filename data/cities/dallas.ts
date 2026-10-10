@@ -68,19 +68,19 @@ export const DALLAS_DATA: CityData = {
     },
     {
       q: 'Does my Dallas home need HOA or conservation district approval for a metal roof?',
-      a: "Whether your Dallas HOA approves depends on its architectural guidelines, and many accept metal and Brava in approved profiles and colors. It depends on the neighborhood. HOA-governed communities require standard architectural review, while historic conservation districts like Junius Heights and the M Streets have their own City of Dallas review process for exterior changes. We prepare material samples, color chips, and spec sheets for your submission at no additional cost.",
+      a: "Whether your Dallas HOA approves depends on its architectural guidelines, and many accept metal and Brava in approved profiles and colors. HOA-governed communities require standard architectural review, while historic conservation districts like Junius Heights and the M Streets have their own City of Dallas review process for exterior changes. We prepare material samples, color chips, and spec sheets for your submission at no additional cost.",
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Dallas?',
-      a: "Most Texas insurers discount Class 4 roofs, so upgrading to a Class 4 metal roof in Dallas can reduce what you pay. Dallas County's position in the DFW hail corridor means most homeowners see a meaningful reduction in their wind/hail premium after upgrading from asphalt. The size of the discount depends on your carrier and policy, so check with your insurance carrier.",
+      a: "Most Texas insurers discount Class 4 roofs, so upgrading to a Class 4 metal roof in Dallas can reduce what you pay. Dallas County's position in the DFW hail corridor makes the premium question worth asking after upgrading from asphalt. The size of the discount depends on your carrier and policy, so check with your insurance carrier.",
     },
     {
       q: 'How long does metal roof installation take in Dallas?',
       a: "Expect one to three days on site for most homes in Dallas, based on the size and layout of the roof. Denser neighborhoods with tighter lots or shared driveways may need a bit more coordination on staging, which we handle as part of scheduling. You will have a clear schedule for your own home as part of the estimate. Tear-off, underlayment, and the new roof are typically done in sequence.",
     },
     {
-      q: 'What metal and Brava roofing style works best for Dallas homes?',
-      a: "Style depends on the house, and for Dallas we can match it with steel or with a Brava slate, shake, or tile profile. It depends on the neighborhood and architecture. Stone-coated steel is the most common choice for traditional bungalows in Lakewood and Oak Cliff, while standing seam is popular on the more contemporary builds found in Uptown-adjacent and Knox-Henderson properties. Homeowners drawn to natural slate, shake, or tile can compare Brava's three profiles with the steel options. The Free Roof Visualizer lets you preview each option on your actual home before you decide.",
+      q: "What metal and Brava roofing style suits Dallas homes?",
+      a: "Style depends on the house, and for Dallas we can match it with steel or with a Brava slate, shake, or tile profile. Stone-coated steel is the most common choice for traditional bungalows in Lakewood and Oak Cliff, while standing seam is popular on the more contemporary builds found in Uptown-adjacent and Knox-Henderson properties. Homeowners drawn to natural slate, shake, or tile can compare Brava's three profiles with the steel options. The Free Roof Visualizer lets you preview each option on your actual home before you decide.",
     },
     {
       q: "Is a metal or Brava roof worth the cost over asphalt in Dallas?",

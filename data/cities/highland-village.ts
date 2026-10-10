@@ -52,7 +52,7 @@ export const HIGHLAND_VILLAGE_DATA: CityData = {
       a: "Standing seam and stone-coated steel carry a Class 4 impact rating, the highest available. Highland Village homeowners deal with spring storms, so a Class 4 roof is a common upgrade after a claim. Textured stone-coated steel profiles also tend to hide marks well.",
     },
     {
-      q: 'What metal and Brava roofing styles work best in Highland Village?',
+      q: "What metal and Brava roofing styles suit homes in Highland Village?",
       a: "A Highland Village roof can take several looks: standing seam panels, stone-coated steel, or one of three Brava profiles. Standing seam and stone-coated steel are both popular in Highland Village. Standing seam suits the area's mix of contemporary and transitional lake-area homes. Brava synthetic slate, shake, and Spanish barrel tile add a natural-material look for owners who prefer it. You can preview any of these on your own address in our Free Roof Visualizer.",
     },
     {

@@ -63,7 +63,7 @@ export const FRISCO_DATA: CityData = {
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Collin County?',
-      a: "Yes, a Class 4 impact-rated metal roof can lower your premium, since most Texas insurers discount Class 4 roofs. Standing seam and stone-coated steel carry a Class 4 impact resistance rating, the highest available, which qualifies for significant premium discounts from most Texas carriers. Collin County homeowners in active hail zones like Frisco typically see 15–35% reductions on their wind/hail premium after upgrading to a Class 4 rated roof, depending on carrier and policy. We provide product documentation for your agent, and your insurance carrier sets the final discount.",
+      a: "Yes, a Class 4 impact-rated metal roof can lower your premium. In Collin County's hail zones, standing seam and stone-coated steel carry a Class 4 impact rating, the highest available. Most Texas insurers discount Class 4 roofs; check with your carrier for your policy. We provide product documentation for your agent.",
     },
     {
       q: 'How long does metal roof installation take in Frisco?',
@@ -74,7 +74,7 @@ export const FRISCO_DATA: CityData = {
       a: 'For homes in the $500K–$900K range common across Frisco\'s master-planned communities, the economics strongly favor metal. Eliminating repeated asphalt replacement cycles, qualifying for insurance discounts, and reducing cooling costs over 30 years means the upgrade typically pays for itself, while adding a permanent, low-maintenance finish that holds up to North Texas storms.',
     },
     {
-      q: 'What metal and Brava roofing styles work best on Frisco homes?',
+      q: "What metal and Brava roofing styles suit Frisco homes?",
       a: "The right profile for a Frisco home depends on its architecture, and we install steel and Brava options to match. Standing seam is the most popular choice for Frisco's contemporary and transitional architecture, offering clean lines and hidden fasteners. If you lean toward a slate or tile appearance, Brava's three profiles are worth a look. We set samples next to your siding or brick so you can see how each material reads in daylight.",
     },
     {

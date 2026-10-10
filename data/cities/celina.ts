@@ -52,7 +52,7 @@ export const CELINA_DATA: CityData = {
       a: "One to three days covers most Celina projects, and bigger or more intricate roofs may need a little more time. During the estimate we map out the days your roof will take, so there are no surprises. Tear-off, underlayment, and the new roof are typically done in sequence.",
     },
     {
-      q: 'What metal and Brava roofing styles work best on Celina homes?',
+      q: "What metal and Brava roofing styles suit Celina homes?",
       a: "Celina homeowners can choose from standing seam, stone-coated steel, and Brava synthetic slate, shake, or Spanish barrel tile. Standing seam and stone-coated steel are the most popular choices for Celina's mix of contemporary and traditional new construction. The right choice depends on your home's architecture and HOA requirements. For the look of natural slate, shake, or tile, Brava offers three profiles in a durable composite. Ask for samples of metal and Brava during your inspection and judge them against your own roofline.",
     },
     {

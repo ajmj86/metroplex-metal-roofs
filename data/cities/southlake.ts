@@ -65,7 +65,7 @@ export const SOUTHLAKE_DATA: CityData = {
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Tarrant County?',
-      a: "Most Texas insurers discount Class 4 roofs, so upgrading to a Class 4 metal roof in Southlake can reduce what you pay. Standing seam and stone-coated steel carry a Class 4 impact resistance rating, the highest available, which qualifies for significant premium discounts from most Texas carriers. In Tarrant County, where hail claims are common, many homeowners see 15–35% reductions on their wind/hail premium, depending on carrier and policy. Savings vary from one carrier to the next, so ask your agent what applies to your policy.",
+      a: "Upgrading to a Class 4 metal roof in Southlake can reduce what you pay on a higher-value home. Both standing seam and stone-coated steel carry a Class 4 impact rating, the highest available. Most Texas insurers discount Class 4 roofs; check with your carrier for your policy.",
     },
     {
       q: 'How long does metal roof installation take in Southlake?',
@@ -77,7 +77,7 @@ export const SOUTHLAKE_DATA: CityData = {
     },
     {
       q: 'What metal roofing colors are HOA-approved in Southlake neighborhoods?',
-      a: "Approval depends on your Southlake community's guidelines, and many HOAs accept metal and Brava profiles in approved colors. The most commonly approved colors across Southlake HOAs include charcoal gray, aged bronze, and weathered brown tones for standing seam, and earth-tone blends for stone-coated steel. We recommend confirming with your specific HOA before selection. We can assist with the documentation package regardless of which community you are in. We prepare material samples, color chips, and spec sheets for your submission at no additional cost.",
+      a: "Approval depends on your Southlake community's guidelines, and many HOAs accept metal and Brava profiles in approved colors. The most commonly approved colors across Southlake HOAs include charcoal gray, aged bronze, and weathered brown tones for standing seam, and earth-tone blends for stone-coated steel. We recommend confirming with your specific HOA before selection, and we prepare material samples, color chips, and spec sheets for your submission at no additional cost.",
     },
     {
       q: 'How does Brava compare to DaVinci roofing?',

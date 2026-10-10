@@ -52,7 +52,7 @@ export const NORTHLAKE_DATA: CityData = {
       a: "For a typical Northlake home the work takes about one to three days, depending on how big and complex the roof is. We give you a specific timeline for your home during the estimate process. We handle debris removal and a final walkthrough when the roof is complete.",
     },
     {
-      q: 'What metal and Brava roofing styles work best in Northlake?',
+      q: "What metal and Brava roofing styles suit homes in Northlake?",
       a: "Northlake homeowners can choose from standing seam, stone-coated steel, and Brava synthetic slate, shake, or Spanish barrel tile. Standing seam and stone-coated steel are both popular in Northlake's newer developments. Brava's composite slate, shake, and barrel tile reproduce natural materials with natural color variation. We set samples next to your siding or brick so you can see how each material reads in daylight.",
     },
     {

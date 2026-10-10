@@ -52,7 +52,7 @@ export const MANSFIELD_DATA: CityData = {
       a: "For hail, our steel systems come with a Class 4 impact rating, the highest rating available. Storm season in Tarrant County is why many Mansfield owners ask about impact ratings first. We can show you how the finish looks on samples during your inspection.",
     },
     {
-      q: 'What metal and Brava roofing styles work best in Mansfield?',
+      q: "What metal and Brava roofing styles suit homes in Mansfield?",
       a: "Style depends on the house, and for Mansfield we can match it with steel or with a Brava slate, shake, or tile profile. Stone-coated steel in shingle and shake profiles is popular throughout Mansfield's traditional neighborhoods. Brava synthetic slate, shake, and Spanish barrel tile add a natural-material look for owners who prefer it. We set samples next to your siding or brick so you can see how each material reads in daylight.",
     },
     {

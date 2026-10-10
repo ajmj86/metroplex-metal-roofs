@@ -50,7 +50,7 @@ export const FLOWER_MOUND_DATA: CityData = {
     },
     {
       q: 'How does metal roofing handle Denton County hail storms?',
-      a: "Both steel systems we install carry a Class 4 impact rating, the highest level available. Denton County storms make impact rating a practical question for Flower Mound homes. The right product depends on your roofline and your comfort with the look.",
+      a: "Both steel systems we install carry a Class 4 impact rating, the highest level available. Denton County storms make impact rating a practical question for Flower Mound homes. We can go over finish and profile options during your inspection.",
     },
     {
       q: 'What metal and Brava roofing styles are popular in Flower Mound?',

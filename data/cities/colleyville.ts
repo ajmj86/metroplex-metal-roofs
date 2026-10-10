@@ -48,7 +48,7 @@ export const COLLEYVILLE_DATA: CityData = {
       a: "Most Colleyville installations are finished in one to three days, depending on roof size and complexity. Larger estate homes may take longer. Your estimate includes a timeline specific to your property before any work begins. We protect landscaping and clean up daily while the crew is on site.",
     },
     {
-      q: 'What metal and Brava roofing is best for high-value homes in Colleyville?',
+      q: "What metal and Brava roofing suits high-value homes in Colleyville?",
       a: "The right profile for a Colleyville home depends on its architecture, and we install steel and Brava options to match. Standing seam is the most popular choice for Colleyville estate properties due to its clean architectural lines and hidden fastener system. Copper is available for homeowners seeking a premium, permanent finish that develops a natural patina over time. Brava gives a premium alternative to metal, with slate, cedar shake, and Spanish barrel tile profiles. Class 4 impact ratings apply to our steel systems, and we will walk through color and profile choices on site.",
     },
     {

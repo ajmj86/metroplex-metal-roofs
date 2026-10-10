@@ -36,7 +36,7 @@ export const ROYSE_CITY_DATA: CityData = {
     },
     {
       q: 'Is metal roofing a good investment in Royse City?',
-      a: 'Yes. For Royse City homeowners, metal roofing eliminates the recurring asphalt replacement cost, qualifies for insurance discounts, and adds a long-term durable finish that holds its value. With rising home values throughout Rockwall County, a metal roof is a strong protective investment.',
+      a: "For many Royse City homeowners, yes: metal roofing ends the cycle of recurring asphalt replacements and offers long life, low maintenance, and a Class 4 impact rating. Most Texas insurers discount Class 4 roofs, so ask your carrier how it applies to your policy. Whether it fits depends on how long you plan to stay in the home.",
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Rockwall County?',

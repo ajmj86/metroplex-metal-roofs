@@ -68,7 +68,7 @@ export const GRAND_PRAIRIE_DATA: CityData = {
       a: "A typical Grand Prairie roof takes one to three days to install, with larger or more complex roofs at the longer end. You will have a clear schedule for your own home as part of the estimate. We handle debris removal and a final walkthrough when the roof is complete.",
     },
     {
-      q: 'What metal and Brava roofing style works best for Grand Prairie homes?',
+      q: "What metal and Brava roofing style suits Grand Prairie homes?",
       a: "We offer standing seam, stone-coated steel, and Brava in Grand Prairie, each suited to different rooflines. Standing seam suits the contemporary architecture common in newer communities like Mira Lagos and CentrePort-adjacent builds, while stone-coated steel is a strong match for the more traditional homes closer to Downtown Grand Prairie. Homeowners drawn to natural slate, shake, or tile can compare Brava's three profiles with the steel options. Ask for samples of metal and Brava during your inspection and judge them against your own roofline.",
     },
     {

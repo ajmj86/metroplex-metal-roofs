@@ -38,7 +38,7 @@ export const WESTLAKE_DATA: CityData = {
     },
     {
       q: 'Is copper roofing available for Westlake homes?',
-      a: 'Yes. Copper standing seam is available and particularly well-suited to Westlake estate properties. Copper develops a natural patina over time, lasts 100 years or more, and makes a permanent architectural statement. It is the highest-tier option we offer and requires no maintenance beyond the occasional rinse.',
+      a: "Yes. Copper standing seam is available and particularly well-suited to Westlake estate properties. Copper develops a natural patina over time, lasts 100 years or more, and makes a permanent architectural statement. It is the highest-tier option we offer and needs very little maintenance.",
     },
     {
       q: 'Will my Westlake HOA approve a metal roof?',
@@ -53,7 +53,7 @@ export const WESTLAKE_DATA: CityData = {
       a: "Most Westlake installations are finished in one to three days, depending on roof size and complexity. Copper and large standing seam systems on estate properties may take longer. A schedule tailored to your home comes with the proposal, well before installation day. Tear-off, underlayment, and the new roof are typically done in sequence.",
     },
     {
-      q: 'What metal and Brava roofing styles work best on Westlake estate homes?',
+      q: "What metal and Brava roofing styles suit Westlake estate homes?",
       a: "In Westlake, the choice usually comes down to a shingle or shake look in stone-coated steel, a clean standing seam line, or a Brava profile. Standing seam is the most popular choice for Westlake estate architecture, offering clean hidden-fastener lines that complement both contemporary and traditional design. Copper is the premium option for properties where permanence and visual distinction are the priority. Brava synthetic slate, shake, and Spanish barrel tile add a natural-material look for owners who prefer it. The Free Roof Visualizer lets you preview each option on your actual home before you decide.",
     },
     {

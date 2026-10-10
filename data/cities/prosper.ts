@@ -54,7 +54,7 @@ export const PROSPER_DATA: CityData = {
     },
     {
       q: 'How much does a metal roof cost in Prosper, TX?',
-      a: "A Prosper metal roof is quoted per square foot, with the final figure driven by roof size, pitch, and material. Most homes in Prosper\\'s master-planned communities fall in the 28 to 45 square range. Our first number comes from satellite measurements of your actual roof, and the firm price follows your free on-site assessment. All materials are listed in the pricing table above, and the free visualizer prices your specific roof. We explain every line of the proposal in person.",
+      a: "A Prosper metal roof is quoted per square foot, with the final figure driven by roof size, pitch, and material. Most homes in Prosper's master-planned communities fall in the 28 to 45 square range. Our first number comes from satellite measurements of your actual roof, and the firm price follows your free on-site assessment. All materials are listed in the pricing table above, and the free visualizer prices your specific roof. We explain every line of the proposal in person.",
     },
     {
       q: 'Is metal roofing common in Prosper neighborhoods like Windsong Ranch?',
@@ -62,7 +62,7 @@ export const PROSPER_DATA: CityData = {
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Prosper?',
-      a: "A Class 4 impact rating is what carriers look for, and most Texas insurers discount roofs that have it. For Prosper homeowners with median home values above $700,000, the 2% wind/hail deductible means a single storm event can cost $14,000 or more out of pocket on asphalt. A metal roof eliminates that exposure while also reducing your annual premium. The size of the discount depends on your carrier and policy, so check with your insurance carrier.",
+      a: "A Class 4 impact rating is what carriers look for, and most Texas insurers discount roofs that have it. For Prosper homeowners with median home values above $700,000, the 2% wind/hail deductible means a single storm event can cost $14,000 or more out of pocket on asphalt. A metal roof reduces that exposure and can lower your annual premium. The size of the discount depends on your carrier and policy, so check with your insurance carrier.",
     },
     {
       q: 'Will my Prosper HOA approve a metal roof?',

@@ -62,7 +62,7 @@ export const CARROLLTON_DATA: CityData = {
       a: "Installation in Carrollton usually wraps up within one to three days, adjusted for roof size and complexity. A schedule tailored to your home comes with the proposal, well before installation day. Your project lead checks in each day so you know where things stand.",
     },
     {
-      q: 'What metal and Brava roofing style works best for Carrollton homes?',
+      q: "What metal and Brava roofing style suits Carrollton homes?",
       a: "Whatever your Carrollton home's architecture, there is a metal or Brava profile to suit it. Standing seam suits the more contemporary builds common in Castle Hills and Coyote Ridge, while stone-coated steel is a strong match for the traditional homes near Historic Downtown Carrollton and Rosemeade. Brava rounds out the options with slate, cedar shake, and Spanish barrel tile looks. You can preview any of these on your own address in our Free Roof Visualizer.",
     },
     {

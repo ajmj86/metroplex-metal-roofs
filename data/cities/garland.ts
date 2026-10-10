@@ -51,7 +51,7 @@ export const GARLAND_DATA: CityData = {
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Garland?',
-      a: "Often it does, because most Texas insurers discount Class 4 roofs and metal systems carry that rating. For a Garland home, a quick call to your agent before choosing a material can pay off. Savings vary from one carrier to the next, so ask your agent what applies to your policy.",
+      a: "Often it does, because most Texas insurers discount Class 4 roofs and metal systems carry that rating. For a Garland home, it helps to talk with your agent before choosing a material. Savings vary from one carrier to the next, so ask your agent what applies to your policy.",
     },
     {
       q: 'Will my Garland HOA approve a metal roof?',
@@ -62,7 +62,7 @@ export const GARLAND_DATA: CityData = {
       a: "Most Garland installations are finished in one to three days, depending on roof size and complexity. Before the crew arrives, we spell out the schedule for your particular roof. Most homeowners stay in the house during the work.",
     },
     {
-      q: 'What metal and Brava roofing style works best for Garland homes?',
+      q: "What metal and Brava roofing style suits Garland homes?",
       a: "In Garland, the choice usually comes down to a shingle or shake look in stone-coated steel, a clean standing seam line, or a Brava profile. Stone-coated steel is a popular match for the traditional ranch and split-level homes common throughout Garland's older neighborhoods, while standing seam suits the newer builds near Firewheel. Brava's composite slate, shake, and barrel tile reproduce natural materials with natural color variation. We are happy to compare options side by side during your free assessment.",
     },
     {
