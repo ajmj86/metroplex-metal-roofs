@@ -31,7 +31,7 @@ import {
   STANDING_SEAM_COLORS, R_PANEL_COLORS, STONE_COLORS, STONE_PROFILE_TILES, STONE_SHINGLE_TILES,
   COPPER_PATINA_CHIPS, COPPER_INSTALL_PHOTOS,
 } from "@/lib/productColors";
-import { productsForStyle, stylesWithColors, MATERIAL_TYPE_DISPLAY_LABELS, styleHasWidthVariants, colorsForWidth, colorImageForWidth } from "@/lib/roofProducts";
+import { productsForStyle, MATERIAL_TYPE_DISPLAY_LABELS, styleHasWidthVariants, colorsForWidth, colorImageForWidth } from "@/lib/roofProducts";
 
 /* ── Reveal on scroll ── */
 const Reveal = ({ children, delay=0 }) => {
@@ -251,29 +251,13 @@ const specMap = {
   stone:   [{k:"Lifespan",v:"40–70 yrs"},{k:"Hail Rating",v:"Class 4"},{k:"Wind",v:"High Wind Resistance"},{k:"Profile",v:"Shingle-style"}],
   rpanel:  [{k:"Lifespan",v:"40–60 yrs"},{k:"Hail Rating",v:"Class 4"},{k:"Wind",v:"High Wind Resistance"},{k:"Fastener",v:"Exposed"}],
 };
-// Spec lines under each product description. Brava lines are fixed facts plus
-// the profile's color count from the color config; metal lines use the
-// product's own page copy (see each page) plus the config color count.
-const metalSpecLines = {
-  standing:["Class 4 impact rating available","Hidden fasteners, clean lines"],
-  copper:  ["High wind resistance","Natural patina over time"],
-  stone:   ["Class 4 impact rating available","Shingle, shake, tile looks"],
-  rpanel:  ["Class 4 impact rating available","Exposed-fastener panel system"],
-};
-const uniqueColorCount = (roofType) => {
-  const names = new Set();
-  stylesWithColors(roofType).forEach(([styleKey]) => {
-    productsForStyle(roofType, styleKey).forEach(([, prod]) => (prod.colors || []).forEach(c => names.add(c.name)));
-  });
-  return names.size;
-};
+// Spec lines under each Brava product description: fixed approved facts plus
+// the profile's color count from the color config. Metal cards keep their own
+// four-cell spec grid instead, so they get no extra lines.
 const specLinesFor = (tab) => {
-  if (BRAVA_TAB_IDS.includes(tab)) {
-    const n = (productsForStyle("synthetic_slate", tab)[0]?.[1]?.colors ?? []).length;
-    return ["Class 4 impact rating", n > 0 ? `${n} colors` : null, "Compression molded"].filter(Boolean);
-  }
-  const n = uniqueColorCount(visualizerRoofTypeMap[tab]);
-  return [...(metalSpecLines[tab] || []), n > 1 ? `${n} colors` : null].filter(Boolean);
+  if (!BRAVA_TAB_IDS.includes(tab)) return [];
+  const n = (productsForStyle("synthetic_slate", tab)[0]?.[1]?.colors ?? []).length;
+  return ["Class 4 impact rating", n > 0 ? `${n} colors` : null, "Compression molded"].filter(Boolean);
 };
 const badgeMap = {standing:"Popular Choice",copper:"Premium",stone:"HOA Friendly",rpanel:"Value Option"};
 // Standalone material landing pages (Phase 3) -- only populated for
@@ -701,7 +685,8 @@ export default function ProductsSection({
                       <div style={{fontSize:10,color:C.accent,letterSpacing:2,textTransform:"uppercase",marginBottom:8}}>{badgeMap[activeTab]}</div>
                     )}
                     <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(26px,3vw,36px)",fontWeight:700,color:C.white,marginBottom:20}}>{activeType.label}</div>
-                    <p style={{fontSize:16,color:C.mutedLight,lineHeight:1.8,marginBottom:20}}>{activeType.desc}</p>
+                    <p style={{fontSize:16,color:C.mutedLight,lineHeight:1.8,marginBottom:specLinesFor(activeTab).length ? 20 : 28}}>{activeType.desc}</p>
+                    {specLinesFor(activeTab).length > 0 && (
                     <div style={{display:"flex",flexDirection:"column",gap:10,marginBottom:28}}>
                       {specLinesFor(activeTab).map(line=>(
                         <div key={line} style={{display:"flex",alignItems:"center",gap:10,fontSize:13,color:C.accent,letterSpacing:1.2,textTransform:"uppercase",fontWeight:500}}>
@@ -710,6 +695,7 @@ export default function ProductsSection({
                         </div>
                       ))}
                     </div>
+                    )}
                     <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:0}}>
                       {(specMap[activeTab]||[]).map(item=>(
                         <div key={item.k} style={{padding:"14px 0",borderBottom:`1px solid ${C.border}`}}>
