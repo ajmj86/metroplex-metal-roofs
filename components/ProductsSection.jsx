@@ -247,19 +247,23 @@ const roofTypes = [
 ];
 const specMap = {
   standing:[{k:"Lifespan",v:"50–70 yrs"},{k:"Hail Rating",v:"Class 4"},{k:"Wind",v:"High Wind Resistance"},{k:"Fastener",v:"Hidden"}],
-  copper:  [{k:"Lifespan",v:"100+ yrs"}, {k:"Patina",v:"Natural"},{k:"Wind",v:"High Wind Resistance"},{k:"Maintenance",v:"Near zero"}],
+  copper:  [{k:"Lifespan",v:"80–100 yrs"}, {k:"Patina",v:"Natural"},{k:"Wind",v:"High Wind Resistance"},{k:"Maintenance",v:"Near zero"}],
   stone:   [{k:"Lifespan",v:"40–70 yrs"},{k:"Hail Rating",v:"Class 4"},{k:"Wind",v:"High Wind Resistance"},{k:"Profile",v:"Shingle-style"}],
   rpanel:  [{k:"Lifespan",v:"40–60 yrs"},{k:"Hail Rating",v:"Class 4"},{k:"Wind",v:"High Wind Resistance"},{k:"Fastener",v:"Exposed"}],
 };
-// Spec lines under each Brava product description: fixed approved facts plus
-// the profile's color count from the color config. Metal cards keep their own
-// four-cell spec grid instead, so they get no extra lines.
-const specLinesFor = (tab) => {
-  if (!BRAVA_TAB_IDS.includes(tab)) return [];
+// Brava cards use the same 2x2 spec grid as the metal cards. The color count
+// comes from the color config for that profile.
+const specGridFor = (tab) => {
+  if (!BRAVA_TAB_IDS.includes(tab)) return specMap[tab] || [];
   const n = (productsForStyle("synthetic_slate", tab)[0]?.[1]?.colors ?? []).length;
-  return ["Class 4 impact rating", n > 0 ? `${n} colors` : null, "Compression molded"].filter(Boolean);
+  return [
+    {k:"Hail Rating",v:"Class 4"},
+    {k:"Warranty",v:"50-Year Limited"},
+    {k:"Colors",v:String(n)},
+    {k:"Construction",v:"Compression Molded"},
+  ];
 };
-const badgeMap = {standing:"Popular Choice",copper:"Premium",stone:"HOA Friendly",rpanel:"Value Option"};
+const badgeMap = {standing:"Popular Choice",copper:"Premium",stone:"HOA Friendly",rpanel:"Value Option",slate:"Premium Choice",cedar_shake:"Natural Wood Look",spanish_barrel_tile:"Clay Tile Look"};
 // Standalone material landing pages (Phase 3) -- only populated for
 // materials that have a page built so far. Tabs without an entry here just
 // don't render the secondary "full guide" link.
@@ -696,19 +700,9 @@ export default function ProductsSection({
                       <div style={{fontSize:10,color:C.accent,letterSpacing:2,textTransform:"uppercase",marginBottom:8}}>{badgeMap[activeTab]}</div>
                     )}
                     <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(26px,3vw,36px)",fontWeight:700,color:C.white,marginBottom:20}}>{activeType.label}</div>
-                    <p style={{fontSize:16,color:C.mutedLight,lineHeight:1.8,marginBottom:specLinesFor(activeTab).length ? 20 : 28}}>{activeType.desc}</p>
-                    {specLinesFor(activeTab).length > 0 && (
-                    <div style={{display:"flex",flexDirection:"column",gap:10,marginBottom:28}}>
-                      {specLinesFor(activeTab).map(line=>(
-                        <div key={line} style={{display:"flex",alignItems:"center",gap:10,fontSize:13,color:C.accent,letterSpacing:1.2,textTransform:"uppercase",fontWeight:500}}>
-                          <span style={{width:4,height:4,borderRadius:"50%",background:C.accent,flexShrink:0}}/>
-                          <span>{line}</span>
-                        </div>
-                      ))}
-                    </div>
-                    )}
+                    <p style={{fontSize:16,color:C.mutedLight,lineHeight:1.8,marginBottom:28}}>{activeType.desc}</p>
                     <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:0}}>
-                      {(specMap[activeTab]||[]).map(item=>(
+                      {specGridFor(activeTab).map(item=>(
                         <div key={item.k} style={{padding:"14px 0",borderBottom:`1px solid ${C.border}`}}>
                           <div style={{fontSize:9,color:C.muted,letterSpacing:2,textTransform:"uppercase",marginBottom:4}}>{item.k}</div>
                           <div style={{fontSize:14,color:C.white,fontWeight:500}}>{item.v}</div>
