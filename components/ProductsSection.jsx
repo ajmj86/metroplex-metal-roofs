@@ -31,7 +31,7 @@ import {
   STANDING_SEAM_COLORS, R_PANEL_COLORS, STONE_COLORS, STONE_PROFILE_TILES, STONE_SHINGLE_TILES,
   COPPER_PATINA_CHIPS, COPPER_INSTALL_PHOTOS,
 } from "@/lib/productColors";
-import { productsForStyle, MATERIAL_TYPE_DISPLAY_LABELS, styleHasWidthVariants, colorsForWidth, colorImageForWidth } from "@/lib/roofProducts";
+import { productsForStyle, stylesWithColors, MATERIAL_TYPE_DISPLAY_LABELS, styleHasWidthVariants, colorsForWidth, colorImageForWidth } from "@/lib/roofProducts";
 
 /* ── Reveal on scroll ── */
 const Reveal = ({ children, delay=0 }) => {
@@ -250,6 +250,30 @@ const specMap = {
   copper:  [{k:"Lifespan",v:"100+ yrs"}, {k:"Patina",v:"Natural"},{k:"Wind",v:"High Wind Resistance"},{k:"Maintenance",v:"Near zero"}],
   stone:   [{k:"Lifespan",v:"40–70 yrs"},{k:"Hail Rating",v:"Class 4"},{k:"Wind",v:"High Wind Resistance"},{k:"Profile",v:"Shingle-style"}],
   rpanel:  [{k:"Lifespan",v:"40–60 yrs"},{k:"Hail Rating",v:"Class 4"},{k:"Wind",v:"High Wind Resistance"},{k:"Fastener",v:"Exposed"}],
+};
+// Spec lines under each product description. Brava lines are fixed facts plus
+// the profile's color count from the color config; metal lines use the
+// product's own page copy (see each page) plus the config color count.
+const metalSpecLines = {
+  standing:["Class 4 impact rating available","Hidden fasteners, clean lines"],
+  copper:  ["High wind resistance","Natural patina over time"],
+  stone:   ["Class 4 impact rating available","Shingle, shake, tile looks"],
+  rpanel:  ["Class 4 impact rating available","Exposed-fastener panel system"],
+};
+const uniqueColorCount = (roofType) => {
+  const names = new Set();
+  stylesWithColors(roofType).forEach(([styleKey]) => {
+    productsForStyle(roofType, styleKey).forEach(([, prod]) => (prod.colors || []).forEach(c => names.add(c.name)));
+  });
+  return names.size;
+};
+const specLinesFor = (tab) => {
+  if (BRAVA_TAB_IDS.includes(tab)) {
+    const n = (productsForStyle("synthetic_slate", tab)[0]?.[1]?.colors ?? []).length;
+    return ["Class 4 impact rating", n > 0 ? `${n} colors` : null, "Compression molded"].filter(Boolean);
+  }
+  const n = uniqueColorCount(visualizerRoofTypeMap[tab]);
+  return [...(metalSpecLines[tab] || []), n > 1 ? `${n} colors` : null].filter(Boolean);
 };
 const badgeMap = {standing:"Popular Choice",copper:"Premium",stone:"HOA Friendly",rpanel:"Value Option"};
 // Standalone material landing pages (Phase 3) -- only populated for
@@ -662,7 +686,7 @@ export default function ProductsSection({
                         </div>
                         <button
                           onClick={()=>openSwatchModal(activeTab)}
-                          style={{marginTop:18,fontSize:11,letterSpacing:0.6,color:C.muted,background:"none",border:"none",padding:0,cursor:"pointer",textAlign:"left",transition:"color 0.2s"}}
+                          style={{marginTop:18,fontSize:13,letterSpacing:0.6,color:C.muted,background:"none",border:"none",padding:0,cursor:"pointer",textAlign:"left",transition:"color 0.2s"}}
                           onMouseEnter={e=>e.currentTarget.style.color=C.mutedLight}
                           onMouseLeave={e=>e.currentTarget.style.color=C.muted}
                         >{swatchData.caption(swatchData.full.length)}</button>
@@ -677,7 +701,15 @@ export default function ProductsSection({
                       <div style={{fontSize:10,color:C.accent,letterSpacing:2,textTransform:"uppercase",marginBottom:8}}>{badgeMap[activeTab]}</div>
                     )}
                     <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(26px,3vw,36px)",fontWeight:700,color:C.white,marginBottom:20}}>{activeType.label}</div>
-                    <p style={{fontSize:16,color:C.mutedLight,lineHeight:1.8,marginBottom:28}}>{activeType.desc}</p>
+                    <p style={{fontSize:16,color:C.mutedLight,lineHeight:1.8,marginBottom:20}}>{activeType.desc}</p>
+                    <div style={{display:"flex",flexDirection:"column",gap:10,marginBottom:28}}>
+                      {specLinesFor(activeTab).map(line=>(
+                        <div key={line} style={{display:"flex",alignItems:"center",gap:10,fontSize:13,color:C.accent,letterSpacing:1.2,textTransform:"uppercase",fontWeight:500}}>
+                          <span style={{width:4,height:4,borderRadius:"50%",background:C.accent,flexShrink:0}}/>
+                          <span>{line}</span>
+                        </div>
+                      ))}
+                    </div>
                     <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:0}}>
                       {(specMap[activeTab]||[]).map(item=>(
                         <div key={item.k} style={{padding:"14px 0",borderBottom:`1px solid ${C.border}`}}>
@@ -687,18 +719,23 @@ export default function ProductsSection({
                       ))}
                     </div>
                   </div>
-                  <div style={{display:"flex",flexDirection:"column",gap:14}}>
+                  <style>{`
+                    .ps-cta-row{display:flex;flex-direction:row;align-items:center;flex-wrap:wrap;gap:14px 28px}
+                    .ps-guide-link{display:inline-flex;align-items:center;gap:6px;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:600;color:${C.accent};text-decoration:none;transition:color 0.2s}
+                    .ps-guide-link:hover,.ps-guide-link:focus-visible{color:${C.accentLight};text-decoration:underline}
+                    @media (max-width:640px){.ps-cta-row{flex-direction:column;align-items:flex-start;gap:16px}}
+                  `}</style>
+                  <div className="ps-cta-row">
                     <a href={utm(materialVisualizerHref(activeTab))} className="cta-btn"
                       style={{display:"inline-flex",alignItems:"center",justifyContent:"center",gap:8,padding:"14px 24px",background:C.accent,color:C.black,fontSize:11,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"background 0.2s",width:"fit-content"}}
                       onMouseEnter={e=>e.currentTarget.style.background=C.accentLight}
                       onMouseLeave={e=>e.currentTarget.style.background=C.accent}
                     >See it on your home →</a>
                     {productPageMap[activeTab] && (
-                      <a href={productPageMap[activeTab]}
-                        style={{display:"inline-flex",alignItems:"center",gap:6,fontSize:14,color:C.mutedLight,letterSpacing:0.5,textDecoration:"underline",width:"fit-content",transition:"color 0.2s"}}
-                        onMouseEnter={e=>e.currentTarget.style.color=C.accent}
-                        onMouseLeave={e=>e.currentTarget.style.color=C.mutedLight}
-                      >Read the full {activeType.label} guide →</a>
+                      <a href={productPageMap[activeTab]} className="ps-guide-link"
+                        aria-label={`Explore the ${activeType.label} guide`}
+                        title={`Explore the ${activeType.label} guide`}
+                      >Explore the guide →</a>
                     )}
                   </div>
                 </div>
