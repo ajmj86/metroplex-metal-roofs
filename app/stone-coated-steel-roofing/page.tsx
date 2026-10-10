@@ -11,7 +11,7 @@ const BOOKING_URL = 'https://api.leadconnectorhq.com/widget/booking/gG1ruFfEWkUX
 
 export const metadata: Metadata = {
   title: 'Stone-Coated Steel Roofing Dallas–Fort Worth | Metroplex Metal Roofs',
-  description: 'Stone-coated steel roofing for DFW homeowners — the look of architectural shingles with Class 4 hail-rated steel underneath. HOA-friendly profiles. Free consultation.',
+  description: 'Stone-coated steel roofing for DFW homeowners, the look of architectural shingles with Class 4 hail-rated steel underneath. HOA-friendly profiles. Free consultation.',
   alternates: {
     canonical: '/stone-coated-steel-roofing',
   },
@@ -41,11 +41,11 @@ const FAQS = [
   },
   {
     q: 'Will my HOA approve a stone-coated steel roof?',
-    a: 'Stone-coated steel has the highest HOA approval rate of any metal roofing system we install — its shingle and tile profiles read as traditional from the curb, which is usually the sticking point for design review committees. We provide material samples, color chips, and manufacturer spec sheets to support your submission at no additional cost.',
+    a: 'Stone-coated steel has the highest HOA approval rate of any metal roofing system we install, its shingle and tile profiles read as traditional from the curb, which is usually the sticking point for design review committees. We provide material samples, color chips, and manufacturer spec sheets to support your submission at no additional cost.',
   },
   {
     q: 'Does stone-coated steel qualify for insurance discounts in DFW?',
-    a: 'Yes. Stone-coated steel carries a Class 4 impact resistance rating — the highest available — which qualifies for meaningful premium discounts from most Texas carriers. In hail-prone North Texas counties, many homeowners see 15–35% reductions on their wind/hail premium, depending on carrier and policy.',
+    a: 'Yes. Stone-coated steel carries a Class 4 impact resistance rating, the highest available, which qualifies for meaningful premium discounts from most Texas carriers. In hail-prone North Texas counties, many homeowners see 15–35% reductions on their wind/hail premium, depending on carrier and policy.',
   },
   {
     q: 'How long does a stone-coated steel roof last?',
@@ -53,7 +53,7 @@ const FAQS = [
   },
   {
     q: 'How much does stone-coated steel roofing cost per square foot in DFW?',
-    a: 'Stone-coated steel runs about $10–$16 per square foot installed in the Dallas–Fort Worth market. Your exact number depends on roof size, pitch, and complexity — request a free estimate for your specific home.',
+    a: 'Stone-coated steel runs about $10–$16 per square foot installed in the Dallas–Fort Worth market. Your exact number depends on roof size, pitch, and complexity, request a free estimate for your specific home.',
   },
 ]
 
@@ -151,7 +151,7 @@ export default function StoneCoatedSteelRoofingPage() {
               Shingle Curb Appeal.<br/><span style={{ color: C.accent, fontStyle: 'italic' }}>Steel Underneath.</span>
             </h1>
             <p style={{ fontSize: 'clamp(1.05rem,1.3vw,1.1875rem)', lineHeight: 1.8, color: C.mutedLight, maxWidth: 560, marginBottom: 40, fontWeight: 500 }}>
-              The traditional shingle, shake, or tile profile your HOA expects — built on Class 4 hail-rated steel instead of asphalt.
+              The traditional shingle, shake, or tile profile your HOA expects, built on Class 4 hail-rated steel instead of asphalt.
             </p>
             <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'center' }}>
               <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="cta-btn stone-cta-primary"
@@ -189,7 +189,7 @@ export default function StoneCoatedSteelRoofingPage() {
                 </div>
                 {[
                   { label: 'Lifespan', val: 'Typically 15–20 years before a full replacement is needed.' },
-                  { label: 'Hail Resistance', val: 'No meaningful impact rating on standard shingles — hail damage is the most common claim in North Texas.' },
+                  { label: 'Hail Resistance', val: 'No meaningful impact rating on standard shingles, hail damage is the most common claim in North Texas.' },
                   { label: 'Insurance', val: 'No Class 4 discount available on standard asphalt.' },
                   { label: 'Long-Term Cost', val: 'Lower upfront cost, but repeated replacement cycles over a 40-year ownership horizon.' },
                 ].map(item => (
@@ -205,8 +205,8 @@ export default function StoneCoatedSteelRoofingPage() {
                   <div style={{ fontSize: 17, letterSpacing: 2.5, textTransform: 'uppercase', color: C.accent }}>Stone-Coated Steel</div>
                 </div>
                 {[
-                  { label: 'Lifespan', val: '40 to 70 years depending on profile and coating — two to four full asphalt cycles in one install.' },
-                  { label: 'Hail Resistance', val: 'Class 4 impact rating — the highest available — engineered for exactly the hail events North Texas sees every spring.' },
+                  { label: 'Lifespan', val: '40 to 70 years depending on profile and coating, two to four full asphalt cycles in one install.' },
+                  { label: 'Hail Resistance', val: 'Class 4 impact rating, the highest available, engineered for exactly the hail events North Texas sees every spring.' },
                   { label: 'Insurance', val: 'Qualifies for meaningful premium discounts from most Texas carriers.' },
                   { label: 'Long-Term Cost', val: 'Higher upfront cost, but typically a single install for the life of the home.' },
                 ].map(item => (
@@ -226,14 +226,14 @@ export default function StoneCoatedSteelRoofingPage() {
             <SHead
               eyebrow="An Honest Comparison"
               title="Stone-Coated Steel vs. Standing Seam"
-              sub="We install both. Here's how we actually think about which one fits a given home — not a sales pitch for either."
+              sub="We install both. Here's how we actually think about which one fits a given home, not a sales pitch for either."
               center
             />
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
               <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 8, padding: 'clamp(24px,3vw,32px)' }}>
                 <div style={{ fontSize: 13, letterSpacing: 1.5, color: C.accent, textTransform: 'uppercase', marginBottom: 10, fontWeight: 600 }}>Choose Stone-Coated Steel If</div>
                 <p style={{ fontSize: 15, color: C.mutedLight, lineHeight: 1.85, margin: 0 }}>
-                  Your HOA&apos;s design guidelines call for a traditional shingle, shake, or tile profile, or you want the strongest available HOA approval odds. Still Class 4 hail-rated steel underneath.
+                  Your HOA&apos;s design guidelines call for a traditional shingle, shake, or tile profile, or you want a profile HOAs readily approve. Still Class 4 hail-rated steel underneath.
                 </p>
               </div>
               <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 8, padding: 'clamp(24px,3vw,32px)' }}>
@@ -292,7 +292,7 @@ export default function StoneCoatedSteelRoofingPage() {
               Get The Shingle Look<br/><span style={{ fontStyle: 'italic', color: C.accent }}>Without the Asphalt Downside</span>
             </h2>
             <p style={{ fontSize: 16, color: C.mutedLight, lineHeight: 1.8, marginBottom: 40 }}>
-              A quick call with our team is the fastest way to find out if stone-coated steel is the right fit for your home and your HOA — no pressure, no obligation.
+              A quick call with our team is the fastest way to find out if stone-coated steel is the right fit for your home and your HOA, no pressure, no obligation.
             </p>
             <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', justifyContent: 'center' }}>
               <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="cta-btn stone-cta-primary"

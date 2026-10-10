@@ -11,7 +11,7 @@ const BOOKING_URL = 'https://api.leadconnectorhq.com/widget/booking/gG1ruFfEWkUX
 
 export const metadata: Metadata = {
   title: 'Copper Roofing Dallas–Fort Worth | Metroplex Metal Roofs',
-  description: 'Copper roofing for DFW estate homes — a 100+ year lifespan and a natural patina that evolves for generations. The most premium material in residential roofing. Free consultation.',
+  description: 'Copper roofing for DFW estate homes, a 100+ year lifespan and a natural patina that evolves for generations. The most premium material in residential roofing. Free consultation.',
   alternates: {
     canonical: '/copper-roofing',
   },
@@ -31,23 +31,23 @@ const CITIES: [string, string][] = [
 const FAQS = [
   {
     q: 'How long does a copper roof last?',
-    a: 'Copper roofing routinely lasts 100 years or more — it is, by a wide margin, the longest-lived material in residential roofing. Many copper roofs installed in the early 1900s are still fully functional today.',
+    a: 'Copper roofing routinely lasts 100 years or more. Many copper roofs installed in the early 1900s are still fully functional today.',
   },
   {
     q: 'Why does copper change color over time?',
-    a: 'Copper develops a protective oxide layer through natural weathering: bright copper for roughly the first year, shifting to brown tones over the following decade, and eventually settling into the green verdigris patina copper is known for after 20–30+ years. That patina layer is what protects the metal underneath — it is a feature, not wear.',
+    a: 'Copper develops a protective oxide layer through natural weathering: bright copper for roughly the first year, shifting to brown tones over the following decade, and eventually settling into the green verdigris patina copper is known for after 20–30+ years. That patina layer is what protects the metal underneath. It is a feature, not wear.',
   },
   {
     q: 'How much does copper roofing cost per square foot in DFW?',
-    a: 'Copper runs about $25–$40+ per square foot installed in the Dallas–Fort Worth market — the highest cost of any material we install, reflecting both the raw material and the specialized installation it requires. Full copper roofs are most common on estate-level homes; many homeowners use copper selectively as an accent (dormers, entries, bay windows) alongside a standing seam main roof.',
+    a: 'Copper runs about $25–$40+ per square foot installed in the Dallas–Fort Worth market, the highest cost of any material we install, reflecting both the raw material and the specialized installation it requires. Full copper roofs are most common on estate-level homes; many homeowners use copper selectively as an accent (dormers, entries, bay windows) alongside a standing seam main roof.',
   },
   {
     q: 'Does copper roofing require maintenance?',
-    a: 'Very little. Once the patina layer forms, it is essentially self-protecting and does not need repainting, recoating, or the periodic upkeep other roofing materials require. It is among the lowest-maintenance materials available.',
+    a: 'Very little. Once the patina layer forms, it is essentially self-protecting and does not need repainting or recoating, and needs very little periodic upkeep.',
   },
   {
     q: 'Can I use copper as an accent instead of a full roof?',
-    a: 'Yes — copper accents on dormers, entryways, bay windows, or porch roofs are a common way to bring copper\'s look and permanence into a project without the cost of a full copper roof, typically paired with standing seam steel on the main roof planes.',
+    a: 'Yes, copper accents on dormers, entryways, bay windows, or porch roofs are a common way to bring copper\'s look and permanence into a project without the cost of a full copper roof, typically paired with standing seam steel on the main roof planes.',
   },
 ]
 
@@ -172,14 +172,14 @@ export default function CopperRoofingPage() {
             <SHead
               eyebrow="A Living Finish"
               title="Copper Isn't Chosen From a Color Chart"
-              sub="It's one material whose surface evolves for decades — and every stage of that evolution is protecting the roof underneath, not wearing it down."
+              sub="It's one material whose surface evolves for decades, and every stage of that evolution is protecting the roof underneath, not wearing it down."
               center
             />
             <div className="grid-2" style={{ gap: 3, gridTemplateColumns: 'repeat(3,1fr)' }}>
               {[
-                { stage: 'Year 1', title: 'Bright Copper', desc: 'The roof installs with copper\'s familiar bright, warm metallic tone — the same look as a new penny.' },
+                { stage: 'Year 1', title: 'Bright Copper', desc: 'The roof installs with copper\'s familiar bright, warm metallic tone, the same look as a new penny.' },
                 { stage: '~Year 10', title: 'Brown Tones', desc: 'Natural oxidation shifts the surface through a range of brown and russet tones as the protective layer builds.' },
-                { stage: 'Year 30+', title: 'Green Verdigris', desc: 'The surface settles into the green-blue verdigris patina copper is known for — fully self-protecting at this stage.' },
+                { stage: 'Year 30+', title: 'Green Verdigris', desc: 'The surface settles into the green-blue verdigris patina copper is known for, fully self-protecting at this stage.' },
               ].map(item => (
                 <div key={item.stage} style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 8, padding: 'clamp(24px,3vw,32px)' }}>
                   <div style={{ fontSize: 11, letterSpacing: 2, textTransform: 'uppercase', color: C.accent, marginBottom: 10 }}>{item.stage}</div>
@@ -197,7 +197,7 @@ export default function CopperRoofingPage() {
             <SHead
               eyebrow="An Honest Comparison"
               title="Copper vs. Standing Seam Steel"
-              sub="We install both. Here's how we actually think about which one fits a given home — not a sales pitch for either."
+              sub="We install both. Here's how we actually think about which one fits a given home, not a sales pitch for either."
               center
             />
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
@@ -210,7 +210,7 @@ export default function CopperRoofingPage() {
               <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 8, padding: 'clamp(24px,3vw,32px)' }}>
                 <div style={{ fontSize: 13, letterSpacing: 1.5, color: C.accent, textTransform: 'uppercase', marginBottom: 10, fontWeight: 600 }}>Choose Standing Seam If</div>
                 <p style={{ fontSize: 15, color: C.mutedLight, lineHeight: 1.85, margin: 0 }}>
-                  You want a 50–70 year lifespan and the same hidden-fastener architectural line at roughly half the cost per square foot — or you want to reserve copper for an accent instead of the full roof. <Link href="/standing-seam-roofing" style={{ color: C.accent }}>See the full standing seam guide →</Link>
+                  You want a 50–70 year lifespan and the same hidden-fastener architectural line at roughly half the cost per square foot, or you want to reserve copper for an accent instead of the full roof. <Link href="/standing-seam-roofing" style={{ color: C.accent }}>See the full standing seam guide →</Link>
                 </p>
               </div>
             </div>
@@ -222,7 +222,7 @@ export default function CopperRoofingPage() {
           <div className="inner">
             <PricingTable
               title="Copper Roofing Costs in DFW"
-              intro="Copper runs $25–$40+/sq ft installed — the highest cost of any material we install, and the longest lifespan. Installed cost by material, based on current DFW-wide market rates."
+              intro="Copper runs $25–$40+/sq ft installed, the highest cost of any material we install, and the longest lifespan. Installed cost by material, based on current DFW-wide market rates."
             />
           </div>
         </section>
@@ -245,7 +245,7 @@ export default function CopperRoofingPage() {
         {/* ── SERVICE AREAS ── */}
         <section id="service-areas" className="sp" style={{ background: C.card, borderTop: `1px solid ${C.border}` }}>
           <div className="inner">
-            <SHead eyebrow="Service Areas" title="Copper Roofing Across DFW" sub="We install copper roofing — full roofs and accents — throughout the Dallas–Fort Worth Metroplex. Find your city below." center />
+            <SHead eyebrow="Service Areas" title="Copper Roofing Across DFW" sub="We install copper roofing, full roofs and accents, throughout the Dallas–Fort Worth Metroplex. Find your city below." center />
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 9, justifyContent: 'center' }}>
               {CITIES.map(([name, slug]) => (
                 <Link key={slug} href={`/metal-roofing-${slug}-tx`} className="copper-city-pill"
@@ -263,7 +263,7 @@ export default function CopperRoofingPage() {
               Building Something<br/><span style={{ fontStyle: 'italic', color: C.accent }}>Meant to Last Generations?</span>
             </h2>
             <p style={{ fontSize: 16, color: C.mutedLight, lineHeight: 1.8, marginBottom: 40 }}>
-              A quick call with our team is the fastest way to find out if copper — full roof or accent — is the right fit for your home. No pressure, no obligation.
+              A quick call with our team is the fastest way to find out if copper, full roof or accent, is the right fit for your home. No pressure, no obligation.
             </p>
             <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', justifyContent: 'center' }}>
               <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="cta-btn copper-cta-primary"

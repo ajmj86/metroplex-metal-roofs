@@ -125,9 +125,9 @@ const SwatchChip = ({ chip, label, onClick, size="chip", badge }) => {
  * several of those merge these in directly.
  */
 const bravaStyles = [
-  { id: "spanish_barrel_tile", label: "Brava Spanish Barrel Tile", desc: "A rounded, high-relief barrel profile that reads as authentic clay tile from the curb — popular on Mediterranean, Spanish Colonial, and Tuscan-style homes across DFW." },
+  { id: "spanish_barrel_tile", label: "Brava Spanish Barrel Tile", desc: "A rounded, high-relief barrel profile that reads as authentic clay tile from the curb, popular on Mediterranean, Spanish Colonial, and Tuscan-style homes across DFW." },
   { id: "cedar_shake",         label: "Brava Cedar Shake",         desc: "A deeply textured, hand-split shake profile for homeowners who want a rustic, natural-wood look without cedar's fire risk, rot, or ongoing upkeep." },
-  { id: "slate",               label: "Brava Slate",               desc: "A crisp, dimensional slate profile — the closest match to authentic quarried slate — suited to historic-style, French Country, and traditional architecture." },
+  { id: "slate",               label: "Brava Slate",               desc: "A crisp, dimensional slate profile, the closest match to authentic quarried slate, suited to historic-style, French Country, and traditional architecture." },
 ];
 const BRAVA_TAB_IDS = bravaStyles.map(t => t.id);
 // Same "flavor" colors already featured on /synthetic-slate-roofing's own
@@ -240,7 +240,7 @@ const bravaColorsForStyle = (styleId) => {
 
 /* ── Static data (module scope) ── */
 const roofTypes = [
-  {id:"stone",   label:"Stone-Coated Steel",  desc:"The look of architectural shingles with the strength of steel. Class 4 hail rating — ideal for HOA-governed DFW communities that require traditional aesthetics."},
+  {id:"stone",   label:"Stone-Coated Steel",  desc:"The look of architectural shingles with the strength of steel. Class 4 hail rating, ideal for HOA-governed DFW communities that require traditional aesthetics."},
   {id:"copper",  label:"Copper",              desc:"The most premium material in residential roofing. Develops a natural patina over decades, lasts 100+ years, and signals enduring quality. Ideal for estate-level homes or architectural accents."},
   {id:"standing",label:"Standing Seam Steel", desc:"The gold standard in metal roofing. Hidden fasteners, clean architectural lines, and a 50+ year lifespan. Preferred by luxury homebuilders and architects across DFW."},
   {id:"rpanel",  label:"R-Panel",             desc:"A proven exposed-fastener metal panel system offering exceptional durability and longevity. A straightforward entry into metal roofing without sacrificing long-term performance."},
@@ -251,7 +251,7 @@ const specMap = {
   stone:   [{k:"Lifespan",v:"40–70 yrs"},{k:"Hail Rating",v:"Class 4"},{k:"Wind",v:"120 mph"},{k:"Profile",v:"Shingle-style"}],
   rpanel:  [{k:"Lifespan",v:"40–60 yrs"},{k:"Hail Rating",v:"Class 4"},{k:"Wind",v:"120 mph"},{k:"Fastener",v:"Exposed"}],
 };
-const badgeMap = {standing:"Most Popular",copper:"Ultra Premium",stone:"HOA Friendly",rpanel:"Best Value"};
+const badgeMap = {standing:"Popular Choice",copper:"Premium",stone:"HOA Friendly",rpanel:"Value Option"};
 // Standalone material landing pages (Phase 3) -- only populated for
 // materials that have a page built so far. Tabs without an entry here just
 // don't render the secondary "full guide" link.
@@ -327,12 +327,12 @@ const stoneTileVisualizerParams = {
 /* ── Swatch row / modal data (see lib/productColors.js) ── */
 const SWATCH_ROW_LIMIT = 6;
 const swatchDataByTab = {
-  standing: { full: STANDING_SEAM_COLORS, rowOverride: null,      caption: n => `Available in ${n} colors — view all` },
-  rpanel:   { full: R_PANEL_COLORS,       rowOverride: null,      caption: n => `Available in ${n} colors — view all` },
+  standing: { full: STANDING_SEAM_COLORS, rowOverride: null,      caption: n => `Available in ${n} colors, view all` },
+  rpanel:   { full: R_PANEL_COLORS,       rowOverride: null,      caption: n => `Available in ${n} colors, view all` },
   copper:   { full: COPPER_PATINA_CHIPS,  rowOverride: null,      caption: () => "One material. A finish that evolves for generations." },
-  spanish_barrel_tile: { full: bravaColorsForStyle("spanish_barrel_tile"), rowOverride: null, caption: n => `Available in ${n} colors — view all` },
-  cedar_shake:          { full: bravaColorsForStyle("cedar_shake"),         rowOverride: null, caption: n => `Available in ${n} colors — view all` },
-  slate:                { full: bravaColorsForStyle("slate"),               rowOverride: null, caption: n => `Available in ${n} colors — view all` },
+  spanish_barrel_tile: { full: bravaColorsForStyle("spanish_barrel_tile"), rowOverride: null, caption: n => `Available in ${n} colors, view all` },
+  cedar_shake:          { full: bravaColorsForStyle("cedar_shake"),         rowOverride: null, caption: n => `Available in ${n} colors, view all` },
+  slate:                { full: bravaColorsForStyle("slate"),               rowOverride: null, caption: n => `Available in ${n} colors, view all` },
 };
 
 /*
@@ -491,7 +491,7 @@ export default function ProductsSection({
     <div style={{width:"100%",padding:"8px 4px",display:"flex",flexDirection:"column",gap:26,alignItems:"center"}}>
       <div style={{maxWidth:480}}>
         <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:24,color:C.white,marginBottom:8}}>A Living Finish</div>
-        <p style={{fontSize:14,color:C.mutedLight,lineHeight:1.7,margin:0}}>Copper isn't chosen from a color chart — it's one material whose surface evolves for decades.</p>
+        <p style={{fontSize:14,color:C.mutedLight,lineHeight:1.7,margin:0}}>Copper isn't chosen from a color chart. It's one material whose surface evolves for decades.</p>
       </div>
       <div style={{width:"100%",maxWidth:480,padding:"0 8px"}}>
         <div style={{height:20,borderRadius:10,background:`linear-gradient(90deg, ${COPPER_PATINA_CHIPS[0].hex}, ${COPPER_PATINA_CHIPS[1].hex}, ${COPPER_PATINA_CHIPS[2].hex})`}}/>

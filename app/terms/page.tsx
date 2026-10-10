@@ -29,7 +29,7 @@ export default function TermsPage() {
       <p>Any cost ranges or preliminary figures discussed verbally or via email are non-binding until a formal written estimate is issued and signed by both parties. Written estimates are valid for 30 days from the date of issue unless otherwise stated. Final project costs are determined by confirmed measurements, material selection, current pricing at time of contract execution, and any additional materials or labor required following physical inspection of the existing roof condition, proper removal of existing roofing systems, and installation in compliance with applicable local building codes.</p>
 
       <LH>6. Intellectual Property</LH>
-      <p>All content on this Site — including text, graphics, logos, and software — is the property of {LEGAL_ENTITY} or its licensors and is protected by applicable copyright and trademark law. You may not reproduce or distribute any Site content without our prior written permission.</p>
+      <p>All content on this Site, including text, graphics, logos, and software, is the property of {LEGAL_ENTITY} or its licensors and is protected by applicable copyright and trademark law. You may not reproduce or distribute any Site content without our prior written permission.</p>
 
       <LH>7. Disclaimer of Warranties</LH>
       <p>THE SITE AND ITS CONTENT ARE PROVIDED "AS IS" WITHOUT WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.</p>

@@ -386,7 +386,7 @@ const steps = [
  * customer reviews are collected; keep the #reviews id and section shape.
  */
 const credentials = [
-  {eyebrow:"Impact Rating",   label:"Class 4 Hail Rated",           body:"The highest impact rating UL tests for. Engineered for DFW's hail climate, not just rated for it."},
+  {eyebrow:"Impact Rating",   label:"Class 4 Hail Rated",           body:"The highest impact rating available (Class 4). Engineered for DFW's hail climate, not just rated for it."},
   {eyebrow:"Wind Rating",     label:"Up to 160 MPH Wind Rated",     body:"Standing seam and copper systems rated well above anything DFW's storm season throws at a roof."},
   {eyebrow:"Coverage",        label:"10-Year Workmanship, In Writing", body:"Backed by manufacturer material warranties on every system, registered in your name, not a verbal promise."},
 ];

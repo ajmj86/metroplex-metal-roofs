@@ -60,8 +60,8 @@ const FAQS = [
     a: 'We install three Brava composite profiles: Brava Spanish Barrel Tile (a rounded clay-tile profile for Mediterranean and Spanish Colonial-style homes), Brava Cedar Shake (a textured, hand-split wood-shake look without the fire risk or upkeep of real cedar), and Brava Slate (a crisp, dimensional profile that\'s the closest match to authentic quarried slate). Each comes in a range of factory colors. We\'ll walk through samples for your specific home during your free consultation.',
   },
   {
-    q: 'Why does Metroplex Metal Roofs install Brava synthetic tile instead of other composite brands?',
-    a: "We selected Brava after evaluating the composite tile market on wind performance, fire rating, and texture realism. Brava tiles are wind-tested up to 188–211 mph with proper fastening, beyond what many other synthetic tile manufacturers rate their composite profiles for, and select Brava shake and slate lines carry a standalone Class A fire rating without requiring the specialized fire-retardant underlayment some competing composite products need to hit the same rating. The compression-molded texture and through-body color also hold up to chips and scratches better than surface-treated alternatives. It's the combination that made Brava our standard, not any single spec.",
+    q: 'Why does Metroplex Metal Roofs install Brava synthetic slate and tile?',
+    a: "Brava gives homeowners the look of natural slate, shake, or tile on a composite built for North Texas weather. We chose Brava for its wind resistance, fire performance, and realistic texture, and for a color that runs through the full thickness of each tile. It's the combination that made Brava our standard for synthetic slate, not any single spec.",
   },
   {
     q: 'How much does Brava synthetic slate roofing cost compared to real slate?',
@@ -69,7 +69,7 @@ const FAQS = [
   },
   {
     q: 'How long does Brava synthetic slate roofing last?',
-    a: "Brava synthetic slate is backed by a 50-year limited warranty from Brava, with the material engineered to resist cracking, fading, and impact damage. That falls short of standing seam metal's 50–70 year lifespan, but it's well beyond asphalt shingles and far more durable than real slate, which is prone to cracking underfoot and in hail regardless of its long theoretical lifespan.",
+    a: "Brava synthetic slate is backed by a 50-year limited warranty from Brava. The composite is engineered to resist cracking and fading, and it is built to last for decades, well beyond the 15–20 year lifespan of asphalt shingles.",
   },
   {
     q: 'Is Brava synthetic slate roofing heavier than asphalt or metal?',
@@ -77,7 +77,7 @@ const FAQS = [
   },
   {
     q: 'Brava synthetic slate vs. metal roofing, which is better for my home?',
-    a: "It depends on what you're optimizing for. Standing seam metal offers the longest lifespan, the strongest insurance discounts, and a cleaner architectural line. Brava synthetic slate offers a traditional, dimensional profile that some HOAs and historic-style homes call for specifically, in a system still built for North Texas hail. We install both, and we'll tell you honestly which one fits your home and your HOA's guidelines, not just push whichever is easier to sell.",
+    a: "It depends on what you're optimizing for. Standing seam metal offers a 50–70 year lifespan, strong insurance discounts, and a clean architectural line. Brava synthetic slate offers a traditional, dimensional profile that some HOAs and historic-style homes call for specifically, in a system built for North Texas hail. We install both, and we'll tell you honestly which one fits your home and your HOA's guidelines.",
   },
   {
     q: 'Does Brava synthetic slate qualify for insurance discounts like metal does?',
@@ -308,19 +308,19 @@ export default function SyntheticSlateRoofingPage() {
               {[
                 {
                   label: 'Wind Performance',
-                  val: 'Brava composite tiles are wind-tested to withstand up to 188–211 mph with proper fastening, well beyond what many other synthetic tile manufacturers rate their composite profiles for. That matters here: North Texas sees serious straight-line wind and severe thunderstorm events alongside its hail seasons, and a roof rated for a fraction of that speed is a real long-term risk, not just a spec-sheet number.',
+                  val: 'Brava composite tiles are tested for high wind resistance when installed to Brava\'s specifications. North Texas sees serious straight-line wind and severe thunderstorm events alongside its hail seasons, so we walk through the right installation method for your home with you.',
                 },
                 {
-                  label: 'Fire Rating',
-                  val: "Select Brava shake and slate lines carry a standalone Class A fire rating, the highest available, without requiring the specialized, costly fire-retardant underlayment system some competing composite products need to hit the same rating. That's a real difference in install cost and complexity, not just a certification footnote.",
+                  label: 'Fire Performance',
+                  val: "Brava shake and slate are specified with fire performance in mind. We confirm the right fire-rated assembly for your home and your local requirements during your consultation.",
                 },
                 {
                   label: 'Realistic Texture, No Two Tiles Alike',
-                  val: "Brava tiles are compression-molded from actual natural wood shake and slate masters, capturing deep surface ridges and irregular, rustic edges that read as genuinely handmade rather than stamped. Color runs through the full thickness of each tile, through-body mineral coloration, so a scratch or chip exposes more of the same color underneath, not a mismatched substrate the way surface-treated alternatives can show.",
+                  val: "Brava tiles are compression-molded from natural wood shake and slate masters, capturing deep surface ridges and irregular, rustic edges that read as genuinely handmade. Color runs through the full thickness of each tile, so a scratch or chip exposes more of the same color underneath.",
                 },
                 {
                   label: 'Weight & Profile Availability',
-                  val: "Brava's composite is lighter per square than some heavy-duty slate alternatives, reducing the load on older roof decks that were never engineered for real slate's weight. Brava also makes a genuine composite Spanish barrel tile profile with high-wind and Miami-Dade approvals, a traditional tile silhouette not every composite manufacturer offers.",
+                  val: "Brava's composite is lightweight, which reduces the load on older roof decks that were never engineered for real slate's weight. Brava also makes a composite Spanish barrel tile profile with a traditional tile silhouette.",
                 },
               ].map(item => (
                 <div key={item.label} style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 8, padding: 'clamp(24px,3vw,32px)', height: '100%' }}>
@@ -345,7 +345,7 @@ export default function SyntheticSlateRoofingPage() {
               <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 8, padding: 'clamp(24px,3vw,32px)' }}>
                 <div style={{ fontSize: 13, letterSpacing: 1.5, color: C.accent, textTransform: 'uppercase', marginBottom: 10, fontWeight: 600 }}>Choose Metal If</div>
                 <p style={{ fontSize: 15, color: C.mutedLight, lineHeight: 1.85, margin: 0 }}>
-                  You want the longest possible lifespan (standing seam runs 50–70 years), the strongest available insurance discounts, and a clean, modern architectural line. Metal is the higher-durability, higher-savings choice over a 20–30 year horizon.
+                  You want a 50–70 year lifespan (standing seam), strong insurance discounts, and a clean, modern architectural line. Metal is a high-durability, high-savings choice over a 20–30 year horizon.
                 </p>
               </div>
               <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 8, padding: 'clamp(24px,3vw,32px)' }}>

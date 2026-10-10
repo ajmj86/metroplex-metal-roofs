@@ -11,7 +11,7 @@ const BOOKING_URL = 'https://api.leadconnectorhq.com/widget/booking/gG1ruFfEWkUX
 
 export const metadata: Metadata = {
   title: 'R-Panel Metal Roofing Dallas–Fort Worth | Metroplex Metal Roofs',
-  description: 'R-panel exposed-fastener metal roofing for DFW homeowners — the most affordable entry into metal roofing, without sacrificing long-term durability. Free consultation.',
+  description: 'R-panel exposed-fastener metal roofing for DFW homeowners, the most affordable entry into metal roofing, without sacrificing long-term durability. Free consultation.',
   alternates: {
     canonical: '/r-panel-roofing',
   },
@@ -33,11 +33,11 @@ const R_PANEL_COLOR_NAMES = ['Bone White', 'Bronze', 'Burgundy', 'Charcoal Gray'
 const FAQS = [
   {
     q: 'What is R-panel metal roofing?',
-    a: 'R-panel is an exposed-fastener metal roofing system — ribbed steel panels installed with screws driven directly through the panel face. It\'s a proven, straightforward system widely used on both residential and agricultural buildings across Texas.',
+    a: 'R-panel is an exposed-fastener metal roofing system, ribbed steel panels installed with screws driven directly through the panel face. It\'s a proven, straightforward system widely used on both residential and agricultural buildings across Texas.',
   },
   {
     q: 'Is R-panel a good long-term roofing option?',
-    a: 'Yes. R-panel typically lasts 40 to 60 years — far beyond asphalt shingles — and carries the same Class 4 hail rating as our other steel systems. The tradeoff versus standing seam is the exposed fastener pattern, not the underlying durability of the steel.',
+    a: 'Yes. R-panel typically lasts 40 to 60 years, far beyond asphalt shingles, and carries the same Class 4 hail rating as our other steel systems. The tradeoff versus standing seam is the exposed fastener pattern, not the underlying durability of the steel.',
   },
   {
     q: 'What colors does R-panel come in?',
@@ -45,11 +45,11 @@ const FAQS = [
   },
   {
     q: 'Does R-panel qualify for insurance discounts in DFW?',
-    a: 'Yes. R-panel carries a Class 4 impact resistance rating — the highest available — which qualifies for meaningful premium discounts from most Texas carriers, the same as our other metal roofing systems.',
+    a: 'Yes. R-panel carries a Class 4 impact resistance rating, the highest available, which qualifies for meaningful premium discounts from most Texas carriers, the same as our other metal roofing systems.',
   },
   {
     q: 'How much does R-panel metal roofing cost per square foot in DFW?',
-    a: 'R-panel is the most affordable metal roofing system we install, running about $7–$11 per square foot installed in the Dallas–Fort Worth market. Your exact number depends on roof size, pitch, and complexity — request a free estimate for your specific home.',
+    a: 'R-panel is the most affordable metal roofing system we install, running about $7–$11 per square foot installed in the Dallas–Fort Worth market. Your exact number depends on roof size, pitch, and complexity, request a free estimate for your specific home.',
   },
 ]
 
@@ -147,7 +147,7 @@ export default function RPanelRoofingPage() {
               The Smart Entry<br/><span style={{ color: C.accent, fontStyle: 'italic' }}>Into Metal Roofing.</span>
             </h1>
             <p style={{ fontSize: 'clamp(1.05rem,1.3vw,1.1875rem)', lineHeight: 1.8, color: C.mutedLight, maxWidth: 560, marginBottom: 40, fontWeight: 500 }}>
-              A proven exposed-fastener steel panel system offering exceptional durability and longevity — the most affordable way into metal roofing without sacrificing long-term performance.
+              A proven exposed-fastener steel panel system offering exceptional durability and longevity, the most affordable way into metal roofing without sacrificing long-term performance.
             </p>
             <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'center' }}>
               <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="cta-btn rpanel-cta-primary"
@@ -174,7 +174,7 @@ export default function RPanelRoofingPage() {
             <SHead
               eyebrow="Why R-Panel"
               title="The Most Affordable Way Off Asphalt"
-              sub="R-panel costs less per square foot than any other metal system we install, and still leaves asphalt shingles behind on every durability measure that matters."
+              sub="R-panel is our most affordable way into metal roofing, built to last far longer than asphalt shingles."
               center
             />
             <div className="grid-2" style={{ gap: 3 }}>
@@ -185,7 +185,7 @@ export default function RPanelRoofingPage() {
                 </div>
                 {[
                   { label: 'Lifespan', val: 'Typically 15–20 years before a full replacement is needed.' },
-                  { label: 'Hail Resistance', val: 'No meaningful impact rating on standard shingles — hail damage is the most common claim in North Texas.' },
+                  { label: 'Hail Resistance', val: 'No meaningful impact rating on standard shingles, hail damage is the most common claim in North Texas.' },
                   { label: 'Insurance', val: 'No Class 4 discount available on standard asphalt.' },
                   { label: 'Long-Term Cost', val: 'Lower upfront cost, but repeated replacement cycles over a 40-year ownership horizon.' },
                 ].map(item => (
@@ -201,8 +201,8 @@ export default function RPanelRoofingPage() {
                   <div style={{ fontSize: 17, letterSpacing: 2.5, textTransform: 'uppercase', color: C.accent }}>R-Panel</div>
                 </div>
                 {[
-                  { label: 'Lifespan', val: '40 to 60 years — two to three full asphalt cycles in one install.' },
-                  { label: 'Hail Resistance', val: 'Class 4 impact rating — the highest available — the same rating as our premium systems.' },
+                  { label: 'Lifespan', val: '40 to 60 years, two to three full asphalt cycles in one install.' },
+                  { label: 'Hail Resistance', val: 'Class 4 impact rating, the highest available, the same rating as our premium systems.' },
                   { label: 'Insurance', val: 'Qualifies for meaningful premium discounts from most Texas carriers.' },
                   { label: 'Long-Term Cost', val: 'The lowest cost per square foot of any metal system we install, with metal-level durability.' },
                 ].map(item => (
@@ -222,7 +222,7 @@ export default function RPanelRoofingPage() {
             <SHead
               eyebrow="An Honest Comparison"
               title="R-Panel vs. Standing Seam"
-              sub="We install both. Here's how we actually think about which one fits a given home — not a sales pitch for either."
+              sub="We install both. Here's how we actually think about which one fits a given home, not a sales pitch for either."
               center
             />
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
@@ -247,7 +247,7 @@ export default function RPanelRoofingPage() {
           <div className="inner">
             <PricingTable
               title="R-Panel Metal Roofing Costs in DFW"
-              intro="R-panel runs $7–$11/sq ft installed — the most affordable metal system we offer. Installed cost by material, based on current DFW-wide market rates."
+              intro="R-panel runs $7–$11/sq ft installed, the most affordable metal system we offer. Installed cost by material, based on current DFW-wide market rates."
             />
           </div>
         </section>
@@ -288,7 +288,7 @@ export default function RPanelRoofingPage() {
               Ready For a Metal Roof<br/><span style={{ fontStyle: 'italic', color: C.accent }}>At the Right Price?</span>
             </h2>
             <p style={{ fontSize: 16, color: C.mutedLight, lineHeight: 1.8, marginBottom: 40 }}>
-              A quick call with our team is the fastest way to find out if R-panel is the right fit for your home and your budget — no pressure, no obligation.
+              A quick call with our team is the fastest way to find out if R-panel is the right fit for your home and your budget, no pressure, no obligation.
             </p>
             <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', justifyContent: 'center' }}>
               <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="cta-btn rpanel-cta-primary"

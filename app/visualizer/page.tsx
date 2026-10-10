@@ -42,7 +42,7 @@ const LOADING_PHRASES = [
   'Applying your chosen material and color…',
   'Running the AI render engine…',
   'Adding realistic lighting and shadows…',
-  'Almost there — finalizing your visualization…',
+  'Almost there, finalizing your visualization…',
 ]
 
 const TX_BOUNDS = { north: 36.5, south: 25.8, east: -93.5, west: -106.6 }
@@ -212,7 +212,7 @@ const GATE_SCREENS: GateScreen[] = [
   {
     field: 'currentRoofType',
     headline: "What's your roof looking like right now?",
-    subtext: "No judgment — we're just figuring out your starting point.",
+    subtext: "No judgment. We're just figuring out your starting point.",
     choices: [
       { value: 'asphalt_shingles',  label: 'Asphalt Shingles',    icon: '🏠' },
       { value: 'metal_old',         label: 'Old Metal / Tin',      icon: '🔩' },
@@ -238,16 +238,16 @@ const GATE_SCREENS: GateScreen[] = [
     headline: "Have you filed an insurance claim yet?",
     subtext: "If damage is involved, we can walk you through the upgrade pathway.",
     choices: [
-      { value: 'yes_approved',         label: 'Yes — Claim Approved',       icon: '✅' },
-      { value: 'yes_pending',          label: 'Yes — Still Pending',        icon: '⏳' },
-      { value: 'no_but_considering',   label: 'No — But Considering It',    icon: '🤔' },
-      { value: 'no_cash',              label: 'No — Paying Out of Pocket',  icon: '💵' },
+      { value: 'yes_approved',         label: 'Yes, Claim Approved',       icon: '✅' },
+      { value: 'yes_pending',          label: 'Yes, Still Pending',        icon: '⏳' },
+      { value: 'no_but_considering',   label: 'No, But Considering It',    icon: '🤔' },
+      { value: 'no_cash',              label: 'No, Paying Out of Pocket',  icon: '💵' },
     ],
   },
   {
     field: 'timeline',
     headline: "When are you looking to get this done?",
-    subtext: "We work on your timeline — not ours.",
+    subtext: "We work on your timeline, not ours.",
     choices: [
       { value: 'asap',             label: 'As Soon as Possible',    icon: '🔥' },
       { value: '1_3_months',       label: 'Within 1–3 Months',     icon: '📆' },
@@ -698,7 +698,7 @@ export default function VisualizerPage() {
           return
         }
       }
-      setLookupError("We couldn't find a match — you can start a new rendering below.")
+      setLookupError("We couldn't find a match. You can start a new rendering below.")
     } catch {
       setLookupError('Something went wrong. Please try again.')
     } finally {
@@ -1158,10 +1158,10 @@ export default function VisualizerPage() {
             <div style={{ animation: 'vfade 0.3s ease', textAlign: 'center' }}>
               <div style={{ fontSize: 13, letterSpacing: 4, color: C.accent, textTransform: 'uppercase', marginBottom: 20, fontWeight: 600 }}>Welcome Back</div>
               <h1 style={{ fontFamily: "'Cormorant Garamond',Georgia,serif", fontSize: 'clamp(1.8rem,4vw,2.6rem)', fontWeight: 700, color: C.white, lineHeight: 1.25, marginBottom: 16 }}>
-                Hi {returningContact.firstName || 'there'} — still at<br/><span style={{ color: C.accent }}>{returningContact.address}</span>?
+                Hi {returningContact.firstName || 'there'}, still at<br/><span style={{ color: C.accent }}>{returningContact.address}</span>?
               </h1>
               <p style={{ fontSize: 15, color: C.mutedLight, lineHeight: 1.8, maxWidth: 460, margin: '0 auto 32px' }}>
-                See it in a different material or color — no need to re-answer everything.
+                See it in a different material or color, no need to re-answer everything.
               </p>
               <button
                 onClick={() => { setReturningSameAddress(true); handleVisualize() }}
@@ -1169,7 +1169,7 @@ export default function VisualizerPage() {
                 style={{ width: '100%', maxWidth: 420, margin: '0 auto', display: 'block', padding: '16px', background: C.accent, color: C.black, fontSize: 12, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 700, borderRadius: 4, opacity: locating ? 0.45 : 1, border: 'none', cursor: locating ? 'not-allowed' : 'pointer', fontFamily: "'Outfit',sans-serif", marginBottom: 16, transition: 'background 0.2s' }}
                 onMouseEnter={e => { if (!locating) e.currentTarget.style.background = C.accentLight }}
                 onMouseLeave={e => { e.currentTarget.style.background = C.accent }}
-              >{locating ? 'Locating…' : 'Yes — Try a Different Color →'}</button>
+              >{locating ? 'Locating…' : 'Yes, Try a Different Color →'}</button>
               <button
                 onClick={() => { setReturningSameAddress(false); setAddress(''); setStep('address') }}
                 style={{ fontSize: 11, color: C.muted, letterSpacing: 1, textTransform: 'uppercase', cursor: 'pointer', background: 'none', border: 'none', padding: 0, textDecoration: 'underline', fontFamily: "'Outfit',sans-serif" }}
@@ -1185,11 +1185,11 @@ export default function VisualizerPage() {
                   See Your Home With<br /><span style={{ color: C.accent, fontStyle: 'italic' }}>a New Roof</span>
                 </h1>
                 <p style={{ fontSize: 15, color: C.mutedLight, lineHeight: 1.8, maxWidth: 460, margin: '0 auto' }}>
-                  Enter your address and choose a material. We&apos;ll render your home with your selected roofing material and give you a price range — in under 60 seconds. No upload required.
+                  Enter your address and choose a material. We&apos;ll render your home with your selected roofing material and give you a price range, in under 60 seconds. No upload required.
                 </p>
               </div>
               {placesFailed && !addressComponents && (
-                <div style={{ fontSize: 11, color: C.accentLight, marginBottom: 6 }}>Address suggestions aren&apos;t available right now — type your full address (street, city, state) and continue.</div>
+                <div style={{ fontSize: 11, color: C.accentLight, marginBottom: 6 }}>Address suggestions aren&apos;t available right now. Type your full address (street, city, state) and continue.</div>
               )}
               {!placesFailed && !addrError && address.trim() && !addressComponents && (
                 // Above the input, not below -- the Places suggestion dropdown
@@ -1312,7 +1312,7 @@ export default function VisualizerPage() {
                     <div>
                       <div style={{ fontSize: 13, color: C.white, fontWeight: 500, marginBottom: 4 }}>{address}</div>
                       <div style={{ fontSize: 11, color: C.muted, fontStyle: 'italic', lineHeight: 1.5 }}>
-                        No satellite image found — your render will use your address and selected style.
+                        No satellite image found. Your render will use your address and selected style.
                       </div>
                     </div>
                   </div>
@@ -1506,7 +1506,7 @@ export default function VisualizerPage() {
 
               {selType === 'standing_seam' && (
                 <p style={{ fontSize: 13, color: C.muted, fontStyle: 'italic', lineHeight: 1.5, marginBottom: 20 }}>
-                  Standing seam panels are standard 24-gauge steel — a premium, highly durable choice resistant to dents, wind uplift, and oil canning. Fastening system (snaplock or double mechanical lock) is matched to your roof&apos;s slope during final measurement.
+                  Standing seam panels are standard 24-gauge steel, a premium, highly durable choice resistant to dents, wind uplift, and oil canning. Fastening system (snaplock or double mechanical lock) is matched to your roof&apos;s slope during final measurement.
                 </p>
               )}
 
@@ -1637,7 +1637,7 @@ export default function VisualizerPage() {
                         <p style={{ fontSize: 13, color: C.muted, lineHeight: 1.65, marginBottom: 24 }}>
                           {gateData.timeline === 'just_researching'
                             ? "We'll send your render and a ballpark price range so you have a starting point for when you're ready."
-                            : "We'll send your AI-rendered roof design to this number — no spam, ever."}
+                            : "We'll send your AI-rendered roof design to this number, no spam, ever."}
                         </p>
                         <div style={{ display: 'flex', gap: 12, marginBottom: 12 }}>
                           <div style={{ flex: 1 }}>
@@ -1690,7 +1690,7 @@ export default function VisualizerPage() {
                         </div>
                         {leadSubmitFailed && (
                           <div role="alert" style={{ fontSize: 13, color: C.white, lineHeight: 1.6, marginBottom: 12, padding: '12px 14px', background: C.surface, borderRadius: 4, border: '1px solid #F87171' }}>
-                            We couldn&apos;t save your details just now — nothing is lost on your end. Please tap Try again, or call us at{' '}
+                            We couldn&apos;t save your details just now. Nothing is lost on your end. Please tap Try again, or call us at{' '}
                             <a href={PHONE_TEL} style={{ color: C.accent, textDecoration: 'underline' }}>{PHONE}</a>{' '}and we&apos;ll take care of you.
                           </div>
                         )}
@@ -1752,7 +1752,7 @@ export default function VisualizerPage() {
                 {gateData.firstName ? ` for ${gateData.firstName}` : ''}
               </div>
               <div style={{ fontSize: 12, color: C.muted, marginTop: 12, fontStyle: 'italic' }}>
-                Your render takes about 60 seconds — worth the wait.
+                Your render takes about 60 seconds, worth the wait.
               </div>
             </div>
           )}

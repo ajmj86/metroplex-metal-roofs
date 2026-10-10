@@ -12,7 +12,7 @@ export const FACEBOOK_DATA: LandingPageData = {
     eyebrowText: 'Your Home, in Metal or Brava Synthetic Slate · Dallas–Fort Worth',
     headline: 'See Your Roof',
     headlineAccent: 'Before You Buy It',
-    subhead: 'The only tool in DFW that renders YOUR actual home in metal and Brava synthetic slate roofing. Pick a material, pick a color, get a real price range in under 60 seconds.',
+    subhead: 'A free tool that renders YOUR actual home in metal and Brava synthetic slate roofing. Pick a material, pick a color, get a real price range in under 60 seconds.',
     microcopy: 'See your home in metal and get a free price range, no photo upload, no obligation.',
     backgroundImageSrc: '/MMR Hero Pic.png',
     trustBullets: ['50-Year Lifespan', 'Insurance Discount Eligible*', 'Class 4 Impact Rated'],

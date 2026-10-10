@@ -11,7 +11,7 @@ const BOOKING_URL = 'https://api.leadconnectorhq.com/widget/booking/gG1ruFfEWkUX
 
 export const metadata: Metadata = {
   title: 'Standing Seam Metal Roofing Dallas–Fort Worth | Metroplex Metal Roofs',
-  description: 'Standing seam metal roofing for DFW homeowners — hidden fasteners, a 50–70 year lifespan, and Class 4 hail rating. Seven factory colors. Free consultation.',
+  description: 'Standing seam metal roofing for DFW homeowners, hidden fasteners, a 50–70 year lifespan, and Class 4 hail rating. Seven factory colors. Free consultation.',
   alternates: {
     canonical: '/standing-seam-roofing',
   },
@@ -35,27 +35,27 @@ const STANDING_SEAM_COLOR_NAMES = ['Bone White', 'Bronze', 'Burgundy', 'Charcoal
 const FAQS = [
   {
     q: 'What makes standing seam different from other metal roofing?',
-    a: "Standing seam panels interlock via a raised, hidden-fastener seam — no exposed screws penetrating the panel face anywhere on the roof. That's the main thing that separates it from exposed-fastener systems like R-panel: nothing to back out, corrode, or leak over time, and a cleaner, unbroken architectural line.",
+    a: "Standing seam panels interlock via a raised, hidden-fastener seam, no exposed screws penetrating the panel face anywhere on the roof. That's the main thing that separates it from exposed-fastener systems like R-panel: nothing to back out, corrode, or leak over time, and a cleaner, unbroken architectural line.",
   },
   {
     q: 'How long does a standing seam metal roof last?',
-    a: 'Standing seam is the longest-lived roofing system we install — typically 50 to 70 years, versus 40–60 years for exposed-fastener metal and 15–20 years for asphalt shingles. Most DFW homeowners who install standing seam never replace a roof again.',
+    a: 'Standing seam is the longest-lived roofing system we install, typically 50 to 70 years, versus 40–60 years for exposed-fastener metal and 15–20 years for asphalt shingles. Most DFW homeowners who install standing seam never replace a roof again.',
   },
   {
     q: 'Does standing seam qualify for insurance discounts in DFW?',
-    a: 'Yes. Standing seam carries a Class 4 impact resistance rating — the highest available — which qualifies for meaningful premium discounts from most Texas carriers. In hail-prone North Texas counties, many homeowners see 15–35% reductions on their wind/hail premium after switching, depending on carrier and policy.',
+    a: 'Yes. Standing seam carries a Class 4 impact resistance rating, the highest available, which qualifies for meaningful premium discounts from most Texas carriers. In hail-prone North Texas counties, many homeowners see 15–35% reductions on their wind/hail premium after switching, depending on carrier and policy.',
   },
   {
     q: 'Will my HOA approve a standing seam metal roof?',
-    a: 'Most DFW-area HOAs approve standing seam in neutral or earth-tone colors — charcoal gray, bronze, and true black are the most commonly approved. We provide material samples, color chips, and manufacturer spec sheets to support your HOA submission at no additional cost.',
+    a: 'Most DFW-area HOAs approve standing seam in neutral or earth-tone colors. Charcoal gray, bronze, and true black are the most commonly approved. We provide material samples, color chips, and manufacturer spec sheets to support your HOA submission at no additional cost.',
   },
   {
     q: 'What colors does standing seam metal roofing come in?',
-    a: `Our standing seam systems come in seven factory finishes: ${STANDING_SEAM_COLOR_NAMES.join(', ')}. Every finish carries the same panel warranty and Class 4 rating — color is purely an aesthetic choice, not a durability tradeoff.`,
+    a: `Our standing seam systems come in seven factory finishes: ${STANDING_SEAM_COLOR_NAMES.join(', ')}. Every finish carries the same panel warranty and Class 4 rating, color is purely an aesthetic choice, not a durability tradeoff.`,
   },
   {
     q: 'How much does standing seam metal roofing cost per square foot in DFW?',
-    a: 'Standard standing seam runs about $12–$18 per square foot installed in the Dallas–Fort Worth market; premium 24-gauge standing seam runs $15–$22+ per square foot. Your exact number depends on roof size, pitch, and complexity — request a free estimate for your specific home.',
+    a: 'Standard standing seam runs about $12–$18 per square foot installed in the Dallas–Fort Worth market; premium 24-gauge standing seam runs $15–$22+ per square foot. Your exact number depends on roof size, pitch, and complexity. Request a free estimate for your specific home.',
   },
 ]
 
@@ -195,10 +195,10 @@ export default function StandingSeamRoofingPage() {
                   <div style={{ fontSize: 17, letterSpacing: 2.5, textTransform: 'uppercase', color: C.muted }}>Exposed Fastener</div>
                 </div>
                 {[
-                  { label: 'Penetrations', val: 'Screws pass directly through the panel face — every one is a potential leak point over the life of the roof.' },
+                  { label: 'Penetrations', val: 'Screws pass directly through the panel face. Every one is a potential leak point over the life of the roof.' },
                   { label: 'Maintenance', val: 'Fastener washers degrade over time and typically need inspection or replacement well before the panels do.' },
                   { label: 'Appearance', val: 'Visible screw heads in a regular pattern across the whole roof surface.' },
-                  { label: 'Lifespan', val: 'Still durable — typically 40–60 years — just shorter than a hidden-fastener system.' },
+                  { label: 'Lifespan', val: 'Still durable, typically 40–60 years, just shorter than a hidden-fastener system.' },
                 ].map(item => (
                   <div key={item.label} style={{ padding: '18px 0', borderBottom: `1px solid ${C.border}` }}>
                     <div style={{ fontSize: 12, letterSpacing: 1.5, textTransform: 'uppercase', color: C.muted, marginBottom: 4 }}>{item.label}</div>
@@ -212,9 +212,9 @@ export default function StandingSeamRoofingPage() {
                   <div style={{ fontSize: 17, letterSpacing: 2.5, textTransform: 'uppercase', color: C.accent }}>Standing Seam</div>
                 </div>
                 {[
-                  { label: 'Penetrations', val: 'Panels interlock via a raised seam with concealed clips — zero fastener penetrations through the panel face.' },
+                  { label: 'Penetrations', val: 'Panels interlock via a raised seam with concealed clips, zero fastener penetrations through the panel face.' },
                   { label: 'Maintenance', val: 'Nothing exposed to back out, corrode, or need periodic replacement. Near-zero maintenance for decades.' },
-                  { label: 'Appearance', val: 'A clean, unbroken line from ridge to eave — the look architects and luxury builders specify by default.' },
+                  { label: 'Appearance', val: 'A clean, unbroken line from ridge to eave, the look architects and luxury builders specify by default.' },
                   { label: 'Lifespan', val: '50–70 years, the longest of any roofing system we install.' },
                 ].map(item => (
                   <div key={item.label} style={{ padding: '18px 0', borderBottom: `1px solid ${C.border}` }}>
@@ -233,7 +233,7 @@ export default function StandingSeamRoofingPage() {
             <SHead
               eyebrow="An Honest Comparison"
               title="Standing Seam vs. Stone-Coated Steel"
-              sub="We install both. Here's how we actually think about which one fits a given home — not a sales pitch for either."
+              sub="We install both. Here's how we actually think about which one fits a given home, not a sales pitch for either."
               center
             />
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
@@ -299,7 +299,7 @@ export default function StandingSeamRoofingPage() {
               Ready For a Roof<br/><span style={{ fontStyle: 'italic', color: C.accent }}>You&apos;ll Never Replace?</span>
             </h2>
             <p style={{ fontSize: 16, color: C.mutedLight, lineHeight: 1.8, marginBottom: 40 }}>
-              A quick call with our team is the fastest way to find out if standing seam is the right fit for your home — no pressure, no obligation.
+              A quick call with our team is the fastest way to find out if standing seam is the right fit for your home, no pressure, no obligation.
             </p>
             <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', justifyContent: 'center' }}>
               <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="cta-btn seam-cta-primary"

@@ -61,7 +61,7 @@ export default function PricingTable({
         <UtmLink href="/visualizer" style={{ color: C.accent, textDecoration: 'underline' }}>free visualizer</UtmLink>.
       </p>
       <p style={{ fontSize: 11, color: C.muted, lineHeight: 1.7, marginTop: 8, maxWidth: 720 }}>
-        DFW-wide installed-cost ranges as of 2026, for material and labor combined — actual cost depends on your roof&apos;s exact size, slope, tear-off needs, and site conditions.
+        DFW-wide installed-cost ranges as of 2026, for material and labor combined. Actual cost depends on your roof&apos;s exact size, slope, tear-off needs, and site conditions.
       </p>
       {/* Plain <a> + CSS class (no handlers) so this stays a boundary-agnostic component;
           .cta-btn (brand globalStyles) makes it full-width on mobile. */}
