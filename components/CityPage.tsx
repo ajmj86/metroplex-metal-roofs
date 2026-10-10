@@ -290,7 +290,7 @@ export default function CityPage({ city }: { city: CityData }) {
                 <div style={{ flex: 1, minWidth: 260 }}>
                   <div style={{ fontSize: 10, letterSpacing: 2, color: C.accent, textTransform: 'uppercase', marginBottom: 10 }}>The Metal and Brava Calculus</div>
                   <p style={{ fontSize: 14, color: C.mutedLight, lineHeight: 1.85, margin: 0 }}>
-                    A metal or Brava roof eliminates the replacement cycle entirely. Add carrier discounts, reduced energy costs, and eliminated deductible exposure over 20–30 years, and the upgrade typically pays for itself well within the life of the home. Metal roofs typically recoup 50–60% of installation cost at resale, and unlike asphalt, that return doesn't reset every 8–10 years with a full replacement, per Remodeling magazine's Cost vs. Value report.
+                    A metal or Brava roof is built for long life and low maintenance, and it carries a Class 4 impact rating. The right choice depends on how long you plan to stay in the home.
                   </p>
                 </div>
               </div>
