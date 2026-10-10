@@ -7,9 +7,12 @@ import { C, fonts, globalStyles } from '@/components/brand'
 import PricingTable from '@/components/PricingTable'
 import { BRAVA_PROFILES } from '@/lib/bravaColors'
 import { FAQ_RATE } from '@/lib/pricingData'
+import { ALL_CITIES } from '@/data/cities'
 
 const BASE_URL = 'https://www.metroplexmetalroofs.com'
 const BOOKING_URL = 'https://api.leadconnectorhq.com/widget/booking/gG1ruFfEWkUXO7eIB8NR'
+
+const BRAVA_COLOR_COUNT = BRAVA_PROFILES.reduce((n, p) => n + p.colors.length, 0)
 
 export const metadata: Metadata = {
   title: 'Brava Synthetic Slate Roofing DFW | Metroplex Metal Roofs',
@@ -22,9 +25,6 @@ export const metadata: Metadata = {
   },
 }
 
-// Mirrors the `cities` list + slug mapping in Homepage.jsx's #service-areas
-// section (same 29 markets, alphabetized here since this grid isn't ordered
-// by population like the homepage's is).
 // Descriptive copy + which colors to surface as flavor examples, keyed to
 // BRAVA_PROFILES so the name/color data has one source of truth (lib/bravaColors.ts)
 // instead of drifting if that file's color list ever changes.
@@ -43,16 +43,13 @@ const BRAVA_PROFILE_COPY: Record<string, { desc: string; flavorColors: [string, 
   },
 }
 
-const CITIES: [string, string][] = [
-  ['Allen', 'allen'], ['Anna', 'anna'], ['Argyle', 'argyle'], ['Burleson', 'burleson'],
-  ['Celina', 'celina'], ['Colleyville', 'colleyville'], ['Coppell', 'coppell'], ['Fate', 'fate'],
-  ['Flower Mound', 'flower-mound'], ['Forney', 'forney'], ['Frisco', 'frisco'], ['Grapevine', 'grapevine'],
-  ['Highland Village', 'highland-village'], ['Keller', 'keller'], ['Lewisville', 'lewisville'],
-  ['Mansfield', 'mansfield'], ['McKinney', 'mckinney'], ['Midlothian', 'midlothian'], ['Northlake', 'northlake'],
-  ['Plano', 'plano'], ['Prosper', 'prosper'], ['Richardson', 'richardson'], ['Roanoke', 'roanoke'],
-  ['Rockwall', 'rockwall'], ['Royse City', 'royse-city'], ['Southlake', 'southlake'], ['Trophy Club', 'trophy-club'],
-  ['Waxahachie', 'waxahachie'], ['Westlake', 'westlake'],
-]
+// Service Areas chips: every city page flagged leadWithBrava in its data, so the
+// list follows the data instead of a hardcoded set of slugs. Neighborhood pages
+// (parentCity set) show as "Name, Parent".
+const CITIES: [string, string][] = ALL_CITIES
+  .filter(c => c.leadWithBrava)
+  .map(c => [c.parentCity ? `${c.name}, ${c.parentCity}` : c.name, c.slug] as [string, string])
+  .sort((x, y) => x[0].localeCompare(y[0]))
 
 const FAQS = [
   {
@@ -61,7 +58,7 @@ const FAQS = [
   },
   {
     q: 'Why does Metroplex Metal Roofs install Brava synthetic slate and tile?',
-    a: "Brava gives homeowners the look of natural slate, shake, or tile on a composite built for North Texas weather. We chose Brava for its wind resistance, fire performance, and realistic texture, and for a color that runs through the full thickness of each tile. It's the combination that made Brava our standard for synthetic slate, not any single spec.",
+    a: "Brava gives homeowners the look of natural slate, shake, or tile on a composite built for North Texas weather. We chose Brava for its wind resistance and realistic texture, and for a color that runs through the full thickness of each tile. It's the combination that made Brava our standard for synthetic slate, not any single spec.",
   },
   {
     q: 'How much does Brava synthetic slate roofing cost compared to real slate?',
@@ -307,20 +304,20 @@ export default function SyntheticSlateRoofingPage() {
             <div className="grid-2" style={{ gap: 3 }}>
               {[
                 {
-                  label: 'Wind Performance',
-                  val: 'Brava composite tiles are tested for high wind resistance when installed to Brava\'s specifications. North Texas sees serious straight-line wind and severe thunderstorm events alongside its hail seasons, so we walk through the right installation method for your home with you.',
+                  label: 'Authentic Texture, Three Profiles',
+                  val: "Brava gives homeowners the look of natural slate, shake, or tile, with natural variation so no two tiles look alike, in a lightweight composite. Choose Brava Slate for a crisp, dimensional look, Brava Cedar Shake for a hand-split wood look, or Brava Spanish Barrel Tile, which brings the traditional clay tile look to Spanish, Mediterranean, and Tuscan style homes.",
                 },
                 {
-                  label: 'Fire Performance',
-                  val: "Brava shake and slate are specified with fire performance in mind. We confirm the right fire-rated assembly for your home and your local requirements during your consultation.",
+                  label: 'Backed by Brava',
+                  val: "Brava synthetic slate is backed by a 50-year limited warranty from Brava. Every Metroplex project also carries our 10-year workmanship warranty, written into your contract.",
                 },
                 {
-                  label: 'Realistic Texture, No Two Tiles Alike',
-                  val: "Brava tiles are compression-molded from natural wood shake and slate masters, capturing deep surface ridges and irregular, rustic edges that read as genuinely handmade. Color runs through the full thickness of each tile, so a scratch or chip exposes more of the same color underneath.",
+                  label: 'See Every Profile on Your Home',
+                  val: `All three Brava profiles are live in our Free Roof Visualizer, across ${BRAVA_COLOR_COUNT} color options, so you can see each one rendered on your own home before you decide.`,
                 },
                 {
-                  label: 'Weight & Profile Availability',
-                  val: "Brava's composite is lightweight, which reduces the load on older roof decks that were never engineered for real slate's weight. Brava also makes a composite Spanish barrel tile profile with a traditional tile silhouette.",
+                  label: 'Built Tough for North Texas',
+                  val: "Brava is engineered for North Texas weather. Its composite carries a Class 4 impact rating and is tested for high wind resistance, and color runs through the full thickness of each tile, so a scratch or chip shows more of the same color underneath.",
                 },
               ].map(item => (
                 <div key={item.label} style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 8, padding: 'clamp(24px,3vw,32px)', height: '100%' }}>
