@@ -295,6 +295,14 @@ const heroMap = {
   rpanel:   "/products/r_panel/true-black.jpg",
   ...bravaHeroMap,
 };
+// All 7 product photos share one 4:3 frame (the stone-coated steel / standing
+// seam aspect ratio) with object-fit: cover. Only the two square sources need a
+// non-centered crop: copper keeps the whole main roof, R-panel keeps the whole
+// panel with an even margin of white.
+const heroPositionMap = {
+  copper: "50% 75%",
+  rpanel: "50% 32%",
+};
 const visualizerRoofTypeMap = {
   standing: "standing_seam",
   copper:   "copper_standing_seam",
@@ -399,6 +407,7 @@ export default function ProductsSection({
   };
 
   const activeType = [...roofTypes, ...bravaStyles].find(t=>t.id===activeTab);
+  const groupTypes = materialType === "metal" ? roofTypes : bravaStyles;
   const [swatchModal, setSwatchModal] = useState(null); // { material, tileKey?, items, index } | null
   // Independent of swatchModal so it survives modal close (Back/Escape/backdrop) — see openStoneColorModal.
   const [stoneTileLevel, setStoneTileLevel] = useState("profiles"); // "profiles" | "shingle"
@@ -620,37 +629,37 @@ export default function ProductsSection({
                 <div style={{display:"flex",flexDirection:"column",height:"100%",minWidth:0}}>
                   <a
                     href={utm(materialVisualizerHref(activeTab))}
-                    style={{display:"block",overflow:"hidden",cursor:"pointer",flex:"1 1 auto",minHeight:280}}
+                    style={{display:"block",overflow:"hidden",cursor:"pointer",flex:"0 0 auto",aspectRatio:"4 / 3",width:"100%"}}
                   >
                     <img
                       src={activeTab === "slate" ? slateHeroSrc : heroMap[activeTab]}
                       alt={`${activeType.label} roof`}
                       loading="lazy"
                       decoding="async"
-                      style={{width:"100%",height:"100%",objectFit:"cover",display:"block",transition:"transform 0.3s ease"}}
+                      style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:heroPositionMap[activeTab] ?? "center",display:"block",transition:"transform 0.3s ease"}}
                       onMouseEnter={e => e.currentTarget.style.transform = "scale(1.02)"}
                       onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}
                     />
                   </a>
                   {/* Swatch row */}
-                  <div style={{flexShrink:0,minWidth:0,background:C.black,borderTop:`1px solid ${C.border}`,padding:"26px clamp(20px,3vw,32px) 28px"}}>
+                  <div className="ps-swatch-block" style={{minWidth:0,background:C.black,borderTop:`1px solid ${C.border}`,padding:"26px clamp(20px,3vw,32px) 28px"}}>
                     {activeTab === "stone" ? (
                       <>
-                        <div style={{display:"flex",alignItems:"flex-start",gap:16,overflowX:"auto",padding:"12px 12px 14px",margin:"-12px -12px -14px"}}>
+                        <div style={{display:"flex",alignItems:"flex-start",gap:16,overflowX:"auto",flex:"0 0 auto",padding:"12px 12px 14px",margin:"-12px -12px -14px"}}>
                           {(stoneTileLevel === "profiles" ? stoneProfileChips : stoneShingleChips).map(chip=>(
                             <SwatchChip key={chip.key} chip={chip} size="tile" badge={chip.key === "shingle" ? "2 Styles" : undefined}
                               onClick={()=>stoneTileLevel==="profiles" ? handleStoneProfileChipClick(chip) : handleStoneShingleChipClick(chip)}/>
                           ))}
                         </div>
                         {stoneTileLevel === "profiles" ? (
-                          <div style={{marginTop:18,fontSize:11,letterSpacing:0.6,color:C.muted}}>Tap a profile to explore its colors</div>
+                          <div style={{marginTop:"auto",paddingTop:18,minHeight:57}}><div style={{fontSize:11,letterSpacing:0.6,color:C.muted}}>Tap a profile to explore its colors</div></div>
                         ) : (
-                          <button
+                          <div style={{marginTop:"auto",paddingTop:18,minHeight:57}}><button
                             onClick={()=>setStoneTileLevel("profiles")}
-                            style={{marginTop:18,fontSize:11,letterSpacing:0.6,color:C.muted,background:"none",border:"none",padding:0,cursor:"pointer",textAlign:"left",transition:"color 0.2s"}}
+                            style={{display:"block",fontSize:11,letterSpacing:0.6,color:C.muted,background:"none",border:"none",padding:0,cursor:"pointer",textAlign:"left",transition:"color 0.2s"}}
                             onMouseEnter={e=>e.currentTarget.style.color=C.mutedLight}
                             onMouseLeave={e=>e.currentTarget.style.color=C.muted}
-                          >← Back to profiles</button>
+                          >← Back to profiles</button></div>
                         )}
                       </>
                     ) : (
@@ -666,16 +675,16 @@ export default function ProductsSection({
                          * two-button toggle instead of tiles since there's
                          * no separate preview image per width tier here.
                          */}
-                        {activeTab === "slate" && slateHasWidthVariants && (
-                          <div style={{display:"flex",gap:8,marginBottom:16}}>
+                        {BRAVA_TAB_IDS.includes(activeTab) && (
+                          <div aria-hidden={activeTab !== "slate" || undefined} style={{display:"flex",gap:8,marginBottom:16,visibility:activeTab === "slate" && slateHasWidthVariants ? "visible" : "hidden"}}>
                             {["standard","multi"].map(w=>(
-                              <button key={w} onClick={()=>setSlateWidth(w)}
+                              <button key={w} tabIndex={activeTab === "slate" ? 0 : -1} onClick={()=>setSlateWidth(w)}
                                 style={{padding:"7px 14px",fontSize:10,letterSpacing:1,textTransform:"uppercase",color:slateWidth===w?C.black:C.muted,background:slateWidth===w?C.accent:"transparent",border:`1px solid ${slateWidth===w?C.accent:C.border}`,borderRadius:4,cursor:"pointer",transition:"all 0.2s",whiteSpace:"nowrap"}}
                               >{w==="standard" ? "Standard Slate" : "Multi-Width Slate"}</button>
                             ))}
                           </div>
                         )}
-                        <div style={{display:"flex",alignItems:"flex-start",gap:10,overflowX:"auto",padding:"12px 12px 14px",margin:"-12px -12px -14px"}}>
+                        <div style={{display:"flex",alignItems:"flex-start",gap:10,overflowX:"auto",flex:"0 0 auto",padding:"12px 12px 14px",margin:"-12px -12px -14px"}}>
                           {swatchChips.map((chip,i)=>(
                             <SwatchChip key={chip.src || chip.hex || `${chip.name}-${i}`} chip={chip} onClick={()=>openSwatchModal(activeTab, chip)}/>
                           ))}
@@ -683,12 +692,12 @@ export default function ProductsSection({
                             <SwatchChip label={`+${swatchOverflow}`} onClick={()=>openSwatchModal(activeTab)}/>
                           )}
                         </div>
-                        <button
+                        <div style={{marginTop:"auto",paddingTop:18,minHeight:57}}><button
                           onClick={()=>openSwatchModal(activeTab)}
-                          style={{marginTop:18,fontSize:13,letterSpacing:0.6,color:C.muted,background:"none",border:"none",padding:0,cursor:"pointer",textAlign:"left",transition:"color 0.2s"}}
+                          style={{display:"block",fontSize:13,letterSpacing:0.6,color:C.muted,background:"none",border:"none",padding:0,cursor:"pointer",textAlign:"left",transition:"color 0.2s"}}
                           onMouseEnter={e=>e.currentTarget.style.color=C.mutedLight}
                           onMouseLeave={e=>e.currentTarget.style.color=C.muted}
-                        >{swatchData.caption(swatchData.full.length)}</button>
+                        >{swatchData.caption(swatchData.full.length)}</button></div>
                       </>
                     )}
                   </div>
@@ -699,9 +708,23 @@ export default function ProductsSection({
                     {badgeMap[activeTab] && (
                       <div style={{fontSize:10,color:C.accent,letterSpacing:2,textTransform:"uppercase",marginBottom:8}}>{badgeMap[activeTab]}</div>
                     )}
-                    <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(26px,3vw,36px)",fontWeight:700,color:C.white,marginBottom:20}}>{activeType.label}</div>
-                    <p style={{fontSize:16,color:C.mutedLight,lineHeight:1.8,marginBottom:28}}>{activeType.desc}</p>
-                    <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:0}}>
+                    {/*
+                      * Title and description for every tab in the active group are stacked in one
+                      * grid cell and only the active one is visible, so the cell is always as tall
+                      * as the longest title/description in the group and nothing below moves when
+                      * the tab changes.
+                      */}
+                    <div style={{display:"grid",marginBottom:20}}>
+                      {groupTypes.map(t=>(
+                        <div key={t.id} aria-hidden={t.id!==activeTab || undefined} style={{gridArea:"1 / 1",visibility:t.id===activeTab?"visible":"hidden",fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(26px,3vw,36px)",fontWeight:700,color:C.white}}>{t.label}</div>
+                      ))}
+                    </div>
+                    <div style={{display:"grid",marginBottom:28}}>
+                      {groupTypes.map(t=>(
+                        <p key={t.id} aria-hidden={t.id!==activeTab || undefined} style={{gridArea:"1 / 1",visibility:t.id===activeTab?"visible":"hidden",fontSize:16,color:C.mutedLight,lineHeight:1.8,margin:0}}>{t.desc}</p>
+                      ))}
+                    </div>
+                    <div className="ps-spec-grid" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gridAutoRows:"minmax(var(--ps-spec-row),auto)",gap:0}}>
                       {specGridFor(activeTab).map(item=>(
                         <div key={item.k} style={{padding:"14px 0",borderBottom:`1px solid ${C.border}`}}>
                           <div style={{fontSize:9,color:C.muted,letterSpacing:2,textTransform:"uppercase",marginBottom:4}}>{item.k}</div>
@@ -711,10 +734,13 @@ export default function ProductsSection({
                     </div>
                   </div>
                   <style>{`
+                    .ps-spec-grid{--ps-spec-row:67px}
+                    .ps-swatch-block{display:flex;flex-direction:column;flex:0 0 auto;height:254px;overflow:hidden}
+                    @media (max-width:640px){.ps-swatch-block{height:240px}}
                     .ps-cta-row{display:flex;flex-direction:row;align-items:center;flex-wrap:nowrap;gap:14px 28px}
                     .ps-guide-link{display:block;flex:1 1 0;min-width:0;line-height:1.5;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:600;color:${C.accent};text-decoration:none;transition:color 0.2s}
                     .ps-guide-link:hover,.ps-guide-link:focus-visible{color:${C.accentLight};text-decoration:underline}
-                    @media (max-width:640px){.ps-cta-row{flex-direction:column;align-items:flex-start;gap:16px}.ps-guide-link{flex:0 0 auto}}
+                    @media (max-width:640px){.ps-cta-row{flex-direction:column;align-items:flex-start;gap:16px}.ps-guide-link{flex:0 0 auto;min-height:3em}}
                   `}</style>
                   <div className="ps-cta-row">
                     <a href={utm(materialVisualizerHref(activeTab))} className="cta-btn"
