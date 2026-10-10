@@ -387,7 +387,7 @@ const steps = [
  */
 const credentials = [
   {eyebrow:"Impact Rating",   label:"Class 4 Hail Rated",           body:"The highest impact rating available (Class 4). Engineered for DFW's hail climate, not just rated for it."},
-  {eyebrow:"Wind Rating",     label:"Up to 160 MPH Wind Rated",     body:"Standing seam and copper systems rated well above anything DFW's storm season throws at a roof."},
+  {eyebrow:"Wind Resistance", label:"High Wind Resistance",         body:"Standing seam and copper systems engineered for high wind resistance in DFW's storm season."},
   {eyebrow:"Coverage",        label:"10-Year Workmanship, In Writing", body:"Backed by manufacturer material warranties on every system, registered in your name, not a verbal promise."},
 ];
 const cities = [
