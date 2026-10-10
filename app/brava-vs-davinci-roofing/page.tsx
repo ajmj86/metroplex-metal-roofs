@@ -17,7 +17,8 @@ export const metadata: Metadata = {
 }
 
 /*
- * Spec table. Brava column: facts supplied by the owner from Brava's slate
+ * Spec table. Brava color facts: Brava Technical Bulletin TB-240402R1,
+ * "UV Testing & Color Durability". Brava column: facts supplied by the owner from Brava's slate
  * and cedar shake spec sheets, brochures, and QAI report CERus-1014.
  * DaVinci column: DaVinci's own website only.
  *   Profiles:      https://www.davinciroofscapes.com/products/ (product menu)
@@ -62,7 +63,7 @@ const SPECS: { label: string; brava: string; davinci: string }[] = [
   },
   {
     label: 'Color',
-    brava: 'Mineral pigments. Color runs through the full thickness of the tile.',
+    brava: 'ColorCast mineral-infusion process. Mineral pigments through the full thickness of the tile, UV-tested for color durability.',
     davinci: 'See manufacturer',
   },
   {
@@ -277,7 +278,7 @@ export default function BravaVsDaVinciPage() {
                 },
                 {
                   label: 'The Specs',
-                  val: 'Brava tiles are compression molded, which Brava says makes the tiles stronger and more detailed. They carry a Class 4 impact rating, and the color runs through the full thickness of each tile.',
+                  val: "Brava tiles are compression molded, which Brava says makes them stronger and more detailed. They carry a Class 4 impact rating. Color comes from Brava's ColorCast mineral-infusion process, which disperses mineral pigments through the full thickness of each tile, and the color is UV-tested for durability.",
                 },
                 {
                   label: 'See It on Your Home',
