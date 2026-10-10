@@ -18,12 +18,6 @@ export const BLUFFVIEW_DALLAS_DATA: CityData = {
 
   hoaNote: "Design review and permit requirements vary by street and by project, and we handle the submission. We provide material samples, color chips, and manufacturer spec sheets for any review or HOA package at no additional cost.",
 
-  localStat: {
-    val: '$1M',
-    label: 'Median Home Value',
-    source: 'Bluffview, Dallas, Trulia, May 2026',
-  },
-
   neighborhoods: [
     'Bluffview Boulevard area',
   ],

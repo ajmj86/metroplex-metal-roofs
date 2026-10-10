@@ -7,7 +7,6 @@ export const OAK_CLIFF_DALLAS_DATA: CityData = {
   state: 'TX',
   county: 'Dallas',
   region: 'Southwest Dallas',
-  zip: '75208',
   slug: 'oak-cliff-dallas',
   metaTitle: 'Metal Roofing Oak Cliff Dallas TX | Metroplex',
   metaDesc: 'Stone-coated steel, Brava synthetic slate and standing seam roofing in Oak Cliff, a Dallas neighborhood. Free 40-point assessment and HOA-ready documents.',

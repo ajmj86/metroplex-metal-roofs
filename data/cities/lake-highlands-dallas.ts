@@ -7,7 +7,6 @@ export const LAKE_HIGHLANDS_DALLAS_DATA: CityData = {
   state: 'TX',
   county: 'Dallas',
   region: 'Northeast Dallas',
-  zip: '75231',
   slug: 'lake-highlands-dallas',
   metaTitle: 'Metal Roofing Lake Highlands Dallas TX | Metroplex',
   metaDesc: 'Stone-coated steel, Brava synthetic slate and standing seam roofing in Lake Highlands, a Dallas neighborhood. Free 40-point assessment.',
