@@ -48,8 +48,8 @@ export const HOME_FAQS: HomeFAQ[] = [
     a: 'Brava uses mineral pigments, and the color runs through the full thickness of each tile rather than sitting on the surface. All outdoor materials change a little with sun and weather over the years. We can show you samples in daylight during your inspection.',
   },
   {
-    q: 'Will Brava synthetic slate curl or warp?',
-    a: 'Curling and warping are usually tied to installation rather than the material. Installing to Brava\'s published installation guide is what prevents it, and that is how we install every Brava roof.',
+    q: 'Will Brava synthetic slate curl, crack, or warp?',
+    a: 'Brava tiles are compression molded and carry a Class 4 impact rating. Curling, warping, and cracking are usually tied to installation, and installing to Brava\'s published installation guide is what prevents them, which is how we install every Brava roof.',
   },
   {
     q: 'Does a metal or Brava roof lower my insurance premium?',

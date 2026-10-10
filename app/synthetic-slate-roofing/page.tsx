@@ -63,6 +63,14 @@ const FAQS = [
     a: 'Curling and warping usually trace back to how a roof was installed, not to the tile itself. Following Brava\'s published installation guide is the safeguard, and that is how our crews install Brava. We are glad to explain the installation steps before you decide.',
   },
   {
+    q: 'Can Brava crack in Texas heat or a hard freeze?',
+    a: 'Brava\'s spec sheets list the tiles as freeze and thaw resistant, and they are compression molded with a Class 4 impact rating. For Texas heat, proper installation matters, including the expansion spacing in Brava\'s installation guide. We install to that guide, and we are honest that no roof is immune to every condition.',
+  },
+  {
+    q: 'Composite roofing is newer than slate. Why trust it?',
+    a: 'Brava\'s products are tested and evaluated for weather, wind, fire, and hail resistance under the building codes. They are also backed by a 50-year limited warranty from Brava. Because composite is a newer category, we suggest judging it for yourself: we bring samples to your inspection, and the Free Roof Visualizer shows each profile on your own home.',
+  },
+  {
     q: 'Does Brava look fake or like plastic up close?',
     a: 'Brava is made to look like natural slate, shake, or tile, with natural color variation from tile to tile. The surest test is to see it in person, so we bring samples to your inspection. You can also preview each profile on your own home in the Free Roof Visualizer.',
   },
