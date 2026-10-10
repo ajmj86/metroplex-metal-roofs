@@ -67,8 +67,8 @@ const FAQS = [
     a: "Brava synthetic slate is backed by a 50-year limited warranty from Brava. The composite is engineered to resist cracking and fading, and it is built to last for decades, well beyond the 15–20 year lifespan of asphalt shingles.",
   },
   {
-    q: 'Is Brava synthetic slate roofing heavier than asphalt or metal?',
-    a: "Brava synthetic slate is engineered to be lightweight, typically comparable to or only slightly heavier than asphalt shingles, and it doesn't require the structural reinforcement real slate often demands. That makes it a viable option on homes where authentic slate was never structurally practical.",
+    q: 'How heavy is Brava synthetic slate roofing?',
+    a: "Brava synthetic slate is far lighter than natural slate or clay tile, so most homes can take it without added structural support. We confirm your roof deck and framing during the inspection. That makes it a viable option on many homes where authentic slate was never structurally practical.",
   },
   {
     q: 'Brava synthetic slate vs. metal roofing, which is better for my home?',
@@ -196,7 +196,7 @@ export default function SyntheticSlateRoofingPage() {
               >Get a Free Consultation →</a>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginTop: 48, paddingTop: 32, borderTop: `1px solid ${C.border}` }}>
-              {['Class 4 Hail Rating', 'Lightweight: No Structural Reinforcement Needed', '10-Year Workmanship Warranty'].map(t => (
+              {['Class 4 Hail Rating', 'Far Lighter Than Natural Slate', '10-Year Workmanship Warranty'].map(t => (
                 <div key={t} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                   <div style={{ width: 4, height: 4, borderRadius: '50%', background: C.accent, flexShrink: 0 }} />
                   <span style={{ fontSize: 12, color: C.muted }}>{t}</span>
@@ -239,7 +239,7 @@ export default function SyntheticSlateRoofingPage() {
                   <div style={{ fontSize: 17, letterSpacing: 2.5, textTransform: 'uppercase', color: C.accent }}>Brava Synthetic Slate</div>
                 </div>
                 {[
-                  { label: 'Weight', val: 'Engineered to be lightweight, comparable to asphalt shingles, with no structural reinforcement required.' },
+                  { label: 'Weight', val: 'Far lighter than natural slate or clay tile, so most homes can take Brava without added structural support. We confirm your roof deck and framing during the inspection.' },
                   { label: 'Durability', val: 'Class 4 impact-rated composite construction, built to withstand North Texas hail without cracking.' },
                   { label: 'Cost', val: 'A fraction of real slate\'s installed cost, closer to premium metal or high-end stone-coated steel.' },
                   { label: 'Maintenance', val: 'A single system installed once, backed by a 50-year limited warranty from Brava, not a roof you\'re periodically patching.' },
