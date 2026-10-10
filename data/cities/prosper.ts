@@ -11,12 +11,12 @@ export const PROSPER_DATA: CityData = {
   metaTitle: 'Metal & Brava Slate Roofing Prosper TX | Metroplex',
   metaDesc: 'Premium standing seam, stone-coated steel & Brava synthetic slate roofing in Prosper, TX. Serving Windsong Ranch and Star Trail.',
 
-  heroHeadline: "Prosper Built to Last —\nYour Roof Should Too",
+  heroHeadline: "Prosper Built to Last,\nYour Roof Should Too",
   heroSub: "From Windsong Ranch to Star Trail, Prosper homeowners are making the same upgrade new construction already has. A metal roof that matches the permanence of the home beneath it.",
 
-  localContext: "Prosper has become one of the fastest-growing communities in North Texas, with new construction consistently specifying metal roofing as the standard across its master-planned developments. For existing homeowners, the case is equally clear — Collin County's active hail corridor, rising home values above $700,000, and 2% wind/hail deductibles mean asphalt shingles represent a recurring five-figure liability. Metal roofing eliminates that cycle entirely. Homeowners who want the look of natural slate, shake, or tile have an equally strong option in Brava synthetic slate, which we install alongside standing seam and stone-coated steel for homes in communities like Windsong Ranch and Star Trail.",
+  localContext: "Prosper has become one of the fastest-growing communities in North Texas, with new construction consistently specifying metal roofing as the standard across its master-planned developments. For existing homeowners, the case is equally clear: Collin County's active hail corridor, rising home values above $700,000, and 2% wind/hail deductibles mean asphalt shingles represent a recurring five-figure liability. Metal roofing eliminates that cycle entirely. Homeowners who want the look of natural slate, shake, or tile have an equally strong option in Brava synthetic slate, which we install alongside standing seam and stone-coated steel for homes in communities like Windsong Ranch and Star Trail.",
 
-  hoaNote: "Prosper's master-planned communities including Windsong Ranch, Star Trail, and Lakes of Prosper have established architectural review processes for roofing material changes. Metal roofing in approved profiles and colors is widely permitted and increasingly common across these neighborhoods. We provide the full documentation package — material samples, color chips, and manufacturer spec sheets — to support your HOA submission.",
+  hoaNote: "Prosper's master-planned communities including Windsong Ranch, Star Trail, and Lakes of Prosper have established architectural review processes for roofing material changes. Metal roofing in approved profiles and colors is widely permitted and increasingly common across these neighborhoods. We provide the full documentation package: material samples, color chips, and manufacturer spec sheets, to support your HOA submission.",
 
   localStat: {
     val: '$720k',
@@ -56,15 +56,15 @@ export const PROSPER_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Prosper, TX?',
-      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract — plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Prosper homeowners will never need to use.',
+      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract, plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Prosper homeowners will never need to use.',
     },
     {
       q: 'How much does a metal roof cost in Prosper, TX?',
-      a: `Metal roofing in Prosper is priced by the square foot, and your total depends on roof size, pitch, and material. Most homes in Prosper\'s master-planned communities fall in the 28 to 45 square range. We provide satellite-based estimates built from your roof\'s satellite-measured size — no guesswork, no in-person visit required to get a ballpark range, which we refine into a firm number after your free on-site assessment. By material, that typically breaks down to ${cityFaqMaterialRates()} — see our pricing table above for the full breakdown, or use our free visualizer for an exact number for your roof.`,
+      a: `Metal roofing in Prosper is priced by the square foot, and your total depends on roof size, pitch, and material. Most homes in Prosper\'s master-planned communities fall in the 28 to 45 square range. We provide satellite-based estimates built from your roof\'s satellite-measured size, no guesswork, no in-person visit required to get a ballpark range, which we refine into a firm number after your free on-site assessment. By material, that typically breaks down to ${cityFaqMaterialRates()}. See our pricing table above for the full breakdown, or use our free visualizer for an exact number for your roof.`,
     },
     {
       q: 'Is metal roofing common in Prosper neighborhoods like Windsong Ranch?',
-      a: 'Yes — metal roofing has become increasingly standard across Prosper\'s master-planned developments, with many new homes built with standing seam or stone-coated steel from the start. Existing homeowners in Windsong Ranch, Star Trail, and Lakes of Prosper have been upgrading at a significant rate, particularly after hail seasons that exposed the limitations of asphalt in Collin County\'s storm corridor.',
+      a: 'Yes, metal roofing has become increasingly standard across Prosper\'s master-planned developments, with many new homes built with standing seam or stone-coated steel from the start. Existing homeowners in Windsong Ranch, Star Trail, and Lakes of Prosper have been upgrading at a significant rate, particularly after hail seasons that exposed the limitations of asphalt in Collin County\'s storm corridor.',
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Prosper?',
@@ -72,15 +72,15 @@ export const PROSPER_DATA: CityData = {
     },
     {
       q: 'Will my Prosper HOA approve a metal roof?',
-      a: 'Most Prosper HOAs approve metal roofing in pre-approved profiles and color palettes. Windsong Ranch, Star Trail, and Lakes of Prosper have all approved metal roofing installations for homeowners who submitted proper documentation. We handle the documentation package — material samples, color chips, and spec sheets — at no additional cost.',
+      a: 'Most Prosper HOAs approve metal roofing in pre-approved profiles and color palettes. Windsong Ranch, Star Trail, and Lakes of Prosper have all approved metal roofing installations for homeowners who submitted proper documentation. We handle the documentation package: material samples, color chips, and spec sheets, at no additional cost.',
     },
     {
       q: 'How long does metal roof installation take in Prosper?',
-      a: 'Most residential metal roofing installations in Prosper are completed in one to three days. The timeline depends on roof size, pitch complexity, and material — standing seam typically takes slightly longer than stone-coated steel. We provide a specific installation timeline for your home as part of the estimate process.',
+      a: 'Most residential metal roofing installations in Prosper are completed in one to three days. The timeline depends on roof size, pitch complexity, and material. Standing seam typically takes slightly longer than stone-coated steel. We provide a specific installation timeline for your home as part of the estimate process.',
     },
     {
       q: 'What is the difference between standing seam, stone-coated steel, and Brava for a Prosper home?',
-      a: 'Standing seam features hidden fasteners and clean vertical lines — ideal for contemporary and modern architecture common in newer Prosper builds. Stone-coated steel replicates the look of traditional shingles or shake in steel form, making it well-suited for neighborhoods with traditional HOA aesthetic guidelines. Both carry Class 4 hail ratings and 50+ year lifespans. The right choice depends on your home\'s architecture and HOA requirements. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.',
+      a: 'Standing seam features hidden fasteners and clean vertical lines, ideal for contemporary and modern architecture common in newer Prosper builds. Stone-coated steel replicates the look of traditional shingles or shake in steel form, making it well-suited for neighborhoods with traditional HOA aesthetic guidelines. Both carry Class 4 hail ratings and 50+ year lifespans. The right choice depends on your home\'s architecture and HOA requirements. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.',
     },
   ],
 }

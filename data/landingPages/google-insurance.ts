@@ -4,15 +4,15 @@ export const GOOGLE_INSURANCE_DATA: LandingPageData = {
   slug: 'google-insurance',
   channel: 'google_insurance',
   meta: {
-    title: 'Class 4 Impact-Rated Roofing — 15–35% Insurance Discount | Metroplex Metal Roofs',
-    description: 'Metal and synthetic slate roofing with Class 4 impact rating can qualify DFW homeowners for a meaningful homeowners insurance discount. See your options free.',
+    title: 'Class 4 Impact-Rated Roofing: 15–35% Insurance Discount | Metroplex Metal Roofs',
+    description: 'Metal and Brava synthetic slate roofing with Class 4 impact rating can qualify DFW homeowners for a meaningful insurance discount. See your options free.',
   },
   hero: {
-    eyebrowText: 'Your Home, in Metal or Synthetic Slate · Dallas–Fort Worth',
+    eyebrowText: 'Your Home, in Metal or Brava Synthetic Slate · Dallas–Fort Worth',
     headline: 'A Roof That Can Lower',
     headlineAccent: 'Your Insurance Bill',
-    subhead: 'Class 4 impact-rated metal and synthetic slate roofing can qualify DFW homeowners for a 15–35% insurance discount* — see your home in the visualizer and get a real price range first.',
-    microcopy: 'See your home in metal and get a free price range — no photo upload, no obligation.',
+    subhead: 'Class 4 impact-rated metal and Brava synthetic slate roofing can qualify DFW homeowners for a 15–35% insurance discount*. See your home in the visualizer and get a real price range first.',
+    microcopy: 'See your home in metal and get a free price range, no photo upload, no obligation.',
     backgroundImageSrc: '/MMR Hero Pic.png',
     // Same trustBullets/trustBulletFootnote mechanism postcard uses for the
     // 15–35% figure's disclaimer (Hero.tsx only renders the footnote when

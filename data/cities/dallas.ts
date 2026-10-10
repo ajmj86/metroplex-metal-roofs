@@ -14,9 +14,9 @@ export const DALLAS_DATA: CityData = {
   heroHeadline: "Dallas Homes Deserve\nMore Than Another Asphalt Roof",
   heroSub: "From the bungalows of Lakewood to the townhomes of Uptown, Dallas homeowners are done replacing shingles every storm season. Metal roofing is the upgrade built for the long haul.",
 
-  localContext: "Dallas's close-in neighborhoods — from the tree-lined streets of Lakewood and White Rock to the historic bungalows of Oak Cliff and the dense corridors of Uptown and Knox-Henderson — carry some of the oldest and most storm-exposed roofs in North Texas. Dallas County sits squarely in the DFW hail corridor, and homeowners who've already replaced one asphalt roof are increasingly switching to metal rather than repeating the cycle every decade. With home values climbing across nearly every close-in neighborhood, a 50-plus year roof is one of the few renovations that protects the investment instead of just maintaining it. For Dallas homeowners drawn to a traditional slate or shake profile, Brava offers that look in a durable synthetic, so you can choose between metal and Brava on the merits of your own home.",
+  localContext: "Dallas's close-in neighborhoods, from the tree-lined streets of Lakewood and White Rock to the historic bungalows of Oak Cliff and the dense corridors of Uptown and Knox-Henderson, carry some of the oldest and most storm-exposed roofs in North Texas. Dallas County sits squarely in the DFW hail corridor, and homeowners who've already replaced one asphalt roof are increasingly switching to metal rather than repeating the cycle every decade. With home values climbing across nearly every close-in neighborhood, a 50-plus year roof is one of the few renovations that protects the investment instead of just maintaining it. For Dallas homeowners drawn to a traditional slate or shake profile, Brava offers that look in a durable synthetic, so you can choose between metal and Brava on the merits of your own home.",
 
-  hoaNote: "Roofing rules vary block by block in Dallas — HOA-governed pockets like parts of Lake Highlands and Park Cities follow standard architectural review, while historic districts such as Junius Heights and the M Streets fall under City of Dallas conservation district guidelines rather than a private HOA. We handle documentation for either process — material samples, color chips, and manufacturer spec sheets — at no additional cost.",
+  hoaNote: "Roofing rules vary block by block in Dallas: HOA-governed pockets like parts of Lake Highlands and Park Cities follow standard architectural review, while historic districts such as Junius Heights and the M Streets fall under City of Dallas conservation district guidelines rather than a private HOA. We handle documentation for either process: material samples, color chips, and manufacturer spec sheets, at no additional cost.",
 
   localStat: {
     val: '$540k',
@@ -62,11 +62,11 @@ export const DALLAS_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Dallas, TX?',
-      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract — plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Dallas homeowners will never need to use.',
+      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract, plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Dallas homeowners will never need to use.',
     },
     {
       q: 'How much does a metal roof cost in Dallas?',
-      a: `Metal roofing in Dallas is priced by the square foot, and your total depends on roof size, pitch, and material — close-in bungalows in neighborhoods like Oak Cliff and Lakewood tend to have smaller roofs and a lower overall cost, while larger Park Cities-adjacent homes run higher. We provide a satellite-based ballpark range from your roof\'s measured size — not a guess from the driveway — refined into a firm number after your free on-site assessment. By material, that typically breaks down to ${cityFaqMaterialRates()} — see our pricing table above for the full breakdown, or use our free visualizer for an exact number for your roof.`,
+      a: `Metal roofing in Dallas is priced by the square foot, and your total depends on roof size, pitch, and material. Close-in bungalows in neighborhoods like Oak Cliff and Lakewood tend to have smaller roofs and a lower overall cost, while larger Park Cities-adjacent homes run higher. We provide a satellite-based ballpark range from your roof\'s measured size, not a guess from the driveway, refined into a firm number after your free on-site assessment. By material, that typically breaks down to ${cityFaqMaterialRates()}. See our pricing table above for the full breakdown, or use our free visualizer for an exact number for your roof.`,
     },
     {
       q: 'Will a metal roof look right on an older Dallas home?',
@@ -74,7 +74,7 @@ export const DALLAS_DATA: CityData = {
     },
     {
       q: 'Does my Dallas home need HOA or conservation district approval for a metal roof?',
-      a: 'It depends on the neighborhood. HOA-governed communities require standard architectural review, while historic conservation districts like Junius Heights and the M Streets have their own City of Dallas review process for exterior changes. We provide full documentation — material samples, color chips, and manufacturer spec sheets — to support either process at no additional cost.',
+      a: 'It depends on the neighborhood. HOA-governed communities require standard architectural review, while historic conservation districts like Junius Heights and the M Streets have their own City of Dallas review process for exterior changes. We provide full documentation: material samples, color chips, and manufacturer spec sheets, to support either process at no additional cost.',
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Dallas?',

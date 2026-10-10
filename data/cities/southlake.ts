@@ -13,9 +13,9 @@ export const SOUTHLAKE_DATA: CityData = {
   metaDesc: 'Premium standing seam, stone-coated steel & Brava synthetic slate roofing in Southlake, TX. Serving Timarron, Shady Oaks & Clariden Ranch.',
 
   heroHeadline: "Southlake's Standard\nfor Metal Roofing",
-  heroSub: "From Timarron to Shady Oaks, Southlake homeowners are upgrading to metal — permanently. One installation that outlasts the mortgage and the next hail season.",
+  heroSub: "From Timarron to Shady Oaks, Southlake homeowners are upgrading to metal, permanently. One installation that outlasts the mortgage and the next hail season.",
 
-  localContext: "Southlake's Tarrant County location places it squarely in one of North Texas's most active hail corridors. With median home values consistently among the highest in DFW and 2% wind/hail deductibles now standard on most carrier policies, many Southlake homeowners are paying $20,000 or more out of pocket per replacement — often more than the cost of a metal roof that would have eliminated the cycle entirely. For Southlake homes with a premium roofline, Brava synthetic slate and shake bring the character of natural materials without the weight or upkeep, and standing seam and stone-coated steel round out the options we compare with you.",
+  localContext: "Southlake's Tarrant County location places it squarely in one of North Texas's most active hail corridors. With median home values consistently among the highest in DFW and 2% wind/hail deductibles now standard on most carrier policies, many Southlake homeowners are paying $20,000 or more out of pocket per replacement, often more than the cost of a metal roof that would have eliminated the cycle entirely. For Southlake homes with a premium roofline, Brava synthetic slate and shake bring the character of natural materials without the weight or upkeep, and standing seam and stone-coated steel round out the options we compare with you.",
 
   hoaNote: "Many Southlake HOAs require architectural approval for roofing materials. Standing seam and stone-coated steel in pre-approved colors are the most commonly permitted metal options across Carroll ISD neighborhoods. We provide material samples, color chips, and manufacturer spec sheets to support your HOA submission at no additional cost.",
 
@@ -59,11 +59,11 @@ export const SOUTHLAKE_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Southlake, TX?',
-      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract — plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Southlake homeowners will never need to use.',
+      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract, plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Southlake homeowners will never need to use.',
     },
     {
       q: 'How much does a standing seam metal roof cost in Southlake, TX?',
-      a: `Standing seam metal roofing in Southlake is priced by the square foot, and your total depends on roof size, pitch, and complexity — with most homes in the 20 to 40 square range. We provide a satellite-based ballpark range from your roof\'s measured size — not a guess from the driveway — refined into a firm number after your free on-site assessment. By material, that runs about ${FAQ_RATE.standingSeam()}/sq ft for standard standing seam and ${FAQ_RATE.premiumStandingSeam()}/sq ft for premium 24-gauge — see our pricing table above for rates across all materials, including R-panel and stone-coated steel, or use our free visualizer for an exact number for your roof.`,
+      a: `Standing seam metal roofing in Southlake is priced by the square foot, and your total depends on roof size, pitch, and complexity, with most homes in the 20 to 40 square range. We provide a satellite-based ballpark range from your roof\'s measured size, not a guess from the driveway, refined into a firm number after your free on-site assessment. By material, that runs about ${FAQ_RATE.standingSeam()}/sq ft for standard standing seam and ${FAQ_RATE.premiumStandingSeam()}/sq ft for premium 24-gauge. See our pricing table above for rates across all materials, including R-panel and stone-coated steel, or use our free visualizer for an exact number for your roof.`,
     },
     {
       q: 'Will my Southlake HOA approve a metal roof?',
@@ -71,7 +71,7 @@ export const SOUTHLAKE_DATA: CityData = {
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Tarrant County?',
-      a: 'Yes. Standing seam and stone-coated steel carry a Class 4 impact resistance rating — the highest available — which qualifies for significant premium discounts from most Texas carriers. In Tarrant County, where hail claims are common, many homeowners see 15–35% reductions on their wind/hail premium, depending on carrier and policy.',
+      a: 'Yes. Standing seam and stone-coated steel carry a Class 4 impact resistance rating, the highest available, which qualifies for significant premium discounts from most Texas carriers. In Tarrant County, where hail claims are common, many homeowners see 15–35% reductions on their wind/hail premium, depending on carrier and policy.',
     },
     {
       q: 'How long does metal roof installation take in Southlake?',
@@ -79,11 +79,11 @@ export const SOUTHLAKE_DATA: CityData = {
     },
     {
       q: 'Is a metal or Brava roof worth it on a home in the Carroll ISD area?',
-      a: 'For homes in the $800K–$1.5M range common across Carroll ISD neighborhoods, the math typically favors metal strongly. Eliminating one asphalt replacement cycle, qualifying for insurance discounts, and reducing energy costs over 30 years means the upgrade often pays for itself — while adding a permanent finish that reflects the quality of the home. For homes in this class, Brava synthetic slate, shake, and Spanish barrel tile are often the first option we show, with standing seam and stone-coated steel as strong alternatives.',
+      a: 'For homes in the $800K–$1.5M range common across Carroll ISD neighborhoods, the math typically favors metal strongly. Eliminating one asphalt replacement cycle, qualifying for insurance discounts, and reducing energy costs over 30 years means the upgrade often pays for itself, while adding a permanent finish that reflects the quality of the home. For homes in this class, Brava synthetic slate, shake, and Spanish barrel tile are often the first option we show, with standing seam and stone-coated steel as strong alternatives.',
     },
     {
       q: 'What metal roofing colors are HOA-approved in Southlake neighborhoods?',
-      a: 'The most commonly approved colors across Southlake HOAs include charcoal gray, aged bronze, and weathered brown tones for standing seam, and earth-tone blends for stone-coated steel. We recommend confirming with your specific HOA before selection — we can assist with the documentation package regardless of which community you are in.',
+      a: 'The most commonly approved colors across Southlake HOAs include charcoal gray, aged bronze, and weathered brown tones for standing seam, and earth-tone blends for stone-coated steel. We recommend confirming with your specific HOA before selection. We can assist with the documentation package regardless of which community you are in.',
     },
   ],
 }

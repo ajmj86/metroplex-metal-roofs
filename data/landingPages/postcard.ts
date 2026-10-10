@@ -20,17 +20,17 @@ export const POSTCARD_DATA: LandingPageData = {
     // behind it). Swapped for "Mailed to homes in {area} · Dallas–Fort
     // Worth" by LandingPageHero.tsx when the URL carries ?area=, per-route
     // at QR-generation time.
-    eyebrowText: 'Your Home, in Metal or Synthetic Slate · Dallas–Fort Worth',
+    eyebrowText: 'Your Home, in Metal or Brava Synthetic Slate · Dallas–Fort Worth',
     headline: 'The Last Roof',
     headlineAccent: "You'll Ever Need",
     // Kept to one short sentence, matching the homepage's own hero subhead --
     // the value props (lifespan/insurance/hail rating) live in trustBullets
     // below instead of being packed into this sentence.
-    subhead: "For DFW homeowners ready to stop replacing asphalt roofs every decade — see it on your home and get a real price range in under 60 seconds.",
+    subhead: "For DFW homeowners ready to stop replacing asphalt roofs every decade. See it on your home and get a real price range in under 60 seconds.",
     // Same line Homepage.jsx's hero uses under its own CTA -- genuinely
     // applicable here too (same /visualizer destination, same claim), not
     // new copy invented for this page.
-    microcopy: 'See your home in metal and get a free price range — no photo upload, no obligation.',
+    microcopy: 'See your home in metal and get a free price range, no photo upload, no obligation.',
     backgroundImageSrc: '/MMR Hero Pic.png',
     // Same bullet-row/footnote pattern as Homepage.jsx's hero trust-bar,
     // rendered via the shared HeroTrustBullets component.

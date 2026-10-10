@@ -11,7 +11,7 @@ export const GRAND_PRAIRIE_DATA: CityData = {
   metaTitle: 'Metal & Brava Slate Roofing Grand Prairie TX | Metroplex',
   metaDesc: 'Premium standing seam, stone-coated steel & Brava synthetic slate roofing in Grand Prairie, TX. Serving Mira Lagos and Westchester.',
 
-  heroHeadline: "Grand Prairie Is Building Fast —\nBuild the Roof Right the First Time",
+  heroHeadline: "Grand Prairie Is Building Fast,\nBuild the Roof Right the First Time",
   heroSub: "From Mira Lagos to CentrePort, Grand Prairie's newest neighborhoods are setting a higher standard, and metal roofing is part of it.",
 
   localContext: "Grand Prairie sits at the center of the Mid-Cities, between Arlington, Irving, and Dallas, and its newer master-planned communities like Mira Lagos and Sheffield are drawing homeowners who want their roof to match the quality of the rest of the build. Dallas County's hail corridor covers Grand Prairie the same as its neighbors, and with home values rising steadily across the city's newer developments, a Class 4 impact-rated metal roof is increasingly the standard rather than the upgrade. For Grand Prairie homeowners drawn to a traditional slate or shake profile, Brava offers that look in a durable synthetic, so you can choose between metal and Brava on the merits of your own home.",
@@ -51,11 +51,11 @@ export const GRAND_PRAIRIE_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Grand Prairie, TX?',
-      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract — plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Grand Prairie homeowners will never need to use.',
+      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract, plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Grand Prairie homeowners will never need to use.',
     },
     {
       q: 'How much does a metal roof cost in Grand Prairie?',
-      a: `Metal roofing in Grand Prairie is priced by the square foot, and your total depends on roof size, pitch, and material. We provide a satellite-based ballpark range from your roof\'s measured size — not a guess from the driveway — refined into a firm number after your free on-site assessment. By material, that typically breaks down to ${cityFaqMaterialRates()} — see our pricing table above for the full breakdown, or use our free visualizer for an exact number for your roof.`,
+      a: `Metal roofing in Grand Prairie is priced by the square foot, and your total depends on roof size, pitch, and material. We provide a satellite-based ballpark range from your roof\'s measured size, not a guess from the driveway, refined into a firm number after your free on-site assessment. By material, that typically breaks down to ${cityFaqMaterialRates()}. See our pricing table above for the full breakdown, or use our free visualizer for an exact number for your roof.`,
     },
     {
       q: 'Is metal roofing common in newer Grand Prairie communities like Mira Lagos?',
@@ -71,7 +71,7 @@ export const GRAND_PRAIRIE_DATA: CityData = {
     },
     {
       q: 'How long does metal roof installation take in Grand Prairie?',
-      a: 'Most residential installations in Grand Prairie are completed in one to three days. The exact timeline depends on roof size and material selection — we provide a specific estimate timeline for your home before any work begins.',
+      a: 'Most residential installations in Grand Prairie are completed in one to three days. The exact timeline depends on roof size and material selection. We provide a specific estimate timeline for your home before any work begins.',
     },
     {
       q: 'What metal and Brava roofing style works best for Grand Prairie homes?',

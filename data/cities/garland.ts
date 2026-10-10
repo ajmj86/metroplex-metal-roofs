@@ -14,9 +14,9 @@ export const GARLAND_DATA: CityData = {
   heroHeadline: "Garland Homeowners Are Done\nReplacing Shingles Every Storm Season",
   heroSub: "From Firewheel to Downtown Garland, more homeowners are making the one-time switch to metal instead of budgeting for another asphalt reroof.",
 
-  localContext: "Garland's housing stock ranges from the newer developments around Firewheel to the established mid-century neighborhoods closer to Downtown Garland, giving the city one of the widest roof-age ranges in East Dallas. Dallas County's hail corridor runs straight through Garland, and homeowners with roofs original to their home — or already replaced once with asphalt — are increasingly choosing metal to end the cycle rather than repeat it a third time. Metal is not the only lasting choice here. Brava synthetic slate, shake, and Spanish barrel tile give Garland homes a premium, natural-material look, and we help you compare Brava and metal side by side before you decide.",
+  localContext: "Garland's housing stock ranges from the newer developments around Firewheel to the established mid-century neighborhoods closer to Downtown Garland, giving the city one of the widest roof-age ranges in East Dallas. Dallas County's hail corridor runs straight through Garland, and homeowners with roofs original to their home, or already replaced once with asphalt, are increasingly choosing metal to end the cycle rather than repeat it a third time. Metal is not the only lasting choice here. Brava synthetic slate, shake, and Spanish barrel tile give Garland homes a premium, natural-material look, and we help you compare Brava and metal side by side before you decide.",
 
-  hoaNote: "Newer communities near Firewheel and Rose Hill maintain standard HOA architectural review, while many of Garland's older neighborhoods near Downtown and Club Hill have no HOA restrictions at all. Where an HOA does apply, we provide full documentation — material samples, color chips, and manufacturer spec sheets — at no additional cost.",
+  hoaNote: "Newer communities near Firewheel and Rose Hill maintain standard HOA architectural review, while many of Garland's older neighborhoods near Downtown and Club Hill have no HOA restrictions at all. Where an HOA does apply, we provide full documentation: material samples, color chips, and manufacturer spec sheets, at no additional cost.",
 
   localStat: {
     val: '$285k',
@@ -42,18 +42,18 @@ export const GARLAND_DATA: CityData = {
   review: {
     name: 'Robert L.',
     neighborhood: 'Firewheel',
-    text: "Our shingle roof took a beating two hail seasons in a row and the insurance claims were getting old fast. Switched to standing seam and the estimate process was easier than I expected — got a ballpark number the same day from satellite measurements before anyone even came out.",
+    text: "Our shingle roof took a beating two hail seasons in a row and the insurance claims were getting old fast. Switched to standing seam and the estimate process was easier than I expected, and got a ballpark number the same day from satellite measurements before anyone even came out.",
     rating: 5,
   },
 
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Garland, TX?',
-      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract — plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Garland homeowners will never need to use.',
+      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract, plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Garland homeowners will never need to use.',
     },
     {
       q: 'How much does a metal roof cost in Garland?',
-      a: `Metal roofing in Garland is priced by the square foot, and your total depends on roof size, pitch, and material. We provide a satellite-based ballpark range from your roof\'s measured size — not a guess from the driveway — refined into a firm number after your free on-site assessment. By material, that typically breaks down to ${cityFaqMaterialRates()} — see our pricing table above for the full breakdown, or use our free visualizer for an exact number for your roof.`,
+      a: `Metal roofing in Garland is priced by the square foot, and your total depends on roof size, pitch, and material. We provide a satellite-based ballpark range from your roof\'s measured size, not a guess from the driveway, refined into a firm number after your free on-site assessment. By material, that typically breaks down to ${cityFaqMaterialRates()}. See our pricing table above for the full breakdown, or use our free visualizer for an exact number for your roof.`,
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Garland?',
@@ -65,7 +65,7 @@ export const GARLAND_DATA: CityData = {
     },
     {
       q: 'How long does metal roof installation take in Garland?',
-      a: 'Most residential installations in Garland are completed in one to three days. The exact timeline depends on roof size and material selection — we provide a specific estimate timeline for your home before any work begins.',
+      a: 'Most residential installations in Garland are completed in one to three days. The exact timeline depends on roof size and material selection. We provide a specific estimate timeline for your home before any work begins.',
     },
     {
       q: 'What metal and Brava roofing style works best for Garland homes?',

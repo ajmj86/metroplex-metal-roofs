@@ -358,7 +358,7 @@ const VisualizerGate = () => {
         <div style={{width:48,height:48,borderRadius:"50%",background:`${C.accentDark}44`,border:`1px solid ${C.accentDark}`,display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto 18px",fontSize:20,color:C.accent}}>✓</div>
         <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:26,color:C.white,fontWeight:700,marginBottom:12}}>You're all set.</div>
         <p style={{fontSize:16,color:C.mutedLight,lineHeight:1.8,marginBottom:24}}>
-          Your visualization is being prepared. Our team will follow up with your full render and free estimate — typically within one business day.
+          Your visualization is being prepared. Our team will follow up with your full render and free estimate, typically within one business day.
         </p>
         <div style={{fontSize:12,color:C.muted}}>Questions? <a href="tel:+18173823338" style={{color:C.accent}}>{PHONE}</a></div>
       </div>
@@ -373,22 +373,22 @@ const stats = [
   {val:55,  suffix:"%",     label:"Cost Recouped at Resale"},
 ];
 const steps = [
-  {n:"01",title:"Visualize Your Roof",   time:"~60 seconds",           href:"/visualizer",body:"Enter your address. Our AI visualizer pulls a street-level image of your home and renders it with your chosen metal roof style and color — before you commit to anything."},
+  {n:"01",title:"Visualize Your Roof",   time:"~60 seconds",           href:"/visualizer",body:"Enter your address. Our AI visualizer pulls a street-level image of your home and renders it with your chosen metal roof style and color, before you commit to anything."},
   {n:"02",title:"Brief Consultation",    time:"15 minutes, this week", href:"https://api.leadconnectorhq.com/widget/booking/gG1ruFfEWkUXO7eIB8NR",body:"A quick call with our team. We confirm your home's scope, timeline, and whether metal is the right fit. No pressure, no obligation."},
-  {n:"03",title:"40-Point Roof & Structure Assessment", time:"On-site, within days",   href:"#assessment",body:"Our team visits your home to complete the free 40-Point Roof & Structure Assessment — decking, flashing, ventilation, attic, and every penetration. It's the same on-site diagnostic professional inspectors charge for."},
-  {n:"04",title:"Precision Proposal",    time:"Presented in person",    href:undefined,body:"Using your assessment findings and satellite measurements, we build your firm proposal — one clear number, presented in person, with no post-signing surprises."},
-  {n:"05",title:"Expert Installation",   time:"Warrantied from day one",href:undefined,body:"Your roof is installed to manufacturer spec by a credentialed metal roofing specialist — licensed in Texas and fully insured — and covered by our 10-year workmanship warranty from day one."},
+  {n:"03",title:"40-Point Roof & Structure Assessment", time:"On-site, within days",   href:"#assessment",body:"Our team visits your home to complete the free 40-Point Roof & Structure Assessment, decking, flashing, ventilation, attic, and every penetration. It's the same on-site diagnostic professional inspectors charge for."},
+  {n:"04",title:"Precision Proposal",    time:"Presented in person",    href:undefined,body:"Using your assessment findings and satellite measurements, we build your firm proposal, one clear number, presented in person, with no post-signing surprises."},
+  {n:"05",title:"Expert Installation",   time:"Warrantied from day one",href:undefined,body:"Your roof is installed to manufacturer spec by a credentialed metal roofing specialist, licensed in Texas and fully insured, and covered by our 10-year workmanship warranty from day one."},
 ];
 /*
- * Placeholder testimonials (Michael T., Jennifer R., David K.) removed —
+ * Placeholder testimonials (Michael T., Jennifer R., David K.) removed -
  * FTC 2024 fake-review rule + Texas DTPA exposure until real reviews exist
  * post-WF4. Swap `credentials` below for a `reviews` array once real
  * customer reviews are collected; keep the #reviews id and section shape.
  */
 const credentials = [
-  {eyebrow:"Impact Rating",   label:"Class 4 Hail Rated",           body:"The highest impact rating UL tests for — engineered for DFW's hail climate, not just rated for it."},
+  {eyebrow:"Impact Rating",   label:"Class 4 Hail Rated",           body:"The highest impact rating UL tests for. Engineered for DFW's hail climate, not just rated for it."},
   {eyebrow:"Wind Rating",     label:"Up to 160 MPH Wind Rated",     body:"Standing seam and copper systems rated well above anything DFW's storm season throws at a roof."},
-  {eyebrow:"Coverage",        label:"10-Year Workmanship, In Writing", body:"Backed by manufacturer material warranties on every system — registered in your name, not a verbal promise."},
+  {eyebrow:"Coverage",        label:"10-Year Workmanship, In Writing", body:"Backed by manufacturer material warranties on every system, registered in your name, not a verbal promise."},
 ];
 const cities = [
   "Southlake","Frisco","Westlake","Prosper","Celina",
@@ -432,7 +432,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
         subhead="For DFW homeowners done replacing their asphalt roof every decade."
         ctaLabel="See Your Home With Metal →"
         ctaHref="/visualizer"
-        microcopy="See your home in metal and get a free price range — no photo upload, no obligation."
+        microcopy="See your home in metal and get a free price range, no photo upload, no obligation."
         trustBullets={["50-Year Lifespan","Insurance Discount Eligible*","10-Year Workmanship Warranty"]}
         trustBulletFootnote={HERO_FOOTNOTE}
         backgroundImageSrc="/MMR Hero Pic.png"
@@ -464,7 +464,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
                 Why DFW Homeowners Are<br/><span style={{fontStyle:"italic",color:C.accent}}>Done With Asphalt</span>
               </h2>
               <p style={{fontSize:16,color:C.mutedLight,lineHeight:1.8,maxWidth:560,margin:"0 auto"}}>
-                In a hail zone like Dallas–Fort Worth, asphalt roofing isn't a long-term asset — it's a recurring expense. Here's what the numbers actually look like.
+                In a hail zone like Dallas–Fort Worth, asphalt roofing isn't a long-term asset. It's a recurring expense. Here's what the numbers actually look like.
               </p>
             </div>
           </Reveal>
@@ -585,7 +585,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
               <div style={{borderBottom:`1px solid ${C.border}`,padding:"20px clamp(24px,4vw,48px)",display:"flex",alignItems:"center",gap:16,flexWrap:"wrap"}}>
                 <p style={{fontSize:16,color:C.mutedLight,margin:0,lineHeight:1.6,fontStyle:"italic"}}>
                   <span style={{display:"inline-block",width:6,height:6,borderRadius:"50%",background:C.accent,marginRight:12,verticalAlign:"middle",flexShrink:0}}/>
-                  Metal roofing is now standard on new construction across Prosper, Celina, Westlake, and Southlake. Existing homeowners in these communities are making the same upgrade — and it shows.
+                  Metal roofing is now standard on new construction across Prosper, Celina, Westlake, and Southlake. Existing homeowners in these communities are making the same upgrade, and it shows.
                 </p>
               </div>
               {/* CTA row */}
@@ -623,7 +623,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
           <Reveal>
             <PricingTable
               title="Roofing Costs in DFW"
-              intro="Installed cost by material, based on current DFW-wide market rates — your exact number depends on your roof's size, pitch, and complexity, not just which system you choose."
+              intro="Installed cost by material, based on current DFW-wide market rates. Your exact number depends on your roof's size, pitch, and complexity, not just which system you choose."
             />
           </Reveal>
         </div>
@@ -706,12 +706,12 @@ const HomePage = ({ activeTab, setActiveTab }) => {
         <div className="inner">
           <Reveal>
             <div style={{textAlign:"center",marginBottom:48}}>
-              <div style={{fontSize:15,letterSpacing:3,color:C.accent,textTransform:"uppercase",marginBottom:14}}>Included With Every Estimate — Free</div>
+              <div style={{fontSize:15,letterSpacing:3,color:C.accent,textTransform:"uppercase",marginBottom:14}}>Included Free With Every Estimate</div>
               <h2 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(1.75rem,4.3vw,3.75rem)",fontWeight:700,color:C.white,lineHeight:1.1,marginBottom:20}}>
                 The 40-Point Roof<br/><span style={{fontStyle:"italic",color:C.accent}}>& Structure Assessment</span>
               </h2>
               <p style={{fontSize:16,color:C.mutedLight,lineHeight:1.8,maxWidth:640,margin:"0 auto"}}>
-                Before we deliver your firm number, we inspect your roof's structure, weatherproofing, ventilation, and every penetration — 40 points in all. It's the same diagnostic professional inspectors charge for, done free with every estimate, so your price is locked before installation day — not renegotiated after.
+                Before we deliver your firm number, we inspect your roof's structure, weatherproofing, ventilation, and every penetration, 40 points in all. It's the same diagnostic professional inspectors charge for, done free with every estimate, so your price is locked before installation day, not renegotiated after.
               </p>
             </div>
           </Reveal>
@@ -749,7 +749,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
               One Project Lead.<br/><span style={{fontStyle:"italic",color:C.accent}}>One Warranty. Zero Chasing.</span>
             </h2>
             <p style={{fontSize:16,color:C.mutedLight,lineHeight:1.8,maxWidth:600,margin:"0 auto 48px"}}>
-              Most roof replacements mean juggling a salesman, a crew foreman, and a warranty department that stops answering. Here, you have one project lead from your first call to your final walkthrough — and every roof we install is backed by a 10-year workmanship warranty, in writing, in your contract.
+              Most roof replacements mean juggling a salesman, a crew foreman, and a warranty department that stops answering. Here, you have one project lead from your first call to your final walkthrough, and every roof we install is backed by a 10-year workmanship warranty, in writing, in your contract.
             </p>
           </Reveal>
           <div className="grid-3" style={{gap:16,textAlign:"left"}}>
@@ -900,7 +900,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
                   <span style={{fontSize:10,letterSpacing:1.5,textTransform:"uppercase",color:C.accent,border:`1px solid ${C.accentDark}`,borderRadius:20,padding:"4px 11px",whiteSpace:"nowrap"}}>Free With Every Project</span>
                 </div>
                 <p style={{fontSize:15,color:C.mutedLight,lineHeight:1.85,margin:0}}>
-                  Most of the neighborhoods we serve — Southlake, Prosper, Frisco, and beyond — require architectural review before a new roof goes on. We handle it: material samples, color chips, manufacturer spec sheets, and submission support for your HOA, included at no additional cost. Most approvals sail through on the first pass.
+                  Most of the neighborhoods we serve, Southlake, Prosper, Frisco, and beyond, require architectural review before a new roof goes on. We handle it: material samples, color chips, manufacturer spec sheets, and submission support for your HOA, included at no additional cost. Most approvals sail through on the first pass.
                 </p>
               </div>
             </div>
@@ -940,7 +940,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
               Get a Roof Estimate<br/><span style={{fontStyle:"italic",color:C.accent}}>Built From Satellite Measurements</span>
             </h2>
             <p style={{fontSize:16,color:C.mutedLight,lineHeight:1.8,marginBottom:40}}>
-              We use satellite imagery to measure your roof's size — not a guess from the driveway. Your ballpark range gets refined into a firm number after your free on-site assessment, where we account for slope, roof levels, and every detail of your specific project.
+              We use satellite imagery to measure your roof's size, not a guess from the driveway. Your ballpark range gets refined into a firm number after your free on-site assessment, where we account for slope, roof levels, and every detail of your specific project.
             </p>
             <div style={{display:"flex",gap:14,justifyContent:"center",flexWrap:"wrap"}}>
               <a href={utm("/visualizer")} className="cta-btn" style={{padding:"16px 36px",background:C.accent,color:C.black,fontSize:12,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"all 0.2s"}}
@@ -984,7 +984,7 @@ export default function App() {
     // SiteNav.tsx (used on city pages, /about, /visualizer, etc.) remembers
     // the last city page visited in sessionStorage so it can route section
     // links back there instead of the homepage. That memory never expired
-    // on its own — landing on the actual homepage is the one clear signal
+    // on its own - landing on the actual homepage is the one clear signal
     // that the "came from a city page" journey is over, so clear it here.
     // Homepage.jsx doesn't render SiteNav at all (uses its own Nav below),
     // so this is the only place that can reliably clear it.

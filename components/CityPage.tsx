@@ -17,7 +17,7 @@ import { GALLERY_ITEMS } from '@/lib/gallery'
 
 /*
   ══════════════════════════════════════
-  METROPLEX METAL ROOFS — CITY PAGE
+  METROPLEX METAL ROOFS - CITY PAGE
 
   HOW TO USE:
   - Pass CITY_DATA as a prop from a server component
@@ -118,7 +118,7 @@ export default function CityPage({ city }: { city: CityData }) {
       title: 'Visualize Your Roof',
       time: '~60 seconds',
       href: '/visualizer',
-      body: 'Enter your address. Our AI visualizer pulls a satellite image of your home and renders it with your chosen metal roof style and color — before you commit to anything.',
+      body: 'Enter your address. Our AI visualizer pulls a satellite image of your home and renders it with your chosen metal roof style and color, before you commit to anything.',
     },
     {
       n: '02',
@@ -132,21 +132,21 @@ export default function CityPage({ city }: { city: CityData }) {
       title: '40-Point Roof & Structure Assessment',
       time: 'On-site, within days',
       href: '#assessment',
-      body: "Our team visits your home to complete the free 40-Point Roof & Structure Assessment — decking, flashing, ventilation, attic, and every penetration. It's the same on-site diagnostic professional inspectors charge for.",
+      body: "Our team visits your home to complete the free 40-Point Roof & Structure Assessment, decking, flashing, ventilation, attic, and every penetration. It's the same on-site diagnostic professional inspectors charge for.",
     },
     {
       n: '04',
       title: 'Precision Proposal',
       time: 'Presented in person',
       href: undefined,
-      body: 'Using your assessment findings and satellite measurements, we build your firm proposal — one clear number, presented in person, with no post-signing surprises.',
+      body: 'Using your assessment findings and satellite measurements, we build your firm proposal, one clear number, presented in person, with no post-signing surprises.',
     },
     {
       n: '05',
       title: 'Expert Installation',
       time: 'Warrantied from day one',
       href: undefined,
-      body: 'Your roof is installed to manufacturer spec by a credentialed metal roofing specialist — licensed in Texas and fully insured — and covered by our 10-year workmanship warranty from day one.',
+      body: 'Your roof is installed to manufacturer spec by a credentialed metal roofing specialist, licensed in Texas and fully insured, and covered by our 10-year workmanship warranty from day one.',
     },
   ]
 
@@ -204,7 +204,7 @@ export default function CityPage({ city }: { city: CityData }) {
                     onMouseLeave={e => (e.currentTarget.style.background = C.accent)}
                   >See Your Home With Metal →</a>
                 </div>
-                {/* Trust row — matches the homepage hero's trust-bar set
+                {/* Trust row - matches the homepage hero's trust-bar set
                     exactly (50-Year Lifespan / Insurance Discount Eligible /
                     10-Year Workmanship Warranty), with Class 4 Hail Rating
                     kept as a 4th item since this layout uses four bullets.
@@ -282,13 +282,13 @@ export default function CityPage({ city }: { city: CityData }) {
                 <div style={{ flex: 1, minWidth: 260 }}>
                   <div style={{ fontSize: 10, letterSpacing: 2, color: '#F87171', textTransform: 'uppercase', marginBottom: 10 }}>The Asphalt Reality in {city.name}</div>
                   <p style={{ fontSize: 14, color: C.mutedLight, lineHeight: 1.85, margin: 0 }}>
-                    With a 2% wind/hail deductible and {city.name}'s home values, a single claim means a five-figure out-of-pocket expense — often approaching or exceeding the full cost of a cash roof replacement. And that resets every 8–10 years.
+                    With a 2% wind/hail deductible and {city.name}'s home values, a single claim means a five-figure out-of-pocket expense, often approaching or exceeding the full cost of a cash roof replacement. And that resets every 8–10 years.
                   </p>
                 </div>
                 <div style={{ flex: 1, minWidth: 260 }}>
                   <div style={{ fontSize: 10, letterSpacing: 2, color: C.accent, textTransform: 'uppercase', marginBottom: 10 }}>The Metal and Brava Calculus</div>
                   <p style={{ fontSize: 14, color: C.mutedLight, lineHeight: 1.85, margin: 0 }}>
-                    A metal or Brava roof eliminates the replacement cycle entirely. Add carrier discounts, reduced energy costs, and eliminated deductible exposure over 20–30 years — and the upgrade typically pays for itself well within the life of the home. Metal roofs typically recoup 50–60% of installation cost at resale — and unlike asphalt, that return doesn't reset every 8–10 years with a full replacement, per Remodeling magazine's Cost vs. Value report.
+                    A metal or Brava roof eliminates the replacement cycle entirely. Add carrier discounts, reduced energy costs, and eliminated deductible exposure over 20–30 years, and the upgrade typically pays for itself well within the life of the home. Metal roofs typically recoup 50–60% of installation cost at resale, and unlike asphalt, that return doesn't reset every 8–10 years with a full replacement, per Remodeling magazine's Cost vs. Value report.
                   </p>
                 </div>
               </div>
@@ -446,9 +446,9 @@ export default function CityPage({ city }: { city: CityData }) {
           <div className="inner">
             <Reveal>
               <SHead
-                eyebrow="Included With Every Estimate — Free"
+                eyebrow="Included Free With Every Estimate"
                 title={`The 40-Point Roof<br/><em style="font-style:italic;color:${C.accent}">&amp; Structure Assessment</em>`}
-                sub={`Before we build your ${city.name} proposal, we inspect structure, weatherproofing, ventilation, and every penetration — 40 points in all. It's the same diagnostic professional inspectors charge for, done free with every estimate, so your price is locked before installation day, not renegotiated after.`}
+                sub={`Before we build your ${city.name} proposal, we inspect structure, weatherproofing, ventilation, and every penetration, 40 points in all. It's the same diagnostic professional inspectors charge for, done free with every estimate, so your price is locked before installation day, not renegotiated after.`}
                 center
               />
             </Reveal>
@@ -477,7 +477,7 @@ export default function CityPage({ city }: { city: CityData }) {
           </div>
         </section>
 
-        {/* ── THE METROPLEX STANDARD (compact) — replaces per-city placeholder
+        {/* ── THE METROPLEX STANDARD (compact) - replaces per-city placeholder
              review (was city.review, e.g. Southlake's "Robert M.") pending
              real reviews post-WF4. Same FTC/DTPA exposure as the homepage
              testimonials; id="standard" so SiteNav can target it in-page. ── */}
@@ -531,7 +531,7 @@ export default function CityPage({ city }: { city: CityData }) {
         <section id="faq" className="sp" style={{ background: C.surface, borderTop: `1px solid ${C.border}` }}>
           <div className="inner" style={{ maxWidth: 820 }}>
             <Reveal>
-              <SHead eyebrow="FAQ" title={`Metal Roofing Questions —<br/>${city.name}, TX`}/>
+              <SHead eyebrow="FAQ" title={`Metal Roofing Questions<br/>in ${city.name}, TX`}/>
             </Reveal>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
               {city.faqs.map((faq, i) => (

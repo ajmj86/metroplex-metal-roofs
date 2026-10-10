@@ -16,7 +16,7 @@ export const IRVING_DATA: CityData = {
 
   localContext: "Irving's housing stock spans nearly every era of DFW development, from Heritage District homes built decades before Las Colinas existed to the master-planned communities of Valley Ranch and the canal-front properties near Lake Carolyn. That range means Irving sees more roofing variety than most nearby cities, but the underlying problem is the same everywhere: Dallas County's hail corridor doesn't spare Irving, and asphalt shingles rated for 15 to 20 years routinely fail well before that in real storm seasons. Metal is not the only lasting choice here. Brava synthetic slate, shake, and Spanish barrel tile give Irving homes a premium, natural-material look, and we help you compare Brava and metal side by side before you decide.",
 
-  hoaNote: "Las Colinas and Valley Ranch both maintain active HOAs with architectural review for exterior changes, and metal roofing in approved profiles is already common throughout both communities. Older Heritage District and Northgate Heights homes typically fall outside HOA jurisdiction. We provide full documentation — material samples, color chips, and manufacturer spec sheets — to support any required HOA submission at no additional cost.",
+  hoaNote: "Las Colinas and Valley Ranch both maintain active HOAs with architectural review for exterior changes, and metal roofing in approved profiles is already common throughout both communities. Older Heritage District and Northgate Heights homes typically fall outside HOA jurisdiction. We provide full documentation: material samples, color chips, and manufacturer spec sheets, to support any required HOA submission at no additional cost.",
 
   localStat: {
     val: '$395k',
@@ -49,15 +49,15 @@ export const IRVING_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Irving, TX?',
-      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract — plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Irving homeowners will never need to use.',
+      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract, plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Irving homeowners will never need to use.',
     },
     {
       q: 'How much does a metal roof cost in Irving?',
-      a: `Metal roofing in Irving is priced by the square foot, and your total depends on roof size, pitch, and material — Las Colinas and Valley Ranch homes tend to run toward a higher overall cost given typical roof size. We provide a satellite-based ballpark range from your roof\'s measured size — not a guess from the driveway — refined into a firm number after your free on-site assessment. By material, that typically breaks down to ${cityFaqMaterialRates()} — see our pricing table above for the full breakdown, or use our free visualizer for an exact number for your roof.`,
+      a: `Metal roofing in Irving is priced by the square foot, and your total depends on roof size, pitch, and material. Las Colinas and Valley Ranch homes tend to run toward a higher overall cost given typical roof size. We provide a satellite-based ballpark range from your roof\'s measured size, not a guess from the driveway, refined into a firm number after your free on-site assessment. By material, that typically breaks down to ${cityFaqMaterialRates()}. See our pricing table above for the full breakdown, or use our free visualizer for an exact number for your roof.`,
     },
     {
       q: 'Will my Las Colinas or Valley Ranch HOA approve a metal roof?',
-      a: 'Both communities already have established architectural review processes and metal roofing in approved profiles and colors is common throughout each. We provide the full documentation package — material samples, color chips, and manufacturer spec sheets — for your HOA submission at no additional cost.',
+      a: 'Both communities already have established architectural review processes and metal roofing in approved profiles and colors is common throughout each. We provide the full documentation package: material samples, color chips, and manufacturer spec sheets, for your HOA submission at no additional cost.',
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Irving?',
@@ -73,7 +73,7 @@ export const IRVING_DATA: CityData = {
     },
     {
       q: 'Is metal roofing common on Irving homes near Lake Carolyn and the canals?',
-      a: 'Yes — properties near Lake Carolyn and the Las Colinas canal system have increasingly moved to standing seam metal roofing, both for the clean architectural lines and for the added storm protection given the area\'s open exposure.',
+      a: 'Yes, properties near Lake Carolyn and the Las Colinas canal system have increasingly moved to standing seam metal roofing, both for the clean architectural lines and for the added storm protection given the area\'s open exposure.',
     },
   ],
 }
