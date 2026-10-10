@@ -38,5 +38,10 @@ export const WESTLAKE_DATA: CityData = {
     { q: 'Does a metal roof qualify for an insurance discount in Tarrant County?', a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. For Westlake homeowners with high-value policies, the savings on annual premiums combined with eliminated deductible exposure over 20 to 30 years typically represent a substantial financial return on the upgrade.' },
     { q: 'How long does metal roof installation take in Westlake?', a: 'Most residential metal roofing installations in Westlake are completed in one to four days depending on roof size, complexity, and material. Copper and large standing seam systems on estate properties may take longer. We provide a specific timeline for your home as part of the estimate process.' },
     { q: 'What metal and Brava roofing styles work best on Westlake estate homes?', a: 'Standing seam is the most popular choice for Westlake estate architecture, offering clean hidden-fastener lines that complement both contemporary and traditional design. Copper is the premium option for properties where permanence and visual distinction are the priority. Both carry the highest available impact resistance ratings. For homes in this class, Brava synthetic slate, shake, and Spanish barrel tile are often the first option we show, with standing seam and stone-coated steel as strong alternatives.' },
+    {
+      q: 'How does Brava compare to DaVinci roofing?',
+      a: "Brava and DaVinci are both premium composite roofs that give a home the look of slate or shake, and both publish a Class 4 impact rating. Brava also offers Spanish Barrel Tile, and we install Brava in three profiles: slate, cedar shake, and Spanish barrel tile. For Westlake homeowners weighing the two, the side-by-side lists the published specifications from each manufacturer.",
+      link: { href: '/brava-vs-davinci-roofing', text: 'See the Brava and DaVinci side-by-side →' },
+    },
   ],
 }

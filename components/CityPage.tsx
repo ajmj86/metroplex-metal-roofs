@@ -30,6 +30,8 @@ import { GALLERY_ITEMS } from '@/lib/gallery'
 export interface CityFAQ {
   q: string
   a: string
+  // Optional link rendered under the answer (not part of the FAQ JSON-LD text).
+  link?: { href: string; text: string }
 }
 
 export interface CityData {
@@ -543,6 +545,11 @@ export default function CityPage({ city }: { city: CityData }) {
                     <p style={{ fontSize: 14, color: C.mutedLight, lineHeight: 1.85, margin: 0 }}>
                       {faq.a}
                     </p>
+                    {faq.link && (
+                      <Link href={faq.link.href}
+                        style={{ display: 'inline-block', marginTop: 12, fontSize: 12, color: C.accent, letterSpacing: 1.5, textTransform: 'uppercase', textDecoration: 'underline' }}
+                      >{faq.link.text}</Link>
+                    )}
                   </div>
                 </Reveal>
               ))}

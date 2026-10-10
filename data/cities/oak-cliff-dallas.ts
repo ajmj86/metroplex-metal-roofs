@@ -59,5 +59,10 @@ export const OAK_CLIFF_DALLAS_DATA: CityData = {
       q: 'Can you check an older Oak Cliff roof structure before installing?',
       a: "Yes, the free 40-point assessment includes decking, framing, flashing, and ventilation. Older homes often need decking repairs, and we point those out before you sign so the price is firm. Most installs then take one to three days.",
     },
+    {
+      q: 'How does Brava compare to DaVinci roofing?',
+      a: "Brava and DaVinci are both premium composite roofs that give a home the look of slate or shake, and both publish a Class 4 impact rating. Brava also offers Spanish Barrel Tile, and we install Brava in three profiles: slate, cedar shake, and Spanish barrel tile. For Oak Cliff homeowners weighing the two, the side-by-side lists the published specifications from each manufacturer.",
+      link: { href: '/brava-vs-davinci-roofing', text: 'See the Brava and DaVinci side-by-side →' },
+    },
   ],
 }

@@ -64,5 +64,10 @@ export const HIGHLAND_PARK_DATA: CityData = {
       q: 'How long does a roof replacement take on a larger Highland Park home?',
       a: "Most installs take one to three days, and larger homes with dormers, chimneys, and multiple valleys can take longer. We give you a schedule specific to your home before any work begins. We also protect landscaping and clean up daily.",
     },
+    {
+      q: 'How does Brava compare to DaVinci roofing?',
+      a: "Brava and DaVinci are both premium composite roofs that give a home the look of slate or shake, and both publish a Class 4 impact rating. Brava also offers Spanish Barrel Tile, and we install Brava in three profiles: slate, cedar shake, and Spanish barrel tile. For Highland Park homeowners weighing the two, the side-by-side lists the published specifications from each manufacturer.",
+      link: { href: '/brava-vs-davinci-roofing', text: 'See the Brava and DaVinci side-by-side →' },
+    },
   ],
 }

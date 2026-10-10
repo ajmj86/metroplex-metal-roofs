@@ -375,6 +375,10 @@ export default function SyntheticSlateRoofingPage() {
                 </div>
               ))}
             </div>
+            <p style={{ fontSize: 15, color: C.mutedLight, lineHeight: 1.8, margin: '28px 0 0', textAlign: 'center' }}>
+              Comparing Brava and DaVinci?{' '}
+              <Link href="/brava-vs-davinci-roofing" style={{ color: C.accent, textDecoration: 'underline' }}>See the side-by-side.</Link>
+            </p>
           </div>
         </section>
 

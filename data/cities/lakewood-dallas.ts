@@ -58,5 +58,10 @@ export const LAKEWOOD_DALLAS_DATA: CityData = {
       q: 'How much does a metal or Brava synthetic slate roof cost in Lakewood?',
       a: `Cost depends on roof size, pitch, and complexity, and many Lakewood bungalows have smaller, simpler roofs than larger estate homes. By material, that runs about ${FAQ_RATE.stoneCoated()}/sq ft for stone-coated steel, ${FAQ_RATE.standingSeam()}/sq ft for standing seam, and ${FAQ_RATE.slate()}/sq ft for Brava synthetic slate. We give a satellite-based range first and a firm number after your free on-site assessment.`,
     },
+    {
+      q: 'How does Brava compare to DaVinci roofing?',
+      a: "Brava and DaVinci are both premium composite roofs that give a home the look of slate or shake, and both publish a Class 4 impact rating. Brava also offers Spanish Barrel Tile, and we install Brava in three profiles: slate, cedar shake, and Spanish barrel tile. For Lakewood homeowners weighing the two, the side-by-side lists the published specifications from each manufacturer.",
+      link: { href: '/brava-vs-davinci-roofing', text: 'See the Brava and DaVinci side-by-side →' },
+    },
   ],
 }

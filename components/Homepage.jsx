@@ -528,6 +528,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
                   {icon:"✓", label:"Lasting value",      val:"A durable composite that delivers the premium look without the weight, fragility, or upkeep of the real thing."},
                 ],
                 note:"Brava slate, cedar shake, and Spanish barrel tile for homes that deserve a premium finish.",
+                link:{href:"/brava-vs-davinci-roofing", text:"Comparing Brava and DaVinci? See the side-by-side →"},
                 delay:0.1,
               },
             ].map(col=>(
@@ -573,6 +574,13 @@ const HomePage = ({ activeTab, setActiveTab }) => {
                       {col.note}
                     </div>
                   </div>
+                  {col.link && (
+                    <a href={col.link.href}
+                      style={{display:"inline-block",marginTop:18,fontSize:12,color:C.accent,letterSpacing:1.5,textTransform:"uppercase",textDecoration:"underline",transition:"opacity 0.2s"}}
+                      onMouseEnter={e=>e.currentTarget.style.opacity="0.7"}
+                      onMouseLeave={e=>e.currentTarget.style.opacity="1"}
+                    >{col.link.text}</a>
+                  )}
                 </div>
               </Reveal>
             ))}

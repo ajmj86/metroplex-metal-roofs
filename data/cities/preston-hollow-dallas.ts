@@ -59,5 +59,10 @@ export const PRESTON_HOLLOW_DALLAS_DATA: CityData = {
       q: 'How do mature trees affect a roof replacement in Preston Hollow?',
       a: "Mature trees mean we plan access, staging, and cleanup carefully, and we protect your landscaping during the work. Metal also sheds leaves and debris well, which helps on tree-covered lots. Most installs take one to three days, and larger roofs can take longer.",
     },
+    {
+      q: 'How does Brava compare to DaVinci roofing?',
+      a: "Brava and DaVinci are both premium composite roofs that give a home the look of slate or shake, and both publish a Class 4 impact rating. Brava also offers Spanish Barrel Tile, and we install Brava in three profiles: slate, cedar shake, and Spanish barrel tile. For Preston Hollow homeowners weighing the two, the side-by-side lists the published specifications from each manufacturer.",
+      link: { href: '/brava-vs-davinci-roofing', text: 'See the Brava and DaVinci side-by-side →' },
+    },
   ],
 }

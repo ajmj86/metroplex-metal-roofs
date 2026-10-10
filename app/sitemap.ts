@@ -30,6 +30,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/synthetic-slate-roofing`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${BASE_URL}/standing-seam-roofing`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${BASE_URL}/stone-coated-steel-roofing`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${BASE_URL}/brava-vs-davinci-roofing`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${BASE_URL}/copper-roofing`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${BASE_URL}/r-panel-roofing`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${BASE_URL}/privacy`, lastModified: now, changeFrequency: 'yearly', priority: 0.2 },

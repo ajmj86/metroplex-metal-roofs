@@ -37,5 +37,10 @@ export const COLLEYVILLE_DATA: CityData = {
     { q: 'How long does metal roof installation take in Colleyville?', a: 'Most Colleyville residential installations are completed in one to three days depending on roof size and complexity. Larger estate homes may take longer. We provide a specific timeline for your property during the estimate process.' },
     { q: 'What metal and Brava roofing is best for high-value homes in Colleyville?', a: 'Standing seam is the most popular choice for Colleyville estate properties due to its clean architectural lines and hidden fastener system. Copper is available for homeowners seeking a premium, permanent finish that develops a natural patina over time. Both carry the highest available impact resistance ratings. For homes in this class, Brava synthetic slate, shake, and Spanish barrel tile are often the first option we show, with standing seam and stone-coated steel as strong alternatives.' },
     { q: 'How does metal roofing hold up in Tarrant County hail storms?', a: 'Standing seam and stone-coated steel carry a Class 4 impact resistance rating, the highest available. This is the rating required by most Texas carriers for maximum hail discount eligibility and is particularly important in Tarrant County\'s active storm corridor.' },
+    {
+      q: 'How does Brava compare to DaVinci roofing?',
+      a: "Brava and DaVinci are both premium composite roofs that give a home the look of slate or shake, and both publish a Class 4 impact rating. Brava also offers Spanish Barrel Tile, and we install Brava in three profiles: slate, cedar shake, and Spanish barrel tile. For Colleyville homeowners weighing the two, the side-by-side lists the published specifications from each manufacturer.",
+      link: { href: '/brava-vs-davinci-roofing', text: 'See the Brava and DaVinci side-by-side →' },
+    },
   ],
 }
