@@ -27,12 +27,6 @@ export const GRAPEVINE_DATA: CityData = {
     { name: 'Coppell', slug: 'coppell' },
     { name: 'Keller', slug: 'keller' },
   ],
-  review: {
-    name: 'Lynn B.',
-    neighborhood: '',
-    text: "Our house is older and we were worried metal would not look right on it. The render completely changed our minds. We went with stone-coated steel and it blends perfectly with the style of the house. Really glad we did not just go with another shingle roof.",
-    rating: 5,
-  },
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Grapevine, TX?',

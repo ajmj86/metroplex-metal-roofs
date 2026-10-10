@@ -27,12 +27,6 @@ export const COPPELL_DATA: CityData = {
     { name: 'Carrollton', slug: 'carrollton' },
     { name: 'Irving', slug: 'irving' },
   ],
-  review: {
-    name: 'Sandra K.',
-    neighborhood: '',
-    text: "Our house is 22 years old and we had already replaced the roof once. When the estimate came in I was surprised by how straightforward the math was. The standing seam has been on for a year now and it has already been through two significant hail events without any issues.",
-    rating: 5,
-  },
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Coppell, TX?',

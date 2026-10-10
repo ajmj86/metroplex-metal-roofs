@@ -24,12 +24,6 @@ export const FORNEY_DATA: CityData = {
     { name: 'Rockwall', slug: 'rockwall' },
     { name: 'Mesquite', slug: 'mesquite' },
   ],
-  review: {
-    name: 'Ashley T.',
-    neighborhood: '',
-    text: "We bought our house three years ago and the builder roof was already showing wear after a couple bad hail seasons. Got the satellite estimate, saw the render, and decided to just do it right. The stone-coated steel looks great and we feel a lot better about the next storm season.",
-    rating: 5,
-  },
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Forney, TX?',

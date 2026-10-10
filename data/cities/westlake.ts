@@ -27,12 +27,6 @@ export const WESTLAKE_DATA: CityData = {
     { name: 'Colleyville', slug: 'colleyville' },
     { name: 'Roanoke', slug: 'roanoke' },
   ],
-  review: {
-    name: 'David K.',
-    neighborhood: '',
-    text: "They showed me a render of my actual house with a metal roof before we even talked numbers. That was a completely different experience than every other roofing company I had talked to. The copper standing seam turned out better than the render honestly.",
-    rating: 5,
-  },
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Westlake, TX?',

@@ -26,12 +26,6 @@ export const HIGHLAND_VILLAGE_DATA: CityData = {
     { name: 'Coppell', slug: 'coppell' },
     { name: 'Argyle', slug: 'argyle' },
   ],
-  review: {
-    name: 'Scott M.',
-    neighborhood: '',
-    text: "We have been in our house for 18 years and finally replaced the original roof last year. Should have gone metal the first time. The satellite estimate was easy, the install was fast, and the standing seam looks fantastic on the house.",
-    rating: 5,
-  },
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Highland Village, TX?',

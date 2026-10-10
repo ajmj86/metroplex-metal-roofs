@@ -27,12 +27,6 @@ export const KELLER_DATA: CityData = {
     { name: 'Trophy Club', slug: 'trophy-club' },
     { name: 'Roanoke', slug: 'roanoke' },
   ],
-  review: {
-    name: 'Susan H.',
-    neighborhood: '',
-    text: "We had a roofer come out after hail two years ago and just kept putting off the decision. Finally got the satellite estimate and it was way less painful than I expected. The crew was in and out in two days and the roof looks fantastic.",
-    rating: 5,
-  },
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Keller, TX?',

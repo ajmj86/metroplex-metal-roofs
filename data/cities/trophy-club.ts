@@ -27,12 +27,6 @@ export const TROPHY_CLUB_DATA: CityData = {
     { name: 'Roanoke', slug: 'roanoke' },
     { name: 'Flower Mound', slug: 'flower-mound' },
   ],
-  review: {
-    name: 'Gary N.',
-    neighborhood: '',
-    text: "I had been meaning to look into metal roofing for a couple years. Finally got the satellite estimate and it was a much easier decision than I expected. The standing seam was installed in two days and the HOA approved it without any back and forth.",
-    rating: 5,
-  },
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Trophy Club, TX?',

@@ -52,12 +52,6 @@ export const DALLAS_DATA: CityData = {
     { name: 'University Park', slug: 'university-park' },
   ],
 
-  review: {
-    name: 'Marcus D.',
-    neighborhood: 'Lakewood',
-    text: "Our house is a 1940s bungalow and the original shingles were long past due. We were nervous a metal roof would look out of place on an older Lakewood house, but the render showed us exactly how it would sit and it turned out better than we imagined. Crew was in and out in two days.",
-    rating: 5,
-  },
 
   faqs: [
     {

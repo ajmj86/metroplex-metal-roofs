@@ -26,12 +26,6 @@ export const ALLEN_DATA: CityData = {
     { name: 'Frisco', slug: 'frisco' },
     { name: 'Richardson', slug: 'richardson' },
   ],
-  review: {
-    name: 'Karen S.',
-    neighborhood: '',
-    text: "I was skeptical at first because every roofer I had talked to just wanted to get on my roof and give me a quote. This was different. I got to see what the metal roof would look like on my actual house and the estimate came from satellite data. It felt honest and the finished roof looks great.",
-    rating: 5,
-  },
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Allen, TX?',

@@ -39,12 +39,6 @@ export const CARROLLTON_DATA: CityData = {
     { name: 'Irving', slug: 'irving' },
   ],
 
-  review: {
-    name: 'Katie B.',
-    neighborhood: 'Castle Hills',
-    text: "We built in Castle Hills a few years back with a standard shingle roof and started looking at metal after seeing a few neighbors switch. The HOA approval was straightforward once we had the documentation package, and the standing seam looks sharp against the rest of the house.",
-    rating: 5,
-  },
 
   faqs: [
     {

@@ -24,12 +24,6 @@ export const BURLESON_DATA: CityData = {
     { name: 'Mansfield', slug: 'mansfield' },
     { name: 'Midlothian', slug: 'midlothian' },
   ],
-  review: {
-    name: 'Mike V.',
-    neighborhood: '',
-    text: "We had hail damage two years in a row and just kept getting the asphalt patched. Finally got a real estimate for metal and it was not as expensive as I thought. The job took less than two days and the crew left the yard cleaner than they found it.",
-    rating: 5,
-  },
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Burleson, TX?',

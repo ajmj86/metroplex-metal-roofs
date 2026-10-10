@@ -49,12 +49,6 @@ export const SOUTHLAKE_DATA: CityData = {
     { name: 'Flower Mound',  slug: 'flower-mound' },
   ],
 
-  review: {
-    name: 'Robert M.',
-    neighborhood: '',
-    text: "Our HOA was the main concern, we weren't sure metal would be approved. The team provided everything we needed for the submission and it sailed through. The standing seam looks better than anything else on the street.",
-    rating: 5,
-  },
 
   faqs: [
     {

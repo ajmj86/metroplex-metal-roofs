@@ -26,12 +26,6 @@ export const ARGYLE_DATA: CityData = {
     { name: 'Northlake', slug: 'northlake' },
     { name: 'Roanoke', slug: 'roanoke' },
   ],
-  review: {
-    name: 'Todd W.',
-    neighborhood: '',
-    text: "We have a larger house on a decent piece of land and replacing the roof is always a serious project. The satellite estimate was more accurate than any in-person quote I had gotten before. Standing seam install was done in three days and the crew was great.",
-    rating: 5,
-  },
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Argyle, TX?',

@@ -46,12 +46,6 @@ export const PROSPER_DATA: CityData = {
     { name: 'Allen',         slug: 'allen' },
   ],
 
-  review: {
-    name: 'Michelle T.',
-    neighborhood: '',
-    text: "A few of our neighbors had already switched to metal so we started asking questions. After seeing the render of our own house and getting the satellite estimate the decision was pretty easy. The stone-coated steel looks like it was always there.",
-    rating: 5,
-  },
 
   faqs: [
     {

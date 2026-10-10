@@ -39,12 +39,6 @@ export const GARLAND_DATA: CityData = {
     { name: 'Mesquite', slug: 'mesquite' },
   ],
 
-  review: {
-    name: 'Robert L.',
-    neighborhood: 'Firewheel',
-    text: "Our shingle roof took a beating two hail seasons in a row and the insurance claims were getting old fast. Switched to standing seam and the estimate process was easier than I expected, and got a ballpark number the same day from satellite measurements before anyone even came out.",
-    rating: 5,
-  },
 
   faqs: [
     {

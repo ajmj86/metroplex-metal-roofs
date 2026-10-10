@@ -25,12 +25,6 @@ export const FATE_DATA: CityData = {
     { name: 'Royse City', slug: 'royse-city' },
     { name: 'Forney', slug: 'forney' },
   ],
-  review: {
-    name: 'Steve R.',
-    neighborhood: '',
-    text: "Builder roof on a three year old house already needed repairs after hail. The satellite estimate came back the next day and the process was really smooth. The standing seam is on now and looks great. Should have done this before the first storm.",
-    rating: 5,
-  },
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Fate, TX?',

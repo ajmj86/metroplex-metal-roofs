@@ -25,12 +25,6 @@ export const MIDLOTHIAN_DATA: CityData = {
     { name: 'Waxahachie', slug: 'waxahachie' },
     { name: 'Burleson', slug: 'burleson' },
   ],
-  review: {
-    name: 'Rachel P.',
-    neighborhood: '',
-    text: "We have a newer house and did not think we needed to worry about the roof yet. After two hail seasons back to back we changed our minds. Got the satellite estimate and it was faster and more accurate than I expected. Very happy with the stone-coated steel.",
-    rating: 5,
-  },
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Midlothian, TX?',

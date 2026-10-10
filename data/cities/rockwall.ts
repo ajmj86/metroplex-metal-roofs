@@ -25,12 +25,6 @@ export const ROCKWALL_DATA: CityData = {
     { name: 'Fate', slug: 'fate' },
     { name: 'Royse City', slug: 'royse-city' },
   ],
-  review: {
-    name: 'Kevin L.',
-    neighborhood: '',
-    text: "Living near the lake means we get hit hard every storm season. After the fourth hail claim we were done with asphalt. The whole process was easy. Satellite estimate, render of the house, install in two days. The standing seam has been through two storms since then without a scratch.",
-    rating: 5,
-  },
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Rockwall, TX?',

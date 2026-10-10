@@ -27,12 +27,6 @@ export const ROANOKE_DATA: CityData = {
     { name: 'Argyle', slug: 'argyle' },
     { name: 'Northlake', slug: 'northlake' },
   ],
-  review: {
-    name: 'Paul E.',
-    neighborhood: '',
-    text: "We have friends in Southlake who went metal a couple years ago and we finally followed their lead. The whole process was easier than I expected. The satellite estimate was accurate, the render was helpful, and the install was done in two days.",
-    rating: 5,
-  },
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Roanoke, TX?',

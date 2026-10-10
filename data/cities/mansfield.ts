@@ -26,12 +26,6 @@ export const MANSFIELD_DATA: CityData = {
     { name: 'Burleson', slug: 'burleson' },
     { name: 'Grand Prairie', slug: 'grand-prairie' },
   ],
-  review: {
-    name: 'Chris A.',
-    neighborhood: '',
-    text: "Third roof in 20 years. Finally pulled the trigger on metal. The satellite estimate took a day and the render made it easy to commit. Install was two days and everything was cleaned up perfectly. Wish I had done this 10 years ago.",
-    rating: 5,
-  },
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Mansfield, TX?',

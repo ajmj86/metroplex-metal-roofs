@@ -27,12 +27,6 @@ export const LEWISVILLE_DATA: CityData = {
     { name: 'Carrollton', slug: 'carrollton' },
     { name: 'Grapevine', slug: 'grapevine' },
   ],
-  review: {
-    name: 'Dana R.',
-    neighborhood: '',
-    text: "We are right on the lake and catch every storm that rolls through. After replacing the shingles twice in eight years we finally went metal. The satellite estimate was quick and the visualizer was fun to use honestly. Zero regrets.",
-    rating: 5,
-  },
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Lewisville, TX?',

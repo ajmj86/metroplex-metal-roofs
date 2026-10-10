@@ -27,12 +27,6 @@ export const FLOWER_MOUND_DATA: CityData = {
     { name: 'Lewisville', slug: 'lewisville' },
     { name: 'Highland Village', slug: 'highland-village' },
   ],
-  review: {
-    name: 'Patricia W.',
-    neighborhood: '',
-    text: "We had our third hail claim in eight years and decided enough was enough. The process with Metroplex was really straightforward. Satellite estimate, saw the render, scheduled the install. The standing seam looks sharp and I am not dreading storm season anymore.",
-    rating: 5,
-  },
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Flower Mound, TX?',

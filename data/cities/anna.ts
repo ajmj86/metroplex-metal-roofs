@@ -24,12 +24,6 @@ export const ANNA_DATA: CityData = {
     { name: 'McKinney', slug: 'mckinney' },
     { name: 'Celina', slug: 'celina' },
   ],
-  review: {
-    name: 'Nathan B.',
-    neighborhood: '',
-    text: "We bought a new build here two years ago and the builder shingles took hail damage the first season. Decided to just go metal and skip the cycle. The process was quick and straightforward and the stone-coated steel looks sharp on the house.",
-    rating: 5,
-  },
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Anna, TX?',

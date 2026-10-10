@@ -24,12 +24,6 @@ export const WAXAHACHIE_DATA: CityData = {
     { name: 'Midlothian', slug: 'midlothian' },
     { name: 'Mansfield', slug: 'mansfield' },
   ],
-  review: {
-    name: 'James F.',
-    neighborhood: '',
-    text: "Our house is an older build and I wanted to make sure metal would work with the style. The render showed us exactly what it would look like and we were sold right there. The install crew was respectful of the property and the finished product looks like it was always meant to be there.",
-    rating: 5,
-  },
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Waxahachie, TX?',

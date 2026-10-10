@@ -26,12 +26,6 @@ export const COLLEYVILLE_DATA: CityData = {
     { name: 'Keller', slug: 'keller' },
     { name: 'Grapevine', slug: 'grapevine' },
   ],
-  review: {
-    name: 'Mark D.',
-    neighborhood: '',
-    text: "We had been on asphalt for 14 years and just kept repairing it after every hail season. The satellite estimate was fast and the render was convincing. We went with standing seam and it completely changed the look of the house. Should have done this years ago.",
-    rating: 5,
-  },
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Colleyville, TX?',

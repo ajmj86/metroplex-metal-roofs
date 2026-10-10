@@ -39,12 +39,6 @@ export const MESQUITE_DATA: CityData = {
     { name: 'Forney', slug: 'forney' },
   ],
 
-  review: {
-    name: 'Tammy R.',
-    neighborhood: 'Town East Estates',
-    text: "We'd been putting off the reroof for years knowing we'd just be back here again in a decade. Went with stone-coated steel this time and the difference in how the house looks is honestly bigger than we expected. Crew was done in two days.",
-    rating: 5,
-  },
 
   faqs: [
     {

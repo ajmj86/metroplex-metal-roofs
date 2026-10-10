@@ -27,12 +27,6 @@ export const PLANO_DATA: CityData = {
     { name: 'Richardson', slug: 'richardson' },
     { name: 'Garland', slug: 'garland' },
   ],
-  review: {
-    name: 'Tom R.',
-    neighborhood: '',
-    text: "Our roof was 11 years old and we knew it was only a matter of time. We got quotes from three companies and Metroplex was the only one that sent us a satellite estimate with an actual image of the house. The install was clean, fast, and the crew was professional. No regrets.",
-    rating: 5,
-  },
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Plano, TX?',

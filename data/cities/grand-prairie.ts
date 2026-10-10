@@ -41,12 +41,6 @@ export const GRAND_PRAIRIE_DATA: CityData = {
     { name: 'Dallas', slug: 'dallas' },
   ],
 
-  review: {
-    name: 'Carlos M.',
-    neighborhood: 'Mira Lagos',
-    text: "We built in Mira Lagos and the builder-grade shingle roof was the one thing that felt out of place with the rest of the house. Upgraded to standing seam about a year in and it made a bigger difference to the curb appeal than almost anything else we've done.",
-    rating: 5,
-  },
 
   faqs: [
     {

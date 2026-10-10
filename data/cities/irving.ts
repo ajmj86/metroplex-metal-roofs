@@ -39,12 +39,6 @@ export const IRVING_DATA: CityData = {
     { name: 'Carrollton', slug: 'carrollton' },
   ],
 
-  review: {
-    name: 'Priya S.',
-    neighborhood: 'Valley Ranch',
-    text: "We got two shingle roofs replaced by our old HOA-approved contractor before deciding to just switch to metal. The HOA approval process was easier than we expected since they already had a documentation package ready to go. Install was fast and the house looks noticeably better.",
-    rating: 5,
-  },
 
   faqs: [
     {

@@ -38,12 +38,6 @@ export const ARLINGTON_DATA: CityData = {
     { name: 'Mansfield', slug: 'mansfield' },
   ],
 
-  review: {
-    name: 'Diane K.',
-    neighborhood: 'North Arlington',
-    text: "We'd already replaced our shingle roof once after hail and didn't want to do it again in ten years. The satellite estimate was quick and the render helped my husband get on board. Standing seam looks great and we haven't thought twice about the next hailstorm.",
-    rating: 5,
-  },
 
   faqs: [
     {

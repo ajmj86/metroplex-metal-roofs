@@ -25,12 +25,6 @@ export const ROYSE_CITY_DATA: CityData = {
     { name: 'Fate', slug: 'fate' },
     { name: 'Forney', slug: 'forney' },
   ],
-  review: {
-    name: 'Jennifer H.',
-    neighborhood: '',
-    text: "We bought our house four years ago and put off the roof upgrade for too long. After back to back hail seasons we finally got the satellite estimate. It was fast, accurate, and the whole job was done in a day and a half. Very happy we did not wait longer.",
-    rating: 5,
-  },
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Royse City, TX?',

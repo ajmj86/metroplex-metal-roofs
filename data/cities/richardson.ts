@@ -27,12 +27,6 @@ export const RICHARDSON_DATA: CityData = {
     { name: 'Dallas', slug: 'dallas' },
     { name: 'Lake Highlands', slug: 'lake-highlands-dallas' },
   ],
-  review: {
-    name: 'Linda C.',
-    neighborhood: '',
-    text: "Our house is 35 years old and we are on our third roof. The satellite estimate was the first time I actually felt like I understood what I was paying for. The stone-coated steel looks great on the house and we are not dreading the next hail season.",
-    rating: 5,
-  },
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Richardson, TX?',

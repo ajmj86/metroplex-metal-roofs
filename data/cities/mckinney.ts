@@ -27,12 +27,6 @@ export const MCKINNEY_DATA: CityData = {
     { name: 'Celina', slug: 'celina' },
     { name: 'Anna', slug: 'anna' },
   ],
-  review: {
-    name: 'Brian C.',
-    neighborhood: '',
-    text: "We had already replaced our roof once after hail and really did not want to do it again. The estimate came back faster than I expected and the satellite thing was impressive. The whole job was done in a day and a half. No complaints at all.",
-    rating: 5,
-  },
   faqs: [
     {
       q: 'What warranty comes with a metal roof in McKinney, TX?',

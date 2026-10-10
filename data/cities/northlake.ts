@@ -26,12 +26,6 @@ export const NORTHLAKE_DATA: CityData = {
     { name: 'Trophy Club', slug: 'trophy-club' },
     { name: 'Roanoke', slug: 'roanoke' },
   ],
-  review: {
-    name: 'Amy J.',
-    neighborhood: '',
-    text: "We just moved into a new build and the builder roof was already showing issues after the first storm season. Got the satellite estimate and went straight to metal. The stone-coated steel looks like it belongs on the house and we have peace of mind going into every storm season.",
-    rating: 5,
-  },
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Northlake, TX?',

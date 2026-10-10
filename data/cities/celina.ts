@@ -26,12 +26,6 @@ export const CELINA_DATA: CityData = {
     { name: 'Frisco', slug: 'frisco' },
     { name: 'Anna', slug: 'anna' },
   ],
-  review: {
-    name: 'Derek M.',
-    neighborhood: '',
-    text: "We built our house two years ago and the builder put on a standard shingle roof. After the first big hail season we started looking at metal. Got a satellite estimate in a day, saw the render, and pulled the trigger. Best upgrade we have made to the house.",
-    rating: 5,
-  },
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Celina, TX?',
