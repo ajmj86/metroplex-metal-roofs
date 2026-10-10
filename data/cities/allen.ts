@@ -49,7 +49,7 @@ export const ALLEN_DATA: CityData = {
     },
     {
       q: 'How does a metal roof handle hail in Collin County?',
-      a: "Standing seam and stone-coated steel are available with a Class 4 impact rating, the highest available. That matters in Collin County, where hail is a regular part of owning a home. We can show you how the finish looks on samples during your inspection.",
+      a: "Standing seam and stone-coated steel carry a Class 4 impact rating, the highest available. That matters in Collin County, where hail is a regular part of owning a home. We can show you how the finish looks on samples during your inspection.",
     },
     {
       q: 'What metal and Brava roofing styles are available in Allen?',

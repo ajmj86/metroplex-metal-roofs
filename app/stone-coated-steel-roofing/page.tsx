@@ -45,7 +45,7 @@ const FAQS = [
   },
   {
     q: 'Does stone-coated steel qualify for insurance discounts in DFW?',
-    a: 'Insurance carriers set the discount, but most Texas insurers discount Class 4 roofs, and stone-coated steel is available with that rating. Your agent can confirm the details, and we provide product information whenever you need it.',
+    a: 'Insurance carriers set the discount, but most Texas insurers discount Class 4 roofs, and stone-coated steel carries that rating. Your agent can confirm the details, and we provide product information whenever you need it.',
   },
   {
     q: 'How long does a stone-coated steel roof last?',
@@ -57,7 +57,7 @@ const FAQS = [
   },
   {
     q: 'Will hail dent stone-coated steel?',
-    a: 'Stone-coated steel is available with a Class 4 impact rating, and its textured stone surface hides marks better than smooth panels. Very large hail can still leave cosmetic marks on some metal finishes, so we explain what to expect. Ask to see samples of the textured finish during your inspection.',
+    a: 'Stone-coated steel carries a Class 4 impact rating, and its textured stone surface hides marks better than smooth panels. Very large hail can still leave cosmetic marks on some metal finishes, so we explain what to expect. Ask to see samples of the textured finish during your inspection.',
   },
   {
     q: 'Will a metal roof make my home look like a barn?',

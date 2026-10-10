@@ -50,7 +50,7 @@ export const TROPHY_CLUB_DATA: CityData = {
     },
     {
       q: 'How does metal roofing handle Denton County hail storms?',
-      a: "Standing seam and stone-coated steel are available with a Class 4 impact rating, the highest available. Hail is a real concern across Denton County, and most Texas insurers discount Class 4 roofs. Ask about colors and profiles when we visit your home.",
+      a: "Standing seam and stone-coated steel carry a Class 4 impact rating, the highest available. Hail is a real concern across Denton County, and most Texas insurers discount Class 4 roofs. Ask about colors and profiles when we visit your home.",
     },
     {
       q: 'What metal and Brava roofing styles work best on Trophy Club homes?',

@@ -49,7 +49,7 @@ export const HIGHLAND_VILLAGE_DATA: CityData = {
     },
     {
       q: 'How does metal roofing handle storms near Lake Lewisville?',
-      a: "Standing seam and stone-coated steel are available with a Class 4 impact rating, the highest available. Highland Village homeowners deal with spring storms, so a Class 4 roof is a common upgrade after a claim. Textured stone-coated steel profiles also tend to hide marks well.",
+      a: "Standing seam and stone-coated steel carry a Class 4 impact rating, the highest available. Highland Village homeowners deal with spring storms, so a Class 4 roof is a common upgrade after a claim. Textured stone-coated steel profiles also tend to hide marks well.",
     },
     {
       q: 'What metal and Brava roofing styles work best in Highland Village?',

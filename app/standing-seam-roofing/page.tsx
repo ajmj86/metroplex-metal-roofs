@@ -43,7 +43,7 @@ const FAQS = [
   },
   {
     q: 'Does standing seam qualify for insurance discounts in DFW?',
-    a: 'Yes, standing seam is available with a Class 4 impact rating, and most Texas insurers discount Class 4 roofs. Savings vary by carrier and policy, so check with your insurance carrier before you decide. We can supply product documentation for your agent.',
+    a: 'Yes, standing seam carries a Class 4 impact rating, and most Texas insurers discount Class 4 roofs. Savings vary by carrier and policy, so check with your insurance carrier before you decide. We can supply product documentation for your agent.',
   },
   {
     q: 'Will my HOA approve a standing seam metal roof?',
@@ -55,7 +55,7 @@ const FAQS = [
   },
   {
     q: 'Will hail dent a metal roof?',
-    a: 'Standing seam is available with a Class 4 impact rating, but very large hail can still leave cosmetic marks on some metal finishes. Smooth panels show marks more readily than textured stone-coated steel, so finish and profile matter. If that concerns you, ask about textured options during your inspection.',
+    a: 'Standing seam carries a Class 4 impact rating, but very large hail can still leave cosmetic marks on some metal finishes. Smooth panels show marks more readily than textured stone-coated steel, so finish and profile matter. If that concerns you, ask about textured options during your inspection.',
   },
   {
     q: 'Does a standing seam roof tick or pop as it heats and cools?',
