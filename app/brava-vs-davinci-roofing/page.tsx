@@ -22,7 +22,7 @@ export const metadata: Metadata = {
  * DaVinci column: DaVinci's own website only.
  *   Profiles:      https://www.davinciroofscapes.com/products/ (product menu)
  *   Thickness:     https://www.davinciroofscapes.com/products/slate/multi-width-slate/
- *                  ("Profiles range from 1/4-inch to 5/8-inch")
+ *                  ("Profiles range from 1/4-inch to 5/8-inch"; shown for Multi-Width Slate only)
  *   Wind, Impact:  https://www.davinciroofscapes.com/extreme-weather-hail/
  *                  ("Class 4 Impact Rating, 110 mph straight line Wind Rating,
  *                  and 180mph Hurricane Zone Winds")
@@ -43,7 +43,7 @@ const SPECS: { label: string; brava: string; davinci: string }[] = [
   {
     label: 'Thickness',
     brava: 'Slate 1 inch. Cedar Shake 5/8 to 1 inch.',
-    davinci: 'Profiles range from 1/4 inch to 5/8 inch.',
+    davinci: "Multi-Width Slate: 1/4 to 5/8 inch, per DaVinci's product page. See manufacturer for other profiles.",
   },
   {
     label: 'Wind',
@@ -67,7 +67,7 @@ const SPECS: { label: string; brava: string; davinci: string }[] = [
   },
   {
     label: 'Warranty',
-    brava: 'Backed by a 50-year limited warranty from Brava.',
+    brava: 'Limited Lifetime Warranty, defined by Brava as 50 years. See manufacturer for terms.',
     davinci: 'Lifetime limited material warranty. See manufacturer for terms.',
   },
 ]
@@ -245,7 +245,7 @@ export default function BravaVsDaVinciPage() {
               </table>
             </div>
             <p style={{ fontSize: 12, color: C.muted, lineHeight: 1.7, marginTop: 16, textAlign: 'center' }}>
-              Specifications from each manufacturer's published materials as of October 2026. Ratings depend on installation.
+              Specifications from each manufacturer's published materials as of October 2026. Ratings depend on installation and test method, so figures from different manufacturers may not be directly comparable.
             </p>
           </div>
         </section>
@@ -337,7 +337,7 @@ export default function BravaVsDaVinciPage() {
         {/* ── TRADEMARK NOTE ── */}
         <div style={{ borderTop: `1px solid ${C.border}`, padding: '20px clamp(24px,5vw,64px)', textAlign: 'center' }}>
           <p style={{ fontSize: 11, color: C.muted, lineHeight: 1.7, margin: 0, opacity: 0.85 }}>
-            DaVinci is a trademark of its owner. Metroplex Metal Roofs is not affiliated with DaVinci Roofscapes.
+            DaVinci is a trademark of its owner. This page compares published specifications and is not sponsored by either manufacturer.
           </p>
         </div>
 
