@@ -11,7 +11,7 @@ const BOOKING_URL = 'https://api.leadconnectorhq.com/widget/booking/gG1ruFfEWkUX
 
 export const metadata: Metadata = {
   title: 'Copper Roofing Dallas–Fort Worth | Metroplex Metal Roofs',
-  description: 'Copper roofing for DFW estate homes, a 100+ year lifespan and a natural patina that evolves for generations. The most premium material in residential roofing. Free consultation.',
+  description: 'Copper roofing for DFW estate homes, an 80 to 100 year lifespan and a natural patina that evolves for generations. The most premium material in residential roofing. Free consultation.',
   alternates: {
     canonical: '/copper-roofing',
   },
@@ -31,7 +31,7 @@ const CITIES: [string, string][] = [
 const FAQS = [
   {
     q: 'How long does a copper roof last?',
-    a: 'Copper roofing routinely lasts 100 years or more. Many copper roofs installed in the early 1900s are still fully functional today.',
+    a: 'Copper roofing commonly lasts 80 to 100 years. Many copper roofs installed in the early 1900s are still fully functional today.',
   },
   {
     q: 'Why does copper change color over time?',
@@ -149,7 +149,7 @@ export default function CopperRoofingPage() {
               A Roof That<br/><span style={{ color: C.accent, fontStyle: 'italic' }}>Outlives the Mortgage.</span>
             </h1>
             <p style={{ fontSize: 'clamp(1.05rem,1.3vw,1.1875rem)', lineHeight: 1.8, color: C.mutedLight, maxWidth: 560, marginBottom: 40, fontWeight: 500 }}>
-              One material whose finish evolves for generations. Copper roofing lasts 100+ years and signals enduring quality most materials can&apos;t match.
+              One material whose finish evolves for generations. Copper roofing lasts 80 to 100 years and signals enduring quality most materials can&apos;t match.
             </p>
             <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'center' }}>
               <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="cta-btn copper-cta-primary"
@@ -160,7 +160,7 @@ export default function CopperRoofingPage() {
               >See It On Your Home →</UtmLink>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginTop: 48, paddingTop: 32, borderTop: `1px solid ${C.border}` }}>
-              {['100+ Year Lifespan', 'Natural, Self-Protecting Patina', 'Near-Zero Maintenance', '10-Year Workmanship Warranty'].map(t => (
+              {['80 to 100 Year Lifespan', 'Natural, Self-Protecting Patina', 'Near-Zero Maintenance', '10-Year Workmanship Warranty'].map(t => (
                 <div key={t} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                   <div style={{ width: 4, height: 4, borderRadius: '50%', background: C.accent, flexShrink: 0 }} />
                   <span style={{ fontSize: 12, color: C.muted }}>{t}</span>
@@ -208,7 +208,7 @@ export default function CopperRoofingPage() {
               <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 8, padding: 'clamp(24px,3vw,32px)' }}>
                 <div style={{ fontSize: 13, letterSpacing: 1.5, color: C.accent, textTransform: 'uppercase', marginBottom: 10, fontWeight: 600 }}>Choose Copper If</div>
                 <p style={{ fontSize: 15, color: C.mutedLight, lineHeight: 1.85, margin: 0 }}>
-                  You want the longest possible lifespan (100+ years), a living finish that evolves for generations, and you&apos;re building or renovating an estate-level home where cost is secondary to permanence and craft.
+                  You want the longest possible lifespan (80 to 100 years), a living finish that evolves for generations, and you&apos;re building or renovating an estate-level home where cost is secondary to permanence and craft.
                 </p>
               </div>
               <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 8, padding: 'clamp(24px,3vw,32px)' }}>

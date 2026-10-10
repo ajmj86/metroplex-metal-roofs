@@ -241,7 +241,7 @@ const bravaColorsForStyle = (styleId) => {
 /* ── Static data (module scope) ── */
 const roofTypes = [
   {id:"stone",   label:"Stone-Coated Steel",  desc:"The look of architectural shingles with the strength of steel. Class 4 hail rating, ideal for HOA-governed DFW communities that require traditional aesthetics."},
-  {id:"copper",  label:"Copper",              desc:"The most premium material in residential roofing. Develops a natural patina over decades, lasts 100+ years, and signals enduring quality. Ideal for estate-level homes or architectural accents."},
+  {id:"copper",  label:"Copper",              desc:"The most premium material in residential roofing. Develops a natural patina over decades, lasts 80 to 100 years, and signals enduring quality. Ideal for estate-level homes or architectural accents."},
   {id:"standing",label:"Standing Seam Steel", desc:"The gold standard in metal roofing. Hidden fasteners, clean architectural lines, and a 50+ year lifespan. Preferred by luxury homebuilders and architects across DFW."},
   {id:"rpanel",  label:"R-Panel",             desc:"A proven exposed-fastener metal panel system offering exceptional durability and longevity. A straightforward entry into metal roofing without sacrificing long-term performance."},
 ];
