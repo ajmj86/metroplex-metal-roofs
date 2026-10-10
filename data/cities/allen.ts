@@ -56,7 +56,7 @@ export const ALLEN_DATA: CityData = {
       a: "Allen homeowners can choose from standing seam, stone-coated steel, and Brava synthetic slate, shake, or Spanish barrel tile. Standing seam and stone-coated steel are the most common choices for Allen homes. The right selection depends on your home's architecture, budget, and HOA requirements. Brava synthetic slate, shake, and Spanish barrel tile add a natural-material look for owners who prefer it. Both steel systems carry a Class 4 impact rating, and we bring samples so you can compare them on your own home.",
     },
     {
-      q: "Will a metal roof rust on a Allen home?",
+      q: "Will a metal roof rust on an Allen home?",
       a: "Coated steel is designed to resist rust when it is installed and maintained properly, and copper does not rust at all; it develops a patina. For Allen homes, we walk through which finish suits your roof.",
     },
   ],

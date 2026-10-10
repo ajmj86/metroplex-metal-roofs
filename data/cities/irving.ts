@@ -43,7 +43,7 @@ export const IRVING_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Irving, TX?',
-      a: "The paperwork for a Irving roof starts with a 10-year workmanship warranty, written into the contract. Panels and finish are covered separately by the manufacturer's material warranty. Paired with a system lifespan of 50 years or more, it is coverage most Irving homeowners rarely have to use. We can send the warranty documents ahead of time if you would like to read them.",
+      a: "The paperwork for an Irving roof starts with a 10-year workmanship warranty, written into the contract. Panels and finish are covered separately by the manufacturer's material warranty. Paired with a system lifespan of 50 years or more, it is coverage most Irving homeowners rarely have to use. We can send the warranty documents ahead of time if you would like to read them.",
     },
     {
       q: 'How much does a metal roof cost in Irving?',

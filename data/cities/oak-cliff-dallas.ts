@@ -49,7 +49,7 @@ export const OAK_CLIFF_DALLAS_DATA: CityData = {
     },
     {
       q: 'How much does a metal or Brava synthetic slate roof cost in Oak Cliff?',
-      a: "Pricing for a Oak Cliff metal or Brava roof is per square foot, shaped mostly by how large and steep the roof is and which system you select. Cost depends on roof size, pitch, and complexity, and Oak Cliff bungalows often have smaller roofs than newer suburban homes. Expect a ballpark based on satellite measurements first, followed by a firm figure after the free in-person assessment. See the pricing table above for every material, or run our free visualizer for a figure specific to your house. Pitch, tear-off, and deck condition also factor into the final number.",
+      a: "Pricing for an Oak Cliff metal or Brava roof is per square foot, shaped mostly by how large and steep the roof is and which system you select. Cost depends on roof size, pitch, and complexity, and Oak Cliff bungalows often have smaller roofs than newer suburban homes. Expect a ballpark based on satellite measurements first, followed by a firm figure after the free in-person assessment. See the pricing table above for every material, or run our free visualizer for a figure specific to your house. Pitch, tear-off, and deck condition also factor into the final number.",
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Oak Cliff?',

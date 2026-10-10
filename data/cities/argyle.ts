@@ -33,7 +33,7 @@ export const ARGYLE_DATA: CityData = {
     },
     {
       q: 'How much does a metal roof cost in Argyle, TX?',
-      a: "Pricing for a Argyle metal roof is per square foot, shaped mostly by how large and steep the roof is and which system you select. Estate homes with larger footprints and more complex rooflines often carry a higher overall cost. You get a ballpark from satellite imagery of your own roof, not a guess from the curb, and a firm number after we inspect it in person. Use the pricing table above to compare systems, then put your address into the free visualizer for your own number. We explain every line of the proposal in person.",
+      a: "Pricing for an Argyle metal roof is per square foot, shaped mostly by how large and steep the roof is and which system you select. Estate homes with larger footprints and more complex rooflines often carry a higher overall cost. You get a ballpark from satellite imagery of your own roof, not a guess from the curb, and a firm number after we inspect it in person. Use the pricing table above to compare systems, then put your address into the free visualizer for your own number. We explain every line of the proposal in person.",
     },
     {
       q: 'What metal and Brava roofing options are best for Argyle estate homes?',
@@ -57,7 +57,7 @@ export const ARGYLE_DATA: CityData = {
     },
     {
       q: "Will a metal roof tick or pop in the Argyle heat?",
-      a: "Metal expands and contracts as temperatures change, and proper fastening and panel systems keep that movement controlled. We do not promise silence, but a careful installation on a Argyle home keeps noise minimal.",
+      a: "Metal expands and contracts as temperatures change, and proper fastening and panel systems keep that movement controlled. We do not promise silence, but a careful installation on an Argyle home keeps noise minimal.",
     },
   ],
 }

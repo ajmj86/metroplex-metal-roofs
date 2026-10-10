@@ -51,7 +51,7 @@ export const ANNA_DATA: CityData = {
     },
     {
       q: 'What metal and Brava roofing styles work best in Anna?',
-      a: "The right profile for a Anna home depends on its architecture, and we install steel and Brava options to match. Stone-coated steel and standing seam are both popular choices in Anna's newer developments. For the look of natural slate, shake, or tile, Brava offers three profiles in a durable composite. The Free Roof Visualizer lets you preview each option on your actual home before you decide.",
+      a: "The right profile for an Anna home depends on its architecture, and we install steel and Brava options to match. Stone-coated steel and standing seam are both popular choices in Anna's newer developments. For the look of natural slate, shake, or tile, Brava offers three profiles in a durable composite. The Free Roof Visualizer lets you preview each option on your actual home before you decide.",
     },
     {
       q: "Will a metal roof make my Anna home look like a barn?",
