@@ -263,6 +263,17 @@ const badgeMap = {standing:"Popular Choice",copper:"Premium",stone:"HOA Friendly
 // Standalone material landing pages (Phase 3) -- only populated for
 // materials that have a page built so far. Tabs without an entry here just
 // don't render the secondary "full guide" link.
+// Visible label per guide page (not per tab), so all three Brava tabs read
+// "Brava roofing" because they share one page.
+const guideLabelMap = {
+  standing:"standing seam metal",
+  stone:"stone-coated steel",
+  copper:"copper roofing",
+  rpanel:"R-panel metal",
+  spanish_barrel_tile:"Brava roofing",
+  cedar_shake:"Brava roofing",
+  slate:"Brava roofing",
+};
 const productPageMap = {
   standing:"/standing-seam-roofing",
   stone:"/stone-coated-steel-roofing",
@@ -706,10 +717,10 @@ export default function ProductsSection({
                     </div>
                   </div>
                   <style>{`
-                    .ps-cta-row{display:flex;flex-direction:row;align-items:center;flex-wrap:wrap;gap:14px 28px}
-                    .ps-guide-link{display:inline-flex;align-items:center;gap:6px;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:600;color:${C.accent};text-decoration:none;transition:color 0.2s}
+                    .ps-cta-row{display:flex;flex-direction:row;align-items:center;flex-wrap:nowrap;gap:14px 28px}
+                    .ps-guide-link{display:block;flex:1 1 0;min-width:0;line-height:1.5;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:600;color:${C.accent};text-decoration:none;transition:color 0.2s}
                     .ps-guide-link:hover,.ps-guide-link:focus-visible{color:${C.accentLight};text-decoration:underline}
-                    @media (max-width:640px){.ps-cta-row{flex-direction:column;align-items:flex-start;gap:16px}}
+                    @media (max-width:640px){.ps-cta-row{flex-direction:column;align-items:flex-start;gap:16px}.ps-guide-link{flex:0 0 auto}}
                   `}</style>
                   <div className="ps-cta-row">
                     <a href={utm(materialVisualizerHref(activeTab))} className="cta-btn"
@@ -719,9 +730,9 @@ export default function ProductsSection({
                     >See it on your home →</a>
                     {productPageMap[activeTab] && (
                       <a href={productPageMap[activeTab]} className="ps-guide-link"
-                        aria-label={`Explore the ${activeType.label} guide`}
-                        title={`Explore the ${activeType.label} guide`}
-                      >Explore the guide →</a>
+                        aria-label={`Learn more about ${guideLabelMap[activeTab]}`}
+                        title={`Learn more about ${guideLabelMap[activeTab]}`}
+                      >Learn more about <span style={{whiteSpace:"nowrap"}}>{guideLabelMap[activeTab]} →</span></a>
                     )}
                   </div>
                 </div>
