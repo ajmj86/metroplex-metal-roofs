@@ -28,8 +28,8 @@ export const HOME_FAQS: HomeFAQ[] = [
     a: `Installed cost is priced per square foot and ranges from about ${FAQ_RATE.rPanel()}/sq ft for R-panel up to ${FAQ_RATE.copper()}/sq ft for copper, depending on material. See the pricing table above for a full breakdown by system. Your total depends on your roof's size, pitch, and complexity, so use our free visualizer for an exact number, refined into a firm number after a free satellite-based estimate.`,
   },
   {
-    q: 'Do you offer free estimates?',
-    a: 'Yes. Our Free Roof Visualizer renders your actual home in your chosen material and color and gives you a satellite-based price range in under a minute, with no photo upload required. We refine that into a firm number after a free on-site assessment, no cost or obligation at either step.',
+    q: 'Will hail damage a metal or Brava roof?',
+    a: 'Both metal and Brava are available with a Class 4 impact rating, the highest available. Very large hail can still leave cosmetic marks on some metal finishes, and textured finishes hide marks better than smooth panels. Ask to see samples of each finish so you can judge for yourself.',
   },
   {
     q: 'Is a metal roof louder in the rain or hail?',
@@ -37,11 +37,11 @@ export const HOME_FAQS: HomeFAQ[] = [
   },
   {
     q: 'Does a metal roof attract lightning?',
-    a: 'No. A metal roof does not make a home more likely to be struck by lightning, and metal does not burn. Storm questions are welcome at your inspection.',
+    a: 'No. A metal roof does not make a home more likely to be struck by lightning, and metal does not burn.',
   },
   {
     q: 'Will a metal roof affect my cell or Wi-Fi signal?',
-    a: 'Metal roofs generally have little effect on cell or Wi-Fi signal inside the home. In areas where signal is already weak, a signal booster helps. We cannot promise results for every property.',
+    a: 'Metal roofs generally have little effect on cell or Wi-Fi signal inside the home. In areas where signal is already weak, a signal booster helps. Results vary by property.',
   },
   {
     q: 'Does Brava synthetic slate fade over time?',

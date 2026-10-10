@@ -73,7 +73,7 @@ export const SOUTHLAKE_DATA: CityData = {
     },
     {
       q: 'Is a metal or Brava roof worth it on a home in the Carroll ISD area?',
-      a: 'For homes in the $800K–$1.5M range common across Carroll ISD neighborhoods, the math typically favors metal strongly. Eliminating one asphalt replacement cycle, qualifying for insurance discounts, and reducing energy costs over 30 years means the upgrade often pays for itself, while adding a permanent finish that reflects the quality of the home. For homes in this class, Brava synthetic slate, shake, and Spanish barrel tile are often the first option we show, with standing seam and stone-coated steel as strong alternatives.',
+      a: "For homes in the $800K–$1.5M range common across Carroll ISD neighborhoods, owners choose metal or Brava for long life, low maintenance, and a Class 4 impact rating. The right choice depends on how long you plan to stay in the home. For homes in this class, Brava synthetic slate, shake, and Spanish barrel tile are often the first option we show, with standing seam and stone-coated steel as strong alternatives.",
     },
     {
       q: 'What metal roofing colors are HOA-approved in Southlake neighborhoods?',

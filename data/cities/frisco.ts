@@ -71,7 +71,7 @@ export const FRISCO_DATA: CityData = {
     },
     {
       q: 'Is a metal roof worth it for a home in a Frisco master-planned community?',
-      a: 'For homes in the $500K–$900K range common across Frisco\'s master-planned communities, the economics strongly favor metal. Eliminating repeated asphalt replacement cycles, qualifying for insurance discounts, and reducing cooling costs over 30 years means the upgrade typically pays for itself, while adding a permanent, low-maintenance finish that holds up to North Texas storms.',
+      a: "For homes in the $500K–$900K range common across Frisco's master-planned communities, owners choose metal for long life, low maintenance, and a Class 4 impact rating. The right choice depends on how long you plan to stay in the home. We are happy to talk through your plans at the free estimate.",
     },
     {
       q: "What metal and Brava roofing styles suit Frisco homes?",
