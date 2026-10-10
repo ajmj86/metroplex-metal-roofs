@@ -30,13 +30,35 @@ export const COPPELL_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Coppell, TX?',
-      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract, plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Coppell homeowners will never need to use.',
+      a: "We back every Coppell installation with a 10-year workmanship warranty that sits in your contract, not on a handshake. The metal itself carries the manufacturer's material warranty for the panels and their finish. Between the two, you have coverage for both the installation and the product, on a roof designed to last 50 years or more. We can send the warranty documents ahead of time if you would like to read them.",
     },
-    { q: 'How much does a metal roof cost in Coppell, TX?', a: `Metal roofing in Coppell is priced by the square foot, and your total depends on roof size, pitch, and material. We provide a satellite-based ballpark range from your roof\'s measured size, not a guess from the driveway, refined into a firm number after your free on-site assessment. By material, that typically breaks down to ${cityFaqMaterialRates()}. See our pricing table above for the full breakdown, or use our free visualizer for an exact number for your roof.` },
-    { q: 'Does a metal roof qualify for an insurance discount in Coppell?', a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. Coppell homeowners with median home values above $550,000 often see the largest financial benefit from eliminating repeated deductible exposure and qualifying for annual premium reductions.' },
-    { q: 'Will my Coppell HOA approve a metal roof?', a: 'Most Coppell HOAs permit standing seam and stone-coated steel in approved profiles and neutral color palettes. We provide full HOA documentation support including material samples and spec sheets at no additional cost.' },
-    { q: 'How long does metal roof installation take in Coppell?', a: 'Most Coppell residential installations are completed in one to three days depending on roof size and material. We provide a specific timeline during the estimate process.' },
-    { q: 'How does metal roofing handle Dallas County hail storms?', a: 'Standing seam and stone-coated steel carry a Class 4 impact resistance rating, the highest available. Dallas County\'s active storm corridor sees significant annual hail activity and Class 4 rated roofing provides strong protection while qualifying for maximum carrier discounts.' },
-    { q: 'What metal and Brava roofing options are best for established Coppell homes?', a: 'Standing seam and stone-coated steel are both popular in Coppell. Stone-coated steel in shingle profiles is widely chosen for older and established homes where traditional aesthetics are important. The AI visualizer lets you see exactly what each option looks like on your actual house before you decide. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.' },
+    {
+      q: 'How much does a metal roof cost in Coppell, TX?',
+      a: "Pricing for a Coppell metal roof is per square foot, shaped mostly by how large and steep the roof is and which system you select. A satellite measurement of your roof gives us a reliable starting range, and the free on-site assessment turns it into a firm price. All materials are listed in the pricing table above, and the free visualizer prices your specific roof. Details like roof valleys and penetrations can shift the total.",
+    },
+    {
+      q: 'Does a metal roof qualify for an insurance discount in Coppell?',
+      a: "In many cases, yes. Metal roofing with a Class 4 impact rating is the type of roof most Texas insurers discount. Coppell homeowners with median home values above $550,000 often see the largest financial benefit from eliminating repeated deductible exposure and qualifying for annual premium reductions. We suggest asking your insurance carrier for a quote that reflects the new roof.",
+    },
+    {
+      q: 'Will my Coppell HOA approve a metal roof?',
+      a: "Many HOAs in Coppell approve these profiles, and each association sets its own rules. If you live in Northlake Woodlands or Parkway Estates, check your association's guidelines early. Tell us which community you are in, and we will build the documentation package for you.",
+    },
+    {
+      q: 'How long does metal roof installation take in Coppell?',
+      a: "A typical Coppell roof takes one to three days to install, with larger or more complex roofs at the longer end. Before the crew arrives, we spell out the schedule for your particular roof. Your project lead checks in each day so you know where things stand.",
+    },
+    {
+      q: 'How does metal roofing handle Dallas County hail storms?',
+      a: "Impact resistance is rated Class 4 on our standing seam and stone-coated steel, the top rating. Storm season in Dallas County is why many Coppell owners ask about impact ratings first. Textured stone-coated steel profiles also tend to hide marks well.",
+    },
+    {
+      q: 'What metal and Brava roofing options are best for established Coppell homes?',
+      a: "In Coppell, the choice usually comes down to a shingle or shake look in stone-coated steel, a clean standing seam line, or a Brava profile. Standing seam and stone-coated steel are both popular in Coppell. Stone-coated steel in shingle profiles is widely chosen for older and established homes where traditional aesthetics are important. If you lean toward a slate or tile appearance, Brava's three profiles are worth a look. You can preview any of these on your own address in our Free Roof Visualizer.",
+    },
+    {
+      q: "Will a metal roof tick or pop in the Coppell heat?",
+      a: "Some ticking can happen as a metal roof warms and cools. Panel systems and fastening designed for movement keep it under control, though we do not promise silence. Hot Dallas County afternoons are when it is most likely to be noticed.",
+    },
   ],
 }

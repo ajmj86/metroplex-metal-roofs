@@ -30,13 +30,35 @@ export const RICHARDSON_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Richardson, TX?',
-      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract, plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Richardson homeowners will never need to use.',
+      a: "The paperwork for a Richardson roof starts with a 10-year workmanship warranty, written into the contract. The metal itself carries the manufacturer's material warranty for the panels and their finish. A lifespan of 50 years or more means these warranties offer peace of mind more than repairs. If you ever need to make a claim, we help you through the process.",
     },
-    { q: 'How much does a metal roof cost in Richardson, TX?', a: `Metal roofing in Richardson is priced by the square foot, and your total depends on roof size, pitch, and material. We provide a satellite-based ballpark range from your roof\'s measured size, not a guess from the driveway, refined into a firm number after your free on-site assessment. By material, that typically breaks down to ${cityFaqMaterialRates()}. See our pricing table above for the full breakdown, or use our free visualizer for an exact number for your roof.` },
-    { q: 'Does a metal roof work on older homes in Richardson?', a: 'Yes. Stone-coated steel is specifically designed to replicate the look of traditional shingles or shake in steel form, making it an excellent choice for Richardson\'s established older homes. The AI visualizer lets you see exactly what it will look like on your actual house before you decide.' },
-    { q: 'Does a metal roof qualify for an insurance discount in Richardson?', a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. Richardson homeowners in Dallas County\'s active storm corridor typically see meaningful annual premium reductions after upgrading.' },
-    { q: 'Will my Richardson HOA approve a metal roof?', a: 'Most Richardson HOAs permit standing seam and stone-coated steel in approved profiles and neutral color palettes. We provide complete HOA documentation support at no additional cost.' },
-    { q: 'How long does metal roof installation take in Richardson?', a: 'Most Richardson residential installations are completed in one to three days depending on roof size and material. We provide a specific timeline during the estimate process.' },
-    { q: 'What metal and Brava roofing styles are popular in Richardson?', a: 'Stone-coated steel in shingle profiles is the most popular choice for Richardson\'s established traditional neighborhoods. Standing seam is preferred for more contemporary homes. Both carry Class 4 hail ratings and 50-plus year lifespans. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.' },
+    {
+      q: 'How much does a metal roof cost in Richardson, TX?',
+      a: "Roof size, pitch, and material set the price of a metal roof in Richardson, which is figured per square foot. You get a ballpark from satellite imagery of your own roof, not a guess from the curb, and a firm number after we inspect it in person. Our pricing table above has the full breakdown, and the free visualizer shows a number for your own roof. Two similar-looking houses can price differently once the roof structure is measured.",
+    },
+    {
+      q: 'Does a metal roof work on older homes in Richardson?',
+      a: 'Yes. Stone-coated steel is specifically designed to replicate the look of traditional shingles or shake in steel form, making it an excellent choice for Richardson\'s established older homes. The AI visualizer lets you see exactly what it will look like on your actual house before you decide.',
+    },
+    {
+      q: 'Does a metal roof qualify for an insurance discount in Richardson?',
+      a: "It can. Class 4 impact-rated metal is discounted by most Texas insurers, which helps offset the cost of a new roof. For a Richardson home, a quick call to your agent before choosing a material can pay off. We provide product documentation for your agent, and your insurance carrier sets the final discount.",
+    },
+    {
+      q: 'Will my Richardson HOA approve a metal roof?',
+      a: "Whether your Richardson HOA approves depends on its architectural guidelines, and many accept metal and Brava in approved profiles and colors. Communities such as Canyon Creek and Arapaho East each have their own review process. Samples, color chips, and spec sheets come with our free help preparing your submission.",
+    },
+    {
+      q: 'How long does metal roof installation take in Richardson?',
+      a: "Most Richardson installations are finished in one to three days, depending on roof size and complexity. We confirm the timeline for your roof up front, so you know what to expect. We handle debris removal and a final walkthrough when the roof is complete.",
+    },
+    {
+      q: 'What metal and Brava roofing styles are popular in Richardson?',
+      a: "We offer standing seam, stone-coated steel, and Brava in Richardson, each suited to different rooflines. Stone-coated steel in shingle profiles is the most popular choice for Richardson's established traditional neighborhoods. Brava synthetic slate, shake, and Spanish barrel tile add a natural-material look for owners who prefer it. Class 4 impact ratings apply to our steel systems, and we will walk through color and profile choices on site.",
+    },
+    {
+      q: "Is a metal or Brava roof worth the cost over asphalt in Richardson?",
+      a: "The upgrade makes the most sense for Richardson homeowners who plan to stay, since long life, low maintenance, and a Class 4 rating are what these roofs offer. We talk through your situation during the free estimate.",
+    },
   ],
 }

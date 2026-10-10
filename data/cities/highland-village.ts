@@ -29,13 +29,35 @@ export const HIGHLAND_VILLAGE_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Highland Village, TX?',
-      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract, plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Highland Village homeowners will never need to use.',
+      a: "Workmanship is covered for 10 years on every Highland Village roof, and the terms are spelled out in your contract. The manufacturer adds its own material warranty on the panels and finish. Between the two, you have coverage for both the installation and the product, on a roof designed to last 50 years or more. If you ever need to make a claim, we help you through the process.",
     },
-    { q: 'How much does a metal roof cost in Highland Village, TX?', a: `Metal roofing in Highland Village is priced by the square foot, and your total depends on roof size, pitch, and material. We provide a satellite-based ballpark range from your roof\'s measured size, not a guess from the driveway, refined into a firm number after your free on-site assessment. By material, that typically breaks down to ${cityFaqMaterialRates()}. See our pricing table above for the full breakdown, or use our free visualizer for an exact number for your roof.` },
-    { q: 'Does a metal roof qualify for an insurance discount in Highland Village?', a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. Highland Village homeowners in Denton County\'s active storm corridor typically see meaningful annual premium reductions after upgrading.' },
-    { q: 'Will my Highland Village HOA approve a metal roof?', a: 'Most Highland Village communities permit standing seam and stone-coated steel in approved profiles and neutral color palettes. We provide complete HOA documentation support at no additional cost.' },
-    { q: 'How long does metal roof installation take in Highland Village?', a: 'Most Highland Village residential installations are completed in one to three days. We provide a specific timeline for your home during the estimate process.' },
-    { q: 'How does metal roofing handle storms near Lake Lewisville?', a: 'Standing seam and stone-coated steel carry a Class 4 impact resistance rating, the highest available. Highland Village\'s lakeside position in Denton County creates consistent storm exposure and Class 4 rated roofing provides strong protection while qualifying for maximum carrier discounts.' },
-    { q: 'What metal and Brava roofing styles work best in Highland Village?', a: 'Standing seam and stone-coated steel are both popular in Highland Village. Standing seam suits the area\'s mix of contemporary and transitional lake-area homes. Stone-coated steel is widely chosen for traditional architecture throughout the community. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.' },
+    {
+      q: 'How much does a metal roof cost in Highland Village, TX?',
+      a: "Roof size, pitch, and material set the price of a metal roof in Highland Village, which is figured per square foot. We start with a satellite-based range built from your roof's measured size, then confirm a firm number after a free on-site assessment. All materials are listed in the pricing table above, and the free visualizer prices your specific roof. There is no obligation at either step.",
+    },
+    {
+      q: 'Does a metal roof qualify for an insurance discount in Highland Village?',
+      a: "A Class 4 impact rating is what carriers look for, and most Texas insurers discount roofs that have it. Storm seasons in Denton County make it worth asking your carrier about a Class 4 discount. We suggest asking your insurance carrier for a quote that reflects the new roof.",
+    },
+    {
+      q: 'Will my Highland Village HOA approve a metal roof?',
+      a: "HOA rules in Highland Village differ by neighborhood, and many associations permit metal or Brava in neutral, approved colors. Reviews in The Peninsula and Lakeside follow each association's own process. Samples, color chips, and spec sheets come with our free help preparing your submission.",
+    },
+    {
+      q: 'How long does metal roof installation take in Highland Village?',
+      a: "Most Highland Village homes are done in one to three days, though roof size and complexity can stretch that. A schedule tailored to your home comes with the proposal, well before installation day. We protect landscaping and clean up daily while the crew is on site.",
+    },
+    {
+      q: 'How does metal roofing handle storms near Lake Lewisville?',
+      a: "Standing seam and stone-coated steel are available with a Class 4 impact rating, the highest available. Highland Village homeowners deal with spring storms, so a Class 4 roof is a common upgrade after a claim. Textured stone-coated steel profiles also tend to hide marks well.",
+    },
+    {
+      q: 'What metal and Brava roofing styles work best in Highland Village?',
+      a: "A Highland Village roof can take several looks: standing seam panels, stone-coated steel, or one of three Brava profiles. Standing seam and stone-coated steel are both popular in Highland Village. Standing seam suits the area's mix of contemporary and transitional lake-area homes. Brava synthetic slate, shake, and Spanish barrel tile add a natural-material look for owners who prefer it. You can preview any of these on your own address in our Free Roof Visualizer.",
+    },
+    {
+      q: "Does a metal roof attract lightning at my Highland Village home?",
+      a: "No. Lightning is not drawn to a home because it has a metal roof, and metal does not burn. If thunderstorms near Highland Village worry you, we are glad to talk through storm questions at your inspection.",
+    },
   ],
 }

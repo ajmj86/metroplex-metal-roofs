@@ -45,11 +45,11 @@ export const GRAND_PRAIRIE_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Grand Prairie, TX?',
-      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract, plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Grand Prairie homeowners will never need to use.',
+      a: "We back every Grand Prairie installation with a 10-year workmanship warranty that sits in your contract, not on a handshake. A second layer of protection comes from the manufacturer, whose material warranty covers the panels and finish. Both are explained in plain language during your estimate, so nothing comes as a surprise later. Your project lead explains what each covers on installation day.",
     },
     {
       q: 'How much does a metal roof cost in Grand Prairie?',
-      a: `Metal roofing in Grand Prairie is priced by the square foot, and your total depends on roof size, pitch, and material. We provide a satellite-based ballpark range from your roof\'s measured size, not a guess from the driveway, refined into a firm number after your free on-site assessment. By material, that typically breaks down to ${cityFaqMaterialRates()}. See our pricing table above for the full breakdown, or use our free visualizer for an exact number for your roof.`,
+      a: "Pricing for a Grand Prairie metal roof is per square foot, shaped mostly by how large and steep the roof is and which system you select. We measure your roof by satellite to give a ballpark, then finalize a firm price once we have seen it during a free assessment. Compare systems in the pricing table above, and let the free visualizer work out a number for your home. Our assessment checks the decking and details that affect the price.",
     },
     {
       q: 'Is metal roofing common in newer Grand Prairie communities like Mira Lagos?',
@@ -57,19 +57,23 @@ export const GRAND_PRAIRIE_DATA: CityData = {
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Grand Prairie?',
-      a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. Grand Prairie sits in the Dallas County hail corridor, and homeowners who upgrade typically see a meaningful reduction in their wind/hail premium.',
+      a: "In many cases, yes. Metal roofing with a Class 4 impact rating is the type of roof most Texas insurers discount. Dallas County homeowners commonly review their coverage after a storm, and a new roof is a natural time. Because discounts vary, check with your insurance carrier and keep our documentation handy.",
     },
     {
       q: 'Will my Grand Prairie HOA approve a metal roof?',
-      a: 'Communities with an active architectural review process, like Mira Lagos and Sheffield, generally approve metal roofing in pre-approved profiles and colors. Where documentation is required, we provide material samples, color chips, and manufacturer spec sheets at no additional cost.',
+      a: "Many HOAs in Grand Prairie approve these profiles, and each association sets its own rules. Areas including Mira Lagos and Westchester are worth confirming with your association. We help with the paperwork and submission, and the committee makes the final call.",
     },
     {
       q: 'How long does metal roof installation take in Grand Prairie?',
-      a: 'Most residential installations in Grand Prairie are completed in one to three days. The exact timeline depends on roof size and material selection. We provide a specific estimate timeline for your home before any work begins.',
+      a: "A typical Grand Prairie roof takes one to three days to install, with larger or more complex roofs at the longer end. You will have a clear schedule for your own home as part of the estimate. We handle debris removal and a final walkthrough when the roof is complete.",
     },
     {
       q: 'What metal and Brava roofing style works best for Grand Prairie homes?',
-      a: 'Standing seam suits the contemporary architecture common in newer communities like Mira Lagos and CentrePort-adjacent builds, while stone-coated steel is a strong match for the more traditional homes closer to Downtown Grand Prairie. Both carry Class 4 hail ratings and 50-plus year lifespans. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.',
+      a: "We offer standing seam, stone-coated steel, and Brava in Grand Prairie, each suited to different rooflines. Standing seam suits the contemporary architecture common in newer communities like Mira Lagos and CentrePort-adjacent builds, while stone-coated steel is a strong match for the more traditional homes closer to Downtown Grand Prairie. Homeowners drawn to natural slate, shake, or tile can compare Brava's three profiles with the steel options. Ask for samples of metal and Brava during your inspection and judge them against your own roofline.",
+    },
+    {
+      q: "Will a metal roof rust on a Grand Prairie home?",
+      a: "Steel roofing is coated to resist rust when installed and cared for properly, while copper forms a patina instead of rusting. Proper installation and upkeep are what protect the finish.",
     },
   ],
 }

@@ -29,13 +29,35 @@ export const NORTHLAKE_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Northlake, TX?',
-      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract, plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Northlake homeowners will never need to use.',
+      a: "Your Northlake roof comes with our 10-year workmanship warranty, put in writing before work begins. Material defects in the panels and finish fall under the manufacturer's own warranty. Both are explained in plain language during your estimate, so nothing comes as a surprise later. Keep the paperwork with your home records for future reference.",
     },
-    { q: 'How much does a metal roof cost in Northlake, TX?', a: `Metal roofing in Northlake is priced by the square foot, and your total depends on roof size, pitch, and material. We provide a satellite-based ballpark range from your roof\'s measured size, not a guess from the driveway, refined into a firm number after your free on-site assessment. By material, that typically breaks down to ${cityFaqMaterialRates()}. See our pricing table above for the full breakdown, or use our free visualizer for an exact number for your roof.` },
-    { q: 'Is metal roofing common on new construction in Northlake?', a: 'Yes. Metal roofing is increasingly specified on new construction throughout Northlake\'s master-planned communities. Builders in the area are incorporating standing seam and stone-coated steel as standard or upgraded options given the area\'s storm exposure and long-term cost advantages.' },
-    { q: 'Does a metal roof qualify for an insurance discount in Northlake?', a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. Northlake homeowners in Denton County\'s active storm corridor typically see meaningful annual premium reductions after upgrading.' },
-    { q: 'Will my Northlake HOA approve a metal roof?', a: 'Most Northlake master-planned communities permit metal roofing in approved profiles and neutral color palettes. We provide complete HOA documentation support at no additional cost.' },
-    { q: 'How long does metal roof installation take in Northlake?', a: 'Most Northlake residential installations are completed in one to three days depending on roof size and material. We provide a specific timeline during the estimate process.' },
-    { q: 'What metal and Brava roofing styles work best in Northlake?', a: 'Standing seam and stone-coated steel are both popular in Northlake\'s newer developments. Stone-coated steel in shingle and shake profiles suits traditional new construction throughout the area. Standing seam is preferred for more contemporary architecture. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.' },
+    {
+      q: 'How much does a metal roof cost in Northlake, TX?',
+      a: "The cost of a metal roof in Northlake comes down to roof size, pitch, and the material you choose, priced per square foot. The process begins with a satellite-measured range and ends with a firm number after our free on-site visit. Compare systems in the pricing table above, and let the free visualizer work out a number for your home. Complex rooflines with many hips and valleys generally cost more than simple gables.",
+    },
+    {
+      q: 'Is metal roofing common on new construction in Northlake?',
+      a: "Metal roofing is a growing option for new construction across Northlake. For Northlake buyers, the draw is a roof that stands up to storm seasons and lasts.",
+    },
+    {
+      q: 'Does a metal roof qualify for an insurance discount in Northlake?',
+      a: "Often it does, because most Texas insurers discount Class 4 roofs and metal systems carry that rating. If you live in Northlake, bring your policy to the estimate and we will point out what to ask. Because discounts vary, check with your insurance carrier and keep our documentation handy.",
+    },
+    {
+      q: 'Will my Northlake HOA approve a metal roof?',
+      a: "In Northlake, many associations allow metal or Brava once the profile and color meet their guidelines. Rules can differ between areas such as Canyon Falls and Pecan Square. Our team assembles the paperwork for your submission, though the final decision is your association's.",
+    },
+    {
+      q: 'How long does metal roof installation take in Northlake?',
+      a: "For a typical Northlake home the work takes about one to three days, depending on how big and complex the roof is. We give you a specific timeline for your home during the estimate process. We handle debris removal and a final walkthrough when the roof is complete.",
+    },
+    {
+      q: 'What metal and Brava roofing styles work best in Northlake?',
+      a: "Northlake homeowners can choose from standing seam, stone-coated steel, and Brava synthetic slate, shake, or Spanish barrel tile. Standing seam and stone-coated steel are both popular in Northlake's newer developments. Brava's composite slate, shake, and barrel tile reproduce natural materials with natural color variation. We set samples next to your siding or brick so you can see how each material reads in daylight.",
+    },
+    {
+      q: "Will a metal roof make my Northlake home look like a barn?",
+      a: "Homes in Denton County use residential profiles built for houses, such as standing seam and stone-coated steel. Preview your Northlake home with each in our Free Roof Visualizer.",
+    },
   ],
 }

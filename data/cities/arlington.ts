@@ -42,11 +42,11 @@ export const ARLINGTON_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Arlington, TX?',
-      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract, plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Arlington homeowners will never need to use.',
+      a: "Each roof we build in Arlington carries a 10-year workmanship warranty covering how it was installed. The metal itself carries the manufacturer's material warranty for the panels and their finish. Both are explained in plain language during your estimate, so nothing comes as a surprise later. Questions about either one are welcome at any point.",
     },
     {
       q: 'How much does a metal roof cost in Arlington?',
-      a: `Metal roofing in Arlington is priced by the square foot, and your total depends on roof size, pitch, and material. We provide a satellite-based ballpark range from your roof\'s measured size, not a guess from the driveway, refined into a firm number after your free on-site assessment. By material, that typically breaks down to ${cityFaqMaterialRates()}. See our pricing table above for the full breakdown, or use our free visualizer for an exact number for your roof.`,
+      a: "What you pay for metal in Arlington depends on the size and pitch of the roof and the material, and it is quoted by the square foot. A satellite measurement of your roof gives us a reliable starting range, and the free on-site assessment turns it into a firm price. Compare systems in the pricing table above, and let the free visualizer work out a number for your home. Two similar-looking houses can price differently once the roof structure is measured.",
     },
     {
       q: 'Is metal roofing common in newer Arlington developments like Viridian?',
@@ -54,19 +54,23 @@ export const ARLINGTON_DATA: CityData = {
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Arlington?',
-      a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. Arlington sits in an active hail corridor between Fort Worth and Dallas, and homeowners who upgrade typically see a meaningful reduction in their wind/hail premium.',
+      a: "Most Texas insurers discount Class 4 roofs, so upgrading to a Class 4 metal roof in Arlington can reduce what you pay. For a Arlington home, a quick call to your agent before choosing a material can pay off. Because discounts vary, check with your insurance carrier and keep our documentation handy.",
     },
     {
       q: 'Will my Arlington HOA approve a metal roof?',
-      a: 'Communities with an active architectural review process, like Viridian, generally approve metal roofing in pre-approved profiles and colors. Many older Arlington neighborhoods have no HOA at all. Where documentation is required, we provide material samples, color chips, and manufacturer spec sheets at no additional cost.',
+      a: "Whether your Arlington HOA approves depends on its architectural guidelines, and many accept metal and Brava in approved profiles and colors. If you live in Viridian or North Arlington, check your association's guidelines early. We help with the paperwork and submission, and the committee makes the final call.",
     },
     {
       q: 'How long does metal roof installation take in Arlington?',
-      a: 'Most residential installations in Arlington are completed in one to three days. The exact timeline depends on roof size and material selection. We provide a specific estimate timeline for your home before any work begins.',
+      a: "Most Arlington homes are done in one to three days, though roof size and complexity can stretch that. You will have a clear schedule for your own home as part of the estimate. Staging and material delivery are planned around your driveway and neighbors.",
     },
     {
       q: 'What metal and Brava roofing styles work best for Arlington homes?',
-      a: 'Standing seam suits the more contemporary builds going up in Viridian and other newer developments, while stone-coated steel is a strong match for the traditional ranch and mid-century homes common across North and South Arlington. Both carry Class 4 hail ratings and 50-plus year lifespans. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.',
+      a: "We offer standing seam, stone-coated steel, and Brava in Arlington, each suited to different rooflines. Standing seam suits the more contemporary builds going up in Viridian and other newer developments, while stone-coated steel is a strong match for the traditional ranch and mid-century homes common across North and South Arlington. If you lean toward a slate or tile appearance, Brava's three profiles are worth a look. We are happy to compare options side by side during your free assessment.",
+    },
+    {
+      q: "What is oil canning, and should Arlington homeowners worry about it?",
+      a: "Oil canning is a slight visible waviness that can appear on flat metal panels. It is cosmetic and does not affect performance. Panel choice and installation help reduce it, and we point out your options for Arlington homes.",
     },
   ],
 }

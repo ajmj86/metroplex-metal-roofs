@@ -30,13 +30,35 @@ export const ROANOKE_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Roanoke, TX?',
-      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract, plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Roanoke homeowners will never need to use.',
+      a: "A 10-year workmanship warranty from Metroplex is written into every Roanoke contract. Material defects in the panels and finish fall under the manufacturer's own warranty. Between the two, you have coverage for both the installation and the product, on a roof designed to last 50 years or more. Your project lead explains what each covers on installation day.",
     },
-    { q: 'How much does a metal roof cost in Roanoke, TX?', a: `Metal roofing in Roanoke is priced by the square foot, and your total depends on roof size, pitch, and material. We provide a satellite-based ballpark range from your roof\'s measured size, not a guess from the driveway, refined into a firm number after your free on-site assessment. By material, that typically breaks down to ${cityFaqMaterialRates()}. See our pricing table above for the full breakdown, or use our free visualizer for an exact number for your roof.` },
-    { q: 'Does a metal roof qualify for an insurance discount in Roanoke?', a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. Roanoke homeowners in Denton County\'s active storm corridor typically see meaningful annual premium reductions after upgrading.' },
-    { q: 'Will my Roanoke HOA approve a metal roof?', a: 'Most Roanoke communities permit standing seam and stone-coated steel in approved profiles and neutral color palettes. We provide complete HOA documentation support at no additional cost.' },
-    { q: 'How long does metal roof installation take in Roanoke?', a: 'Most Roanoke residential installations are completed in one to three days depending on roof size and material. We provide a specific timeline for your home during the estimate process.' },
-    { q: 'How does metal roofing handle Denton County storms?', a: 'Standing seam and stone-coated steel carry a Class 4 impact resistance rating, the highest available. This is required by most Texas carriers for maximum discount eligibility and is particularly important in Denton County\'s active hail corridor.' },
-    { q: 'What metal and Brava roofing styles work best in Roanoke?', a: 'Standing seam and stone-coated steel are both popular in Roanoke. Standing seam suits contemporary and transitional architecture common throughout newer developments. Stone-coated steel is widely chosen for traditional homes. Both carry Class 4 hail ratings and 50-plus year lifespans. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.' },
+    {
+      q: 'How much does a metal roof cost in Roanoke, TX?',
+      a: "Metal roofs in Roanoke are priced per square foot, so the biggest factors are how much roof you have, how steep it is, and the material. A satellite measurement of your roof gives us a reliable starting range, and the free on-site assessment turns it into a firm price. The pricing table on this page covers all the systems, and the free visualizer can estimate your exact roof. There is no obligation at either step.",
+    },
+    {
+      q: 'Does a metal roof qualify for an insurance discount in Roanoke?',
+      a: "Yes, a Class 4 impact-rated metal roof can lower your premium, since most Texas insurers discount Class 4 roofs. If you live in Roanoke, bring your policy to the estimate and we will point out what to ask. We suggest asking your insurance carrier for a quote that reflects the new roof.",
+    },
+    {
+      q: 'Will my Roanoke HOA approve a metal roof?',
+      a: "HOA rules in Roanoke differ by neighborhood, and many associations permit metal or Brava in neutral, approved colors. Neighborhoods like Harriet Creek Ranch and Canyon Falls may follow separate architectural guidelines. Tell us which community you are in, and we will build the documentation package for you.",
+    },
+    {
+      q: 'How long does metal roof installation take in Roanoke?',
+      a: "A typical Roanoke roof takes one to three days to install, with larger or more complex roofs at the longer end. A schedule tailored to your home comes with the proposal, well before installation day. Staging and material delivery are planned around your driveway and neighbors.",
+    },
+    {
+      q: 'How does metal roofing handle Denton County storms?',
+      a: "Both steel systems we install carry a Class 4 impact rating, the highest level available. For Roanoke homes, asking your insurance carrier about a Class 4 discount is a sensible next step. Our team walks through coverage questions with your insurance carrier in mind.",
+    },
+    {
+      q: 'What metal and Brava roofing styles work best in Roanoke?',
+      a: "Style depends on the house, and for Roanoke we can match it with steel or with a Brava slate, shake, or tile profile. Standing seam and stone-coated steel are both popular in Roanoke. Standing seam suits contemporary and transitional architecture common throughout newer developments. For the look of natural slate, shake, or tile, Brava offers three profiles in a durable composite. You can preview any of these on your own address in our Free Roof Visualizer.",
+    },
+    {
+      q: "Will hail dent a metal roof in Denton County?",
+      a: "It depends on the hail and the finish. Class 4 metal handles impact well, yet very large stones can still mark some finishes, and textured stone-coated steel conceals marks better than smooth panels. For homes in Roanoke, we walk through both options so you can choose with open eyes.",
+    },
   ],
 }

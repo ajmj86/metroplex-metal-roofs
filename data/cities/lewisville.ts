@@ -30,13 +30,35 @@ export const LEWISVILLE_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Lewisville, TX?',
-      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract, plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Lewisville homeowners will never need to use.',
+      a: "Each roof we build in Lewisville carries a 10-year workmanship warranty covering how it was installed. You also receive the manufacturer's material warranty for the panels and finish. A lifespan of 50 years or more means these warranties offer peace of mind more than repairs. We can send the warranty documents ahead of time if you would like to read them.",
     },
-    { q: 'How much does a metal roof cost in Lewisville, TX?', a: `Metal roofing in Lewisville is priced by the square foot, and your total depends on roof size, pitch, and material. We provide a satellite-based ballpark range from your roof\'s measured size, not a guess from the driveway, refined into a firm number after your free on-site assessment. By material, that typically breaks down to ${cityFaqMaterialRates()}. See our pricing table above for the full breakdown, or use our free visualizer for an exact number for your roof.` },
-    { q: 'Does a metal roof qualify for an insurance discount in Denton County?', a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. Lewisville homeowners in Denton County\'s active storm corridor typically see meaningful annual premium reductions after upgrading.' },
-    { q: 'Will my Lewisville HOA approve a metal roof?', a: 'Most Lewisville HOAs permit standing seam and stone-coated steel in approved profiles and neutral color palettes. We provide complete HOA documentation support at no additional cost.' },
-    { q: 'How long does metal roof installation take in Lewisville?', a: 'Most Lewisville residential installations are completed in one to three days depending on roof size and material. We provide a specific timeline for your home during the estimate process.' },
-    { q: 'How does metal roofing handle storms near Lake Lewisville?', a: 'Standing seam and stone-coated steel carry a Class 4 impact resistance rating, the highest available. Lewisville\'s lakeside position in Denton County creates consistent storm exposure and Class 4 rated roofing provides strong protection while qualifying for maximum carrier discounts.' },
-    { q: 'What metal and Brava roofing styles are popular in Lewisville?', a: 'Standing seam and stone-coated steel are both widely chosen in Lewisville\'s mix of established and newer neighborhoods. Stone-coated steel suits traditional homes throughout the city. Standing seam is preferred for more contemporary architecture and offers the cleanest visual profile. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.' },
+    {
+      q: 'How much does a metal roof cost in Lewisville, TX?',
+      a: "What you pay for metal in Lewisville depends on the size and pitch of the roof and the material, and it is quoted by the square foot. Expect a ballpark based on satellite measurements first, followed by a firm figure after the free in-person assessment. The pricing table on this page covers all the systems, and the free visualizer can estimate your exact roof. Details like roof valleys and penetrations can shift the total.",
+    },
+    {
+      q: 'Does a metal roof qualify for an insurance discount in Denton County?',
+      a: "Most Texas insurers discount Class 4 roofs, so upgrading to a Class 4 metal roof in Lewisville can reduce what you pay. Many Lewisville owners compare quotes from their carrier once the roof material is chosen. We provide product documentation for your agent, and your insurance carrier sets the final discount.",
+    },
+    {
+      q: 'Will my Lewisville HOA approve a metal roof?',
+      a: "Approval depends on your Lewisville community's guidelines, and many HOAs accept metal and Brava profiles in approved colors. Areas including Castle Hills and Lake Vista are worth confirming with your association. Tell us which community you are in, and we will build the documentation package for you.",
+    },
+    {
+      q: 'How long does metal roof installation take in Lewisville?',
+      a: "One to three days covers most Lewisville projects, and bigger or more intricate roofs may need a little more time. Your estimate includes a timeline specific to your property before any work begins. Weather can shift the schedule slightly, and we keep you updated.",
+    },
+    {
+      q: 'How does metal roofing handle storms near Lake Lewisville?',
+      a: "Class 4 is the highest impact rating available, and our standing seam and stone-coated steel systems carry it. In Lewisville, a Class 4 roof also helps the insurance conversation, since most Texas insurers discount that rating. Preview each look on your own house in the Free Roof Visualizer.",
+    },
+    {
+      q: 'What metal and Brava roofing styles are popular in Lewisville?',
+      a: "We offer standing seam, stone-coated steel, and Brava in Lewisville, each suited to different rooflines. Standing seam and stone-coated steel are both widely chosen in Lewisville's mix of established and newer neighborhoods. Stone-coated steel suits traditional homes throughout the city. Brava rounds out the options with slate, cedar shake, and Spanish barrel tile looks. The Free Roof Visualizer lets you preview each option on your actual home before you decide.",
+    },
+    {
+      q: "Will a metal roof rust on a Lewisville home?",
+      a: "The coating on our steel systems is designed to resist rust with proper installation and maintenance. Copper is different: it does not rust and develops a patina. Ask us about options for your Lewisville home.",
+    },
   ],
 }

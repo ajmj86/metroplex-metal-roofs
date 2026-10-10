@@ -37,11 +37,11 @@ export const PRESTON_HOLLOW_DALLAS_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Preston Hollow?',
-      a: "Every roof we install carries a 10-year workmanship warranty written into your contract, plus the manufacturer's material warranty on the panels and finish. With a 50+ year system lifespan, that is coverage most Preston Hollow homeowners will never need to use.",
+      a: "On a Preston Hollow job, our 10-year workmanship warranty is part of the signed agreement. Panels and finish are covered separately by the manufacturer's material warranty. Between the two, you have coverage for both the installation and the product, on a roof designed to last 50 years or more. You will see the details in writing before you commit.",
     },
     {
       q: 'Is Preston Hollow a good fit for Brava synthetic slate or stone-coated steel?',
-      a: "Yes, both work well on Preston Hollow homes, from mid-century ranches to larger custom houses. Brava synthetic slate suits traditional and estate-style homes with the look of natural slate, shake, or tile, and stone-coated steel gives a shingle or shake look on a lasting roof. Standing seam is a strong choice on contemporary builds.",
+      a: "In Preston Hollow, the choice usually comes down to a shingle or shake look in stone-coated steel, a clean standing seam line, or a Brava profile. Yes, both work well on Preston Hollow homes, from mid-century ranches to larger custom houses. Brava synthetic slate suits traditional and estate-style homes with the look of natural slate, shake, or tile, and stone-coated steel gives a shingle or shake look on a lasting roof. Brava rounds out the options with slate, cedar shake, and Spanish barrel tile looks. Ask for samples of metal and Brava during your inspection and judge them against your own roofline.",
     },
     {
       q: 'Do large, complex roofs cost much more to replace with metal?',
@@ -49,11 +49,11 @@ export const PRESTON_HOLLOW_DALLAS_DATA: CityData = {
     },
     {
       q: 'Does my Preston Hollow home need HOA or design review for a new roof?',
-      a: "It depends on your block. Design review and permit requirements vary, and we handle the submission whichever applies. We provide material samples, color chips, and manufacturer spec sheets at no additional cost.",
+      a: "Approval depends on your Preston Hollow community's guidelines, and many HOAs accept metal and Brava profiles in approved colors. It depends on your block. Design review and permit requirements vary, and we handle the submission whichever applies. We help with the paperwork and submission, and the committee makes the final call.",
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Preston Hollow?',
-      a: "Most Texas insurers discount Class 4 impact rated roofs, and the savings depend on your carrier and policy. On a higher-value home, even a modest premium reduction adds up. Ask your agent for a quote once you know which material you want.",
+      a: "Yes, a Class 4 metal roof is a common way Preston Hollow homeowners earn a premium discount, since most Texas insurers offer one. On a higher-value home, even a modest premium reduction adds up. We suggest asking your insurance carrier for a quote that reflects the new roof.",
     },
     {
       q: 'How do mature trees affect a roof replacement in Preston Hollow?',
@@ -61,8 +61,16 @@ export const PRESTON_HOLLOW_DALLAS_DATA: CityData = {
     },
     {
       q: 'How does Brava compare to DaVinci roofing?',
-      a: "Brava and DaVinci are both premium composite roofs that give a home the look of slate or shake, and both publish a Class 4 impact rating. Brava also offers Spanish Barrel Tile, and we install Brava in three profiles: slate, cedar shake, and Spanish barrel tile. For Preston Hollow homeowners weighing the two, the side-by-side lists the published specifications from each manufacturer.",
+      a: "Both are premium composites with the look of slate or shake and a published Class 4 impact rating. On Preston Hollow's larger lots the profile and color matter most, and Brava includes cedar shake, slate, and Spanish barrel tile. The comparison page shows the published specs for each.",
       link: { href: '/brava-vs-davinci-roofing', text: 'See the Brava and DaVinci side-by-side →' },
+    },
+    {
+      q: "Does Brava synthetic slate fade on a Preston Hollow home?",
+      a: "Brava uses mineral pigments, and the color runs through the full thickness of each tile, so color is not just a surface coating. Sun and weather age every exterior material over time, so look at samples in daylight. We are glad to show Preston Hollow homeowners samples at the inspection.",
+    },
+    {
+      q: "Will a metal roof tick or pop in the Preston Hollow heat?",
+      a: "Temperature swings make metal expand and contract. Proper fastening and the right panel system keep the movement controlled, and we are upfront that we cannot promise a roof will be silent. Ask us about it at your Preston Hollow inspection.",
     },
   ],
 }

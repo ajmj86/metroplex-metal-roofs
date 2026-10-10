@@ -28,13 +28,35 @@ export const ROYSE_CITY_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Royse City, TX?',
-      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract, plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Royse City homeowners will never need to use.',
+      a: "We back every Royse City installation with a 10-year workmanship warranty that sits in your contract, not on a handshake. The manufacturer adds its own material warranty on the panels and finish. A lifespan of 50 years or more means these warranties offer peace of mind more than repairs. Questions about either one are welcome at any point.",
     },
-    { q: 'How much does a metal roof cost in Royse City, TX?', a: `Metal roofing in Royse City is priced by the square foot, and your total depends on roof size, pitch, and material. We provide a satellite-based ballpark range from your roof\'s measured size, not a guess from the driveway, refined into a firm number after your free on-site assessment. By material, that typically breaks down to ${cityFaqMaterialRates()}. See our pricing table above for the full breakdown, or use our free visualizer for an exact number for your roof.` },
-    { q: 'Is metal roofing a good investment in Royse City?', a: 'Yes. For Royse City homeowners, metal roofing eliminates the recurring asphalt replacement cost, qualifies for insurance discounts, and adds a long-term durable finish that holds its value. With rising home values throughout Rockwall County, a metal roof is a strong protective investment.' },
-    { q: 'Does a metal roof qualify for an insurance discount in Rockwall County?', a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. Royse City homeowners in Rockwall County\'s active storm corridor typically see meaningful annual premium reductions after upgrading.' },
-    { q: 'Will my Royse City HOA approve a metal roof?', a: 'Most Royse City communities permit metal roofing in approved profiles and neutral color palettes. We provide complete HOA documentation support at no additional cost.' },
-    { q: 'How long does metal roof installation take in Royse City?', a: 'Most Royse City residential installations are completed in one to two days depending on roof size and material. We provide a specific timeline during the estimate process.' },
-    { q: 'What metal and Brava roofing styles are available in Royse City?', a: 'Standing seam, stone-coated steel, and R-Panel are all available in Royse City. Stone-coated steel in shingle profiles is the most popular choice for traditional homes throughout the area. R-Panel offers a cost-effective metal option with a strong 40 to 60 year lifespan. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.' },
+    {
+      q: 'How much does a metal roof cost in Royse City, TX?',
+      a: "The cost of a metal roof in Royse City comes down to roof size, pitch, and the material you choose, priced per square foot. Expect a ballpark based on satellite measurements first, followed by a firm figure after the free in-person assessment. Our pricing table above has the full breakdown, and the free visualizer shows a number for your own roof. We explain every line of the proposal in person.",
+    },
+    {
+      q: 'Is metal roofing a good investment in Royse City?',
+      a: 'Yes. For Royse City homeowners, metal roofing eliminates the recurring asphalt replacement cost, qualifies for insurance discounts, and adds a long-term durable finish that holds its value. With rising home values throughout Rockwall County, a metal roof is a strong protective investment.',
+    },
+    {
+      q: 'Does a metal roof qualify for an insurance discount in Rockwall County?',
+      a: "In many cases, yes. Metal roofing with a Class 4 impact rating is the type of roof most Texas insurers discount. Storm seasons in Rockwall County make it worth asking your carrier about a Class 4 discount. We provide product documentation for your agent, and your insurance carrier sets the final discount.",
+    },
+    {
+      q: 'Will my Royse City HOA approve a metal roof?',
+      a: "In Royse City, many associations allow metal or Brava once the profile and color meet their guidelines. If you live in Woodcreek Farms or Falcon Heights, check your association's guidelines early. We handle the submission with samples, color chips, and manufacturer spec sheets, at no extra charge.",
+    },
+    {
+      q: 'How long does metal roof installation take in Royse City?',
+      a: "Most Royse City homes are done in one to three days, though roof size and complexity can stretch that. We give you a specific timeline for your home during the estimate process. Your project lead checks in each day so you know where things stand.",
+    },
+    {
+      q: 'What metal and Brava roofing styles are available in Royse City?',
+      a: "Whatever your Royse City home's architecture, there is a metal or Brava profile to suit it. R-Panel offers a cost-effective metal option with a strong 40 to 60 year lifespan. If you lean toward a slate or tile appearance, Brava's three profiles are worth a look. The Free Roof Visualizer lets you preview each option on your actual home before you decide.",
+    },
+    {
+      q: "Will a metal roof rust on a Royse City home?",
+      a: "Rust resistance comes from the coating, which is designed to work when the roof is installed and maintained properly. Copper develops a patina rather than rusting. We can explain care steps for Royse City homeowners at your inspection.",
+    },
   ],
 }

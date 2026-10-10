@@ -27,13 +27,35 @@ export const BURLESON_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Burleson, TX?',
-      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract, plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Burleson homeowners will never need to use.',
+      a: "Workmanship is covered for 10 years on every Burleson roof, and the terms are spelled out in your contract. Material defects in the panels and finish fall under the manufacturer's own warranty. Ask us to walk through both documents for your Burleson address before you sign. We can send the warranty documents ahead of time if you would like to read them.",
     },
-    { q: 'How much does a metal roof cost in Burleson, TX?', a: `Metal roofing in Burleson is priced by the square foot, and your total depends on roof size, pitch, and material. We provide a satellite-based ballpark range from your roof\'s measured size, not a guess from the driveway, refined into a firm number after your free on-site assessment. By material, that typically breaks down to ${cityFaqMaterialRates()}. See our pricing table above for the full breakdown, or use our free visualizer for an exact number for your roof.` },
-    { q: 'Does a metal roof qualify for an insurance discount in Johnson County?', a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. Burleson homeowners in Johnson County\'s active storm corridor typically see meaningful annual premium reductions after upgrading.' },
-    { q: 'Will my Burleson HOA approve a metal roof?', a: 'Most Burleson communities permit metal roofing in approved profiles and neutral color palettes. We provide complete HOA documentation support at no additional cost.' },
-    { q: 'How long does metal roof installation take in Burleson?', a: 'Most Burleson residential installations are completed in one to two days depending on roof size and material. We provide a specific timeline during the estimate process.' },
-    { q: 'How does metal roofing handle hail south of Fort Worth?', a: 'Standing seam and stone-coated steel carry a Class 4 impact resistance rating, the highest available. Johnson County south of Fort Worth sees consistent annual hail activity and Class 4 rated roofing provides strong protection while qualifying for maximum carrier discounts.' },
-    { q: 'What metal and Brava roofing styles are available in Burleson?', a: 'Standing seam, stone-coated steel, and R-Panel are all available in Burleson. Stone-coated steel is the most popular choice for traditional homes throughout the area. R-Panel offers a cost-effective metal option with a 40 to 60 year lifespan. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.' },
+    {
+      q: 'How much does a metal roof cost in Burleson, TX?',
+      a: "Roof size, pitch, and material set the price of a metal roof in Burleson, which is figured per square foot. The process begins with a satellite-measured range and ends with a firm number after our free on-site visit. For the complete picture, check the pricing table above or try the free visualizer with your address. Details like roof valleys and penetrations can shift the total.",
+    },
+    {
+      q: 'Does a metal roof qualify for an insurance discount in Johnson County?',
+      a: "A Class 4 impact rating is what carriers look for, and most Texas insurers discount roofs that have it. If you live in Burleson, bring your policy to the estimate and we will point out what to ask. Your insurance carrier decides the amount, so it is worth a quick call once you pick a material.",
+    },
+    {
+      q: 'Will my Burleson HOA approve a metal roof?',
+      a: "Some Burleson neighborhoods have no HOA, and where one exists, many approve metal and Brava in approved profiles and colors. Villages of Benbrook, Retreat at Willow Creek, and similar communities often have their own architectural committees. Samples, color chips, and spec sheets come with our free help preparing your submission.",
+    },
+    {
+      q: 'How long does metal roof installation take in Burleson?',
+      a: "For a typical Burleson home the work takes about one to three days, depending on how big and complex the roof is. We confirm the timeline for your roof up front, so you know what to expect. We protect landscaping and clean up daily while the crew is on site.",
+    },
+    {
+      q: 'How does metal roofing handle hail south of Fort Worth?',
+      a: "Class 4 is the highest impact rating available, and our standing seam and stone-coated steel systems carry it. Hail is a real concern across Johnson County, and most Texas insurers discount Class 4 roofs. Our team walks through coverage questions with your insurance carrier in mind.",
+    },
+    {
+      q: 'What metal and Brava roofing styles are available in Burleson?',
+      a: "A Burleson roof can take several looks: standing seam panels, stone-coated steel, or one of three Brava profiles. Stone-coated steel is the most popular choice for traditional homes throughout the area. R-Panel offers a cost-effective metal option with a 40 to 60 year lifespan. Homeowners drawn to natural slate, shake, or tile can compare Brava's three profiles with the steel options. Class 4 impact ratings apply to our steel systems, and we will walk through color and profile choices on site.",
+    },
+    {
+      q: "Will a metal roof block cell or Wi-Fi signal in Burleson?",
+      a: "Signal through a metal roof is usually fine in Burleson, and where reception is already poor, a booster is the common remedy. Because every property differs, results vary.",
+    },
   ],
 }

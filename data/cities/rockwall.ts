@@ -28,13 +28,35 @@ export const ROCKWALL_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Rockwall, TX?',
-      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract, plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Rockwall homeowners will never need to use.',
+      a: "Your Rockwall roof comes with our 10-year workmanship warranty, put in writing before work begins. You also receive the manufacturer's material warranty for the panels and finish. Paired with a system lifespan of 50 years or more, it is coverage most Rockwall homeowners rarely have to use. You will see the details in writing before you commit.",
     },
-    { q: 'How much does a metal roof cost in Rockwall, TX?', a: `Metal roofing in Rockwall is priced by the square foot, and your total depends on roof size, pitch, and material. We provide a satellite-based ballpark range from your roof\'s measured size, not a guess from the driveway, refined into a firm number after your free on-site assessment. By material, that typically breaks down to ${cityFaqMaterialRates()}. See our pricing table above for the full breakdown, or use our free visualizer for an exact number for your roof.` },
-    { q: 'How does metal roofing handle the storms near Lake Ray Hubbard?', a: 'Standing seam and stone-coated steel carry a Class 4 impact resistance rating, the highest available. Rockwall County\'s position along Lake Ray Hubbard creates consistent annual storm exposure and Class 4 rated roofing provides strong protection while qualifying for maximum carrier discounts.' },
-    { q: 'Does a metal roof qualify for an insurance discount in Rockwall County?', a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. Rockwall homeowners typically see meaningful annual premium reductions after upgrading, along with eliminated deductible exposure on future hail claims.' },
-    { q: 'Will my Rockwall HOA approve a metal roof?', a: 'Most Rockwall HOAs permit standing seam and stone-coated steel in approved profiles and neutral color palettes. We provide complete HOA documentation support at no additional cost.' },
-    { q: 'How long does metal roof installation take in Rockwall?', a: 'Most Rockwall residential installations are completed in one to three days depending on roof size and material. We provide a specific timeline for your home during the estimate process.' },
-    { q: 'What metal and Brava roofing styles are popular in Rockwall?', a: 'Standing seam is the most popular choice for Rockwall\'s lakefront and contemporary properties. Stone-coated steel is widely chosen in established neighborhoods with traditional architectural character. Both carry Class 4 hail ratings and 50-plus year lifespans. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.' },
+    {
+      q: 'How much does a metal roof cost in Rockwall, TX?',
+      a: "Metal roofing in Rockwall is priced by the square foot, and your total depends on roof size, pitch, and material. The process begins with a satellite-measured range and ends with a firm number after our free on-site visit. All materials are listed in the pricing table above, and the free visualizer prices your specific roof. Our assessment checks the decking and details that affect the price.",
+    },
+    {
+      q: 'How does metal roofing handle the storms near Lake Ray Hubbard?',
+      a: "The Class 4 rating, the highest available for impact, applies to standing seam and stone-coated steel. That matters in Rockwall County, where hail is a regular part of owning a home. Larger hail can still leave cosmetic marks on some finishes, which we explain upfront.",
+    },
+    {
+      q: 'Does a metal roof qualify for an insurance discount in Rockwall County?',
+      a: "Often it does, because most Texas insurers discount Class 4 roofs and metal systems carry that rating. Rockwall homeowners typically see meaningful annual premium reductions after upgrading, along with eliminated deductible exposure on future hail claims. The size of the discount depends on your carrier and policy, so check with your insurance carrier.",
+    },
+    {
+      q: 'Will my Rockwall HOA approve a metal roof?',
+      a: "Some Rockwall neighborhoods have no HOA, and where one exists, many approve metal and Brava in approved profiles and colors. Rules can differ between areas such as Lake Ray Hubbard Estates and Chandler Creek. We prepare material samples, color chips, and spec sheets for your submission at no additional cost.",
+    },
+    {
+      q: 'How long does metal roof installation take in Rockwall?',
+      a: "Expect one to three days on site for most homes in Rockwall, based on the size and layout of the roof. During the estimate we map out the days your roof will take, so there are no surprises. We protect landscaping and clean up daily while the crew is on site.",
+    },
+    {
+      q: 'What metal and Brava roofing styles are popular in Rockwall?',
+      a: "A Rockwall roof can take several looks: standing seam panels, stone-coated steel, or one of three Brava profiles. Standing seam is the most popular choice for Rockwall's lakefront and contemporary properties. Stone-coated steel is widely chosen in established neighborhoods with traditional architectural character. Brava gives a premium alternative to metal, with slate, cedar shake, and Spanish barrel tile profiles. Both steel systems carry a Class 4 impact rating, and we bring samples so you can compare them on your own home.",
+    },
+    {
+      q: "Does a metal roof attract lightning at my Rockwall home?",
+      a: "Metal roofs do not attract lightning, so a Rockwall home is no more likely to be struck. Metal also does not burn, which is one reason some owners feel more comfortable during storm season.",
+    },
   ],
 }

@@ -43,27 +43,31 @@ export const GARLAND_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Garland, TX?',
-      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract, plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Garland homeowners will never need to use.',
+      a: "Your Garland roof comes with our 10-year workmanship warranty, put in writing before work begins. The metal itself carries the manufacturer's material warranty for the panels and their finish. We are glad to go over the exact terms with Dallas County homeowners during the free consultation. Copies of both are yours to keep.",
     },
     {
       q: 'How much does a metal roof cost in Garland?',
-      a: `Metal roofing in Garland is priced by the square foot, and your total depends on roof size, pitch, and material. We provide a satellite-based ballpark range from your roof\'s measured size, not a guess from the driveway, refined into a firm number after your free on-site assessment. By material, that typically breaks down to ${cityFaqMaterialRates()}. See our pricing table above for the full breakdown, or use our free visualizer for an exact number for your roof.`,
+      a: "The cost of a metal roof in Garland comes down to roof size, pitch, and the material you choose, priced per square foot. A satellite measurement of your roof gives us a reliable starting range, and the free on-site assessment turns it into a firm price. Use the pricing table above to compare systems, then put your address into the free visualizer for your own number. Pitch, tear-off, and deck condition also factor into the final number.",
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Garland?',
-      a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. Garland sits in Dallas County\'s active hail corridor, and homeowners who upgrade typically see a meaningful reduction in their wind/hail premium.',
+      a: "Often it does, because most Texas insurers discount Class 4 roofs and metal systems carry that rating. For a Garland home, a quick call to your agent before choosing a material can pay off. Savings vary from one carrier to the next, so ask your agent what applies to your policy.",
     },
     {
       q: 'Will my Garland HOA approve a metal roof?',
-      a: 'Most Garland HOAs, including communities near Firewheel and Rose Hill, permit metal roofing in approved profiles and neutral color palettes. Many older neighborhoods have no HOA at all. Where documentation is required, we provide material samples, color chips, and manufacturer spec sheets at no additional cost.',
+      a: "Approval depends on your Garland community's guidelines, and many HOAs accept metal and Brava profiles in approved colors. If you live in Firewheel or Spring Park, check your association's guidelines early. We can supply everything the committee asks for, from color chips to manufacturer specifications, at no additional cost.",
     },
     {
       q: 'How long does metal roof installation take in Garland?',
-      a: 'Most residential installations in Garland are completed in one to three days. The exact timeline depends on roof size and material selection. We provide a specific estimate timeline for your home before any work begins.',
+      a: "Most Garland installations are finished in one to three days, depending on roof size and complexity. Before the crew arrives, we spell out the schedule for your particular roof. Most homeowners stay in the house during the work.",
     },
     {
       q: 'What metal and Brava roofing style works best for Garland homes?',
-      a: 'Stone-coated steel is a popular match for the traditional ranch and split-level homes common throughout Garland\'s older neighborhoods, while standing seam suits the newer builds near Firewheel. Both carry Class 4 hail ratings and 50-plus year lifespans. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.',
+      a: "In Garland, the choice usually comes down to a shingle or shake look in stone-coated steel, a clean standing seam line, or a Brava profile. Stone-coated steel is a popular match for the traditional ranch and split-level homes common throughout Garland's older neighborhoods, while standing seam suits the newer builds near Firewheel. Brava's composite slate, shake, and barrel tile reproduce natural materials with natural color variation. We are happy to compare options side by side during your free assessment.",
+    },
+    {
+      q: "Does a metal roof attract lightning at my Garland home?",
+      a: "A metal roof does not make a Garland home more likely to be struck by lightning, and metal does not burn. Storm seasons in Dallas County are a fair reason to ask, but the roof material does not change the odds.",
     },
   ],
 }

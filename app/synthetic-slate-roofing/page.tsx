@@ -55,32 +55,32 @@ const FAQS = [
     a: 'We install three Brava composite profiles: Brava Spanish Barrel Tile (a rounded clay-tile profile for Mediterranean and Spanish Colonial-style homes), Brava Cedar Shake (a textured, hand-split wood-shake look without the fire risk or upkeep of real cedar), and Brava Slate (a crisp, dimensional profile that\'s the closest match to authentic quarried slate). Each comes in a range of factory colors. We\'ll walk through samples for your specific home during your free consultation.',
   },
   {
-    q: 'Why does Metroplex Metal Roofs install Brava synthetic slate and tile?',
-    a: "Brava gives homeowners the look of natural slate, shake, or tile on a composite built for North Texas weather. We chose Brava for its wind resistance, fire performance, and realistic texture, and for a color that runs through the full thickness of each tile. It's the combination that made Brava our standard for synthetic slate, not any single spec.",
+    q: 'Does Brava synthetic slate fade over time?',
+    a: 'Brava\'s color comes from mineral pigments that run through the full thickness of each tile, rather than from a surface coating. Sun and weather will still age any exterior material gradually, so we recommend looking at samples in daylight. Ask us about the color durability testing Brava publishes.',
   },
   {
-    q: 'How much does Brava synthetic slate roofing cost compared to real slate?',
-    a: "Brava synthetic slate typically runs a fraction of real slate's installed cost. Real slate requires specialized installers, structural reinforcement for the extra weight, and slate itself is one of the most expensive roofing materials available. Brava synthetic slate delivers a comparable look at a cost much closer to premium metal or high-end stone-coated steel. We'll give you an exact number for your home during your free consultation.",
+    q: 'Does synthetic slate curl or warp?',
+    a: 'Curling and warping usually trace back to how a roof was installed, not to the tile itself. Following Brava\'s published installation guide is the safeguard, and that is how our crews install Brava. We are glad to explain the installation steps before you decide.',
   },
   {
-    q: 'How long does Brava synthetic slate roofing last?',
-    a: "Brava synthetic slate is backed by a 50-year limited warranty from Brava. The composite is engineered to resist cracking and fading, and it is built to last for decades, well beyond the 15–20 year lifespan of asphalt shingles.",
+    q: 'Does Brava look fake or like plastic up close?',
+    a: 'Brava is made to look like natural slate, shake, or tile, with natural color variation from tile to tile. The surest test is to see it in person, so we bring samples to your inspection. You can also preview each profile on your own home in the Free Roof Visualizer.',
   },
   {
-    q: 'How heavy is Brava synthetic slate roofing?',
-    a: "Brava synthetic slate is far lighter than natural slate or clay tile, so most homes can take it without added structural support. We confirm your roof deck and framing during the inspection. That makes it a viable option on many homes where authentic slate was never structurally practical.",
+    q: 'How does Brava hold up to hail?',
+    a: 'Brava carries a Class 4 impact rating, the highest rating available for impact resistance. That rating is why many homeowners in hail-prone areas consider it, and why most Texas insurers discount Class 4 roofs. Check with your insurance carrier for the specifics on your policy.',
   },
   {
-    q: 'Brava synthetic slate vs. metal roofing, which is better for my home?',
-    a: "It depends on what you're optimizing for. Standing seam metal offers a 50–70 year lifespan, strong insurance discounts, and a clean architectural line. Brava synthetic slate offers a traditional, dimensional profile that some HOAs and historic-style homes call for specifically, in a system built for North Texas hail. We install both, and we'll tell you honestly which one fits your home and your HOA's guidelines.",
+    q: 'Is Brava fire rated?',
+    a: 'A Class A fire rating is available with Brava when it is installed as a complete Brava roof system. The rating depends on the roof assembly and installation, so we confirm the right assembly for your home and local requirements.',
   },
   {
-    q: 'Does Brava synthetic slate qualify for insurance discounts like metal does?',
-    a: 'Many carriers offer premium discounts for Class 4 impact-rated roofing, and Brava synthetic slate systems are commonly rated Class 4, but discount programs vary by carrier and aren\'t always as deep as the discounts available for standing seam metal. We\'ll walk through what your specific carrier offers for each material during your consultation.',
+    q: 'What is Brava made from?',
+    a: 'Brava is a composite made with recycled material, and the tiles are fully recyclable. Each tile is compression molded, which Brava says makes the tiles stronger and more detailed.',
   },
   {
-    q: 'How much does Brava synthetic slate roofing cost per square foot in DFW?',
-    a: `Brava synthetic slate installed cost runs about ${FAQ_RATE.slate()} per square foot in the Dallas–Fort Worth market, a premium option priced above standard standing seam steel (${FAQ_RATE.standingSeam()}) and below copper (${FAQ_RATE.copper()}). Your exact number depends on roof size, pitch, and complexity. Request a free estimate for your specific home.`,
+    q: 'How long does a Brava roof last?',
+    a: 'Brava is built as a long-term roof and is backed by a 50-year limited warranty from Brava. We do not quote an exact lifespan, since installation and care matter, but we are glad to walk through the warranty terms with you.',
   },
 ]
 

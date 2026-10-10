@@ -50,11 +50,11 @@ export const PROSPER_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Prosper, TX?',
-      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract, plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Prosper homeowners will never need to use.',
+      a: "Workmanship is covered for 10 years on every Prosper roof, and the terms are spelled out in your contract. On top of that, the product maker stands behind its panels and coatings with a material warranty. Paired with a system lifespan of 50 years or more, it is coverage most Prosper homeowners rarely have to use. Questions about either one are welcome at any point.",
     },
     {
       q: 'How much does a metal roof cost in Prosper, TX?',
-      a: `Metal roofing in Prosper is priced by the square foot, and your total depends on roof size, pitch, and material. Most homes in Prosper\'s master-planned communities fall in the 28 to 45 square range. We provide satellite-based estimates built from your roof\'s satellite-measured size, no guesswork, no in-person visit required to get a ballpark range, which we refine into a firm number after your free on-site assessment. By material, that typically breaks down to ${cityFaqMaterialRates()}. See our pricing table above for the full breakdown, or use our free visualizer for an exact number for your roof.`,
+      a: "A Prosper metal roof is quoted per square foot, with the final figure driven by roof size, pitch, and material. Most homes in Prosper\\'s master-planned communities fall in the 28 to 45 square range. Our first number comes from satellite measurements of your actual roof, and the firm price follows your free on-site assessment. All materials are listed in the pricing table above, and the free visualizer prices your specific roof. We explain every line of the proposal in person.",
     },
     {
       q: 'Is metal roofing common in Prosper neighborhoods like Windsong Ranch?',
@@ -62,19 +62,23 @@ export const PROSPER_DATA: CityData = {
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Prosper?',
-      a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. For Prosper homeowners with median home values above $700,000, the 2% wind/hail deductible means a single storm event can cost $14,000 or more out of pocket on asphalt. A metal roof eliminates that exposure while also reducing your annual premium.',
+      a: "A Class 4 impact rating is what carriers look for, and most Texas insurers discount roofs that have it. For Prosper homeowners with median home values above $700,000, the 2% wind/hail deductible means a single storm event can cost $14,000 or more out of pocket on asphalt. A metal roof eliminates that exposure while also reducing your annual premium. The size of the discount depends on your carrier and policy, so check with your insurance carrier.",
     },
     {
       q: 'Will my Prosper HOA approve a metal roof?',
-      a: 'Most Prosper HOAs approve metal roofing in pre-approved profiles and color palettes. Windsong Ranch, Star Trail, and Lakes of Prosper have all approved metal roofing installations for homeowners who submitted proper documentation. We handle the documentation package: material samples, color chips, and spec sheets, at no additional cost.',
+      a: "Many HOAs in Prosper approve these profiles, and each association sets its own rules. Reviews in Windsong Ranch and Star Trail follow each association's own process. Our team assembles the paperwork for your submission, though the final decision is your association's.",
     },
     {
       q: 'How long does metal roof installation take in Prosper?',
-      a: 'Most residential metal roofing installations in Prosper are completed in one to three days. The timeline depends on roof size, pitch complexity, and material. Standing seam typically takes slightly longer than stone-coated steel. We provide a specific installation timeline for your home as part of the estimate process.',
+      a: "One to three days covers most Prosper projects, and bigger or more intricate roofs may need a little more time. Standing seam typically takes slightly longer than stone-coated steel. Before the crew arrives, we spell out the schedule for your particular roof. We protect landscaping and clean up daily while the crew is on site.",
     },
     {
       q: 'What is the difference between standing seam, stone-coated steel, and Brava for a Prosper home?',
-      a: 'Standing seam features hidden fasteners and clean vertical lines, ideal for contemporary and modern architecture common in newer Prosper builds. Stone-coated steel replicates the look of traditional shingles or shake in steel form, making it well-suited for neighborhoods with traditional HOA aesthetic guidelines. Both carry Class 4 hail ratings and 50+ year lifespans. The right choice depends on your home\'s architecture and HOA requirements. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.',
+      a: "Standing seam has hidden fasteners and a clean vertical line that suits the contemporary builds common in Prosper. Stone-coated steel reads as shingle or shake and fits communities with traditional HOA guidelines. Brava adds slate, shake, and Spanish barrel tile looks, and we bring samples of everything to your inspection.",
+    },
+    {
+      q: "Will a metal roof make my Prosper home hotter?",
+      a: "Metal does not make a house hotter, and reflective finishes can cut heat gain. If cooling bills worry you in Collin County, ask about lighter finishes during the inspection.",
     },
   ],
 }

@@ -29,13 +29,35 @@ export const CELINA_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Celina, TX?',
-      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract, plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Celina homeowners will never need to use.',
+      a: "A 10-year workmanship warranty from Metroplex is written into every Celina contract. Panels and finish are covered separately by the manufacturer's material warranty. Since the roof itself is built to last 50 years or more, claims are uncommon. Questions about either one are welcome at any point.",
     },
-    { q: 'How much does a metal roof cost in Celina, TX?', a: `Metal roofing in Celina is priced by the square foot, and your total depends on roof size, pitch, and material. We provide a satellite-based ballpark range from your roof\'s measured size, not a guess from the driveway, refined into a firm number after your free on-site assessment. By material, that typically breaks down to ${cityFaqMaterialRates()}. See our pricing table above for the full breakdown, or use our free visualizer for an exact number for your roof.` },
-    { q: 'Is metal roofing common on new construction in Celina?', a: 'Yes. Metal roofing is increasingly specified on new construction throughout Celina\'s master-planned developments. Many builders in the area now offer standing seam and stone-coated steel as standard or upgraded options given the area\'s storm exposure and the long-term cost advantages for buyers.' },
-    { q: 'Does a metal roof qualify for an insurance discount in Collin County?', a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. Celina homeowners in Collin County\'s active hail corridor typically see meaningful reductions in their wind/hail premium after upgrading to a Class 4 rated roof.' },
-    { q: 'Will my Celina HOA approve a metal roof?', a: 'Most Celina HOAs permit metal roofing in approved profiles and neutral color palettes. We provide full documentation support including material samples, color chips, and manufacturer spec sheets for your HOA submission at no additional cost.' },
-    { q: 'How long does metal roof installation take in Celina?', a: 'Most residential installations in Celina are completed in one to three days. The exact timeline depends on roof size and material selection. We provide a specific estimate timeline for your home before any work begins.' },
-    { q: 'What metal and Brava roofing styles work best on Celina homes?', a: 'Standing seam and stone-coated steel are the most popular choices for Celina\'s mix of contemporary and traditional new construction. Both carry Class 4 hail ratings and 50-plus year lifespans. The right choice depends on your home\'s architecture and HOA requirements. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.' },
+    {
+      q: 'How much does a metal roof cost in Celina, TX?',
+      a: "Metal roofing in Celina is priced by the square foot, and your total depends on roof size, pitch, and material. Our first number comes from satellite measurements of your actual roof, and the firm price follows your free on-site assessment. See the pricing table above for every material, or run our free visualizer for a figure specific to your house. Two similar-looking houses can price differently once the roof structure is measured.",
+    },
+    {
+      q: 'Is metal roofing common on new construction in Celina?',
+      a: "New builds in Celina increasingly include metal roofs, and the trend is growing. Collin County weather and low maintenance are what draw many buyers to it.",
+    },
+    {
+      q: 'Does a metal roof qualify for an insurance discount in Collin County?',
+      a: "Yes, a Class 4 impact-rated metal roof can lower your premium, since most Texas insurers discount Class 4 roofs. Celina homeowners often start with the insurance question after a hail season. Every policy is different, so confirm the details with your insurance carrier before you decide.",
+    },
+    {
+      q: 'Will my Celina HOA approve a metal roof?',
+      a: "Many Celina HOAs approve metal and Brava roofs, though requirements vary from one community to the next. Neighborhoods like Light Farms and Mustang Lakes may follow separate architectural guidelines. Our team assembles the paperwork for your submission, though the final decision is your association's.",
+    },
+    {
+      q: 'How long does metal roof installation take in Celina?',
+      a: "One to three days covers most Celina projects, and bigger or more intricate roofs may need a little more time. During the estimate we map out the days your roof will take, so there are no surprises. Tear-off, underlayment, and the new roof are typically done in sequence.",
+    },
+    {
+      q: 'What metal and Brava roofing styles work best on Celina homes?',
+      a: "Celina homeowners can choose from standing seam, stone-coated steel, and Brava synthetic slate, shake, or Spanish barrel tile. Standing seam and stone-coated steel are the most popular choices for Celina's mix of contemporary and traditional new construction. The right choice depends on your home's architecture and HOA requirements. For the look of natural slate, shake, or tile, Brava offers three profiles in a durable composite. Ask for samples of metal and Brava during your inspection and judge them against your own roofline.",
+    },
+    {
+      q: "Will hail dent a metal roof in Collin County?",
+      a: "Metal is available with a Class 4 impact rating, but very large hail can still leave cosmetic marks on some finishes. Textured stone-coated steel hides marks better than smooth panels, which is worth knowing in Collin County hail country. We explain the tradeoffs for your Celina roof during the inspection.",
+    },
   ],
 }

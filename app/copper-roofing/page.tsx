@@ -49,6 +49,10 @@ const FAQS = [
     q: 'Can I use copper as an accent instead of a full roof?',
     a: 'Yes, copper accents on dormers, entryways, bay windows, or porch roofs are a common way to bring copper\'s look and permanence into a project without the cost of a full copper roof, typically paired with standing seam steel on the main roof planes.',
   },
+  {
+    q: 'Will a copper roof rust?',
+    a: 'Copper does not rust. Over the years it develops a patina, a natural layer that shields the metal beneath it. The patina is part of copper\'s character and changes its look gradually.',
+  },
 ]
 
 function CopperSchema() {

@@ -29,13 +29,35 @@ export const ARGYLE_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Argyle, TX?',
-      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract, plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Argyle homeowners will never need to use.',
+      a: "We back every Argyle installation with a 10-year workmanship warranty that sits in your contract, not on a handshake. On top of that, the product maker stands behind its panels and coatings with a material warranty. We are glad to go over the exact terms with Denton County homeowners during the free consultation. You will see the details in writing before you commit.",
     },
-    { q: 'How much does a metal roof cost in Argyle, TX?', a: `Metal roofing in Argyle is priced by the square foot, and your total depends on roof size, pitch, and material. Estate homes with larger footprints and more complex rooflines often carry a higher overall cost. We provide a satellite-based ballpark range from your roof\'s measured size, not a guess from the driveway, refined into a firm number after your free on-site assessment. By material, that typically breaks down to ${cityFaqMaterialRates()}. See our pricing table above for the full breakdown, or use our free visualizer for an exact number for your roof.` },
-    { q: 'What metal and Brava roofing options are best for Argyle estate homes?', a: 'Standing seam is the most popular choice for Argyle estate properties due to its clean architectural lines and hidden fastener system. Copper is available for homeowners seeking the highest-tier permanent finish. Both carry the highest available impact resistance ratings. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.' },
-    { q: 'Does a metal roof qualify for an insurance discount in Argyle?', a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. For Argyle homeowners with high-value policies, the combination of reduced annual premiums and eliminated deductible exposure over 20 to 30 years typically represents a strong financial return.' },
-    { q: 'Will my Argyle HOA approve a metal roof?', a: 'Most Argyle estate communities permit standing seam and stone-coated steel in approved profiles and color palettes. We provide complete documentation packages for your HOA or architectural review committee at no additional cost.' },
-    { q: 'How long does metal roof installation take in Argyle?', a: 'Most Argyle residential installations are completed in one to four days depending on roof size and complexity. Larger estate homes may take longer. We provide a specific timeline for your property during the estimate process.' },
-    { q: 'How does metal roofing handle Denton County storms in a rural area?', a: 'Standing seam and stone-coated steel carry a Class 4 impact resistance rating, the highest available. In rural communities like Argyle where storm response services are farther away, having a roof that does not need emergency repair after every hail event is particularly valuable.' },
+    {
+      q: 'How much does a metal roof cost in Argyle, TX?',
+      a: "Pricing for a Argyle metal roof is per square foot, shaped mostly by how large and steep the roof is and which system you select. Estate homes with larger footprints and more complex rooflines often carry a higher overall cost. You get a ballpark from satellite imagery of your own roof, not a guess from the curb, and a firm number after we inspect it in person. Use the pricing table above to compare systems, then put your address into the free visualizer for your own number. We explain every line of the proposal in person.",
+    },
+    {
+      q: 'What metal and Brava roofing options are best for Argyle estate homes?',
+      a: "In Argyle, the choice usually comes down to a shingle or shake look in stone-coated steel, a clean standing seam line, or a Brava profile. Standing seam is the most popular choice for Argyle estate properties due to its clean architectural lines and hidden fastener system. Copper is available for homeowners seeking the highest-tier permanent finish. Brava gives a premium alternative to metal, with slate, cedar shake, and Spanish barrel tile profiles. We set samples next to your siding or brick so you can see how each material reads in daylight.",
+    },
+    {
+      q: 'Does a metal roof qualify for an insurance discount in Argyle?',
+      a: "In many cases, yes. Metal roofing with a Class 4 impact rating is the type of roof most Texas insurers discount. Across Denton County, the premium conversation is a common reason to look at Class 4 roofing. Savings vary from one carrier to the next, so ask your agent what applies to your policy.",
+    },
+    {
+      q: 'Will my Argyle HOA approve a metal roof?',
+      a: "Many HOAs in Argyle approve these profiles, and each association sets its own rules. Rules can differ between areas such as Harvest and Canyon Falls. We can supply everything the committee asks for, from color chips to manufacturer specifications, at no additional cost.",
+    },
+    {
+      q: 'How long does metal roof installation take in Argyle?',
+      a: "Expect one to three days on site for most homes in Argyle, based on the size and layout of the roof. Larger estate homes may take longer. Before the crew arrives, we spell out the schedule for your particular roof. We handle debris removal and a final walkthrough when the roof is complete.",
+    },
+    {
+      q: 'How does metal roofing handle Denton County storms in a rural area?',
+      a: "A Class 4 impact rating, the highest available, applies to our standing seam and stone-coated steel systems. In rural communities like Argyle where storm response services are farther away, having a roof that does not need emergency repair after every hail event is particularly valuable. Argyle homeowners deal with spring storms, so a Class 4 roof is a common upgrade after a claim. Ask about colors and profiles when we visit your home.",
+    },
+    {
+      q: "Will a metal roof tick or pop in the Argyle heat?",
+      a: "Metal expands and contracts as temperatures change, and proper fastening and panel systems keep that movement controlled. We do not promise silence, but a careful installation on a Argyle home keeps noise minimal.",
+    },
   ],
 }

@@ -42,7 +42,7 @@ export const HIGHLAND_PARK_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Highland Park, TX?',
-      a: "Every roof we install carries a 10-year workmanship warranty written into your contract, plus the manufacturer's material warranty on the panels and finish. With a 50+ year system lifespan, that is coverage most Highland Park homeowners will never need to use.",
+      a: "On a Highland Park job, our 10-year workmanship warranty is part of the signed agreement. You also receive the manufacturer's material warranty for the panels and finish. Ask us to walk through both documents for your Highland Park address before you sign. Questions about either one are welcome at any point.",
     },
     {
       q: 'What can replace a clay tile or slate roof on a Highland Park home?',
@@ -54,11 +54,11 @@ export const HIGHLAND_PARK_DATA: CityData = {
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Highland Park?',
-      a: "Most Texas insurers discount Class 4 impact rated roofs, and the savings depend on your carrier and policy. On a high-value Highland Park home, even a modest premium reduction adds up over the life of the roof. Ask your agent for a quote once you know which material you want.",
+      a: "Yes, a Class 4 metal roof is a common way Highland Park homeowners earn a premium discount, since most Texas insurers offer one. On a high-value Highland Park home, even a modest premium reduction adds up over the life of the roof. Your insurance carrier decides the amount, so it is worth a quick call once you pick a material.",
     },
     {
       q: 'How much does a metal or Brava synthetic slate roof cost in Highland Park?',
-      a: `Cost depends on roof size, pitch, and complexity, and larger estate roofs with several rooflines cost more than a simple gable. By material, that runs about ${FAQ_RATE.stoneCoated()}/sq ft for stone-coated steel, ${FAQ_RATE.standingSeam()}/sq ft for standing seam, and ${FAQ_RATE.slate()}/sq ft for Brava synthetic slate. We give a satellite-based range first and a firm number after your free on-site assessment.`,
+      a: "A Highland Park metal or Brava roof is quoted per square foot, with the final figure driven by roof size, pitch, and material. Cost depends on roof size, pitch, and complexity, and larger estate roofs with several rooflines cost more than a simple gable. Expect a ballpark based on satellite measurements first, followed by a firm figure after the free in-person assessment. For the complete picture, check the pricing table above or try the free visualizer with your address. Two similar-looking houses can price differently once the roof structure is measured.",
     },
     {
       q: 'How long does a roof replacement take on a larger Highland Park home?',
@@ -66,8 +66,16 @@ export const HIGHLAND_PARK_DATA: CityData = {
     },
     {
       q: 'How does Brava compare to DaVinci roofing?',
-      a: "Brava and DaVinci are both premium composite roofs that give a home the look of slate or shake, and both publish a Class 4 impact rating. Brava also offers Spanish Barrel Tile, and we install Brava in three profiles: slate, cedar shake, and Spanish barrel tile. For Highland Park homeowners weighing the two, the side-by-side lists the published specifications from each manufacturer.",
+      a: "Both manufacturers make composite slate and shake with a Class 4 impact rating, so the choice often comes down to profile and detail. Highland Park's clay tile era homes may also suit Brava Spanish Barrel Tile. See the comparison for each maker's published specifications.",
       link: { href: '/brava-vs-davinci-roofing', text: 'See the Brava and DaVinci side-by-side →' },
+    },
+    {
+      q: "Does Brava look fake up close on a Highland Park home?",
+      a: "Up close, Brava reads as slate, shake, or tile because each tile varies in color and texture the way natural pieces do. Hold a sample in daylight at your Highland Park inspection and judge it yourself, then check the look on your own roofline in the visualizer.",
+    },
+    {
+      q: "Will a metal roof make my Highland Park home look like a barn?",
+      a: "A barn look comes from agricultural panels, while standing seam and stone-coated steel are designed for houses. See either one on your Highland Park home in the Free Roof Visualizer first.",
     },
   ],
 }

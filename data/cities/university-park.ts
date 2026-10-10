@@ -41,7 +41,7 @@ export const UNIVERSITY_PARK_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in University Park, TX?',
-      a: "Every roof we install carries a 10-year workmanship warranty written into your contract, plus the manufacturer's material warranty on the panels and finish. With a 50+ year system lifespan, that is coverage most University Park homeowners will never need to use.",
+      a: "Workmanship is covered for 10 years on every University Park roof, and the terms are spelled out in your contract. The metal itself carries the manufacturer's material warranty for the panels and their finish. Since the roof itself is built to last 50 years or more, claims are uncommon. Keep the paperwork with your home records for future reference.",
     },
     {
       q: 'Will a metal or Brava synthetic slate roof suit a Tudor or Colonial home?',
@@ -57,16 +57,24 @@ export const UNIVERSITY_PARK_DATA: CityData = {
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in University Park?',
-      a: "Most Texas insurers discount Class 4 impact rated roofs, and the savings depend on your carrier and policy. Ask your agent for a quote once you know which material you want. We can provide the product documentation your carrier asks for.",
+      a: "A Class 4 impact rating is what carriers look for, and most Texas insurers discount roofs that have it. For a University Park home, a quick call to your agent before choosing a material can pay off. Every policy is different, so confirm the details with your insurance carrier before you decide.",
     },
     {
       q: 'How much does a metal or Brava synthetic slate roof cost in University Park?',
-      a: `Cost depends on roof size, pitch, and complexity, and many University Park roofs are moderate in size with several gables and dormers. By material, that runs about ${FAQ_RATE.stoneCoated()}/sq ft for stone-coated steel, ${FAQ_RATE.standingSeam()}/sq ft for standing seam, and ${FAQ_RATE.slate()}/sq ft for Brava synthetic slate. We give a satellite-based range first and a firm number after your free on-site assessment.`,
+      a: "A University Park metal or Brava roof is quoted per square foot, with the final figure driven by roof size, pitch, and material. Cost depends on roof size, pitch, and complexity, and many University Park roofs are moderate in size with several gables and dormers. You get a ballpark from satellite imagery of your own roof, not a guess from the curb, and a firm number after we inspect it in person. Compare systems in the pricing table above, and let the free visualizer work out a number for your home. Details like roof valleys and penetrations can shift the total.",
     },
     {
       q: 'How does Brava compare to DaVinci roofing?',
-      a: "Brava and DaVinci are both premium composite roofs that give a home the look of slate or shake, and both publish a Class 4 impact rating. Brava also offers Spanish Barrel Tile, and we install Brava in three profiles: slate, cedar shake, and Spanish barrel tile. For University Park homeowners weighing the two, the side-by-side lists the published specifications from each manufacturer.",
+      a: "Brava and DaVinci both offer composite slate and shake with a published Class 4 impact rating. Tudor and Colonial homes near SMU usually look to slate or shake, and Brava also has a barrel tile profile. Our comparison lists the published specifications side by side.",
       link: { href: '/brava-vs-davinci-roofing', text: 'See the Brava and DaVinci side-by-side →' },
+    },
+    {
+      q: "How does Brava hold up to hail in Dallas County?",
+      a: "Dallas County homeowners ask about hail first, and Brava answers with a Class 4 impact rating, the highest available. Most Texas insurers discount Class 4 roofs, so mention it to your insurance carrier when you compare coverage.",
+    },
+    {
+      q: "Does a metal roof attract lightning at my University Park home?",
+      a: "The material does not raise the chance of a strike, and metal does not burn. In Dallas County, where thunderstorms are common, we are happy to go over it during your estimate.",
     },
   ],
 }

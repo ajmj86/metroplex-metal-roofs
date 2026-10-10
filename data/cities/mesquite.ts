@@ -43,31 +43,35 @@ export const MESQUITE_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Mesquite, TX?',
-      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract, plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Mesquite homeowners will never need to use.',
+      a: "The paperwork for a Mesquite roof starts with a 10-year workmanship warranty, written into the contract. On top of that, the product maker stands behind its panels and coatings with a material warranty. Since the roof itself is built to last 50 years or more, claims are uncommon. Your project lead explains what each covers on installation day.",
     },
     {
       q: 'How much does a metal roof cost in Mesquite?',
-      a: `Metal roofing in Mesquite is priced by the square foot, and your total depends on roof size, pitch, and material. We provide a satellite-based ballpark range from your roof\'s measured size, not a guess from the driveway, refined into a firm number after your free on-site assessment. By material, that typically breaks down to ${cityFaqMaterialRates()}. See our pricing table above for the full breakdown, or use our free visualizer for an exact number for your roof.`,
+      a: "Metal roofs in Mesquite are priced per square foot, so the biggest factors are how much roof you have, how steep it is, and the material. You get a ballpark from satellite imagery of your own roof, not a guess from the curb, and a firm number after we inspect it in person. See the pricing table above for every material, or run our free visualizer for a figure specific to your house. Our assessment checks the decking and details that affect the price.",
     },
     {
       q: 'Is metal roofing common in newer Mesquite developments like Solterra?',
-      a: 'Yes. Solterra\'s architectural guidelines already permit metal roofing in approved profiles, and it\'s an increasingly common choice for homeowners building or reroofing in the community given the same hail exposure as the rest of Mesquite.',
+      a: "Yes. Solterra's guidelines permit metal roofing in approved profiles, which is why it shows up on newer Mesquite builds. Reroofing owners there face the same Dallas County hail season as the rest of the city.",
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Mesquite?',
-      a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. Mesquite sits in Dallas County\'s active hail corridor, and homeowners who upgrade typically see a meaningful reduction in their wind/hail premium.',
+      a: "It can. Class 4 impact-rated metal is discounted by most Texas insurers, which helps offset the cost of a new roof. Across Dallas County, the premium conversation is a common reason to look at Class 4 roofing. Every policy is different, so confirm the details with your insurance carrier before you decide.",
     },
     {
       q: 'Will my Mesquite HOA approve a metal roof?',
-      a: 'Communities with an active architectural review process, like Solterra, generally approve metal roofing in pre-approved profiles and colors. Many older Mesquite neighborhoods have no HOA at all. Where documentation is required, we provide material samples, color chips, and manufacturer spec sheets at no additional cost.',
+      a: "HOA rules in Mesquite differ by neighborhood, and many associations permit metal or Brava in neutral, approved colors. Communities such as Casa View Heights and Highland Hills each have their own review process. We can supply everything the committee asks for, from color chips to manufacturer specifications, at no additional cost.",
     },
     {
       q: 'How long does metal roof installation take in Mesquite?',
-      a: 'Most residential installations in Mesquite are completed in one to three days. The exact timeline depends on roof size and material selection. We provide a specific estimate timeline for your home before any work begins.',
+      a: "Expect one to three days on site for most homes in Mesquite, based on the size and layout of the roof. A schedule tailored to your home comes with the proposal, well before installation day. Weather can shift the schedule slightly, and we keep you updated.",
     },
     {
       q: 'What metal and Brava roofing style works best for Mesquite homes?',
-      a: 'Stone-coated steel is a strong match for the traditional ranch homes common in Town East Estates and Casa View Heights, while standing seam suits the more contemporary builds going up in Solterra. Both carry Class 4 hail ratings and 50-plus year lifespans. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.',
+      a: "A Mesquite roof can take several looks: standing seam panels, stone-coated steel, or one of three Brava profiles. Stone-coated steel is a strong match for the traditional ranch homes common in Town East Estates and Casa View Heights, while standing seam suits the more contemporary builds going up in Solterra. For the look of natural slate, shake, or tile, Brava offers three profiles in a durable composite. We are happy to compare options side by side during your free assessment.",
+    },
+    {
+      q: "Is a metal roof louder than shingles in a Mesquite rainstorm?",
+      a: "Rain on a metal roof is not noticeably louder than on shingles when there is a solid deck, underlayment, and attic insulation underneath. What people remember is the sound of a shed or barn with bare metal and no deck. Your attic insulation also helps keep the sound familiar.",
     },
   ],
 }

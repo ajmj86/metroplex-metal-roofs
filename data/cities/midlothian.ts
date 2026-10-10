@@ -28,13 +28,35 @@ export const MIDLOTHIAN_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Midlothian, TX?',
-      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract, plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Midlothian homeowners will never need to use.',
+      a: "A 10-year workmanship warranty from Metroplex is written into every Midlothian contract. A second layer of protection comes from the manufacturer, whose material warranty covers the panels and finish. We are glad to go over the exact terms with Ellis County homeowners during the free consultation. We can send the warranty documents ahead of time if you would like to read them.",
     },
-    { q: 'How much does a metal roof cost in Midlothian, TX?', a: `Metal roofing in Midlothian is priced by the square foot, and your total depends on roof size, pitch, and material. We provide a satellite-based ballpark range from your roof\'s measured size, not a guess from the driveway, refined into a firm number after your free on-site assessment. By material, that typically breaks down to ${cityFaqMaterialRates()}. See our pricing table above for the full breakdown, or use our free visualizer for an exact number for your roof.` },
-    { q: 'Is metal roofing common on new construction in Midlothian?', a: 'Metal roofing is increasingly common on new construction throughout Midlothian\'s developing communities. Builders in the area are specifying standing seam and stone-coated steel more frequently as homebuyers prioritize durability in an active storm corridor.' },
-    { q: 'Does a metal roof qualify for an insurance discount in Ellis County?', a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. Midlothian homeowners in Ellis County\'s storm corridor typically see meaningful reductions in their annual wind/hail premium after upgrading.' },
-    { q: 'Will my Midlothian HOA approve a metal roof?', a: 'Most Midlothian communities permit metal roofing in approved profiles and neutral color palettes. We provide complete HOA documentation support at no additional cost.' },
-    { q: 'How long does metal roof installation take in Midlothian?', a: 'Most Midlothian residential installations are completed in one to three days. The exact timeline depends on roof size and material. We provide a specific timeline during the estimate process.' },
-    { q: 'What metal and Brava roofing styles work best in Midlothian?', a: 'Stone-coated steel and standing seam are both popular in Midlothian. Stone-coated steel in shingle profiles suits the traditional architecture common throughout the area. Standing seam is preferred for contemporary homes. Both carry Class 4 ratings and 50-plus year lifespans. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.' },
+    {
+      q: 'How much does a metal roof cost in Midlothian, TX?',
+      a: "Metal roofing in Midlothian is priced by the square foot, and your total depends on roof size, pitch, and material. We measure your roof by satellite to give a ballpark, then finalize a firm price once we have seen it during a free assessment. Use the pricing table above to compare systems, then put your address into the free visualizer for your own number. Details like roof valleys and penetrations can shift the total.",
+    },
+    {
+      q: 'Is metal roofing common on new construction in Midlothian?',
+      a: "More and more new homes in Midlothian are finished with metal roofing. Builders in the area are specifying standing seam and stone-coated steel more frequently as homebuyers prioritize durability in an active storm corridor. Homeowners in Ellis County like that it is built to handle hail and needs little upkeep.",
+    },
+    {
+      q: 'Does a metal roof qualify for an insurance discount in Ellis County?',
+      a: "Yes, a Class 4 impact-rated metal roof can lower your premium, since most Texas insurers discount Class 4 roofs. Ellis County homeowners commonly review their coverage after a storm, and a new roof is a natural time. Savings vary from one carrier to the next, so ask your agent what applies to your policy.",
+    },
+    {
+      q: 'Will my Midlothian HOA approve a metal roof?',
+      a: "Some Midlothian neighborhoods have no HOA, and where one exists, many approve metal and Brava in approved profiles and colors. Neighborhoods like Walnut Grove and Mockingbird Hill may follow separate architectural guidelines. We help with the paperwork and submission, and the committee makes the final call.",
+    },
+    {
+      q: 'How long does metal roof installation take in Midlothian?',
+      a: "Most Midlothian homes are done in one to three days, though roof size and complexity can stretch that. During the estimate we map out the days your roof will take, so there are no surprises. Most homeowners stay in the house during the work.",
+    },
+    {
+      q: 'What metal and Brava roofing styles work best in Midlothian?',
+      a: "Whatever your Midlothian home's architecture, there is a metal or Brava profile to suit it. Stone-coated steel and standing seam are both popular in Midlothian. Brava gives a premium alternative to metal, with slate, cedar shake, and Spanish barrel tile profiles. Ask for samples of metal and Brava during your inspection and judge them against your own roofline.",
+    },
+    {
+      q: "Will a metal roof make my Midlothian home look like a barn?",
+      a: "Stone-coated steel offers shingle, shake, and tile looks, and standing seam has a clean line made for homes. Our Free Roof Visualizer shows your own Midlothian house with the roof.",
+    },
   ],
 }

@@ -27,13 +27,35 @@ export const ANNA_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Anna, TX?',
-      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract, plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Anna homeowners will never need to use.',
+      a: "Your Anna roof comes with our 10-year workmanship warranty, put in writing before work begins. Panels and finish are covered separately by the manufacturer's material warranty. A lifespan of 50 years or more means these warranties offer peace of mind more than repairs. Your project lead explains what each covers on installation day.",
     },
-    { q: 'How much does a metal roof cost in Anna, TX?', a: `Metal roofing in Anna is priced by the square foot, and your total depends on roof size, pitch, and material. We provide a satellite-based ballpark range from your roof\'s measured size, not a guess from the driveway, refined into a firm number after your free on-site assessment. By material, that typically breaks down to ${cityFaqMaterialRates()}. See our pricing table above for the full breakdown, or use our free visualizer for an exact number for your roof.` },
-    { q: 'Is metal roofing common on new construction in Anna?', a: 'Metal roofing is increasingly specified on new construction throughout Anna\'s growing communities. Many builders in the area now offer standing seam and stone-coated steel given the area\'s storm exposure and long-term cost advantages for buyers.' },
-    { q: 'Does a metal roof qualify for an insurance discount in Collin County?', a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. Anna homeowners in Collin County\'s active storm corridor typically see meaningful annual premium reductions after upgrading.' },
-    { q: 'Will my Anna HOA approve a metal roof?', a: 'Most Anna communities permit metal roofing in approved profiles and neutral color palettes. We provide complete HOA documentation support at no additional cost.' },
-    { q: 'How long does metal roof installation take in Anna?', a: 'Most Anna residential installations are completed in one to three days. We provide a specific timeline for your home during the estimate process.' },
-    { q: 'What metal and Brava roofing styles work best in Anna?', a: 'Stone-coated steel and standing seam are both popular choices in Anna\'s newer developments. Stone-coated steel in shingle profiles suits traditional new construction throughout the area. Standing seam is preferred for more contemporary homes. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.' },
+    {
+      q: 'How much does a metal roof cost in Anna, TX?',
+      a: "The cost of a metal roof in Anna comes down to roof size, pitch, and the material you choose, priced per square foot. Our first number comes from satellite measurements of your actual roof, and the firm price follows your free on-site assessment. The pricing table on this page covers all the systems, and the free visualizer can estimate your exact roof. Our assessment checks the decking and details that affect the price.",
+    },
+    {
+      q: 'Is metal roofing common on new construction in Anna?',
+      a: "Yes, metal roofing is showing up more often on new homes in Anna. Storm exposure in Collin County and long-term upkeep are common reasons buyers ask for it.",
+    },
+    {
+      q: 'Does a metal roof qualify for an insurance discount in Collin County?',
+      a: "Often it does, because most Texas insurers discount Class 4 roofs and metal systems carry that rating. Anna homeowners often start with the insurance question after a hail season. We provide product documentation for your agent, and your insurance carrier sets the final discount.",
+    },
+    {
+      q: 'Will my Anna HOA approve a metal roof?',
+      a: "Approval depends on your Anna community's guidelines, and many HOAs accept metal and Brava profiles in approved colors. Neighborhoods like Village Park and Avery Pointe may follow separate architectural guidelines. We handle the submission with samples, color chips, and manufacturer spec sheets, at no extra charge.",
+    },
+    {
+      q: 'How long does metal roof installation take in Anna?',
+      a: "A typical Anna roof takes one to three days to install, with larger or more complex roofs at the longer end. Your estimate includes a timeline specific to your property before any work begins. Most homeowners stay in the house during the work.",
+    },
+    {
+      q: 'What metal and Brava roofing styles work best in Anna?',
+      a: "The right profile for a Anna home depends on its architecture, and we install steel and Brava options to match. Stone-coated steel and standing seam are both popular choices in Anna's newer developments. For the look of natural slate, shake, or tile, Brava offers three profiles in a durable composite. The Free Roof Visualizer lets you preview each option on your actual home before you decide.",
+    },
+    {
+      q: "Will a metal roof make my Anna home look like a barn?",
+      a: "Residential profiles like standing seam and stone-coated steel are designed for homes, not barns. We can show your Anna house in the Free Roof Visualizer before you decide.",
+    },
   ],
 }

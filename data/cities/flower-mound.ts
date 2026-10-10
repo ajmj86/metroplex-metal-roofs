@@ -30,13 +30,35 @@ export const FLOWER_MOUND_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Flower Mound, TX?',
-      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract, plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Flower Mound homeowners will never need to use.',
+      a: "Workmanship is covered for 10 years on every Flower Mound roof, and the terms are spelled out in your contract. You also receive the manufacturer's material warranty for the panels and finish. We are glad to go over the exact terms with Denton County homeowners during the free consultation. Your project lead explains what each covers on installation day.",
     },
-    { q: 'How much does a metal roof cost in Flower Mound, TX?', a: `Metal roofing in Flower Mound is priced by the square foot, and your total depends on roof size, pitch, and material. We provide a satellite-based ballpark range from your roof\'s measured size, not a guess from the driveway, refined into a firm number after your free on-site assessment. By material, that typically breaks down to ${cityFaqMaterialRates()}. See our pricing table above for the full breakdown, or use our free visualizer for an exact number for your roof.` },
-    { q: 'Does a metal roof qualify for an insurance discount in Denton County?', a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. Flower Mound homeowners in Denton County\'s storm corridor typically see meaningful annual premium reductions after upgrading to a Class 4 rated roof.' },
-    { q: 'Will my Flower Mound HOA approve a metal roof?', a: 'Most Flower Mound HOAs permit metal roofing in approved profiles and color palettes. We provide full documentation support for your HOA submission including material samples and manufacturer spec sheets at no additional cost.' },
-    { q: 'How long does metal roof installation take in Flower Mound?', a: 'Most Flower Mound residential installations are completed in one to three days depending on roof size and material. We provide a specific installation timeline for your home as part of the estimate process.' },
-    { q: 'How does metal roofing handle Denton County hail storms?', a: 'Standing seam and stone-coated steel carry a Class 4 impact resistance rating, the highest available. This is the rating required by most Texas carriers for maximum hail discount eligibility and is especially relevant in Denton County\'s active hail corridor.' },
-    { q: 'What metal and Brava roofing styles are popular in Flower Mound?', a: 'Standing seam and stone-coated steel are both widely chosen in Flower Mound. Stone-coated steel in shingle or shake profiles suits the traditional architecture common throughout the city\'s established neighborhoods. Standing seam is preferred for more contemporary homes and rooflines. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.' },
+    {
+      q: 'How much does a metal roof cost in Flower Mound, TX?',
+      a: "Roof size, pitch, and material set the price of a metal roof in Flower Mound, which is figured per square foot. Expect a ballpark based on satellite measurements first, followed by a firm figure after the free in-person assessment. Use the pricing table above to compare systems, then put your address into the free visualizer for your own number. Our assessment checks the decking and details that affect the price.",
+    },
+    {
+      q: 'Does a metal roof qualify for an insurance discount in Denton County?',
+      a: "A Class 4 impact rating is what carriers look for, and most Texas insurers discount roofs that have it. Many Flower Mound owners compare quotes from their carrier once the roof material is chosen. Savings vary from one carrier to the next, so ask your agent what applies to your policy.",
+    },
+    {
+      q: 'Will my Flower Mound HOA approve a metal roof?',
+      a: "Some Flower Mound neighborhoods have no HOA, and where one exists, many approve metal and Brava in approved profiles and colors. Reviews in The Chaparral and Bridlewood follow each association's own process. We can supply everything the committee asks for, from color chips to manufacturer specifications, at no additional cost.",
+    },
+    {
+      q: 'How long does metal roof installation take in Flower Mound?',
+      a: "For a typical Flower Mound home the work takes about one to three days, depending on how big and complex the roof is. A schedule tailored to your home comes with the proposal, well before installation day. Most homeowners stay in the house during the work.",
+    },
+    {
+      q: 'How does metal roofing handle Denton County hail storms?',
+      a: "Both steel systems we install carry a Class 4 impact rating, the highest level available. Denton County storms make impact rating a practical question for Flower Mound homes. The right product depends on your roofline and your comfort with the look.",
+    },
+    {
+      q: 'What metal and Brava roofing styles are popular in Flower Mound?',
+      a: "Whatever your Flower Mound home's architecture, there is a metal or Brava profile to suit it. Standing seam and stone-coated steel are both widely chosen in Flower Mound. Stone-coated steel in shingle or shake profiles suits the traditional architecture common throughout the city's established neighborhoods. Brava synthetic slate, shake, and Spanish barrel tile add a natural-material look for owners who prefer it. We are happy to compare options side by side during your free assessment.",
+    },
+    {
+      q: "Is a metal or Brava roof worth the cost over asphalt in Flower Mound?",
+      a: "It depends on your plans. Long life, low maintenance, and the Class 4 rating are the reasons homeowners in Denton County commonly cite for choosing metal or Brava over asphalt. If you expect to stay a long time, those reasons count for more.",
+    },
   ],
 }

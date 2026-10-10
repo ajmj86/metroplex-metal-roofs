@@ -43,19 +43,27 @@ const FAQS = [
   },
   {
     q: 'Does standing seam qualify for insurance discounts in DFW?',
-    a: 'Yes. Standing seam carries a Class 4 impact resistance rating, the highest available, which qualifies for meaningful premium discounts from most Texas carriers. In hail-prone North Texas counties, many homeowners see 15–35% reductions on their wind/hail premium after switching, depending on carrier and policy.',
+    a: 'Yes, standing seam is available with a Class 4 impact rating, and most Texas insurers discount Class 4 roofs. Savings vary by carrier and policy, so check with your insurance carrier before you decide. We can supply product documentation for your agent.',
   },
   {
     q: 'Will my HOA approve a standing seam metal roof?',
     a: 'Most DFW-area HOAs approve standing seam in neutral or earth-tone colors. Charcoal gray, bronze, and true black are the most commonly approved. We provide material samples, color chips, and manufacturer spec sheets to support your HOA submission at no additional cost.',
   },
   {
-    q: 'What colors does standing seam metal roofing come in?',
-    a: `Our standing seam systems come in seven factory finishes: ${STANDING_SEAM_COLOR_NAMES.join(', ')}. Every finish carries the same panel warranty and Class 4 rating, color is purely an aesthetic choice, not a durability tradeoff.`,
+    q: 'How much does standing seam metal roofing cost per square foot in DFW?',
+    a: 'Standard standing seam runs about $12–$18 per square foot installed in the Dallas–Fort Worth market, with premium 24-gauge panels at $15–$22+. Roof size, pitch, and complexity set the final figure, and a free estimate gives you a number for your own house.',
   },
   {
-    q: 'How much does standing seam metal roofing cost per square foot in DFW?',
-    a: 'Standard standing seam runs about $12–$18 per square foot installed in the Dallas–Fort Worth market; premium 24-gauge standing seam runs $15–$22+ per square foot. Your exact number depends on roof size, pitch, and complexity. Request a free estimate for your specific home.',
+    q: 'Will hail dent a metal roof?',
+    a: 'Standing seam is available with a Class 4 impact rating, but very large hail can still leave cosmetic marks on some metal finishes. Smooth panels show marks more readily than textured stone-coated steel, so finish and profile matter. If that concerns you, ask about textured options during your inspection.',
+  },
+  {
+    q: 'Does a standing seam roof tick or pop as it heats and cools?',
+    a: 'Metal expands and contracts with temperature, and proper fastening and a well-designed panel system keep that movement controlled. We do not promise silence, but a careful installation keeps noise minimal. Ask us what to expect for your roof.',
+  },
+  {
+    q: 'What is oil canning on standing seam, and should I worry?',
+    a: 'Oil canning is a slight visible waviness that can appear on flat metal panels. It is cosmetic and does not affect how the roof performs. Panel choice and installation help reduce it, though we cannot promise it will not show in certain light.',
   },
 ]
 

@@ -32,7 +32,7 @@ export const BLUFFVIEW_DALLAS_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Bluffview?',
-      a: "Every roof we install carries a 10-year workmanship warranty written into your contract, plus the manufacturer's material warranty on the panels and finish. With a 50+ year system lifespan, that is coverage most Bluffview homeowners will never need to use.",
+      a: "On a Bluffview job, our 10-year workmanship warranty is part of the signed agreement. A second layer of protection comes from the manufacturer, whose material warranty covers the panels and finish. Since the roof itself is built to last 50 years or more, claims are uncommon. If you ever need to make a claim, we help you through the process.",
     },
     {
       q: 'Is metal a good choice for a home under mature trees?',
@@ -40,24 +40,32 @@ export const BLUFFVIEW_DALLAS_DATA: CityData = {
     },
     {
       q: 'What roof style fits a 1960s ranch or traditional home in Bluffview?',
-      a: "Brava synthetic shake or slate, and stone-coated steel in a shingle or shake profile, both suit ranch and traditional homes. Standing seam is a clean modern choice, especially on rebuilds and remodels. We bring samples so you can compare colors against your brick and trim.",
+      a: "Style depends on the house, and for Bluffview we can match it with steel or with a Brava slate, shake, or tile profile. Brava synthetic shake or slate, and stone-coated steel in a shingle or shake profile, both suit ranch and traditional homes. Standing seam is a clean modern choice, especially on rebuilds and remodels. Brava's composite slate, shake, and barrel tile reproduce natural materials with natural color variation. Ask for samples of metal and Brava during your inspection and judge them against your own roofline.",
     },
     {
       q: 'How much does a metal or Brava synthetic slate roof cost in Bluffview?',
-      a: `Cost depends on roof size, pitch, and complexity, and most Bluffview homes fall in a mid-size range. By material, that runs about ${FAQ_RATE.stoneCoated()}/sq ft for stone-coated steel, ${FAQ_RATE.standingSeam()}/sq ft for standing seam, and ${FAQ_RATE.slate()}/sq ft for Brava synthetic slate. We give a satellite-based range first and a firm number after your free on-site assessment.`,
+      a: "A Bluffview metal or Brava roof is quoted per square foot, with the final figure driven by roof size, pitch, and material. Cost depends on roof size, pitch, and complexity, and most Bluffview homes fall in a mid-size range. We measure your roof by satellite to give a ballpark, then finalize a firm price once we have seen it during a free assessment. See the pricing table above for every material, or run our free visualizer for a figure specific to your house. There is no obligation at either step.",
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Bluffview?',
-      a: "Most Texas insurers discount Class 4 impact rated roofs, and the savings depend on your carrier and policy. Ask your agent for a quote once you know which material you want. We can provide the product documentation your carrier asks for.",
+      a: "Yes, a Class 4 metal roof is a common way Bluffview homeowners earn a premium discount, since most Texas insurers offer one. Dallas County homeowners commonly review their coverage after a storm, and a new roof is a natural time. Every policy is different, so confirm the details with your insurance carrier before you decide.",
     },
     {
       q: 'Do I need a permit or HOA approval for a new roof in Bluffview?',
-      a: "Requirements vary by street and project, and we handle the submission either way. We confirm what applies to your address and prepare samples, color chips, and spec sheets. Most installs take one to three days once approvals are in place.",
+      a: "HOA rules in Bluffview differ by neighborhood, and many associations permit metal or Brava in neutral, approved colors. Requirements vary by street and project, and we handle the submission either way. We confirm what applies to your address and prepare samples, color chips, and spec sheets. Most installs take one to three days once approvals are in place. Our team assembles the paperwork for your submission, though the final decision is your association's.",
     },
     {
       q: 'How does Brava compare to DaVinci roofing?',
-      a: "Brava and DaVinci are both premium composite roofs that give a home the look of slate or shake, and both publish a Class 4 impact rating. Brava also offers Spanish Barrel Tile, and we install Brava in three profiles: slate, cedar shake, and Spanish barrel tile. For Bluffview homeowners weighing the two, the side-by-side lists the published specifications from each manufacturer.",
+      a: "Brava and DaVinci each publish a Class 4 impact rating and give a composite version of slate or shake. For Bluffview's tree-lined streets, we install Brava in slate, cedar shake, and Spanish barrel tile profiles. The side-by-side lists each manufacturer's published specifications.",
       link: { href: '/brava-vs-davinci-roofing', text: 'See the Brava and DaVinci side-by-side →' },
+    },
+    {
+      q: "Is Brava fire rated for Bluffview homes?",
+      a: "For a Bluffview home, Brava can be specified with a Class A fire rating, provided it goes on as a complete Brava roof system. What applies depends on the assembly and how it is installed, which we review together at the inspection.",
+    },
+    {
+      q: "Is a metal roof louder than shingles in a Bluffview rainstorm?",
+      a: "In Bluffview, rain on a metal roof over a solid deck with underlayment and attic insulation sounds about the same as rain on shingles. The loud reputation comes from barns and sheds with no deck beneath the metal. If noise is a concern, ask us about the layers under your roof during the inspection.",
     },
   ],
 }

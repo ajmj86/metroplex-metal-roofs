@@ -45,7 +45,7 @@ const FAQS = [
   },
   {
     q: 'Does stone-coated steel qualify for insurance discounts in DFW?',
-    a: 'Yes. Stone-coated steel carries a Class 4 impact resistance rating, the highest available, which qualifies for meaningful premium discounts from most Texas carriers. In hail-prone North Texas counties, many homeowners see 15–35% reductions on their wind/hail premium, depending on carrier and policy.',
+    a: 'Insurance carriers set the discount, but most Texas insurers discount Class 4 roofs, and stone-coated steel is available with that rating. Your agent can confirm the details, and we provide product information whenever you need it.',
   },
   {
     q: 'How long does a stone-coated steel roof last?',
@@ -53,7 +53,15 @@ const FAQS = [
   },
   {
     q: 'How much does stone-coated steel roofing cost per square foot in DFW?',
-    a: 'Stone-coated steel runs about $10–$16 per square foot installed in the Dallas–Fort Worth market. Your exact number depends on roof size, pitch, and complexity, request a free estimate for your specific home.',
+    a: 'Installed stone-coated steel runs about $10–$16 per square foot in the Dallas–Fort Worth market, depending on roof size, pitch, and complexity. A free estimate turns that range into a figure for your home.',
+  },
+  {
+    q: 'Will hail dent stone-coated steel?',
+    a: 'Stone-coated steel is available with a Class 4 impact rating, and its textured stone surface hides marks better than smooth panels. Very large hail can still leave cosmetic marks on some metal finishes, so we explain what to expect. Ask to see samples of the textured finish during your inspection.',
+  },
+  {
+    q: 'Will a metal roof make my home look like a barn?',
+    a: 'Residential profiles like stone-coated steel and standing seam are designed for homes, with shingle, shake, and tile looks that suit traditional neighborhoods. A barn look comes from agricultural panels, not these systems. The Free Roof Visualizer lets you see the roof on your own home before you decide.',
   },
 ]
 

@@ -37,7 +37,7 @@ export const OAK_CLIFF_DALLAS_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Oak Cliff?',
-      a: "Every roof we install carries a 10-year workmanship warranty written into your contract, plus the manufacturer's material warranty on the panels and finish. With a 50+ year system lifespan, that is coverage most Oak Cliff homeowners will never need to use.",
+      a: "We back every Oak Cliff installation with a 10-year workmanship warranty that sits in your contract, not on a handshake. You also receive the manufacturer's material warranty for the panels and finish. Since the roof itself is built to last 50 years or more, claims are uncommon. Copies of both are yours to keep.",
     },
     {
       q: 'Will a Brava or metal roof suit an older Oak Cliff bungalow?',
@@ -49,11 +49,11 @@ export const OAK_CLIFF_DALLAS_DATA: CityData = {
     },
     {
       q: 'How much does a metal or Brava synthetic slate roof cost in Oak Cliff?',
-      a: `Cost depends on roof size, pitch, and complexity, and Oak Cliff bungalows often have smaller roofs than newer suburban homes. By material, that runs about ${FAQ_RATE.stoneCoated()}/sq ft for stone-coated steel, ${FAQ_RATE.standingSeam()}/sq ft for standing seam, and ${FAQ_RATE.slate()}/sq ft for Brava synthetic slate. We give a satellite-based range first and a firm number after your free on-site assessment.`,
+      a: "Pricing for a Oak Cliff metal or Brava roof is per square foot, shaped mostly by how large and steep the roof is and which system you select. Cost depends on roof size, pitch, and complexity, and Oak Cliff bungalows often have smaller roofs than newer suburban homes. Expect a ballpark based on satellite measurements first, followed by a firm figure after the free in-person assessment. See the pricing table above for every material, or run our free visualizer for a figure specific to your house. Pitch, tear-off, and deck condition also factor into the final number.",
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Oak Cliff?',
-      a: "Most Texas insurers discount Class 4 impact rated roofs, and the savings depend on your carrier and policy. Ask your agent for a quote once you know which material you want.",
+      a: "In many cases, yes. Metal roofing with a Class 4 impact rating is the type of roof most Texas insurers discount. Many Oak Cliff owners compare quotes from their carrier once the roof material is chosen. Every policy is different, so confirm the details with your insurance carrier before you decide.",
     },
     {
       q: 'Can you check an older Oak Cliff roof structure before installing?',
@@ -61,8 +61,16 @@ export const OAK_CLIFF_DALLAS_DATA: CityData = {
     },
     {
       q: 'How does Brava compare to DaVinci roofing?',
-      a: "Brava and DaVinci are both premium composite roofs that give a home the look of slate or shake, and both publish a Class 4 impact rating. Brava also offers Spanish Barrel Tile, and we install Brava in three profiles: slate, cedar shake, and Spanish barrel tile. For Oak Cliff homeowners weighing the two, the side-by-side lists the published specifications from each manufacturer.",
+      a: "Both manufacturers make composite slate and shake with a published Class 4 impact rating. Oak Cliff's Tudor and Spanish revival homes are one reason we install Brava, which adds a Spanish barrel tile profile. See the comparison for each maker's published specifications.",
       link: { href: '/brava-vs-davinci-roofing', text: 'See the Brava and DaVinci side-by-side →' },
+    },
+    {
+      q: "How long does a Brava roof last in Oak Cliff?",
+      a: "Your Oak Cliff roof is backed by a 50-year limited warranty from Brava, and installation quality plays a large part in how long any roof performs. We follow Brava's installation guide and can walk you through the paperwork at the consultation.",
+    },
+    {
+      q: "Will a metal roof make my Oak Cliff home hotter?",
+      a: "Not in itself. Lighter and reflective finishes reduce heat gain, so the color you choose matters more than the metal. Our team can show finish options suited to Oak Cliff homes.",
     },
   ],
 }

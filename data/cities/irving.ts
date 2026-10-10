@@ -43,31 +43,35 @@ export const IRVING_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Irving, TX?',
-      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract, plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Irving homeowners will never need to use.',
+      a: "The paperwork for a Irving roof starts with a 10-year workmanship warranty, written into the contract. Panels and finish are covered separately by the manufacturer's material warranty. Paired with a system lifespan of 50 years or more, it is coverage most Irving homeowners rarely have to use. We can send the warranty documents ahead of time if you would like to read them.",
     },
     {
       q: 'How much does a metal roof cost in Irving?',
-      a: `Metal roofing in Irving is priced by the square foot, and your total depends on roof size, pitch, and material. Las Colinas and Valley Ranch homes tend to run toward a higher overall cost given typical roof size. We provide a satellite-based ballpark range from your roof\'s measured size, not a guess from the driveway, refined into a firm number after your free on-site assessment. By material, that typically breaks down to ${cityFaqMaterialRates()}. See our pricing table above for the full breakdown, or use our free visualizer for an exact number for your roof.`,
+      a: "Metal roofs in Irving are priced per square foot, so the biggest factors are how much roof you have, how steep it is, and the material. Las Colinas and Valley Ranch homes tend to run toward a higher overall cost given typical roof size. Our first number comes from satellite measurements of your actual roof, and the firm price follows your free on-site assessment. Our pricing table above has the full breakdown, and the free visualizer shows a number for your own roof. Details like roof valleys and penetrations can shift the total.",
     },
     {
       q: 'Will my Las Colinas or Valley Ranch HOA approve a metal roof?',
-      a: 'Both communities already have established architectural review processes and metal roofing in approved profiles and colors is common throughout each. We provide the full documentation package: material samples, color chips, and manufacturer spec sheets, for your HOA submission at no additional cost.',
+      a: "Las Colinas and Valley Ranch both run established architectural reviews, and metal in approved profiles and colors is common in each. We prepare the submission for you, and your association makes the final call. Some Irving neighborhoods have no HOA at all.",
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Irving?',
-      a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. Irving sits in the same Dallas County hail corridor as the rest of North Texas, and homeowners typically see a meaningful reduction in their wind/hail premium after upgrading.',
+      a: "It can. Class 4 impact-rated metal is discounted by most Texas insurers, which helps offset the cost of a new roof. Irving homeowners often start with the insurance question after a hail season. The size of the discount depends on your carrier and policy, so check with your insurance carrier.",
     },
     {
       q: 'How long does metal roof installation take in Irving?',
-      a: 'Most residential installations in Irving are completed in one to three days. Communities with HOA staging or access requirements, like parts of Las Colinas, may need a bit more coordination, which we handle as part of scheduling.',
+      a: "For a typical Irving home the work takes about one to three days, depending on how big and complex the roof is. Communities with HOA staging or access requirements, like parts of Las Colinas, may need a bit more coordination, which we handle as part of scheduling. During the estimate we map out the days your roof will take, so there are no surprises. Your project lead checks in each day so you know where things stand.",
     },
     {
       q: 'What metal and Brava roofing style works best for Irving homes?',
-      a: 'Standing seam is the most common choice in Las Colinas and Valley Ranch given the more contemporary architecture found there, while stone-coated steel suits the traditional ranch-style homes in the Heritage District and Northgate Heights. Both carry Class 4 hail ratings and 50-plus year lifespans. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.',
+      a: "Whatever your Irving home's architecture, there is a metal or Brava profile to suit it. Standing seam is the most common choice in Las Colinas and Valley Ranch given the more contemporary architecture found there, while stone-coated steel suits the traditional ranch-style homes in the Heritage District and Northgate Heights. For the look of natural slate, shake, or tile, Brava offers three profiles in a durable composite. Both steel systems carry a Class 4 impact rating, and we bring samples so you can compare them on your own home.",
     },
     {
       q: 'Is metal roofing common on Irving homes near Lake Carolyn and the canals?',
       a: 'Yes, properties near Lake Carolyn and the Las Colinas canal system have increasingly moved to standing seam metal roofing, both for the clean architectural lines and for the added storm protection given the area\'s open exposure.',
+    },
+    {
+      q: "Will hail dent a metal roof in Dallas County?",
+      a: "A Class 4 impact rating is available on metal, though very large hail can leave cosmetic marks on certain finishes. Smooth panels show marks more readily than textured stone-coated steel. Hail seasons in Irving make finish choice a fair question to bring to your inspection.",
     },
   ],
 }

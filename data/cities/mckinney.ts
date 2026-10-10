@@ -30,13 +30,35 @@ export const MCKINNEY_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in McKinney, TX?',
-      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract, plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most McKinney homeowners will never need to use.',
+      a: "Workmanship is covered for 10 years on every McKinney roof, and the terms are spelled out in your contract. Panels and finish are covered separately by the manufacturer's material warranty. Both are explained in plain language during your estimate, so nothing comes as a surprise later. Copies of both are yours to keep.",
     },
-    { q: 'How much does a metal roof cost in McKinney, TX?', a: `Metal roofing in McKinney is priced by the square foot, and your total depends on roof size, pitch, and material. Most homes in McKinney\'s established neighborhoods fall in the 25 to 40 square range. We provide a satellite-based ballpark range from your roof\'s measured size, not a guess from the driveway, refined into a firm number after your free on-site assessment. By material, that typically breaks down to ${cityFaqMaterialRates()}. See our pricing table above for the full breakdown, or use our free visualizer for an exact number for your roof.` },
-    { q: 'Is metal roofing common in McKinney master-planned communities?', a: 'Yes. Metal roofing has become increasingly standard in McKinney\'s newer master-planned developments including Craig Ranch and Trinity Falls. Existing homeowners throughout the city have been upgrading at a significant rate, particularly following hail seasons that exposed the limitations of asphalt in Collin County\'s storm corridor.' },
-    { q: 'Does a metal roof qualify for an insurance discount in McKinney?', a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. For McKinney homeowners with median home values approaching $500,000, the 2% wind/hail deductible means a single storm event can cost $10,000 or more out of pocket on asphalt. Metal eliminates that exposure.' },
-    { q: 'Will my McKinney HOA approve a metal roof?', a: 'Most McKinney HOAs permit metal roofing in approved profiles and color palettes. Craig Ranch, Trinity Falls, and Stonebridge Ranch have all approved metal roofing installations for homeowners who submitted proper documentation. We handle the full documentation package at no additional cost.' },
-    { q: 'How long does metal roof installation take in McKinney?', a: 'Most residential metal roofing installations in McKinney are completed in one to three days. The timeline depends on roof size, pitch complexity, and material selection. We provide a specific installation timeline for your home as part of the estimate process.' },
-    { q: 'What is the difference between standing seam, stone-coated steel, and Brava for McKinney homes?', a: 'Standing seam features clean vertical lines with hidden fasteners, well-suited to contemporary architecture. Stone-coated steel replicates the look of traditional shingles in steel form, popular in neighborhoods with traditional HOA aesthetic requirements. Both carry Class 4 hail ratings and 50-plus year lifespans. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.' },
+    {
+      q: 'How much does a metal roof cost in McKinney, TX?',
+      a: "Roof size, pitch, and material set the price of a metal roof in McKinney, which is figured per square foot. Most homes in McKinney\\'s established neighborhoods fall in the 25 to 40 square range. Our first number comes from satellite measurements of your actual roof, and the firm price follows your free on-site assessment. Compare systems in the pricing table above, and let the free visualizer work out a number for your home. Pitch, tear-off, and deck condition also factor into the final number.",
+    },
+    {
+      q: 'Is metal roofing common in McKinney master-planned communities?',
+      a: 'Yes. Metal roofing has become increasingly standard in McKinney\'s newer master-planned developments including Craig Ranch and Trinity Falls. Existing homeowners throughout the city have been upgrading at a significant rate, particularly following hail seasons that exposed the limitations of asphalt in Collin County\'s storm corridor.',
+    },
+    {
+      q: 'Does a metal roof qualify for an insurance discount in McKinney?',
+      a: "Yes, most Texas insurers discount Class 4 roofs, and our metal systems carry that rating. McKinney sits in Collin County's storm corridor, and a 2% wind/hail deductible can make a single claim costly, so a lower premium helps. Your carrier sets the discount, so check with them.",
+    },
+    {
+      q: 'Will my McKinney HOA approve a metal roof?',
+      a: "Whether your McKinney HOA approves depends on its architectural guidelines, and many accept metal and Brava in approved profiles and colors. We handle the full documentation package at no additional cost. We handle the submission with samples, color chips, and manufacturer spec sheets, at no extra charge.",
+    },
+    {
+      q: 'How long does metal roof installation take in McKinney?',
+      a: "A typical McKinney roof takes one to three days to install, with larger or more complex roofs at the longer end. We confirm the timeline for your roof up front, so you know what to expect. Tear-off, underlayment, and the new roof are typically done in sequence.",
+    },
+    {
+      q: 'What is the difference between standing seam, stone-coated steel, and Brava for McKinney homes?',
+      a: 'Standing seam features clean vertical lines with hidden fasteners, well-suited to contemporary architecture. Stone-coated steel replicates the look of traditional shingles in steel form, popular in neighborhoods with traditional HOA aesthetic requirements. Both carry Class 4 hail ratings and 50-plus year lifespans. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.',
+    },
+    {
+      q: "What is oil canning, and should McKinney homeowners worry about it?",
+      a: "On flat panels you may notice a gentle waviness called oil canning. It is cosmetic and does not affect performance. McKinney homeowners can ask us about panel styles that help reduce it.",
+    },
   ],
 }

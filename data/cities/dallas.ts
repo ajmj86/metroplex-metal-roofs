@@ -56,31 +56,35 @@ export const DALLAS_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Dallas, TX?',
-      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract, plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Dallas homeowners will never need to use.',
+      a: "Each roof we build in Dallas carries a 10-year workmanship warranty covering how it was installed. A second layer of protection comes from the manufacturer, whose material warranty covers the panels and finish. Paired with a system lifespan of 50 years or more, it is coverage most Dallas homeowners rarely have to use. Keep the paperwork with your home records for future reference.",
     },
     {
       q: 'How much does a metal roof cost in Dallas?',
-      a: `Metal roofing in Dallas is priced by the square foot, and your total depends on roof size, pitch, and material. Close-in bungalows in neighborhoods like Oak Cliff and Lakewood tend to have smaller roofs and a lower overall cost, while larger Park Cities-adjacent homes run higher. We provide a satellite-based ballpark range from your roof\'s measured size, not a guess from the driveway, refined into a firm number after your free on-site assessment. By material, that typically breaks down to ${cityFaqMaterialRates()}. See our pricing table above for the full breakdown, or use our free visualizer for an exact number for your roof.`,
+      a: "What you pay for metal in Dallas depends on the size and pitch of the roof and the material, and it is quoted by the square foot. Close-in bungalows in neighborhoods like Oak Cliff and Lakewood tend to have smaller roofs and a lower overall cost, while larger Park Cities-adjacent homes run higher. We measure your roof by satellite to give a ballpark, then finalize a firm price once we have seen it during a free assessment. Our pricing table above has the full breakdown, and the free visualizer shows a number for your own roof. Complex rooflines with many hips and valleys generally cost more than simple gables.",
     },
     {
       q: 'Will a metal roof look right on an older Dallas home?',
-      a: 'Yes. Standing seam and stone-coated steel are both installed regularly on Craftsman bungalows and prairie-style homes throughout Lakewood, Oak Cliff, and White Rock. Stone-coated steel in particular replicates the look of traditional shingle or shake roofing, which is why it\'s a common choice in historic-adjacent neighborhoods that want the upgrade without changing the home\'s character.',
+      a: "We offer standing seam, stone-coated steel, and Brava in Dallas, each suited to different rooflines. Standing seam and stone-coated steel are both installed regularly on Craftsman bungalows and prairie-style homes throughout Lakewood, Oak Cliff, and White Rock. Stone-coated steel in particular replicates the look of traditional shingle or shake roofing, which is why it's a common choice in historic-adjacent neighborhoods that want the upgrade without changing the home's character. Brava's composite slate, shake, and barrel tile reproduce natural materials with natural color variation. Both steel systems carry a Class 4 impact rating, and we bring samples so you can compare them on your own home.",
     },
     {
       q: 'Does my Dallas home need HOA or conservation district approval for a metal roof?',
-      a: 'It depends on the neighborhood. HOA-governed communities require standard architectural review, while historic conservation districts like Junius Heights and the M Streets have their own City of Dallas review process for exterior changes. We provide full documentation: material samples, color chips, and manufacturer spec sheets, to support either process at no additional cost.',
+      a: "Whether your Dallas HOA approves depends on its architectural guidelines, and many accept metal and Brava in approved profiles and colors. It depends on the neighborhood. HOA-governed communities require standard architectural review, while historic conservation districts like Junius Heights and the M Streets have their own City of Dallas review process for exterior changes. We prepare material samples, color chips, and spec sheets for your submission at no additional cost.",
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Dallas?',
-      a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. Dallas County\'s position in the DFW hail corridor means most homeowners see a meaningful reduction in their wind/hail premium after upgrading from asphalt.',
+      a: "Most Texas insurers discount Class 4 roofs, so upgrading to a Class 4 metal roof in Dallas can reduce what you pay. Dallas County's position in the DFW hail corridor means most homeowners see a meaningful reduction in their wind/hail premium after upgrading from asphalt. The size of the discount depends on your carrier and policy, so check with your insurance carrier.",
     },
     {
       q: 'How long does metal roof installation take in Dallas?',
-      a: 'Most residential installations in Dallas are completed in one to three days, depending on roof size and material. Denser neighborhoods with tighter lots or shared driveways may need a bit more coordination on staging, which we handle as part of scheduling.',
+      a: "Expect one to three days on site for most homes in Dallas, based on the size and layout of the roof. Denser neighborhoods with tighter lots or shared driveways may need a bit more coordination on staging, which we handle as part of scheduling. You will have a clear schedule for your own home as part of the estimate. Tear-off, underlayment, and the new roof are typically done in sequence.",
     },
     {
       q: 'What metal and Brava roofing style works best for Dallas homes?',
-      a: 'It depends on the neighborhood and architecture. Stone-coated steel is the most common choice for traditional bungalows in Lakewood and Oak Cliff, while standing seam is popular on the more contemporary builds found in Uptown-adjacent and Knox-Henderson properties. Both carry Class 4 hail ratings and 50-plus year lifespans. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.',
+      a: "Style depends on the house, and for Dallas we can match it with steel or with a Brava slate, shake, or tile profile. It depends on the neighborhood and architecture. Stone-coated steel is the most common choice for traditional bungalows in Lakewood and Oak Cliff, while standing seam is popular on the more contemporary builds found in Uptown-adjacent and Knox-Henderson properties. Homeowners drawn to natural slate, shake, or tile can compare Brava's three profiles with the steel options. The Free Roof Visualizer lets you preview each option on your actual home before you decide.",
+    },
+    {
+      q: "Is a metal or Brava roof worth the cost over asphalt in Dallas?",
+      a: "Whether metal or Brava pays off at a Dallas home turns on how long you plan to stay. People pick them for long life, low upkeep, and Class 4 impact resistance. We can talk through your plans with no obligation.",
     },
   ],
 }

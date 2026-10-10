@@ -51,23 +51,23 @@ export const FRISCO_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Frisco, TX?',
-      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract, plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Frisco homeowners will never need to use.',
+      a: "A 10-year workmanship warranty from Metroplex is written into every Frisco contract. On top of that, the product maker stands behind its panels and coatings with a material warranty. A lifespan of 50 years or more means these warranties offer peace of mind more than repairs. Keep the paperwork with your home records for future reference.",
     },
     {
       q: 'How much does a metal roof cost in Frisco, TX?',
-      a: `Metal roofing in Frisco is priced by the square foot, and your total depends on roof size, pitch, material selection, and complexity. Most homes in Frisco\'s master-planned communities fall in the 25 to 40 square range. We provide satellite-based estimates built from your roof\'s satellite-measured size, no site visit required to get a ballpark range, which we refine into a firm number after your free on-site assessment. By material, that typically breaks down to ${cityFaqMaterialRates()}. See our pricing table above for the full breakdown, or use our free visualizer for an exact number for your roof.`,
+      a: "Metal roofing in Frisco is priced by the square foot, and your total depends on roof size, pitch, and material. You get a ballpark from satellite imagery of your own roof, not a guess from the curb, and a firm number after we inspect it in person. The pricing table on this page covers all the systems, and the free visualizer can estimate your exact roof. Complex rooflines with many hips and valleys generally cost more than simple gables.",
     },
     {
       q: 'Will my Frisco HOA approve a metal roof?',
-      a: 'Most Frisco HOAs approve stone-coated steel and standing seam metal roofing in pre-approved color palettes. Communities including Phillips Creek Ranch, Newman Village, and Starwood have approved metal roofing for homeowners who submitted the proper documentation. We provide material samples, color chips, and manufacturer spec sheets to support your HOA submission at no cost.',
+      a: "Many Frisco HOAs approve metal and Brava roofs, though requirements vary from one community to the next. Rules can differ between areas such as Starwood and Phillips Creek Ranch. We handle the submission with samples, color chips, and manufacturer spec sheets, at no extra charge.",
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Collin County?',
-      a: 'Yes. Standing seam and stone-coated steel carry a Class 4 impact resistance rating, the highest available, which qualifies for significant premium discounts from most Texas carriers. Collin County homeowners in active hail zones like Frisco typically see 15–35% reductions on their wind/hail premium after upgrading to a Class 4 rated roof, depending on carrier and policy.',
+      a: "Yes, a Class 4 impact-rated metal roof can lower your premium, since most Texas insurers discount Class 4 roofs. Standing seam and stone-coated steel carry a Class 4 impact resistance rating, the highest available, which qualifies for significant premium discounts from most Texas carriers. Collin County homeowners in active hail zones like Frisco typically see 15–35% reductions on their wind/hail premium after upgrading to a Class 4 rated roof, depending on carrier and policy. We provide product documentation for your agent, and your insurance carrier sets the final discount.",
     },
     {
       q: 'How long does metal roof installation take in Frisco?',
-      a: 'Most residential metal roofing installations in Frisco are completed in one to three days depending on roof size and complexity. Standing seam typically takes a day longer than stone-coated steel due to the on-site forming process. We provide a specific timeline estimate for your home before any work begins.',
+      a: "One to three days covers most Frisco projects, and bigger or more intricate roofs may need a little more time. Standing seam typically takes a day longer than stone-coated steel due to the on-site forming process. We give you a specific timeline for your home during the estimate process. Staging and material delivery are planned around your driveway and neighbors.",
     },
     {
       q: 'Is a metal roof worth it for a home in a Frisco master-planned community?',
@@ -75,7 +75,11 @@ export const FRISCO_DATA: CityData = {
     },
     {
       q: 'What metal and Brava roofing styles work best on Frisco homes?',
-      a: 'Standing seam is the most popular choice for Frisco\'s contemporary and transitional architecture, offering clean lines and hidden fasteners. Stone-coated steel in shake or shingle profiles is widely chosen in neighborhoods with traditional HOA guidelines. Both carry Class 4 hail ratings and 50+ year lifespans, so the choice comes down to aesthetics and HOA requirements. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.',
+      a: "The right profile for a Frisco home depends on its architecture, and we install steel and Brava options to match. Standing seam is the most popular choice for Frisco's contemporary and transitional architecture, offering clean lines and hidden fasteners. If you lean toward a slate or tile appearance, Brava's three profiles are worth a look. We set samples next to your siding or brick so you can see how each material reads in daylight.",
+    },
+    {
+      q: "Will a metal roof block cell or Wi-Fi signal in Frisco?",
+      a: "Most homeowners notice little change in cell or Wi-Fi signal after a metal roof. If reception is already weak at your Frisco address, a signal booster is the usual fix. Results vary by property.",
     },
   ],
 }

@@ -29,13 +29,35 @@ export const MANSFIELD_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Mansfield, TX?',
-      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract, plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Mansfield homeowners will never need to use.',
+      a: "On a Mansfield job, our 10-year workmanship warranty is part of the signed agreement. The manufacturer adds its own material warranty on the panels and finish. We are glad to go over the exact terms with Tarrant County homeowners during the free consultation. Keep the paperwork with your home records for future reference.",
     },
-    { q: 'How much does a metal roof cost in Mansfield, TX?', a: `Metal roofing in Mansfield is priced by the square foot, and your total depends on roof size, pitch, and material. We provide a satellite-based ballpark range from your roof\'s measured size, not a guess from the driveway, refined into a firm number after your free on-site assessment. By material, that typically breaks down to ${cityFaqMaterialRates()}. See our pricing table above for the full breakdown, or use our free visualizer for an exact number for your roof.` },
-    { q: 'Does a metal roof qualify for an insurance discount in Mansfield?', a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. Mansfield sits in Tarrant County\'s active storm corridor and most homeowners see meaningful annual premium reductions after upgrading to a Class 4 rated roof.' },
-    { q: 'Will my Mansfield HOA approve a metal roof?', a: 'Most Mansfield HOAs permit standing seam and stone-coated steel in approved profiles and neutral color palettes. We provide complete HOA documentation support at no additional cost.' },
-    { q: 'How long does metal roof installation take in Mansfield?', a: 'Most Mansfield residential installations are completed in one to three days. The exact timeline depends on roof size and material. We provide a specific installation timeline during the estimate process.' },
-    { q: 'How does metal roofing handle hail in Tarrant County?', a: 'Standing seam and stone-coated steel carry a Class 4 impact resistance rating, the highest available. This rating is required by most Texas carriers for maximum discount eligibility and is especially important in Tarrant County\'s active hail corridor.' },
-    { q: 'What metal and Brava roofing styles work best in Mansfield?', a: 'Stone-coated steel in shingle and shake profiles is popular throughout Mansfield\'s traditional neighborhoods. Standing seam suits more contemporary homes and rooflines. Both carry Class 4 hail ratings and 50-plus year lifespans. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.' },
+    {
+      q: 'How much does a metal roof cost in Mansfield, TX?',
+      a: "A Mansfield metal roof is quoted per square foot, with the final figure driven by roof size, pitch, and material. We start with a satellite-based range built from your roof's measured size, then confirm a firm number after a free on-site assessment. Use the pricing table above to compare systems, then put your address into the free visualizer for your own number. Complex rooflines with many hips and valleys generally cost more than simple gables.",
+    },
+    {
+      q: 'Does a metal roof qualify for an insurance discount in Mansfield?',
+      a: "Yes, a Class 4 metal roof is a common way Mansfield homeowners earn a premium discount, since most Texas insurers offer one. Storm seasons in Tarrant County make it worth asking your carrier about a Class 4 discount. Savings vary from one carrier to the next, so ask your agent what applies to your policy.",
+    },
+    {
+      q: 'Will my Mansfield HOA approve a metal roof?',
+      a: "Many HOAs in Mansfield approve these profiles, and each association sets its own rules. Walnut Creek, Southpointe, and similar communities often have their own architectural committees. We prepare material samples, color chips, and spec sheets for your submission at no additional cost.",
+    },
+    {
+      q: 'How long does metal roof installation take in Mansfield?',
+      a: "Most Mansfield installations are finished in one to three days, depending on roof size and complexity. You will have a clear schedule for your own home as part of the estimate. Your project lead checks in each day so you know where things stand.",
+    },
+    {
+      q: 'How does metal roofing handle hail in Tarrant County?',
+      a: "For hail, our steel systems come with a Class 4 impact rating, the highest rating available. Storm season in Tarrant County is why many Mansfield owners ask about impact ratings first. We can show you how the finish looks on samples during your inspection.",
+    },
+    {
+      q: 'What metal and Brava roofing styles work best in Mansfield?',
+      a: "Style depends on the house, and for Mansfield we can match it with steel or with a Brava slate, shake, or tile profile. Stone-coated steel in shingle and shake profiles is popular throughout Mansfield's traditional neighborhoods. Brava synthetic slate, shake, and Spanish barrel tile add a natural-material look for owners who prefer it. We set samples next to your siding or brick so you can see how each material reads in daylight.",
+    },
+    {
+      q: "Will a metal roof tick or pop in the Mansfield heat?",
+      a: "A metal roof moves a little with the temperature, and well-designed panels and fastening manage that movement. For Mansfield homeowners, we explain what to expect rather than promise a silent roof.",
+    },
   ],
 }

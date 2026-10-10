@@ -27,13 +27,35 @@ export const FORNEY_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Forney, TX?',
-      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract, plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Forney homeowners will never need to use.',
+      a: "The paperwork for a Forney roof starts with a 10-year workmanship warranty, written into the contract. The manufacturer adds its own material warranty on the panels and finish. Both are explained in plain language during your estimate, so nothing comes as a surprise later. You will see the details in writing before you commit.",
     },
-    { q: 'How much does a metal roof cost in Forney, TX?', a: `Metal roofing in Forney is priced by the square foot, and your total depends on roof size, pitch, and material. We provide a satellite-based ballpark range from your roof\'s measured size, not a guess from the driveway, refined into a firm number after your free on-site assessment. By material, that typically breaks down to ${cityFaqMaterialRates()}. See our pricing table above for the full breakdown, or use our free visualizer for an exact number for your roof.` },
-    { q: 'Is metal roofing common on new construction in Forney?', a: 'Metal roofing is increasingly specified on new construction throughout Forney\'s growing master-planned developments. Many builders in the area now offer standing seam and stone-coated steel given the area\'s storm exposure and the long-term cost advantages for buyers.' },
-    { q: 'Does a metal roof qualify for an insurance discount in Kaufman County?', a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. Forney homeowners in Kaufman County\'s active storm corridor typically see meaningful reductions in their wind/hail premium after upgrading.' },
-    { q: 'Will my Forney HOA approve a metal roof?', a: 'Most Forney HOAs permit metal roofing in approved profiles and neutral color palettes. We provide complete documentation support for your HOA submission at no additional cost.' },
-    { q: 'How long does metal roof installation take in Forney?', a: 'Most Forney residential installations are completed in one to three days. The exact timeline depends on roof size and material. We provide a specific timeline during the estimate process.' },
-    { q: 'What metal and Brava roofing styles work best in Forney?', a: 'Stone-coated steel and standing seam are both popular choices in Forney. Stone-coated steel in shingle profiles suits the traditional architecture common throughout the city\'s newer developments. Standing seam is preferred for more contemporary homes. Both carry Class 4 hail ratings and 50-plus year lifespans. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.' },
+    {
+      q: 'How much does a metal roof cost in Forney, TX?',
+      a: "Metal roofs in Forney are priced per square foot, so the biggest factors are how much roof you have, how steep it is, and the material. We start with a satellite-based range built from your roof's measured size, then confirm a firm number after a free on-site assessment. Compare systems in the pricing table above, and let the free visualizer work out a number for your home. We explain every line of the proposal in person.",
+    },
+    {
+      q: 'Is metal roofing common on new construction in Forney?',
+      a: "Metal has become a familiar choice on new Forney homes. Its Class 4 impact rating and long life appeal to Forney buyers thinking about storms.",
+    },
+    {
+      q: 'Does a metal roof qualify for an insurance discount in Kaufman County?',
+      a: "It can. Class 4 impact-rated metal is discounted by most Texas insurers, which helps offset the cost of a new roof. Storm seasons in Kaufman County make it worth asking your carrier about a Class 4 discount. Because discounts vary, check with your insurance carrier and keep our documentation handy.",
+    },
+    {
+      q: 'Will my Forney HOA approve a metal roof?',
+      a: "In Forney, many associations allow metal or Brava once the profile and color meet their guidelines. Communities such as Travis Ranch and Devonshire each have their own review process. We help with the paperwork and submission, and the committee makes the final call.",
+    },
+    {
+      q: 'How long does metal roof installation take in Forney?',
+      a: "Installation in Forney usually wraps up within one to three days, adjusted for roof size and complexity. During the estimate we map out the days your roof will take, so there are no surprises. We handle debris removal and a final walkthrough when the roof is complete.",
+    },
+    {
+      q: 'What metal and Brava roofing styles work best in Forney?',
+      a: "Forney homeowners can choose from standing seam, stone-coated steel, and Brava synthetic slate, shake, or Spanish barrel tile. Stone-coated steel and standing seam are both popular choices in Forney. Brava gives a premium alternative to metal, with slate, cedar shake, and Spanish barrel tile profiles. The Free Roof Visualizer lets you preview each option on your actual home before you decide.",
+    },
+    {
+      q: "What is oil canning, and should Forney homeowners worry about it?",
+      a: "It is a cosmetic waviness sometimes seen in flat metal panels, and it does not change how the roof performs. Careful installation and the right panel help reduce it, though we cannot promise it will not show in certain light. Ask about it during your Forney estimate.",
+    },
   ],
 }

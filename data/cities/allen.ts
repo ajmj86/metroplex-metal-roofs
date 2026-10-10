@@ -29,13 +29,35 @@ export const ALLEN_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Allen, TX?',
-      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract, plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Allen homeowners will never need to use.',
+      a: "A 10-year workmanship warranty from Metroplex is written into every Allen contract. The manufacturer adds its own material warranty on the panels and finish. Paired with a system lifespan of 50 years or more, it is coverage most Allen homeowners rarely have to use. Copies of both are yours to keep.",
     },
-    { q: 'How much does a metal roof cost in Allen, TX?', a: `Metal roofing in Allen is priced by the square foot, and your total depends on roof size, pitch, and material. We provide a satellite-based ballpark range from your roof\'s measured size, not a guess from the driveway, refined into a firm number after your free on-site assessment. By material, that typically breaks down to ${cityFaqMaterialRates()}. See our pricing table above for the full breakdown, or use our free visualizer for an exact number for your roof.` },
-    { q: 'Does a metal roof qualify for an insurance discount in Allen?', a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. For Allen homeowners with median home values near $500,000, eliminating repeated asphalt replacements and qualifying for carrier discounts typically represents a strong long-term return on the upgrade.' },
-    { q: 'Will my Allen HOA approve a metal roof?', a: 'Most Allen HOAs permit metal roofing in approved profiles and neutral color palettes. We provide full documentation support including material samples, color chips, and manufacturer spec sheets to support your HOA submission at no additional cost.' },
-    { q: 'How long does metal roof installation take in Allen?', a: 'Most residential installations in Allen are completed in one to three days depending on roof size and complexity. We provide a specific timeline for your home as part of the estimate process.' },
-    { q: 'How does a metal roof handle hail in Collin County?', a: 'Standing seam and stone-coated steel carry a Class 4 impact resistance rating, the highest available. This is the rating required by most Texas carriers for maximum hail discount eligibility and is particularly important in Collin County\'s active hail corridor.' },
-    { q: 'What metal and Brava roofing styles are available in Allen?', a: 'Standing seam, stone-coated steel, copper, and R-Panel are all available. Standing seam and stone-coated steel are the most common choices for Allen homes. The right selection depends on your home\'s architecture, budget, and HOA requirements. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.' },
+    {
+      q: 'How much does a metal roof cost in Allen, TX?',
+      a: "Metal roofing in Allen is priced by the square foot, and your total depends on roof size, pitch, and material. We start with a satellite-based range built from your roof's measured size, then confirm a firm number after a free on-site assessment. Our pricing table above has the full breakdown, and the free visualizer shows a number for your own roof. Pitch, tear-off, and deck condition also factor into the final number.",
+    },
+    {
+      q: 'Does a metal roof qualify for an insurance discount in Allen?',
+      a: "Yes, a Class 4 impact-rated metal roof can lower your premium, since most Texas insurers discount Class 4 roofs. For Allen homeowners with median home values near $500,000, eliminating repeated asphalt replacements and qualifying for carrier discounts typically represents a strong long-term return on the upgrade. The size of the discount depends on your carrier and policy, so check with your insurance carrier.",
+    },
+    {
+      q: 'Will my Allen HOA approve a metal roof?',
+      a: "Many Allen HOAs approve metal and Brava roofs, though requirements vary from one community to the next. Communities such as Watters Crossing and Twin Creeks each have their own review process. We prepare material samples, color chips, and spec sheets for your submission at no additional cost.",
+    },
+    {
+      q: 'How long does metal roof installation take in Allen?',
+      a: "Most Allen installations are finished in one to three days, depending on roof size and complexity. We give you a specific timeline for your home during the estimate process. Weather can shift the schedule slightly, and we keep you updated.",
+    },
+    {
+      q: 'How does a metal roof handle hail in Collin County?',
+      a: "Standing seam and stone-coated steel are available with a Class 4 impact rating, the highest available. That matters in Collin County, where hail is a regular part of owning a home. We can show you how the finish looks on samples during your inspection.",
+    },
+    {
+      q: 'What metal and Brava roofing styles are available in Allen?',
+      a: "Allen homeowners can choose from standing seam, stone-coated steel, and Brava synthetic slate, shake, or Spanish barrel tile. Standing seam and stone-coated steel are the most common choices for Allen homes. The right selection depends on your home's architecture, budget, and HOA requirements. Brava synthetic slate, shake, and Spanish barrel tile add a natural-material look for owners who prefer it. Both steel systems carry a Class 4 impact rating, and we bring samples so you can compare them on your own home.",
+    },
+    {
+      q: "Will a metal roof rust on a Allen home?",
+      a: "Coated steel is designed to resist rust when it is installed and maintained properly, and copper does not rust at all; it develops a patina. For Allen homes, we walk through which finish suits your roof.",
+    },
   ],
 }

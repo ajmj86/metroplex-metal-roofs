@@ -43,27 +43,31 @@ export const CARROLLTON_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Carrollton, TX?',
-      a: 'Every roof we install is covered by a 10-year workmanship warranty, written into your contract, plus the manufacturer\'s material warranty on the panels and finish. Combined with a 50+ year system lifespan, that means coverage most Carrollton homeowners will never need to use.',
+      a: "The paperwork for a Carrollton roof starts with a 10-year workmanship warranty, written into the contract. You also receive the manufacturer's material warranty for the panels and finish. Between the two, you have coverage for both the installation and the product, on a roof designed to last 50 years or more. Keep the paperwork with your home records for future reference.",
     },
     {
       q: 'How much does a metal roof cost in Carrollton?',
-      a: `Metal roofing in Carrollton is priced by the square foot, and your total depends on roof size, pitch, and material. We provide a satellite-based ballpark range from your roof\'s measured size, not a guess from the driveway, refined into a firm number after your free on-site assessment. By material, that typically breaks down to ${cityFaqMaterialRates()}. See our pricing table above for the full breakdown, or use our free visualizer for an exact number for your roof.`,
+      a: "Metal roofs in Carrollton are priced per square foot, so the biggest factors are how much roof you have, how steep it is, and the material. Expect a ballpark based on satellite measurements first, followed by a firm figure after the free in-person assessment. All materials are listed in the pricing table above, and the free visualizer prices your specific roof. Complex rooflines with many hips and valleys generally cost more than simple gables.",
     },
     {
       q: 'Will my Castle Hills or Indian Creek HOA approve a metal roof?',
-      a: 'Both communities already have established architectural review processes and metal roofing in approved profiles and colors is common throughout each. We provide the full documentation package: material samples, color chips, and manufacturer spec sheets, for your HOA submission at no additional cost.',
+      a: "In Carrollton, many associations allow metal or Brava once the profile and color meet their guidelines. Both communities already have established architectural review processes and metal roofing in approved profiles and colors is common throughout each. Tell us which community you are in, and we will build the documentation package for you.",
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Carrollton?',
-      a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. Carrollton sits in the North Texas hail corridor, and homeowners typically see a meaningful reduction in their wind/hail premium after upgrading.',
+      a: "It can. Class 4 impact-rated metal is discounted by most Texas insurers, which helps offset the cost of a new roof. Many Carrollton owners compare quotes from their carrier once the roof material is chosen. We suggest asking your insurance carrier for a quote that reflects the new roof.",
     },
     {
       q: 'How long does metal roof installation take in Carrollton?',
-      a: 'Most residential installations in Carrollton are completed in one to three days. The exact timeline depends on roof size and material selection. We provide a specific estimate timeline for your home before any work begins.',
+      a: "Installation in Carrollton usually wraps up within one to three days, adjusted for roof size and complexity. A schedule tailored to your home comes with the proposal, well before installation day. Your project lead checks in each day so you know where things stand.",
     },
     {
       q: 'What metal and Brava roofing style works best for Carrollton homes?',
-      a: 'Standing seam suits the more contemporary builds common in Castle Hills and Coyote Ridge, while stone-coated steel is a strong match for the traditional homes near Historic Downtown Carrollton and Rosemeade. Both carry Class 4 hail ratings and 50-plus year lifespans. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.',
+      a: "Whatever your Carrollton home's architecture, there is a metal or Brava profile to suit it. Standing seam suits the more contemporary builds common in Castle Hills and Coyote Ridge, while stone-coated steel is a strong match for the traditional homes near Historic Downtown Carrollton and Rosemeade. Brava rounds out the options with slate, cedar shake, and Spanish barrel tile looks. You can preview any of these on your own address in our Free Roof Visualizer.",
+    },
+    {
+      q: "Will a metal roof make my Carrollton home hotter?",
+      a: "No, a metal roof does not make a Carrollton home hotter, and lighter, reflective finishes can reduce heat gain. Color choice matters, so we help you pick one that suits your home and the Dallas County sun.",
     },
   ],
 }
