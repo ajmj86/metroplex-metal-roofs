@@ -64,7 +64,7 @@ const Reveal = ({ children, delay=0 }) => {
 // same-page anchor, so page order doesn't apply to it).
 const NAV_LINKS = [
   {label:"About Us",      href:"/about"},
-  {label:"Why Metal",     href:"#why-metal"},
+  {label:"Why Metal & Brava", href:"#why-metal"},
   {label:"Our Products",  href:"#products"},
   {label:"Pricing",       href:"#pricing"},
   {label:"Gallery",       href:"#gallery"},
@@ -426,7 +426,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
        * this same bullet's rollout to the city pages).
        */}
       <Hero
-        eyebrowText="Premium Metal & Synthetic Slate Roofing · Dallas–Fort Worth"
+        eyebrowText="Premium Metal & Brava Synthetic Slate Roofing · Dallas–Fort Worth"
         headline="The Last Roof"
         headlineAccent="You'll Ever Put On Your House"
         subhead="For DFW homeowners done replacing their asphalt roof every decade."
@@ -469,23 +469,22 @@ const HomePage = ({ activeTab, setActiveTab }) => {
             </div>
           </Reveal>
 
-          {/* Two-column comparison */}
-          <div className="grid-2" style={{gap:3,marginBottom:48}}>
-            {/* Asphalt column */}
-            <Reveal delay={0}>
-              <div style={{background:C.surface,border:`1px solid ${C.border}`,borderRadius:8,padding:"clamp(28px,4vw,48px)",height:"100%"}}>
-                <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:32}}>
-                  <div style={{width:10,height:10,borderRadius:"50%",background:"#52525B",flexShrink:0}}/>
-                  <div style={{fontSize:17,letterSpacing:2.5,textTransform:"uppercase",color:C.muted}}>Asphalt Shingle Roof</div>
-                </div>
-                <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(22px,3vw,32px)",fontWeight:700,color:C.white,marginBottom:32,lineHeight:1.2}}>
-                  A cost you keep<br/>paying — forever.
-                </div>
+          {/* Asphalt reality: compact full-width card, then Metal and Brava at equal weight */}
+          <Reveal>
+            <div style={{background:C.surface,border:`1px solid ${C.border}`,borderRadius:8,padding:"clamp(28px,4vw,48px)",marginBottom:3}}>
+              <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:24}}>
+                <div style={{width:10,height:10,borderRadius:"50%",background:"#52525B",flexShrink:0}}/>
+                <div style={{fontSize:17,letterSpacing:2.5,textTransform:"uppercase",color:C.muted}}>Asphalt Shingle Roof</div>
+              </div>
+              <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(22px,3vw,32px)",fontWeight:700,color:C.white,marginBottom:12,lineHeight:1.2}}>
+                A cost you keep paying, forever.
+              </div>
+              <div className="grid-2" style={{columnGap:40}}>
                 {[
                   {icon:"↻", label:"Replacement cycle",    val:"Every 8–10 years in DFW's hail climate"},
-                  {icon:"▲", label:"Insurance deductible", val:"2% of home value — and rising with home prices"},
-                  {icon:"$", label:"On an $800K home",     val:"$16,000 deductible per claim — often exceeding replacement cost"},
-                  {icon:"↑", label:"Trajectory",           val:"Deductibles and home values both trending up — your exposure grows every year"},
+                  {icon:"▲", label:"Insurance deductible", val:"2% of home value, and rising with home prices"},
+                  {icon:"$", label:"On an $800K home",     val:"$16,000 deductible per claim, often exceeding replacement cost"},
+                  {icon:"↑", label:"Trajectory",           val:"Deductibles and home values both trending up, so your exposure grows every year"},
                 ].map(item=>(
                   <div key={item.label} style={{display:"flex",gap:16,padding:"18px 0",borderBottom:`1px solid ${C.border}`,alignItems:"flex-start"}}>
                     <div style={{width:28,height:28,borderRadius:"50%",background:C.card,border:`1px solid ${C.border}`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:13,color:C.muted,flexShrink:0,marginTop:2}}>{item.icon}</div>
@@ -495,66 +494,88 @@ const HomePage = ({ activeTab, setActiveTab }) => {
                     </div>
                   </div>
                 ))}
-                {/* Insight callout */}
-                <div style={{marginTop:28,padding:"18px 20px",background:C.card,borderRadius:6,border:`1px solid ${C.border}`}}>
-                  <div style={{fontSize:16,color:C.mutedLight,lineHeight:1.7,fontStyle:"italic"}}>
-                    When your deductible equals or exceeds what a replacement costs, insurance provides no real benefit for your roof — you're effectively self-insuring either way.
-                  </div>
+              </div>
+              <div style={{marginTop:28,padding:"18px 20px",background:C.card,borderRadius:6,border:`1px solid ${C.border}`}}>
+                <div style={{fontSize:16,color:C.mutedLight,lineHeight:1.7,fontStyle:"italic"}}>
+                  When your deductible equals or exceeds what a replacement costs, insurance provides no real benefit for your roof. You're effectively self-insuring either way.
                 </div>
               </div>
-            </Reveal>
+            </div>
+          </Reveal>
 
-            {/* Metal column */}
-            <Reveal delay={0.1}>
-              <div style={{background:C.card,border:`1px solid ${C.accentDark}`,borderRadius:8,padding:"clamp(28px,4vw,48px)",height:"100%",position:"relative",overflow:"hidden"}}>
-                {/* Gold top bar */}
-                <div style={{position:"absolute",top:0,left:0,right:0,height:3,background:`linear-gradient(90deg,${C.accentDark},${C.accent},${C.accentDark})`}}/>
-                <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:32}}>
-                  <div style={{width:10,height:10,borderRadius:"50%",background:C.accent,flexShrink:0}}/>
-                  <div style={{fontSize:17,letterSpacing:2.5,textTransform:"uppercase",color:C.accent}}>Metal Roof</div>
-                </div>
-                <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(22px,3vw,32px)",fontWeight:700,color:C.white,marginBottom:32,lineHeight:1.2}}>
-                  One investment.<br/>Decades of returns.
-                </div>
-                {[
-                  {icon:"∞", label:"Replacement cycle",     val:"Once. A quality metal roof outlasts the mortgage — and then some.", gold:true},
-                  {icon:"▼", label:"Insurance premiums",    val:"Metal roofs qualify for significant carrier discounts in Texas hail zones.", gold:true},
-                  {icon:"❄", label:"Energy savings",        val:"Metal's thermal properties reduce cooling costs — a real line item in DFW summers.", gold:true},
-                  {icon:"◆", label:"Curb appeal & value",   val:"Metal roofs typically recoup 50–60% of installation cost at resale — and unlike asphalt, that return doesn't reset every 8–10 years with a full replacement, per Remodeling magazine's Cost vs. Value report.", gold:true},
-                  {icon:"✓", label:"The 20–30 year picture", val:"When you account for avoided replacements, insurance premium savings, and energy reduction, metal typically pays for itself within the life of your home.", gold:true},
-                ].map(item=>(
-                  <div key={item.label} style={{display:"flex",gap:16,padding:"18px 0",borderBottom:`1px solid ${C.border}`,alignItems:"flex-start"}}>
-                    <div style={{width:28,height:28,borderRadius:"50%",background:item.gold?`${C.accentDark}44`:C.surface,border:`1px solid ${item.gold?C.accentDark:C.border}`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:13,color:item.gold?C.accent:C.muted,flexShrink:0,marginTop:2}}>
-                      {item.icon === '❄' ? (
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                          <line x1="12" y1="2" x2="12" y2="22"/>
-                          <line x1="2" y1="12" x2="22" y2="12"/>
-                          <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>
-                          <line x1="19.07" y1="4.93" x2="4.93" y2="19.07"/>
-                          <line x1="12" y1="2" x2="9" y2="5"/>
-                          <line x1="12" y1="2" x2="15" y2="5"/>
-                          <line x1="12" y1="22" x2="9" y2="19"/>
-                          <line x1="12" y1="22" x2="15" y2="19"/>
-                          <line x1="2" y1="12" x2="5" y2="9"/>
-                          <line x1="2" y1="12" x2="5" y2="15"/>
-                          <line x1="22" y1="12" x2="19" y2="9"/>
-                          <line x1="22" y1="12" x2="19" y2="15"/>
-                        </svg>
-                      ) : item.icon}
+          {/* Metal and Brava: equal weight, three broad benefits each */}
+          <div className="grid-2" style={{gap:3,marginBottom:48}}>
+            {[
+              {
+                key:"metal",
+                tag:"Metal Roof",
+                title:<>One investment.<br/>Decades of returns.</>,
+                items:[
+                  {icon:"∞", label:"Replacement cycle",  val:"Once. A quality metal roof can outlast the mortgage, and then some."},
+                  {icon:"▼", label:"Insurance premiums", val:"Most Texas insurers discount Class 4 roofs, a real saving in DFW hail zones."},
+                  {icon:"❄", label:"Energy savings",     val:"Metal's thermal properties help reduce cooling costs in DFW summers."},
+                ],
+                note:"Standing seam and stone-coated steel for homes that want a lasting, low-maintenance roof.",
+                delay:0,
+              },
+              {
+                key:"brava",
+                tag:"Brava Synthetic Slate",
+                title:<>The look of slate, shake, or tile.<br/>Built for Texas weather.</>,
+                items:[
+                  {icon:"◆", label:"Timeless character", val:"Brava synthetic slate, shake, and tile capture the look of natural materials, for homes where the roofline is part of the architecture."},
+                  {icon:"▼", label:"Insurance premiums", val:"Brava is Class 4 impact rated, and most Texas insurers discount Class 4 roofs."},
+                  {icon:"✓", label:"Lasting value",      val:"A durable composite that delivers the premium look without the weight, fragility, or upkeep of the real thing."},
+                ],
+                note:"Brava slate, cedar shake, and Spanish barrel tile for homes that deserve a premium finish.",
+                delay:0.1,
+              },
+            ].map(col=>(
+              <Reveal key={col.key} delay={col.delay}>
+                <div style={{background:C.card,border:`1px solid ${C.accentDark}`,borderRadius:8,padding:"clamp(28px,4vw,48px)",height:"100%",position:"relative",overflow:"hidden"}}>
+                  {/* Gold top bar */}
+                  <div style={{position:"absolute",top:0,left:0,right:0,height:3,background:`linear-gradient(90deg,${C.accentDark},${C.accent},${C.accentDark})`}}/>
+                  <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:32}}>
+                    <div style={{width:10,height:10,borderRadius:"50%",background:C.accent,flexShrink:0}}/>
+                    <div style={{fontSize:17,letterSpacing:2.5,textTransform:"uppercase",color:C.accent}}>{col.tag}</div>
+                  </div>
+                  <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(22px,3vw,32px)",fontWeight:700,color:C.white,marginBottom:32,lineHeight:1.2}}>
+                    {col.title}
+                  </div>
+                  {col.items.map(item=>(
+                    <div key={item.label} style={{display:"flex",gap:16,padding:"18px 0",borderBottom:`1px solid ${C.border}`,alignItems:"flex-start"}}>
+                      <div style={{width:28,height:28,borderRadius:"50%",background:`${C.accentDark}44`,border:`1px solid ${C.accentDark}`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:13,color:C.accent,flexShrink:0,marginTop:2}}>
+                        {item.icon === '❄' ? (
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <line x1="12" y1="2" x2="12" y2="22"/>
+                            <line x1="2" y1="12" x2="22" y2="12"/>
+                            <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>
+                            <line x1="19.07" y1="4.93" x2="4.93" y2="19.07"/>
+                            <line x1="12" y1="2" x2="9" y2="5"/>
+                            <line x1="12" y1="2" x2="15" y2="5"/>
+                            <line x1="12" y1="22" x2="9" y2="19"/>
+                            <line x1="12" y1="22" x2="15" y2="19"/>
+                            <line x1="2" y1="12" x2="5" y2="9"/>
+                            <line x1="2" y1="12" x2="5" y2="15"/>
+                            <line x1="22" y1="12" x2="19" y2="9"/>
+                            <line x1="22" y1="12" x2="19" y2="15"/>
+                          </svg>
+                        ) : item.icon}
+                      </div>
+                      <div>
+                        <div style={{fontSize:12,letterSpacing:1.5,textTransform:"uppercase",color:C.accent,marginBottom:4}}>{item.label}</div>
+                        <div style={{fontSize:16,color:C.text,lineHeight:1.6}}>{item.val}</div>
+                      </div>
                     </div>
-                    <div>
-                      <div style={{fontSize:12,letterSpacing:1.5,textTransform:"uppercase",color:item.gold?C.accent:C.muted,marginBottom:4}}>{item.label}</div>
-                      <div style={{fontSize:16,color:C.text,lineHeight:1.6}}>{item.val}</div>
+                  ))}
+                  <div style={{marginTop:28,padding:"18px 20px",background:`${C.accentDark}22`,borderRadius:6,border:`1px solid ${C.accentDark}`}}>
+                    <div style={{fontSize:16,color:C.accentLight,lineHeight:1.7,fontStyle:"italic"}}>
+                      {col.note}
                     </div>
                   </div>
-                ))}
-                <div style={{marginTop:28,padding:"18px 20px",background:`${C.accentDark}22`,borderRadius:6,border:`1px solid ${C.accentDark}`}}>
-                  <div style={{fontSize:16,color:C.accentLight,lineHeight:1.7,fontStyle:"italic"}}>
-                    If you're already paying out of pocket every decade, the gap between asphalt and metal is smaller than most homeowners expect — and the gap in outcomes is enormous.
-                  </div>
                 </div>
-              </div>
-            </Reveal>
+              </Reveal>
+            ))}
           </div>
 
           {/* Bottom summary bar */}
@@ -574,7 +595,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
                     The upgrade is smaller than you think.<br/><span style={{color:C.accent,fontStyle:"italic"}}>The difference is permanent.</span>
                   </div>
                   <p className="muted-body" style={{fontSize:16,color:C.muted,lineHeight:1.7,margin:0}}>
-                    For a home in the $700K–$1M range, the real question isn't whether you can afford metal — it's whether paying for asphalt again makes any sense at all.
+                    For a home in the $700K–$1M range, the real question isn't whether you can afford metal or Brava, it's whether paying for asphalt again makes any sense at all.
                   </p>
                 </div>
                 <a href={utm("/visualizer")} className="cta-btn" style={{display:"inline-flex",alignItems:"center",gap:10,padding:"16px 32px",background:C.accent,color:C.black,fontSize:11,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"all 0.2s",whiteSpace:"nowrap",flexShrink:0}}
@@ -590,7 +611,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
       <ProductsSection
         id="products"
         eyebrow="Our Products"
-        heading={<>Metal & Synthetic Slate.<br/>One Standard.</>}
+        heading={<>Metal & Brava Synthetic Slate.<br/>One Standard.</>}
         initialTab="stone"
         activeTab={activeTab}
         onTabChange={setActiveTab}

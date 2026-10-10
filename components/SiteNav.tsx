@@ -11,7 +11,7 @@ import { useUtmHref } from '@/lib/useUtmHref'
 // first as an external page link, not a same-page anchor.
 const NAV_LINKS = [
   {label:"About Us",      href:"/about"},
-  {label:"Why Metal",     href:"/#why-metal"},
+  {label:"Why Metal & Brava", href:"/#why-metal"},
   {label:"Our Products",  href:"/#products"},
   {label:"Pricing",       href:"/#pricing"},
   {label:"Gallery",       href:"/#gallery"},
@@ -34,7 +34,7 @@ const NAV_LINKS = [
  * of duplicating the same value here.
  */
 const CITY_PAGE_OVERRIDES: Record<string,string> = {
-  "Why Metal":    "#why-metal",
+  "Why Metal & Brava": "#why-metal",
   "Our Products": "#our-products",
   "Gallery":      "#gallery",
   "Our Process":  "#process",

@@ -8,13 +8,13 @@ export const DALLAS_DATA: CityData = {
   region: 'Central Dallas',
   zip: '75214',
   slug: 'dallas',
-  metaTitle: 'Metal & Synthetic Slate Roofing Dallas TX | Metroplex',
-  metaDesc: 'Premium standing seam, stone-coated steel & synthetic slate roofing in Dallas, TX. Serving Lakewood, Uptown, Oak Cliff and Park Cities.',
+  metaTitle: 'Metal & Brava Synthetic Slate Roofing Dallas TX | Metroplex',
+  metaDesc: 'Premium standing seam, stone-coated steel & Brava synthetic slate roofing in Dallas, TX. Serving Lakewood, Uptown, Oak Cliff and Park Cities.',
 
   heroHeadline: "Dallas Homes Deserve\nMore Than Another Asphalt Roof",
   heroSub: "From the bungalows of Lakewood to the townhomes of Uptown, Dallas homeowners are done replacing shingles every storm season. Metal roofing is the upgrade built for the long haul.",
 
-  localContext: "Dallas's close-in neighborhoods — from the tree-lined streets of Lakewood and White Rock to the historic bungalows of Oak Cliff and the dense corridors of Uptown and Knox-Henderson — carry some of the oldest and most storm-exposed roofs in North Texas. Dallas County sits squarely in the DFW hail corridor, and homeowners who've already replaced one asphalt roof are increasingly switching to metal rather than repeating the cycle every decade. With home values climbing across nearly every close-in neighborhood, a 50-plus year roof is one of the few renovations that protects the investment instead of just maintaining it.",
+  localContext: "Dallas's close-in neighborhoods — from the tree-lined streets of Lakewood and White Rock to the historic bungalows of Oak Cliff and the dense corridors of Uptown and Knox-Henderson — carry some of the oldest and most storm-exposed roofs in North Texas. Dallas County sits squarely in the DFW hail corridor, and homeowners who've already replaced one asphalt roof are increasingly switching to metal rather than repeating the cycle every decade. With home values climbing across nearly every close-in neighborhood, a 50-plus year roof is one of the few renovations that protects the investment instead of just maintaining it. For Dallas homeowners drawn to a traditional slate or shake profile, Brava offers that look in a durable synthetic, so you can choose between metal and Brava on the merits of your own home.",
 
   hoaNote: "Roofing rules vary block by block in Dallas — HOA-governed pockets like parts of Lake Highlands and Park Cities follow standard architectural review, while historic districts such as Junius Heights and the M Streets fall under City of Dallas conservation district guidelines rather than a private HOA. We handle documentation for either process — material samples, color chips, and manufacturer spec sheets — at no additional cost.",
 
@@ -85,8 +85,8 @@ export const DALLAS_DATA: CityData = {
       a: 'Most residential installations in Dallas are completed in one to three days, depending on roof size and material. Denser neighborhoods with tighter lots or shared driveways may need a bit more coordination on staging, which we handle as part of scheduling.',
     },
     {
-      q: 'What metal roofing style works best for Dallas homes?',
-      a: 'It depends on the neighborhood and architecture. Stone-coated steel is the most common choice for traditional bungalows in Lakewood and Oak Cliff, while standing seam is popular on the more contemporary builds found in Uptown-adjacent and Knox-Henderson properties. Both carry Class 4 hail ratings and 50-plus year lifespans.',
+      q: 'What metal and Brava roofing style works best for Dallas homes?',
+      a: 'It depends on the neighborhood and architecture. Stone-coated steel is the most common choice for traditional bungalows in Lakewood and Oak Cliff, while standing seam is popular on the more contemporary builds found in Uptown-adjacent and Knox-Henderson properties. Both carry Class 4 hail ratings and 50-plus year lifespans. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.',
     },
   ],
 }

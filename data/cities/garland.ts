@@ -8,13 +8,13 @@ export const GARLAND_DATA: CityData = {
   region: 'East Dallas',
   zip: '75044',
   slug: 'garland',
-  metaTitle: 'Metal & Synthetic Slate Roofing Garland TX | Metroplex',
-  metaDesc: 'Premium standing seam, stone-coated steel & synthetic slate roofing in Garland, TX. Serving Firewheel and Spring Park.',
+  metaTitle: 'Metal & Brava Slate Roofing Garland TX | Metroplex',
+  metaDesc: 'Premium standing seam, stone-coated steel & Brava synthetic slate roofing in Garland, TX. Serving Firewheel and Spring Park.',
 
   heroHeadline: "Garland Homeowners Are Done\nReplacing Shingles Every Storm Season",
   heroSub: "From Firewheel to Downtown Garland, more homeowners are making the one-time switch to metal instead of budgeting for another asphalt reroof.",
 
-  localContext: "Garland's housing stock ranges from the newer developments around Firewheel to the established mid-century neighborhoods closer to Downtown Garland, giving the city one of the widest roof-age ranges in East Dallas. Dallas County's hail corridor runs straight through Garland, and homeowners with roofs original to their home — or already replaced once with asphalt — are increasingly choosing metal to end the cycle rather than repeat it a third time.",
+  localContext: "Garland's housing stock ranges from the newer developments around Firewheel to the established mid-century neighborhoods closer to Downtown Garland, giving the city one of the widest roof-age ranges in East Dallas. Dallas County's hail corridor runs straight through Garland, and homeowners with roofs original to their home — or already replaced once with asphalt — are increasingly choosing metal to end the cycle rather than repeat it a third time. Metal is not the only lasting choice here. Brava synthetic slate, shake, and Spanish barrel tile give Garland homes a premium, natural-material look, and we help you compare Brava and metal side by side before you decide.",
 
   hoaNote: "Newer communities near Firewheel and Rose Hill maintain standard HOA architectural review, while many of Garland's older neighborhoods near Downtown and Club Hill have no HOA restrictions at all. Where an HOA does apply, we provide full documentation — material samples, color chips, and manufacturer spec sheets — at no additional cost.",
 
@@ -68,8 +68,8 @@ export const GARLAND_DATA: CityData = {
       a: 'Most residential installations in Garland are completed in one to three days. The exact timeline depends on roof size and material selection — we provide a specific estimate timeline for your home before any work begins.',
     },
     {
-      q: 'What metal roofing style works best for Garland homes?',
-      a: 'Stone-coated steel is a popular match for the traditional ranch and split-level homes common throughout Garland\'s older neighborhoods, while standing seam suits the newer builds near Firewheel. Both carry Class 4 hail ratings and 50-plus year lifespans.',
+      q: 'What metal and Brava roofing style works best for Garland homes?',
+      a: 'Stone-coated steel is a popular match for the traditional ranch and split-level homes common throughout Garland\'s older neighborhoods, while standing seam suits the newer builds near Firewheel. Both carry Class 4 hail ratings and 50-plus year lifespans. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.',
     },
   ],
 }

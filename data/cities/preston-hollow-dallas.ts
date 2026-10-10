@@ -9,13 +9,14 @@ export const PRESTON_HOLLOW_DALLAS_DATA: CityData = {
   region: 'North Dallas',
   zip: '75230',
   slug: 'preston-hollow-dallas',
-  metaTitle: 'Metal Roofing Preston Hollow Dallas TX | Metroplex',
-  metaDesc: 'Standing seam, stone-coated steel and Brava synthetic slate roofing in Preston Hollow, a Dallas neighborhood. Free 40-point assessment.',
+  leadWithBrava: true,
+  metaTitle: 'Brava & Metal Roofing Preston Hollow Dallas TX | Metroplex',
+  metaDesc: 'Brava synthetic slate, stone-coated steel and standing seam roofing in Preston Hollow, a Dallas neighborhood. Free 40-point assessment.',
 
   heroHeadline: "Preston Hollow's Big Roofs\nShould Only Be Replaced Once",
   heroSub: "Large lots, mature trees, and roofs with a lot of hips and valleys. Preston Hollow homeowners are choosing a roof that does not come back around in ten years.",
 
-  localContext: "Preston Hollow is a neighborhood of Dallas, in the north part of the city, known for larger lots, mature trees, and homes that range from mid-century ranches to newer custom builds. That mix means roofs of every age, with composition shingle on many older homes and clay tile or slate on some of the larger ones. Big roofs with multiple hips and valleys are expensive to replace again and again, which is why many owners are moving to stone-coated steel, Brava synthetic slate, or standing seam. For the wider city, see our Dallas page.",
+  localContext: "Preston Hollow is a neighborhood of Dallas, in the north part of the city, known for larger lots, mature trees, and homes that range from mid-century ranches to newer custom builds. That mix means roofs of every age, with composition shingle on many older homes and clay tile or slate on some of the larger ones. Big roofs with multiple hips and valleys are expensive to replace again and again, which is why many owners are moving to Brava synthetic slate, stone-coated steel, or standing seam. For the wider city, see our Dallas page.",
 
   hoaNote: "Design review and permit requirements vary by street and by project, and we handle the submission. Some Preston Hollow blocks have HOA or neighborhood association review and others do not, so we confirm what applies at your address and provide samples, color chips, and spec sheets at no additional cost.",
 
@@ -39,12 +40,12 @@ export const PRESTON_HOLLOW_DALLAS_DATA: CityData = {
       a: "Every roof we install carries a 10-year workmanship warranty written into your contract, plus the manufacturer's material warranty on the panels and finish. With a 50+ year system lifespan, that is coverage most Preston Hollow homeowners will never need to use.",
     },
     {
-      q: 'Is Preston Hollow a good fit for stone-coated steel or synthetic slate?',
-      a: "Yes, both work well on Preston Hollow homes, from mid-century ranches to larger custom houses. Stone-coated steel gives a shingle or shake look on a lasting roof, and Brava synthetic slate suits traditional and estate-style homes. Standing seam is a strong choice on contemporary builds.",
+      q: 'Is Preston Hollow a good fit for Brava synthetic slate or stone-coated steel?',
+      a: "Yes, both work well on Preston Hollow homes, from mid-century ranches to larger custom houses. Brava synthetic slate suits traditional and estate-style homes with the look of natural slate, shake, or tile, and stone-coated steel gives a shingle or shake look on a lasting roof. Standing seam is a strong choice on contemporary builds.",
     },
     {
       q: 'Do large, complex roofs cost much more to replace with metal?',
-      a: `Larger roofs with many hips and valleys do cost more, and the layout matters as much as the size. By material, that runs about ${FAQ_RATE.stoneCoated()}/sq ft for stone-coated steel, ${FAQ_RATE.standingSeam()}/sq ft for standing seam, and ${FAQ_RATE.slate()}/sq ft for synthetic slate. We give a satellite-based range first and a firm number after your free on-site assessment.`,
+      a: `Larger roofs with many hips and valleys do cost more, and the layout matters as much as the size. By material, that runs about ${FAQ_RATE.stoneCoated()}/sq ft for stone-coated steel, ${FAQ_RATE.standingSeam()}/sq ft for standing seam, and ${FAQ_RATE.slate()}/sq ft for Brava synthetic slate. We give a satellite-based range first and a firm number after your free on-site assessment.`,
     },
     {
       q: 'Does my Preston Hollow home need HOA or design review for a new roof?',

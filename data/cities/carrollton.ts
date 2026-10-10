@@ -8,13 +8,13 @@ export const CARROLLTON_DATA: CityData = {
   region: 'North Dallas',
   zip: '75006',
   slug: 'carrollton',
-  metaTitle: 'Metal & Synthetic Slate Roofing Carrollton TX | Metroplex',
-  metaDesc: 'Premium standing seam, stone-coated steel & synthetic slate roofing in Carrollton, TX. Serving Castle Hills and Indian Creek.',
+  metaTitle: 'Metal & Brava Slate Roofing Carrollton TX | Metroplex',
+  metaDesc: 'Premium standing seam, stone-coated steel & Brava synthetic slate roofing in Carrollton, TX. Serving Castle Hills and Indian Creek.',
 
   heroHeadline: "Carrollton Homes Deserve\nA Roof That Matches the Investment",
   heroSub: "From Castle Hills to Historic Downtown Carrollton, homeowners are moving past the shingle-replacement cycle for a roof that's built to outlast the mortgage.",
 
-  localContext: "Carrollton spans both Dallas and Denton counties, and its housing stock ranges from the master-planned communities of Castle Hills and Coyote Ridge to the older, established streets near Historic Downtown Carrollton. All of it sits in the North Texas hail corridor, and with home values across the city's newer developments climbing steadily, more homeowners are treating a metal roof as protection for the investment rather than a maintenance expense.",
+  localContext: "Carrollton spans both Dallas and Denton counties, and its housing stock ranges from the master-planned communities of Castle Hills and Coyote Ridge to the older, established streets near Historic Downtown Carrollton. All of it sits in the North Texas hail corridor, and with home values across the city's newer developments climbing steadily, more homeowners are treating a metal roof as protection for the investment rather than a maintenance expense. Metal is not the only lasting choice here. Brava synthetic slate, shake, and Spanish barrel tile give Carrollton homes a premium, natural-material look, and we help you compare Brava and metal side by side before you decide.",
 
   hoaNote: "Castle Hills, Indian Creek, and Rosemeade all maintain active HOAs with architectural review for exterior changes, and metal roofing in approved profiles is already common throughout each. Older neighborhoods near Historic Downtown Carrollton typically have no HOA restrictions. Where documentation is required, we provide material samples, color chips, and manufacturer spec sheets at no additional cost.",
 
@@ -68,8 +68,8 @@ export const CARROLLTON_DATA: CityData = {
       a: 'Most residential installations in Carrollton are completed in one to three days. The exact timeline depends on roof size and material selection — we provide a specific estimate timeline for your home before any work begins.',
     },
     {
-      q: 'What metal roofing style works best for Carrollton homes?',
-      a: 'Standing seam suits the more contemporary builds common in Castle Hills and Coyote Ridge, while stone-coated steel is a strong match for the traditional homes near Historic Downtown Carrollton and Rosemeade. Both carry Class 4 hail ratings and 50-plus year lifespans.',
+      q: 'What metal and Brava roofing style works best for Carrollton homes?',
+      a: 'Standing seam suits the more contemporary builds common in Castle Hills and Coyote Ridge, while stone-coated steel is a strong match for the traditional homes near Historic Downtown Carrollton and Rosemeade. Both carry Class 4 hail ratings and 50-plus year lifespans. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.',
     },
   ],
 }

@@ -55,6 +55,8 @@ export interface CityData {
   review?: { name: string; neighborhood: string; text: string; rating: number }
   // Set for neighborhoods of a larger city (e.g. 'Dallas'); drives schema address.
   parentCity?: string
+  // Premium markets open the products block on Brava instead of metal.
+  leadWithBrava?: boolean
   faqs: CityFAQ[]
 }
 
@@ -255,9 +257,9 @@ export default function CityPage({ city }: { city: CityData }) {
           <div className="inner">
             <Reveal>
               <SHead
-                eyebrow="Why Metal"
-                title={`The Case for Metal Roofing<br/>in <em style="color:${C.accent}">${city.name}</em>`}
-                sub={`In a North Texas hail zone with home values like ${city.name}'s, asphalt shingles are an expensive recurring cost — not a long-term solution.`}
+                eyebrow="Why Metal & Brava"
+                title={`The Case for Metal and Brava Roofing<br/>in <em style="color:${C.accent}">${city.name}</em>`}
+                sub={`In a North Texas hail zone with home values like ${city.name}'s, asphalt shingles are an expensive recurring cost, not a long-term solution. Metal and Brava synthetic slate both end that cycle.`}
                 center
               />
             </Reveal>
@@ -284,9 +286,9 @@ export default function CityPage({ city }: { city: CityData }) {
                   </p>
                 </div>
                 <div style={{ flex: 1, minWidth: 260 }}>
-                  <div style={{ fontSize: 10, letterSpacing: 2, color: C.accent, textTransform: 'uppercase', marginBottom: 10 }}>The Metal Calculus</div>
+                  <div style={{ fontSize: 10, letterSpacing: 2, color: C.accent, textTransform: 'uppercase', marginBottom: 10 }}>The Metal and Brava Calculus</div>
                   <p style={{ fontSize: 14, color: C.mutedLight, lineHeight: 1.85, margin: 0 }}>
-                    A metal roof eliminates the replacement cycle entirely. Add carrier discounts, reduced energy costs, and eliminated deductible exposure over 20–30 years — and the upgrade typically pays for itself well within the life of the home. Metal roofs typically recoup 50–60% of installation cost at resale — and unlike asphalt, that return doesn't reset every 8–10 years with a full replacement, per Remodeling magazine's Cost vs. Value report.
+                    A metal or Brava roof eliminates the replacement cycle entirely. Add carrier discounts, reduced energy costs, and eliminated deductible exposure over 20–30 years — and the upgrade typically pays for itself well within the life of the home. Metal roofs typically recoup 50–60% of installation cost at resale — and unlike asphalt, that return doesn't reset every 8–10 years with a full replacement, per Remodeling magazine's Cost vs. Value report.
                   </p>
                 </div>
               </div>
@@ -308,8 +310,8 @@ export default function CityPage({ city }: { city: CityData }) {
         <ProductsSection
           id="our-products"
           eyebrow="Our Products"
-          heading={<>Metal & Synthetic Slate<br/>for {city.name} Homes</>}
-          initialTab="stone"
+          heading={<>Metal & Brava<br/>for {city.name} Homes</>}
+          initialTab={city.leadWithBrava ? "slate" : "stone"}
         />
 
         {/* ── PRICING ── */}
@@ -560,7 +562,7 @@ export default function CityPage({ city }: { city: CityData }) {
             <Reveal>
               <div style={{ fontSize: 10, letterSpacing: 3, color: C.accent, textTransform: 'uppercase', marginBottom: 16 }}>About Metroplex Metal Roofs</div>
               <p style={{ fontSize: 15, color: C.mutedLight, lineHeight: 1.9, marginBottom: 20 }}>
-                Metroplex Metal Roofs specializes in premium residential roofing across the Dallas–Fort Worth metroplex, led by metal and complemented by synthetic slate. Our focus is standing seam, stone-coated steel, copper, and R-panel — every project precision-measured by satellite, installed to manufacturer spec, and backed by our 10-year workmanship warranty.
+                Metroplex Metal Roofs specializes in premium residential roofing across the Dallas–Fort Worth metroplex, built on two pillars: metal and Brava synthetic slate. Our focus is standing seam, stone-coated steel, copper, R-panel, and Brava synthetic slate. Every project is precision-measured by satellite, installed to manufacturer spec, and backed by our 10-year workmanship warranty.
               </p>
               <Link href="/about"
                 style={{ fontSize: 12, color: C.accent, letterSpacing: 1.5, textTransform: 'uppercase', textDecoration: 'underline', transition: 'opacity 0.2s' }}

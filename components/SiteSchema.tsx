@@ -33,7 +33,7 @@ export function SiteSchema() {
     'image': `${BASE_URL}/MMR%20Hero%20Pic.png`,
     'telephone': '+18173823338',
     'email': 'help@metroplexmetalroofs.com',
-    'description': 'Metroplex Metal Roofs specializes in premium metal and synthetic slate roofing for DFW homeowners -- standing seam, stone-coated steel, copper, R-panel, and synthetic slate.',
+    'description': 'Metroplex Metal Roofs specializes in premium metal and Brava synthetic slate roofing for DFW homeowners -- standing seam, stone-coated steel, copper, R-panel, and Brava synthetic slate.',
     'areaServed': CITIES.map(name => ({
       '@type': 'City',
       'name': name,
@@ -41,13 +41,13 @@ export function SiteSchema() {
     })),
     'hasOfferCatalog': {
       '@type': 'OfferCatalog',
-      'name': 'Metal & Synthetic Slate Roofing Services',
+      'name': 'Metal & Brava Synthetic Slate Roofing Services',
       'itemListElement': [
         { '@type': 'Offer', 'itemOffered': { '@type': 'Service', 'name': 'Standing Seam Metal Roofing', 'url': `${BASE_URL}/standing-seam-roofing` } },
         { '@type': 'Offer', 'itemOffered': { '@type': 'Service', 'name': 'Stone-Coated Steel Roofing', 'url': `${BASE_URL}/stone-coated-steel-roofing` } },
         { '@type': 'Offer', 'itemOffered': { '@type': 'Service', 'name': 'Copper Roofing', 'url': `${BASE_URL}/copper-roofing` } },
         { '@type': 'Offer', 'itemOffered': { '@type': 'Service', 'name': 'R-Panel Metal Roofing', 'url': `${BASE_URL}/r-panel-roofing` } },
-        { '@type': 'Offer', 'itemOffered': { '@type': 'Service', 'name': 'Synthetic Slate Roofing', 'url': `${BASE_URL}/synthetic-slate-roofing` } },
+        { '@type': 'Offer', 'itemOffered': { '@type': 'Service', 'name': 'Brava Synthetic Slate Roofing', 'url': `${BASE_URL}/synthetic-slate-roofing` } },
       ],
     },
     // sameAs is intentionally omitted, not emitted as an empty array --

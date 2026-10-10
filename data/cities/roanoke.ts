@@ -8,11 +8,11 @@ export const ROANOKE_DATA: CityData = {
   region: 'North Fort Worth',
   zip: '76262',
   slug: 'roanoke',
-  metaTitle: 'Metal & Synthetic Slate Roofing Roanoke TX | Metroplex',
-  metaDesc: 'Premium standing seam, stone-coated steel & synthetic slate roofing in Roanoke, TX. Serving Harriet Creek Ranch and Canyon Falls.',
+  metaTitle: 'Metal & Brava Slate Roofing Roanoke TX | Metroplex',
+  metaDesc: 'Premium standing seam, stone-coated steel & Brava synthetic slate roofing in Roanoke, TX. Serving Harriet Creek Ranch and Canyon Falls.',
   heroHeadline: "Roanoke Homeowners\nAre Done With Asphalt",
   heroSub: "Roanoke sits between some of the most premium communities in North Texas. The homes here reflect that. A metal roof is the upgrade that protects that investment.",
-  localContext: "Roanoke's position in Denton County between Southlake and Argyle places it in an active storm corridor with significant annual hail exposure. With growing home values and 2% wind/hail deductibles standard on most carrier policies, Roanoke homeowners face consistent out-of-pocket storm exposure on asphalt. Metal roofing eliminates that exposure and qualifies for meaningful insurance savings.",
+  localContext: "Roanoke's position in Denton County between Southlake and Argyle places it in an active storm corridor with significant annual hail exposure. With growing home values and 2% wind/hail deductibles standard on most carrier policies, Roanoke homeowners face consistent out-of-pocket storm exposure on asphalt. Metal roofing eliminates that exposure and qualifies for meaningful insurance savings. For Roanoke homeowners drawn to a traditional slate or shake profile, Brava offers that look in a durable synthetic, so you can choose between metal and Brava on the merits of your own home.",
   hoaNote: "Roanoke's established and developing neighborhoods have review processes for exterior material changes. Standing seam and stone-coated steel in approved profiles and colors are widely permitted. We provide complete HOA documentation support at no additional cost.",
   localStat: { val: '$470k', label: 'Median Home Value', source: 'Roanoke, TX 2025' },
   neighborhoods: [
@@ -43,6 +43,6 @@ export const ROANOKE_DATA: CityData = {
     { q: 'Will my Roanoke HOA approve a metal roof?', a: 'Most Roanoke communities permit standing seam and stone-coated steel in approved profiles and neutral color palettes. We provide complete HOA documentation support at no additional cost.' },
     { q: 'How long does metal roof installation take in Roanoke?', a: 'Most Roanoke residential installations are completed in one to three days depending on roof size and material. We provide a specific timeline for your home during the estimate process.' },
     { q: 'How does metal roofing handle Denton County storms?', a: 'Standing seam and stone-coated steel carry a Class 4 impact resistance rating, the highest available. This is required by most Texas carriers for maximum discount eligibility and is particularly important in Denton County\'s active hail corridor.' },
-    { q: 'What metal roofing styles work best in Roanoke?', a: 'Standing seam and stone-coated steel are both popular in Roanoke. Standing seam suits contemporary and transitional architecture common throughout newer developments. Stone-coated steel is widely chosen for traditional homes. Both carry Class 4 hail ratings and 50-plus year lifespans.' },
+    { q: 'What metal and Brava roofing styles work best in Roanoke?', a: 'Standing seam and stone-coated steel are both popular in Roanoke. Standing seam suits contemporary and transitional architecture common throughout newer developments. Stone-coated steel is widely chosen for traditional homes. Both carry Class 4 hail ratings and 50-plus year lifespans. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.' },
   ],
 }

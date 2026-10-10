@@ -8,11 +8,11 @@ export const ANNA_DATA: CityData = {
   region: 'North Dallas',
   zip: '75409',
   slug: 'anna',
-  metaTitle: 'Metal & Synthetic Slate Roofing Anna TX | Metroplex',
-  metaDesc: 'Premium standing seam, stone-coated steel & synthetic slate roofing in Anna, TX. Serving Village Park and Avery Pointe.',
+  metaTitle: 'Metal & Brava Synthetic Slate Roofing Anna TX | Metroplex',
+  metaDesc: 'Premium standing seam, stone-coated steel & Brava synthetic slate roofing in Anna, TX. Serving Village Park and Avery Pointe.',
   heroHeadline: "Anna Is Growing Quickly.\nGet the Roof Right the First Time",
   heroSub: "Anna is one of Collin County's fastest-growing communities. New homes are going up every week. The ones built to last are built with metal.",
-  localContext: "Anna has become one of North Texas's most rapidly expanding communities, with new construction setting strong standards for quality throughout the city. Located in Collin County's active hail corridor, Anna homeowners face significant annual storm exposure. Metal roofing is increasingly common on new construction throughout the area and represents a strong long-term upgrade for existing homes.",
+  localContext: "Anna has become one of North Texas's most rapidly expanding communities, with new construction setting strong standards for quality throughout the city. Located in Collin County's active hail corridor, Anna homeowners face significant annual storm exposure. Metal roofing is increasingly common on new construction throughout the area and represents a strong long-term upgrade for existing homes. Metal is not the only lasting choice here. Brava synthetic slate, shake, and Spanish barrel tile give Anna homes a premium, natural-material look, and we help you compare Brava and metal side by side before you decide.",
   hoaNote: "Anna's growing master-planned communities have established review processes for exterior material changes. Standing seam and stone-coated steel in approved profiles and colors are widely permitted. We provide complete HOA documentation support at no additional cost.",
   localStat: { val: '$370k', label: 'Median Home Value', source: 'Anna, TX 2025' },
   neighborhoods: [
@@ -40,6 +40,6 @@ export const ANNA_DATA: CityData = {
     { q: 'Does a metal roof qualify for an insurance discount in Collin County?', a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. Anna homeowners in Collin County\'s active storm corridor typically see meaningful annual premium reductions after upgrading.' },
     { q: 'Will my Anna HOA approve a metal roof?', a: 'Most Anna communities permit metal roofing in approved profiles and neutral color palettes. We provide complete HOA documentation support at no additional cost.' },
     { q: 'How long does metal roof installation take in Anna?', a: 'Most Anna residential installations are completed in one to three days. We provide a specific timeline for your home during the estimate process.' },
-    { q: 'What metal roofing styles work best in Anna?', a: 'Stone-coated steel and standing seam are both popular choices in Anna\'s newer developments. Stone-coated steel in shingle profiles suits traditional new construction throughout the area. Standing seam is preferred for more contemporary homes.' },
+    { q: 'What metal and Brava roofing styles work best in Anna?', a: 'Stone-coated steel and standing seam are both popular choices in Anna\'s newer developments. Stone-coated steel in shingle profiles suits traditional new construction throughout the area. Standing seam is preferred for more contemporary homes. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.' },
   ],
 }

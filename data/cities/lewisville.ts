@@ -8,11 +8,11 @@ export const LEWISVILLE_DATA: CityData = {
   region: 'North Dallas',
   zip: '75067',
   slug: 'lewisville',
-  metaTitle: 'Metal & Synthetic Slate Roofing Lewisville TX | Metroplex',
-  metaDesc: 'Premium standing seam, stone-coated steel & synthetic slate roofing in Lewisville, TX. Serving Castle Hills and Lake Vista.',
+  metaTitle: 'Metal & Brava Slate Roofing Lewisville TX | Metroplex',
+  metaDesc: 'Premium standing seam, stone-coated steel & Brava synthetic slate roofing in Lewisville, TX. Serving Castle Hills and Lake Vista.',
   heroHeadline: "Lewisville Homeowners\nAre Done Replacing Asphalt",
   heroSub: "Lewisville sits on the lake and in the path of North Texas storms. Metal roofing is the upgrade that handles both.",
-  localContext: "Lewisville's position along Lake Lewisville in Denton County places it in an active storm corridor where hail events occur regularly. With median home values approaching $400,000 and standard 2% wind/hail deductibles, Lewisville homeowners face recurring out-of-pocket storm exposure on asphalt roofs. Metal roofing eliminates that exposure and qualifies for real insurance savings.",
+  localContext: "Lewisville's position along Lake Lewisville in Denton County places it in an active storm corridor where hail events occur regularly. With median home values approaching $400,000 and standard 2% wind/hail deductibles, Lewisville homeowners face recurring out-of-pocket storm exposure on asphalt roofs. Metal roofing eliminates that exposure and qualifies for real insurance savings. Metal is not the only lasting choice here. Brava synthetic slate, shake, and Spanish barrel tile give Lewisville homes a premium, natural-material look, and we help you compare Brava and metal side by side before you decide.",
   hoaNote: "Lewisville's established neighborhoods have active HOA review processes. Standing seam and stone-coated steel in approved profiles and neutral color palettes are commonly permitted. We provide complete HOA documentation support at no additional cost.",
   localStat: { val: '$390k', label: 'Median Home Value', source: 'Lewisville, TX 2025' },
   neighborhoods: [
@@ -43,6 +43,6 @@ export const LEWISVILLE_DATA: CityData = {
     { q: 'Will my Lewisville HOA approve a metal roof?', a: 'Most Lewisville HOAs permit standing seam and stone-coated steel in approved profiles and neutral color palettes. We provide complete HOA documentation support at no additional cost.' },
     { q: 'How long does metal roof installation take in Lewisville?', a: 'Most Lewisville residential installations are completed in one to three days depending on roof size and material. We provide a specific timeline for your home during the estimate process.' },
     { q: 'How does metal roofing handle storms near Lake Lewisville?', a: 'Standing seam and stone-coated steel carry a Class 4 impact resistance rating, the highest available. Lewisville\'s lakeside position in Denton County creates consistent storm exposure and Class 4 rated roofing provides strong protection while qualifying for maximum carrier discounts.' },
-    { q: 'What metal roofing styles are popular in Lewisville?', a: 'Standing seam and stone-coated steel are both widely chosen in Lewisville\'s mix of established and newer neighborhoods. Stone-coated steel suits traditional homes throughout the city. Standing seam is preferred for more contemporary architecture and offers the cleanest visual profile.' },
+    { q: 'What metal and Brava roofing styles are popular in Lewisville?', a: 'Standing seam and stone-coated steel are both widely chosen in Lewisville\'s mix of established and newer neighborhoods. Stone-coated steel suits traditional homes throughout the city. Standing seam is preferred for more contemporary architecture and offers the cleanest visual profile. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.' },
   ],
 }

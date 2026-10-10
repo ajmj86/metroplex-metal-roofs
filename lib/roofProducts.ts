@@ -64,6 +64,14 @@ export const MATERIAL_TYPE_LABELS: Record<MaterialType, string> = {
   synthetic_slate: 'Synthetic Slate',
 };
 
+// Display-only labels. MATERIAL_TYPE_LABELS / getRoofTypeLabel /
+// getSelectedRoofLabel above feed the GHL + render payloads and stay
+// unchanged; UI text that names Brava uses these instead.
+export const MATERIAL_TYPE_DISPLAY_LABELS: Record<MaterialType, string> = {
+  metal: 'Metal',
+  synthetic_slate: 'Brava Synthetic Slate',
+};
+
 // Which roofType keys belong to which top-level material group. Synthetic
 // Slate has exactly one roofType today (all 3 Brava profiles live under it
 // as styles, matching the existing stone_coated_steel style/product shape)
@@ -182,6 +190,14 @@ export function resolveSelection(
 // price a lead from the `product` it already carries without a new field.
 export function getProductStyle(roofType: string, product: string): string | null {
   return roofProducts[roofType]?.products?.[product]?.style ?? null;
+}
+
+// Display-only label for echoed selections in the UI. Brava selections show
+// the real Brava profile name (e.g. "Brava Slate") when a product is picked.
+export function getRoofTypeDisplayLabel(roofType: string, product?: string | null): string {
+  if (roofType !== 'synthetic_slate') return getRoofTypeLabel(roofType);
+  const productLabel = product ? getProductLabel(roofType, product) : null;
+  return productLabel ?? MATERIAL_TYPE_DISPLAY_LABELS.synthetic_slate;
 }
 
 // Label shown to Andrew/GHL for a selection. Synthetic slate names the Brava

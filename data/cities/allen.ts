@@ -8,11 +8,11 @@ export const ALLEN_DATA: CityData = {
   region: 'North Dallas',
   zip: '75013',
   slug: 'allen',
-  metaTitle: 'Metal & Synthetic Slate Roofing Allen TX | Metroplex',
-  metaDesc: 'Premium standing seam, stone-coated steel & synthetic slate roofing in Allen, TX. Serving Watters Crossing and Twin Creeks.',
+  metaTitle: 'Metal & Brava Synthetic Slate Roofing Allen TX | Metroplex',
+  metaDesc: 'Premium standing seam, stone-coated steel & Brava synthetic slate roofing in Allen, TX. Serving Watters Crossing and Twin Creeks.',
   heroHeadline: "Allen Homeowners\nDeserve a Permanent Roof",
   heroSub: "Allen has some of the best schools and neighborhoods in North Texas. The homes here deserve a roof that lasts as long as the investment underneath it.",
-  localContext: "Allen sits in Collin County's core hail corridor, where severe storm seasons have become an expected annual event. With median home values near $500,000 and 2% wind/hail deductibles standard across most carriers, a single claim means $10,000 or more out of pocket for most Allen homeowners. Metal roofing is the permanent fix that eliminates the replacement cycle and qualifies for meaningful insurance savings.",
+  localContext: "Allen sits in Collin County's core hail corridor, where severe storm seasons have become an expected annual event. With median home values near $500,000 and 2% wind/hail deductibles standard across most carriers, a single claim means $10,000 or more out of pocket for most Allen homeowners. Metal roofing is the permanent fix that eliminates the replacement cycle and qualifies for meaningful insurance savings. Homeowners who want the look of natural slate, shake, or tile have an equally strong option in Brava synthetic slate, which we install alongside standing seam and stone-coated steel for homes in communities like Watters Crossing and Twin Creeks.",
   hoaNote: "Allen's established neighborhoods including Watters Crossing and Twin Creeks have active HOA review processes for exterior changes. Standing seam and stone-coated steel in approved colors are commonly permitted. We provide full documentation support for your HOA submission.",
   localStat: { val: '$500k', label: 'Median Home Value', source: 'Allen, TX 2025' },
   neighborhoods: [
@@ -42,6 +42,6 @@ export const ALLEN_DATA: CityData = {
     { q: 'Will my Allen HOA approve a metal roof?', a: 'Most Allen HOAs permit metal roofing in approved profiles and neutral color palettes. We provide full documentation support including material samples, color chips, and manufacturer spec sheets to support your HOA submission at no additional cost.' },
     { q: 'How long does metal roof installation take in Allen?', a: 'Most residential installations in Allen are completed in one to three days depending on roof size and complexity. We provide a specific timeline for your home as part of the estimate process.' },
     { q: 'How does a metal roof handle hail in Collin County?', a: 'Standing seam and stone-coated steel carry a Class 4 impact resistance rating, the highest available. This is the rating required by most Texas carriers for maximum hail discount eligibility and is particularly important in Collin County\'s active hail corridor.' },
-    { q: 'What metal roofing styles are available in Allen?', a: 'Standing seam, stone-coated steel, copper, and R-Panel are all available. Standing seam and stone-coated steel are the most common choices for Allen homes. The right selection depends on your home\'s architecture, budget, and HOA requirements.' },
+    { q: 'What metal and Brava roofing styles are available in Allen?', a: 'Standing seam, stone-coated steel, copper, and R-Panel are all available. Standing seam and stone-coated steel are the most common choices for Allen homes. The right selection depends on your home\'s architecture, budget, and HOA requirements. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.' },
   ],
 }

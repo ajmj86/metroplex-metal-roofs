@@ -8,11 +8,11 @@ export const FORNEY_DATA: CityData = {
   region: 'East Dallas',
   zip: '75126',
   slug: 'forney',
-  metaTitle: 'Metal & Synthetic Slate Roofing Forney TX | Metroplex',
-  metaDesc: 'Premium standing seam, stone-coated steel & synthetic slate roofing in Forney, TX. Serving Travis Ranch and Devonshire.',
+  metaTitle: 'Metal & Brava Synthetic Slate Roofing Forney TX | Metroplex',
+  metaDesc: 'Premium standing seam, stone-coated steel & Brava synthetic slate roofing in Forney, TX. Serving Travis Ranch and Devonshire.',
   heroHeadline: "Forney Is One of Texas's\nFastest-Growing Cities",
   heroSub: "New homes are going up across Forney every month. The ones built to last are built with metal. If yours was not, this is how you fix that.",
-  localContext: "Forney has become one of the most rapidly expanding communities east of Dallas, with new construction setting a high standard for quality and durability. Located in Kaufman County's active storm corridor, Forney homeowners face consistent annual hail exposure. Metal roofing is increasingly specified on new builds throughout the city and represents a strong permanent upgrade for existing homes.",
+  localContext: "Forney has become one of the most rapidly expanding communities east of Dallas, with new construction setting a high standard for quality and durability. Located in Kaufman County's active storm corridor, Forney homeowners face consistent annual hail exposure. Metal roofing is increasingly specified on new builds throughout the city and represents a strong permanent upgrade for existing homes. For Forney homeowners drawn to a traditional slate or shake profile, Brava offers that look in a durable synthetic, so you can choose between metal and Brava on the merits of your own home.",
   hoaNote: "Forney's growing master-planned communities have established architectural review processes for roofing material changes. Standing seam and stone-coated steel in approved profiles and colors are widely permitted. We provide full HOA documentation support at no additional cost.",
   localStat: { val: '$340k', label: 'Median Home Value', source: 'Forney, TX 2025' },
   neighborhoods: [
@@ -40,6 +40,6 @@ export const FORNEY_DATA: CityData = {
     { q: 'Does a metal roof qualify for an insurance discount in Kaufman County?', a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. Forney homeowners in Kaufman County\'s active storm corridor typically see meaningful reductions in their wind/hail premium after upgrading.' },
     { q: 'Will my Forney HOA approve a metal roof?', a: 'Most Forney HOAs permit metal roofing in approved profiles and neutral color palettes. We provide complete documentation support for your HOA submission at no additional cost.' },
     { q: 'How long does metal roof installation take in Forney?', a: 'Most Forney residential installations are completed in one to three days. The exact timeline depends on roof size and material. We provide a specific timeline during the estimate process.' },
-    { q: 'What metal roofing styles work best in Forney?', a: 'Stone-coated steel and standing seam are both popular choices in Forney. Stone-coated steel in shingle profiles suits the traditional architecture common throughout the city\'s newer developments. Standing seam is preferred for more contemporary homes. Both carry Class 4 hail ratings and 50-plus year lifespans.' },
+    { q: 'What metal and Brava roofing styles work best in Forney?', a: 'Stone-coated steel and standing seam are both popular choices in Forney. Stone-coated steel in shingle profiles suits the traditional architecture common throughout the city\'s newer developments. Standing seam is preferred for more contemporary homes. Both carry Class 4 hail ratings and 50-plus year lifespans. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.' },
   ],
 }

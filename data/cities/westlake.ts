@@ -8,11 +8,12 @@ export const WESTLAKE_DATA: CityData = {
   region: 'North Fort Worth',
   zip: '76262',
   slug: 'westlake',
-  metaTitle: 'Metal & Synthetic Slate Roofing Westlake TX | Metroplex',
-  metaDesc: 'Premium standing seam, copper & synthetic slate roofing in Westlake, TX. Serving Vaquero and Glenwyck Farms.',
+  leadWithBrava: true,
+  metaTitle: 'Brava Slate & Metal Roofing Westlake TX | Metroplex',
+  metaDesc: 'Premium standing seam, copper & Brava synthetic slate roofing in Westlake, TX. Serving Vaquero and Glenwyck Farms.',
   heroHeadline: "Westlake Estates Deserve\nMore Than Asphalt",
   heroSub: "Westlake homeowners expect a higher standard in everything they own. A metal roof is the permanent finish that matches that standard and handles North Texas weather without compromise.",
-  localContext: "Westlake consistently ranks among the wealthiest communities in Texas, with home values regularly exceeding $2 million. With 2% wind/hail deductibles standard on high-value policies, a single hail event can expose Westlake homeowners to $40,000 or more out of pocket on an asphalt roof. Metal roofing is the only permanent solution that eliminates that exposure entirely.",
+  localContext: "Westlake consistently ranks among the wealthiest communities in Texas, with home values regularly exceeding $2 million. With 2% wind/hail deductibles standard on high-value policies, a single hail event can expose Westlake homeowners to $40,000 or more out of pocket on an asphalt roof. Metal roofing is the only permanent solution that eliminates that exposure entirely. Brava synthetic slate, shake, and tile are a natural fit for Westlake homes where the roofline matters, with the look of natural slate, shake, or tile on a durable synthetic. Standing seam and stone-coated steel remain strong alternatives, and we show you both.",
   hoaNote: "Westlake's residential communities maintain strict architectural standards. Standing seam and copper roofing in approved profiles are widely permitted and increasingly common on estate-level properties. We provide complete HOA documentation packages including material samples, color specifications, and manufacturer certification at no additional cost.",
   localStat: { val: '$2.1M', label: 'Median Home Value', source: 'Westlake, TX 2025' },
   neighborhoods: [
@@ -42,6 +43,6 @@ export const WESTLAKE_DATA: CityData = {
     { q: 'Will my Westlake HOA approve a metal roof?', a: 'Most Westlake residential communities permit standing seam and stone-coated steel in approved profiles and colors. Copper roofing is permitted on many estate properties. We provide the complete documentation package including material samples, color chips, and manufacturer spec sheets to support your HOA or architectural review committee submission.' },
     { q: 'Does a metal roof qualify for an insurance discount in Tarrant County?', a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. For Westlake homeowners with high-value policies, the savings on annual premiums combined with eliminated deductible exposure over 20 to 30 years typically represent a substantial financial return on the upgrade.' },
     { q: 'How long does metal roof installation take in Westlake?', a: 'Most residential metal roofing installations in Westlake are completed in one to four days depending on roof size, complexity, and material. Copper and large standing seam systems on estate properties may take longer. We provide a specific timeline for your home as part of the estimate process.' },
-    { q: 'What metal roofing styles work best on Westlake estate homes?', a: 'Standing seam is the most popular choice for Westlake estate architecture, offering clean hidden-fastener lines that complement both contemporary and traditional design. Copper is the premium option for properties where permanence and visual distinction are the priority. Both carry the highest available impact resistance ratings.' },
+    { q: 'What metal and Brava roofing styles work best on Westlake estate homes?', a: 'Standing seam is the most popular choice for Westlake estate architecture, offering clean hidden-fastener lines that complement both contemporary and traditional design. Copper is the premium option for properties where permanence and visual distinction are the priority. Both carry the highest available impact resistance ratings. For homes in this class, Brava synthetic slate, shake, and Spanish barrel tile are often the first option we show, with standing seam and stone-coated steel as strong alternatives.' },
   ],
 }

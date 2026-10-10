@@ -8,13 +8,13 @@ export const IRVING_DATA: CityData = {
   region: 'Mid-Cities',
   zip: '75039',
   slug: 'irving',
-  metaTitle: 'Metal & Synthetic Slate Roofing Irving TX | Metroplex',
-  metaDesc: 'Premium standing seam, stone-coated steel & synthetic slate roofing in Irving, TX. Serving Las Colinas and Valley Ranch.',
+  metaTitle: 'Metal & Brava Synthetic Slate Roofing Irving TX | Metroplex',
+  metaDesc: 'Premium standing seam, stone-coated steel & Brava synthetic slate roofing in Irving, TX. Serving Las Colinas and Valley Ranch.',
 
   heroHeadline: "Irving Homes Built Around\nLakes and Canals Deserve a Roof to Match",
   heroSub: "From the high-end towers of Las Colinas to the family neighborhoods of Valley Ranch and the Heritage District, Irving homeowners are moving past asphalt for good.",
 
-  localContext: "Irving's housing stock spans nearly every era of DFW development, from Heritage District homes built decades before Las Colinas existed to the master-planned communities of Valley Ranch and the canal-front properties near Lake Carolyn. That range means Irving sees more roofing variety than most nearby cities, but the underlying problem is the same everywhere: Dallas County's hail corridor doesn't spare Irving, and asphalt shingles rated for 15 to 20 years routinely fail well before that in real storm seasons.",
+  localContext: "Irving's housing stock spans nearly every era of DFW development, from Heritage District homes built decades before Las Colinas existed to the master-planned communities of Valley Ranch and the canal-front properties near Lake Carolyn. That range means Irving sees more roofing variety than most nearby cities, but the underlying problem is the same everywhere: Dallas County's hail corridor doesn't spare Irving, and asphalt shingles rated for 15 to 20 years routinely fail well before that in real storm seasons. Metal is not the only lasting choice here. Brava synthetic slate, shake, and Spanish barrel tile give Irving homes a premium, natural-material look, and we help you compare Brava and metal side by side before you decide.",
 
   hoaNote: "Las Colinas and Valley Ranch both maintain active HOAs with architectural review for exterior changes, and metal roofing in approved profiles is already common throughout both communities. Older Heritage District and Northgate Heights homes typically fall outside HOA jurisdiction. We provide full documentation — material samples, color chips, and manufacturer spec sheets — to support any required HOA submission at no additional cost.",
 
@@ -68,8 +68,8 @@ export const IRVING_DATA: CityData = {
       a: 'Most residential installations in Irving are completed in one to three days. Communities with HOA staging or access requirements, like parts of Las Colinas, may need a bit more coordination, which we handle as part of scheduling.',
     },
     {
-      q: 'What metal roofing style works best for Irving homes?',
-      a: 'Standing seam is the most common choice in Las Colinas and Valley Ranch given the more contemporary architecture found there, while stone-coated steel suits the traditional ranch-style homes in the Heritage District and Northgate Heights. Both carry Class 4 hail ratings and 50-plus year lifespans.',
+      q: 'What metal and Brava roofing style works best for Irving homes?',
+      a: 'Standing seam is the most common choice in Las Colinas and Valley Ranch given the more contemporary architecture found there, while stone-coated steel suits the traditional ranch-style homes in the Heritage District and Northgate Heights. Both carry Class 4 hail ratings and 50-plus year lifespans. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.',
     },
     {
       q: 'Is metal roofing common on Irving homes near Lake Carolyn and the canals?',

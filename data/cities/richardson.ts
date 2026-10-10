@@ -8,11 +8,11 @@ export const RICHARDSON_DATA: CityData = {
   region: 'North Dallas',
   zip: '75080',
   slug: 'richardson',
-  metaTitle: 'Metal & Synthetic Slate Roofing Richardson TX | Metroplex',
-  metaDesc: 'Premium standing seam, stone-coated steel & synthetic slate roofing in Richardson, TX. Serving Canyon Creek and Buckingham.',
+  metaTitle: 'Metal & Brava Slate Roofing Richardson TX | Metroplex',
+  metaDesc: 'Premium standing seam, stone-coated steel & Brava synthetic slate roofing in Richardson, TX. Serving Canyon Creek and Buckingham.',
   heroHeadline: "Richardson Homeowners\nAre Ending the Asphalt Cycle",
   heroSub: "Richardson has deep roots and well-established neighborhoods. Homes here are worth protecting properly. Metal roofing is how you do that.",
-  localContext: "Richardson's established neighborhoods carry median home values above $450,000 and sit in Dallas County's active storm corridor. Many Richardson homes are 30 to 40 years old and have already gone through multiple asphalt replacements. Metal roofing ends that cycle permanently and qualifies for meaningful insurance savings in a county where hail claims are a reliable annual occurrence.",
+  localContext: "Richardson's established neighborhoods carry median home values above $450,000 and sit in Dallas County's active storm corridor. Many Richardson homes are 30 to 40 years old and have already gone through multiple asphalt replacements. Metal roofing ends that cycle permanently and qualifies for meaningful insurance savings in a county where hail claims are a reliable annual occurrence. Metal is not the only lasting choice here. Brava synthetic slate, shake, and Spanish barrel tile give Richardson homes a premium, natural-material look, and we help you compare Brava and metal side by side before you decide.",
   hoaNote: "Richardson's established neighborhoods have active HOA review processes. Standing seam and stone-coated steel in approved profiles and neutral color palettes are commonly permitted. We provide complete HOA documentation support at no additional cost.",
   localStat: { val: '$460k', label: 'Median Home Value', source: 'Richardson, TX 2025' },
   neighborhoods: [
@@ -43,6 +43,6 @@ export const RICHARDSON_DATA: CityData = {
     { q: 'Does a metal roof qualify for an insurance discount in Richardson?', a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. Richardson homeowners in Dallas County\'s active storm corridor typically see meaningful annual premium reductions after upgrading.' },
     { q: 'Will my Richardson HOA approve a metal roof?', a: 'Most Richardson HOAs permit standing seam and stone-coated steel in approved profiles and neutral color palettes. We provide complete HOA documentation support at no additional cost.' },
     { q: 'How long does metal roof installation take in Richardson?', a: 'Most Richardson residential installations are completed in one to three days depending on roof size and material. We provide a specific timeline during the estimate process.' },
-    { q: 'What metal roofing styles are popular in Richardson?', a: 'Stone-coated steel in shingle profiles is the most popular choice for Richardson\'s established traditional neighborhoods. Standing seam is preferred for more contemporary homes. Both carry Class 4 hail ratings and 50-plus year lifespans.' },
+    { q: 'What metal and Brava roofing styles are popular in Richardson?', a: 'Stone-coated steel in shingle profiles is the most popular choice for Richardson\'s established traditional neighborhoods. Standing seam is preferred for more contemporary homes. Both carry Class 4 hail ratings and 50-plus year lifespans. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.' },
   ],
 }

@@ -8,11 +8,11 @@ export const CELINA_DATA: CityData = {
   region: 'North Dallas',
   zip: '75009',
   slug: 'celina',
-  metaTitle: 'Metal & Synthetic Slate Roofing Celina TX | Metroplex',
-  metaDesc: 'Premium standing seam, stone-coated steel & synthetic slate roofing in Celina, TX. Serving Light Farms and Mustang Lakes.',
+  metaTitle: 'Metal & Brava Synthetic Slate Roofing Celina TX | Metroplex',
+  metaDesc: 'Premium standing seam, stone-coated steel & Brava synthetic slate roofing in Celina, TX. Serving Light Farms and Mustang Lakes.',
   heroHeadline: "Celina Is Growing Fast.\nBuild It Right the First Time",
   heroSub: "Celina is one of the fastest-growing cities in Texas and the homes going up today are setting a new standard. Metal roofing is part of that standard.",
-  localContext: "Celina has emerged as one of the most rapidly expanding communities in North Texas, with new construction setting a high bar for quality and durability. Located in Collin County's hail corridor, Celina homeowners face the same storm exposure as neighboring communities but often with newer homes and longer mortgage horizons. Metal roofing is increasingly specified on new builds throughout the city and makes strong financial sense for any existing homeowner ready to stop replacing asphalt.",
+  localContext: "Celina has emerged as one of the most rapidly expanding communities in North Texas, with new construction setting a high bar for quality and durability. Located in Collin County's hail corridor, Celina homeowners face the same storm exposure as neighboring communities but often with newer homes and longer mortgage horizons. Metal roofing is increasingly specified on new builds throughout the city and makes strong financial sense for any existing homeowner ready to stop replacing asphalt. For Celina homeowners drawn to a traditional slate or shake profile, Brava offers that look in a durable synthetic, so you can choose between metal and Brava on the merits of your own home.",
   hoaNote: "Celina's growing master-planned communities have established architectural review processes. Metal roofing in approved profiles and colors is widely permitted and becoming increasingly common throughout the city's newer developments. We provide full HOA documentation support at no additional cost.",
   localStat: { val: '$480k', label: 'Median Home Value', source: 'Celina, TX 2025' },
   neighborhoods: [
@@ -42,6 +42,6 @@ export const CELINA_DATA: CityData = {
     { q: 'Does a metal roof qualify for an insurance discount in Collin County?', a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. Celina homeowners in Collin County\'s active hail corridor typically see meaningful reductions in their wind/hail premium after upgrading to a Class 4 rated roof.' },
     { q: 'Will my Celina HOA approve a metal roof?', a: 'Most Celina HOAs permit metal roofing in approved profiles and neutral color palettes. We provide full documentation support including material samples, color chips, and manufacturer spec sheets for your HOA submission at no additional cost.' },
     { q: 'How long does metal roof installation take in Celina?', a: 'Most residential installations in Celina are completed in one to three days. The exact timeline depends on roof size and material selection. We provide a specific estimate timeline for your home before any work begins.' },
-    { q: 'What metal roofing styles work best on Celina homes?', a: 'Standing seam and stone-coated steel are the most popular choices for Celina\'s mix of contemporary and traditional new construction. Both carry Class 4 hail ratings and 50-plus year lifespans. The right choice depends on your home\'s architecture and HOA requirements.' },
+    { q: 'What metal and Brava roofing styles work best on Celina homes?', a: 'Standing seam and stone-coated steel are the most popular choices for Celina\'s mix of contemporary and traditional new construction. Both carry Class 4 hail ratings and 50-plus year lifespans. The right choice depends on your home\'s architecture and HOA requirements. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.' },
   ],
 }

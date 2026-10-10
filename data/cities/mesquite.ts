@@ -8,13 +8,13 @@ export const MESQUITE_DATA: CityData = {
   region: 'East Dallas',
   zip: '75150',
   slug: 'mesquite',
-  metaTitle: 'Metal & Synthetic Slate Roofing Mesquite TX | Metroplex',
-  metaDesc: 'Premium standing seam, stone-coated steel & synthetic slate roofing in Mesquite, TX. Serving Town East Estates and Solterra.',
+  metaTitle: 'Metal & Brava Slate Roofing Mesquite TX | Metroplex',
+  metaDesc: 'Premium standing seam, stone-coated steel & Brava synthetic slate roofing in Mesquite, TX. Serving Town East Estates and Solterra.',
 
   heroHeadline: "Mesquite Homes Have Weathered\nEnough Hail Seasons on Asphalt",
   heroSub: "From Town East Estates to the newer builds in Solterra, Mesquite homeowners are switching to a roof that outlasts the storm cycle instead of getting replaced by it.",
 
-  localContext: "Mesquite's established East Dallas neighborhoods carry some of the area's oldest roofing stock, much of it already replaced once with asphalt after prior hail seasons. Dallas County's hail corridor runs directly through Mesquite, and with newer master-planned communities like Solterra bringing a wave of new construction to the city, metal roofing is increasingly the default choice for homeowners who don't want to repeat a reroof cycle every 12 to 15 years.",
+  localContext: "Mesquite's established East Dallas neighborhoods carry some of the area's oldest roofing stock, much of it already replaced once with asphalt after prior hail seasons. Dallas County's hail corridor runs directly through Mesquite, and with newer master-planned communities like Solterra bringing a wave of new construction to the city, metal roofing is increasingly the default choice for homeowners who don't want to repeat a reroof cycle every 12 to 15 years. Metal is not the only lasting choice here. Brava synthetic slate, shake, and Spanish barrel tile give Mesquite homes a premium, natural-material look, and we help you compare Brava and metal side by side before you decide.",
 
   hoaNote: "Solterra maintains an active HOA with standard architectural review for exterior changes, and metal roofing in approved profiles is already common in the community. Older neighborhoods like Town East Estates and Casa View Heights typically have no HOA restrictions. Where documentation is required, we provide material samples, color chips, and manufacturer spec sheets at no additional cost.",
 
@@ -72,8 +72,8 @@ export const MESQUITE_DATA: CityData = {
       a: 'Most residential installations in Mesquite are completed in one to three days. The exact timeline depends on roof size and material selection — we provide a specific estimate timeline for your home before any work begins.',
     },
     {
-      q: 'What metal roofing style works best for Mesquite homes?',
-      a: 'Stone-coated steel is a strong match for the traditional ranch homes common in Town East Estates and Casa View Heights, while standing seam suits the more contemporary builds going up in Solterra. Both carry Class 4 hail ratings and 50-plus year lifespans.',
+      q: 'What metal and Brava roofing style works best for Mesquite homes?',
+      a: 'Stone-coated steel is a strong match for the traditional ranch homes common in Town East Estates and Casa View Heights, while standing seam suits the more contemporary builds going up in Solterra. Both carry Class 4 hail ratings and 50-plus year lifespans. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.',
     },
   ],
 }

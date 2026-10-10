@@ -8,13 +8,13 @@ export const GRAND_PRAIRIE_DATA: CityData = {
   region: 'Mid-Cities',
   zip: '75052',
   slug: 'grand-prairie',
-  metaTitle: 'Metal & Synthetic Slate Roofing Grand Prairie TX | Metroplex',
-  metaDesc: 'Premium standing seam, stone-coated steel & synthetic slate roofing in Grand Prairie, TX. Serving Mira Lagos and Westchester.',
+  metaTitle: 'Metal & Brava Slate Roofing Grand Prairie TX | Metroplex',
+  metaDesc: 'Premium standing seam, stone-coated steel & Brava synthetic slate roofing in Grand Prairie, TX. Serving Mira Lagos and Westchester.',
 
   heroHeadline: "Grand Prairie Is Building Fast —\nBuild the Roof Right the First Time",
   heroSub: "From Mira Lagos to CentrePort, Grand Prairie's newest neighborhoods are setting a higher standard, and metal roofing is part of it.",
 
-  localContext: "Grand Prairie sits at the center of the Mid-Cities, between Arlington, Irving, and Dallas, and its newer master-planned communities like Mira Lagos and Sheffield are drawing homeowners who want their roof to match the quality of the rest of the build. Dallas County's hail corridor covers Grand Prairie the same as its neighbors, and with home values rising steadily across the city's newer developments, a Class 4 impact-rated metal roof is increasingly the standard rather than the upgrade.",
+  localContext: "Grand Prairie sits at the center of the Mid-Cities, between Arlington, Irving, and Dallas, and its newer master-planned communities like Mira Lagos and Sheffield are drawing homeowners who want their roof to match the quality of the rest of the build. Dallas County's hail corridor covers Grand Prairie the same as its neighbors, and with home values rising steadily across the city's newer developments, a Class 4 impact-rated metal roof is increasingly the standard rather than the upgrade. For Grand Prairie homeowners drawn to a traditional slate or shake profile, Brava offers that look in a durable synthetic, so you can choose between metal and Brava on the merits of your own home.",
 
   hoaNote: "Mira Lagos, Westchester, and Sheffield all maintain active HOAs with architectural review for exterior changes, and metal roofing in approved profiles is already common throughout each. Older neighborhoods closer to Downtown Grand Prairie typically have no HOA restrictions. Where documentation is required, we provide material samples, color chips, and manufacturer spec sheets at no additional cost.",
 
@@ -74,8 +74,8 @@ export const GRAND_PRAIRIE_DATA: CityData = {
       a: 'Most residential installations in Grand Prairie are completed in one to three days. The exact timeline depends on roof size and material selection — we provide a specific estimate timeline for your home before any work begins.',
     },
     {
-      q: 'What metal roofing style works best for Grand Prairie homes?',
-      a: 'Standing seam suits the contemporary architecture common in newer communities like Mira Lagos and CentrePort-adjacent builds, while stone-coated steel is a strong match for the more traditional homes closer to Downtown Grand Prairie. Both carry Class 4 hail ratings and 50-plus year lifespans.',
+      q: 'What metal and Brava roofing style works best for Grand Prairie homes?',
+      a: 'Standing seam suits the contemporary architecture common in newer communities like Mira Lagos and CentrePort-adjacent builds, while stone-coated steel is a strong match for the more traditional homes closer to Downtown Grand Prairie. Both carry Class 4 hail ratings and 50-plus year lifespans. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.',
     },
   ],
 }

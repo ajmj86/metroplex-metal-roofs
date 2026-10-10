@@ -11,8 +11,9 @@ import { getFormVariant } from '@/lib/formVariant'
 import {
   ROOF_TYPE_ORDER,
   MATERIAL_TYPE_GROUPS,
-  MATERIAL_TYPE_LABELS,
+  MATERIAL_TYPE_DISPLAY_LABELS,
   getRoofTypeLabel,
+  getRoofTypeDisplayLabel,
   stylesWithColors,
   productsForStyle,
   hasExactlyOneProduct,
@@ -1341,7 +1342,7 @@ export default function VisualizerPage() {
                     }}
                     onMouseEnter={e => { if (selMaterialType !== mt) { e.currentTarget.style.borderColor = C.accentDark; e.currentTarget.style.color = C.white; }}}
                     onMouseLeave={e => { if (selMaterialType !== mt) { e.currentTarget.style.borderColor = C.border; e.currentTarget.style.color = C.mutedLight; }}}
-                    >{MATERIAL_TYPE_LABELS[mt]}</button>
+                    >{MATERIAL_TYPE_DISPLAY_LABELS[mt]}</button>
                   ))}
                 </div>
               </div>
@@ -1747,7 +1748,7 @@ export default function VisualizerPage() {
                 {LOADING_PHRASES[phraseIdx]}
               </div>
               <div style={{ fontSize: 13, color: C.muted }}>
-                Rendering <span style={{ color: C.accentLight }}>{selColor} {getRoofTypeLabel(selType ?? '')}</span>
+                Rendering <span style={{ color: C.accentLight }}>{selColor} {getRoofTypeDisplayLabel(selType ?? '', selProduct)}</span>
                 {gateData.firstName ? ` for ${gateData.firstName}` : ''}
               </div>
               <div style={{ fontSize: 12, color: C.muted, marginTop: 12, fontStyle: 'italic' }}>
@@ -1764,7 +1765,7 @@ export default function VisualizerPage() {
                   Your Roof Visualization
                 </div>
                 <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 'clamp(1.8rem,4vw,2.8rem)', fontWeight: 700, color: C.white, lineHeight: 1.1, marginBottom: 8 }}>
-                  {selColor} {getRoofTypeLabel(selType ?? '')}
+                  {selColor} {getRoofTypeDisplayLabel(selType ?? '', selProduct)}
                 </h2>
                 <p style={{ fontSize: 13, color: C.muted }}>{address}</p>
               </div>

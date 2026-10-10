@@ -31,7 +31,7 @@ import {
   STANDING_SEAM_COLORS, R_PANEL_COLORS, STONE_COLORS, STONE_PROFILE_TILES, STONE_SHINGLE_TILES,
   COPPER_PATINA_CHIPS, COPPER_INSTALL_PHOTOS,
 } from "@/lib/productColors";
-import { productsForStyle, MATERIAL_TYPE_LABELS, styleHasWidthVariants, colorsForWidth, colorImageForWidth } from "@/lib/roofProducts";
+import { productsForStyle, MATERIAL_TYPE_DISPLAY_LABELS, styleHasWidthVariants, colorsForWidth, colorImageForWidth } from "@/lib/roofProducts";
 
 /* ── Reveal on scroll ── */
 const Reveal = ({ children, delay=0 }) => {
@@ -125,9 +125,9 @@ const SwatchChip = ({ chip, label, onClick, size="chip", badge }) => {
  * several of those merge these in directly.
  */
 const bravaStyles = [
-  { id: "spanish_barrel_tile", label: "Spanish Barrel Tile", desc: "A rounded, high-relief barrel profile that reads as authentic clay tile from the curb — popular on Mediterranean, Spanish Colonial, and Tuscan-style homes across DFW." },
-  { id: "cedar_shake",         label: "Cedar Shake",         desc: "A deeply textured, hand-split shake profile for homeowners who want a rustic, natural-wood look without cedar's fire risk, rot, or ongoing upkeep." },
-  { id: "slate",               label: "Slate",               desc: "A crisp, dimensional slate profile — the closest match to authentic quarried slate — suited to historic-style, French Country, and traditional architecture." },
+  { id: "spanish_barrel_tile", label: "Brava Spanish Barrel Tile", desc: "A rounded, high-relief barrel profile that reads as authentic clay tile from the curb — popular on Mediterranean, Spanish Colonial, and Tuscan-style homes across DFW." },
+  { id: "cedar_shake",         label: "Brava Cedar Shake",         desc: "A deeply textured, hand-split shake profile for homeowners who want a rustic, natural-wood look without cedar's fire risk, rot, or ongoing upkeep." },
+  { id: "slate",               label: "Brava Slate",               desc: "A crisp, dimensional slate profile — the closest match to authentic quarried slate — suited to historic-style, French Country, and traditional architecture." },
 ];
 const BRAVA_TAB_IDS = bravaStyles.map(t => t.id);
 // Same "flavor" colors already featured on /synthetic-slate-roofing's own
@@ -576,7 +576,7 @@ export default function ProductsSection({
                   {["metal","synthetic_slate"].map(mt=>(
                     <button key={mt} onClick={()=>handleMaterialTypeChange(mt)}
                       style={{padding:"9px 14px",fontSize:10,letterSpacing:1,textTransform:"uppercase",color:materialType===mt?C.black:C.muted,background:materialType===mt?C.accent:"transparent",borderRight:`1px solid ${C.border}`,transition:"all 0.2s",whiteSpace:"nowrap"}}
-                    >{MATERIAL_TYPE_LABELS[mt]}</button>
+                    >{MATERIAL_TYPE_DISPLAY_LABELS[mt]}</button>
                   ))}
                 </div>
                 {/* Tab strip — scrollable on mobile */}

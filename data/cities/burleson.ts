@@ -8,11 +8,11 @@ export const BURLESON_DATA: CityData = {
   region: 'South Fort Worth',
   zip: '76028',
   slug: 'burleson',
-  metaTitle: 'Metal & Synthetic Slate Roofing Burleson TX | Metroplex',
-  metaDesc: 'Premium standing seam, stone-coated steel & synthetic slate roofing in Burleson, TX. Serving Villages of Benbrook and Remington Park.',
+  metaTitle: 'Metal & Brava Slate Roofing Burleson TX | Metroplex',
+  metaDesc: 'Premium standing seam, stone-coated steel & Brava synthetic slate roofing in Burleson, TX. Serving Villages of Benbrook and Remington Park.',
   heroHeadline: "Burleson Homeowners\nAre Ending the Replacement Cycle",
   heroSub: "Burleson sits south of Fort Worth in one of Texas's most active hail corridors. Metal roofing is the permanent fix that protects your home and ends the cycle.",
-  localContext: "Burleson's position in Johnson County south of Fort Worth places it in a region with consistent annual hail activity. With median home values approaching $350,000 and standard 2% wind/hail deductibles, storm seasons represent a recurring financial exposure for homeowners on asphalt. Metal roofing eliminates that exposure and qualifies for meaningful insurance savings.",
+  localContext: "Burleson's position in Johnson County south of Fort Worth places it in a region with consistent annual hail activity. With median home values approaching $350,000 and standard 2% wind/hail deductibles, storm seasons represent a recurring financial exposure for homeowners on asphalt. Metal roofing eliminates that exposure and qualifies for meaningful insurance savings. Homeowners who want the look of natural slate, shake, or tile have an equally strong option in Brava synthetic slate, which we install alongside standing seam and stone-coated steel for homes in communities like Villages of Benbrook and Retreat at Willow Creek.",
   hoaNote: "Burleson's established and developing neighborhoods have review processes for exterior material changes. Standing seam and stone-coated steel in approved profiles and colors are widely permitted. We provide complete HOA documentation support at no additional cost.",
   localStat: { val: '$350k', label: 'Median Home Value', source: 'Burleson, TX 2025' },
   neighborhoods: [
@@ -40,6 +40,6 @@ export const BURLESON_DATA: CityData = {
     { q: 'Will my Burleson HOA approve a metal roof?', a: 'Most Burleson communities permit metal roofing in approved profiles and neutral color palettes. We provide complete HOA documentation support at no additional cost.' },
     { q: 'How long does metal roof installation take in Burleson?', a: 'Most Burleson residential installations are completed in one to two days depending on roof size and material. We provide a specific timeline during the estimate process.' },
     { q: 'How does metal roofing handle hail south of Fort Worth?', a: 'Standing seam and stone-coated steel carry a Class 4 impact resistance rating, the highest available. Johnson County south of Fort Worth sees consistent annual hail activity and Class 4 rated roofing provides strong protection while qualifying for maximum carrier discounts.' },
-    { q: 'What metal roofing styles are available in Burleson?', a: 'Standing seam, stone-coated steel, and R-Panel are all available in Burleson. Stone-coated steel is the most popular choice for traditional homes throughout the area. R-Panel offers a cost-effective metal option with a 40 to 60 year lifespan.' },
+    { q: 'What metal and Brava roofing styles are available in Burleson?', a: 'Standing seam, stone-coated steel, and R-Panel are all available in Burleson. Stone-coated steel is the most popular choice for traditional homes throughout the area. R-Panel offers a cost-effective metal option with a 40 to 60 year lifespan. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.' },
   ],
 }

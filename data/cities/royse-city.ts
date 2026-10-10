@@ -8,11 +8,11 @@ export const ROYSE_CITY_DATA: CityData = {
   region: 'East Dallas',
   zip: '75189',
   slug: 'royse-city',
-  metaTitle: 'Metal & Synthetic Slate Roofing Royse City TX | Metroplex',
-  metaDesc: 'Premium standing seam, stone-coated steel & synthetic slate roofing in Royse City, TX. Serving Woodcreek Farms and Falcon Heights.',
+  metaTitle: 'Metal & Brava Slate Roofing Royse City TX | Metroplex',
+  metaDesc: 'Premium standing seam, stone-coated steel & Brava synthetic slate roofing in Royse City, TX. Serving Woodcreek Farms and Falcon Heights.',
   heroHeadline: "Royse City Is Growing Fast.\nYour Roof Should Keep Up",
   heroSub: "Royse City has become one of the most affordable entry points into the DFW market. Protecting that investment with metal roofing is the smartest upgrade you can make.",
-  localContext: "Royse City's rapid growth in Rockwall County has brought new construction and rising home values to a community that sits in an active East Texas storm corridor. Metal roofing is increasingly common on new builds throughout the area and represents a strong long-term investment for any existing homeowner looking to end the asphalt replacement cycle.",
+  localContext: "Royse City's rapid growth in Rockwall County has brought new construction and rising home values to a community that sits in an active East Texas storm corridor. Metal roofing is increasingly common on new builds throughout the area and represents a strong long-term investment for any existing homeowner looking to end the asphalt replacement cycle. Metal is not the only lasting choice here. Brava synthetic slate, shake, and Spanish barrel tile give Royse City homes a premium, natural-material look, and we help you compare Brava and metal side by side before you decide.",
   hoaNote: "Royse City's growing communities have established review processes for exterior material changes. Standing seam and stone-coated steel in approved profiles and colors are widely permitted. We provide complete HOA documentation support at no additional cost.",
   localStat: { val: '$330k', label: 'Median Home Value', source: 'Royse City, TX 2025' },
   neighborhoods: [
@@ -41,6 +41,6 @@ export const ROYSE_CITY_DATA: CityData = {
     { q: 'Does a metal roof qualify for an insurance discount in Rockwall County?', a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. Royse City homeowners in Rockwall County\'s active storm corridor typically see meaningful annual premium reductions after upgrading.' },
     { q: 'Will my Royse City HOA approve a metal roof?', a: 'Most Royse City communities permit metal roofing in approved profiles and neutral color palettes. We provide complete HOA documentation support at no additional cost.' },
     { q: 'How long does metal roof installation take in Royse City?', a: 'Most Royse City residential installations are completed in one to two days depending on roof size and material. We provide a specific timeline during the estimate process.' },
-    { q: 'What metal roofing styles are available in Royse City?', a: 'Standing seam, stone-coated steel, and R-Panel are all available in Royse City. Stone-coated steel in shingle profiles is the most popular choice for traditional homes throughout the area. R-Panel offers a cost-effective metal option with a strong 40 to 60 year lifespan.' },
+    { q: 'What metal and Brava roofing styles are available in Royse City?', a: 'Standing seam, stone-coated steel, and R-Panel are all available in Royse City. Stone-coated steel in shingle profiles is the most popular choice for traditional homes throughout the area. R-Panel offers a cost-effective metal option with a strong 40 to 60 year lifespan. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.' },
   ],
 }

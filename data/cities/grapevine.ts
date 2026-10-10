@@ -8,11 +8,11 @@ export const GRAPEVINE_DATA: CityData = {
   region: 'North Fort Worth',
   zip: '76051',
   slug: 'grapevine',
-  metaTitle: 'Metal & Synthetic Slate Roofing Grapevine TX | Metroplex',
-  metaDesc: 'Premium standing seam, stone-coated steel & synthetic slate roofing in Grapevine, TX. Serving Grapevine Lake Estates and Stonebridge.',
+  metaTitle: 'Metal & Brava Slate Roofing Grapevine TX | Metroplex',
+  metaDesc: 'Premium standing seam, stone-coated steel & Brava synthetic slate roofing in Grapevine, TX. Serving Grapevine Lake Estates and Stonebridge.',
   heroHeadline: "Grapevine Homes\nDeserve a Permanent Roof",
   heroSub: "Grapevine has a character all its own in North Texas. The homes here reflect that. A metal roof is the upgrade that protects that investment for generations.",
-  localContext: "Grapevine sits at the intersection of Tarrant and Dallas counties in one of the most storm-active corridors in North Texas. With median home values approaching $500,000 and significant hail exposure every season, homeowners on asphalt face a predictable cycle of claims and replacements. Metal roofing ends that cycle and qualifies for meaningful carrier discounts.",
+  localContext: "Grapevine sits at the intersection of Tarrant and Dallas counties in one of the most storm-active corridors in North Texas. With median home values approaching $500,000 and significant hail exposure every season, homeowners on asphalt face a predictable cycle of claims and replacements. Metal roofing ends that cycle and qualifies for meaningful carrier discounts. Homeowners who want the look of natural slate, shake, or tile have an equally strong option in Brava synthetic slate, which we install alongside standing seam and stone-coated steel for homes in communities like Grapevine Lake Estates and Dove Meadows.",
   hoaNote: "Grapevine's established neighborhoods have active HOA review processes for exterior changes. Standing seam and stone-coated steel in approved profiles and color palettes are commonly permitted. We provide complete documentation support for your HOA submission.",
   localStat: { val: '$480k', label: 'Median Home Value', source: 'Grapevine, TX 2025' },
   neighborhoods: [
@@ -42,7 +42,7 @@ export const GRAPEVINE_DATA: CityData = {
     { q: 'Does a metal roof qualify for an insurance discount in Grapevine?', a: 'Yes. Class 4 impact-rated metal roofing qualifies for significant premium discounts from most Texas carriers. Grapevine sits in an active Tarrant County storm corridor and most homeowners see meaningful annual premium reductions after upgrading.' },
     { q: 'Will my Grapevine HOA approve a metal roof?', a: 'Most Grapevine HOAs permit standing seam and stone-coated steel in approved profiles and neutral color palettes. We provide full HOA documentation support at no additional cost.' },
     { q: 'How long does metal roof installation take in Grapevine?', a: 'Most Grapevine residential installations are completed in one to three days depending on roof size and material. We provide a specific timeline for your home during the estimate process.' },
-    { q: 'Does stone-coated steel look good on older Grapevine homes?', a: 'Yes. Stone-coated steel is specifically designed to replicate the look of traditional shingles, shake, or tile in steel form. It is one of the most popular choices for older and established homes where traditional architectural character is important. The AI visualizer lets you see exactly what it will look like on your actual house before you decide.' },
+    { q: 'Do stone-coated steel and Brava look good on older Grapevine homes?', a: 'Yes. Stone-coated steel is specifically designed to replicate the look of traditional shingles, shake, or tile in steel form. It is one of the most popular choices for older and established homes where traditional architectural character is important. The AI visualizer lets you see exactly what it will look like on your actual house before you decide. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.' },
     { q: 'How does metal roofing handle hail in the Grapevine area?', a: 'Standing seam and stone-coated steel carry a Class 4 impact resistance rating, the highest available. This is particularly relevant in the Grapevine area where the intersection of Tarrant and Dallas counties creates consistent annual storm exposure.' },
   ],
 }

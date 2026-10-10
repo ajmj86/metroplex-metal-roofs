@@ -8,11 +8,11 @@ export const MANSFIELD_DATA: CityData = {
   region: 'South Fort Worth',
   zip: '76063',
   slug: 'mansfield',
-  metaTitle: 'Metal & Synthetic Slate Roofing Mansfield TX | Metroplex',
-  metaDesc: 'Premium standing seam, stone-coated steel & synthetic slate roofing in Mansfield, TX. Serving Walnut Creek and Southpointe.',
+  metaTitle: 'Metal & Brava Slate Roofing Mansfield TX | Metroplex',
+  metaDesc: 'Premium standing seam, stone-coated steel & Brava synthetic slate roofing in Mansfield, TX. Serving Walnut Creek and Southpointe.',
   heroHeadline: "Mansfield Is Growing.\nBuild a Roof That Keeps Up",
   heroSub: "Mansfield homeowners have been putting up with asphalt long enough. Metal roofing is the upgrade that ends the replacement cycle and holds up to everything North Texas weather brings.",
-  localContext: "Mansfield's rapid growth in southern Tarrant County has brought premium construction standards to a community that sits squarely in an active hail corridor. Median home values approaching $400,000 and standard 2% wind/hail deductibles mean a single storm event can cost Mansfield homeowners $8,000 or more out of pocket. Metal roofing eliminates that exposure and is increasingly specified on new construction throughout the area.",
+  localContext: "Mansfield's rapid growth in southern Tarrant County has brought premium construction standards to a community that sits squarely in an active hail corridor. Median home values approaching $400,000 and standard 2% wind/hail deductibles mean a single storm event can cost Mansfield homeowners $8,000 or more out of pocket. Metal roofing eliminates that exposure and is increasingly specified on new construction throughout the area. For Mansfield homeowners drawn to a traditional slate or shake profile, Brava offers that look in a durable synthetic, so you can choose between metal and Brava on the merits of your own home.",
   hoaNote: "Mansfield's established neighborhoods have active HOA review processes. Standing seam and stone-coated steel in approved profiles and neutral color palettes are widely permitted. We provide complete HOA documentation support at no additional cost.",
   localStat: { val: '$390k', label: 'Median Home Value', source: 'Mansfield, TX 2025' },
   neighborhoods: [
@@ -42,6 +42,6 @@ export const MANSFIELD_DATA: CityData = {
     { q: 'Will my Mansfield HOA approve a metal roof?', a: 'Most Mansfield HOAs permit standing seam and stone-coated steel in approved profiles and neutral color palettes. We provide complete HOA documentation support at no additional cost.' },
     { q: 'How long does metal roof installation take in Mansfield?', a: 'Most Mansfield residential installations are completed in one to three days. The exact timeline depends on roof size and material. We provide a specific installation timeline during the estimate process.' },
     { q: 'How does metal roofing handle hail in Tarrant County?', a: 'Standing seam and stone-coated steel carry a Class 4 impact resistance rating, the highest available. This rating is required by most Texas carriers for maximum discount eligibility and is especially important in Tarrant County\'s active hail corridor.' },
-    { q: 'What metal roofing styles work best in Mansfield?', a: 'Stone-coated steel in shingle and shake profiles is popular throughout Mansfield\'s traditional neighborhoods. Standing seam suits more contemporary homes and rooflines. Both carry Class 4 hail ratings and 50-plus year lifespans.' },
+    { q: 'What metal and Brava roofing styles work best in Mansfield?', a: 'Stone-coated steel in shingle and shake profiles is popular throughout Mansfield\'s traditional neighborhoods. Standing seam suits more contemporary homes and rooflines. Both carry Class 4 hail ratings and 50-plus year lifespans. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.' },
   ],
 }

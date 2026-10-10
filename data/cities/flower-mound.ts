@@ -8,11 +8,11 @@ export const FLOWER_MOUND_DATA: CityData = {
   region: 'North Dallas',
   zip: '75028',
   slug: 'flower-mound',
-  metaTitle: 'Metal & Synthetic Slate Roofing Flower Mound TX | Metroplex',
-  metaDesc: 'Premium standing seam, stone-coated steel & synthetic slate roofing in Flower Mound, TX. Serving The Chaparral and Bridlewood.',
+  metaTitle: 'Metal & Brava Slate Roofing Flower Mound TX | Metroplex',
+  metaDesc: 'Premium standing seam, stone-coated steel & Brava synthetic slate roofing in Flower Mound, TX. Serving The Chaparral and Bridlewood.',
   heroHeadline: "Flower Mound Homes\nBuilt to Last Longer Than Asphalt",
   heroSub: "Flower Mound is one of the most desirable communities in Denton County. The homes here are built to last. The roofs should be too.",
-  localContext: "Flower Mound's position in Denton County puts it in the path of significant annual storm activity, and median home values well above $600,000 mean the 2% wind/hail deductible carries real consequences. Homeowners who have been replacing asphalt roofs every decade are increasingly choosing metal as the permanent alternative, and new construction throughout the city reflects that shift.",
+  localContext: "Flower Mound's position in Denton County puts it in the path of significant annual storm activity, and median home values well above $600,000 mean the 2% wind/hail deductible carries real consequences. Homeowners who have been replacing asphalt roofs every decade are increasingly choosing metal as the permanent alternative, and new construction throughout the city reflects that shift. Metal is not the only lasting choice here. Brava synthetic slate, shake, and Spanish barrel tile give Flower Mound homes a premium, natural-material look, and we help you compare Brava and metal side by side before you decide.",
   hoaNote: "Flower Mound's established HOA communities have clear processes for roofing material changes. Standing seam and stone-coated steel in approved profiles and color palettes are widely permitted. We provide full HOA documentation support at no additional cost.",
   localStat: { val: '$620k', label: 'Median Home Value', source: 'Flower Mound, TX 2025' },
   neighborhoods: [
@@ -43,6 +43,6 @@ export const FLOWER_MOUND_DATA: CityData = {
     { q: 'Will my Flower Mound HOA approve a metal roof?', a: 'Most Flower Mound HOAs permit metal roofing in approved profiles and color palettes. We provide full documentation support for your HOA submission including material samples and manufacturer spec sheets at no additional cost.' },
     { q: 'How long does metal roof installation take in Flower Mound?', a: 'Most Flower Mound residential installations are completed in one to three days depending on roof size and material. We provide a specific installation timeline for your home as part of the estimate process.' },
     { q: 'How does metal roofing handle Denton County hail storms?', a: 'Standing seam and stone-coated steel carry a Class 4 impact resistance rating, the highest available. This is the rating required by most Texas carriers for maximum hail discount eligibility and is especially relevant in Denton County\'s active hail corridor.' },
-    { q: 'What metal roofing styles are popular in Flower Mound?', a: 'Standing seam and stone-coated steel are both widely chosen in Flower Mound. Stone-coated steel in shingle or shake profiles suits the traditional architecture common throughout the city\'s established neighborhoods. Standing seam is preferred for more contemporary homes and rooflines.' },
+    { q: 'What metal and Brava roofing styles are popular in Flower Mound?', a: 'Standing seam and stone-coated steel are both widely chosen in Flower Mound. Stone-coated steel in shingle or shake profiles suits the traditional architecture common throughout the city\'s established neighborhoods. Standing seam is preferred for more contemporary homes and rooflines. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.' },
   ],
 }

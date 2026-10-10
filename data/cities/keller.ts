@@ -8,11 +8,11 @@ export const KELLER_DATA: CityData = {
   region: 'North Fort Worth',
   zip: '76248',
   slug: 'keller',
-  metaTitle: 'Metal & Synthetic Slate Roofing Keller TX | Metroplex',
-  metaDesc: 'Premium standing seam, stone-coated steel & synthetic slate roofing in Keller, TX. Serving Bear Creek and Hidden Lakes.',
+  metaTitle: 'Metal & Brava Synthetic Slate Roofing Keller TX | Metroplex',
+  metaDesc: 'Premium standing seam, stone-coated steel & Brava synthetic slate roofing in Keller, TX. Serving Bear Creek and Hidden Lakes.',
   heroHeadline: "Keller Homeowners\nAre Making the Switch",
   heroSub: "Keller has some of the most established and well-kept neighborhoods in North Fort Worth. A metal roof is the upgrade that protects that investment for the long term.",
-  localContext: "Keller sits in Tarrant County's active hail corridor where significant storm activity is a reliable annual occurrence. With median home values approaching $500,000 and 2% wind/hail deductibles now standard across most carriers, Keller homeowners face consistent storm-season exposure on asphalt roofs. Metal roofing eliminates that cycle and qualifies for real insurance savings.",
+  localContext: "Keller sits in Tarrant County's active hail corridor where significant storm activity is a reliable annual occurrence. With median home values approaching $500,000 and 2% wind/hail deductibles now standard across most carriers, Keller homeowners face consistent storm-season exposure on asphalt roofs. Metal roofing eliminates that cycle and qualifies for real insurance savings. For Keller homeowners drawn to a traditional slate or shake profile, Brava offers that look in a durable synthetic, so you can choose between metal and Brava on the merits of your own home.",
   hoaNote: "Keller's established neighborhoods have active HOA review processes. Standing seam and stone-coated steel in approved profiles and neutral color palettes are commonly permitted. We provide complete HOA documentation support at no additional cost.",
   localStat: { val: '$490k', label: 'Median Home Value', source: 'Keller, TX 2025' },
   neighborhoods: [
@@ -43,6 +43,6 @@ export const KELLER_DATA: CityData = {
     { q: 'Will my Keller HOA approve a metal roof?', a: 'Most Keller HOAs permit standing seam and stone-coated steel in approved profiles and neutral color palettes. We provide full documentation support including material samples and spec sheets for your HOA submission at no additional cost.' },
     { q: 'How long does metal roof installation take in Keller?', a: 'Most Keller residential installations are completed in one to three days. The exact timeline depends on roof size, pitch, and material selection. We provide a specific timeline during the estimate process.' },
     { q: 'How does a metal roof handle hail in Tarrant County?', a: 'Standing seam and stone-coated steel carry a Class 4 impact resistance rating, the highest available. This rating is required by most Texas carriers for maximum discount eligibility and provides meaningful protection in Tarrant County\'s active storm corridor.' },
-    { q: 'What metal roofing styles are popular in Keller?', a: 'Standing seam and stone-coated steel are both popular in Keller\'s mix of traditional and contemporary neighborhoods. Stone-coated steel in shingle profiles is widely chosen in HOA communities with traditional architectural guidelines. Standing seam suits more contemporary and transitional homes.' },
+    { q: 'What metal and Brava roofing styles are popular in Keller?', a: 'Standing seam and stone-coated steel are both popular in Keller\'s mix of traditional and contemporary neighborhoods. Stone-coated steel in shingle profiles is widely chosen in HOA communities with traditional architectural guidelines. Standing seam suits more contemporary and transitional homes. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.' },
   ],
 }

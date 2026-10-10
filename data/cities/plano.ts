@@ -8,11 +8,11 @@ export const PLANO_DATA: CityData = {
   region: 'North Dallas',
   zip: '75093',
   slug: 'plano',
-  metaTitle: 'Metal & Synthetic Slate Roofing Plano TX | Metroplex',
-  metaDesc: 'Premium standing seam, stone-coated steel & synthetic slate roofing in Plano, TX. Serving Willow Bend and Normandy Estates.',
+  metaTitle: 'Metal & Brava Synthetic Slate Roofing Plano TX | Metroplex',
+  metaDesc: 'Premium standing seam, stone-coated steel & Brava synthetic slate roofing in Plano, TX. Serving Willow Bend and Normandy Estates.',
   heroHeadline: "Plano Homes Are Built\nto Last. Your Roof Should Be Too",
   heroSub: "West Plano homeowners have been replacing asphalt roofs for decades. Metal ends that cycle permanently and qualifies for real insurance savings in one of Texas's most active hail zones.",
-  localContext: "Plano's established neighborhoods carry median home values well above $500,000, and the city sits in a Collin County hail corridor that sees significant storm activity every year. With 2% wind/hail deductibles now standard, many Plano homeowners are absorbing $10,000 to $15,000 per replacement out of pocket. Metal roofing eliminates that recurring cost and typically delivers a positive financial return within the life of the home.",
+  localContext: "Plano's established neighborhoods carry median home values well above $500,000, and the city sits in a Collin County hail corridor that sees significant storm activity every year. With 2% wind/hail deductibles now standard, many Plano homeowners are absorbing $10,000 to $15,000 per replacement out of pocket. Metal roofing eliminates that recurring cost and typically delivers a positive financial return within the life of the home. Homeowners who want the look of natural slate, shake, or tile have an equally strong option in Brava synthetic slate, which we install alongside standing seam and stone-coated steel for homes in communities like Willow Bend and Windhaven.",
   hoaNote: "Plano's established HOA communities have clear processes for exterior material changes. Standing seam and stone-coated steel in neutral and earth-tone color palettes are commonly approved. We provide full documentation support for your HOA submission.",
   localStat: { val: '$540k', label: 'Median Home Value', source: 'Plano, TX 2025' },
   neighborhoods: [
@@ -43,6 +43,6 @@ export const PLANO_DATA: CityData = {
     { q: 'Will my Plano HOA approve a metal roof?', a: 'Most Plano HOAs permit standing seam and stone-coated steel in approved profiles and neutral color palettes. We provide full HOA documentation support including material samples, color chips, and manufacturer certification at no additional cost.' },
     { q: 'How long does metal roof installation take in Plano?', a: 'Most Plano residential installations are completed in one to three days depending on roof size and material. We provide a specific timeline for your home during the estimate process.' },
     { q: 'How does metal roofing hold up in Plano hail storms?', a: 'Standing seam and stone-coated steel carry a Class 4 impact resistance rating, the highest available. Plano sits in Collin County\'s active hail corridor where this rating is particularly important, and it is the rating required by most Texas carriers for maximum discount eligibility.' },
-    { q: 'What metal roofing options are available for Plano homes?', a: 'Standing seam, stone-coated steel, copper, and R-Panel are all available. Standing seam is the most popular choice for Plano\'s mix of contemporary and traditional architecture. Stone-coated steel is widely chosen in HOA communities with traditional aesthetic guidelines.' },
+    { q: 'What metal and Brava roofing options are available for Plano homes?', a: 'Standing seam, stone-coated steel, copper, and R-Panel are all available. Standing seam is the most popular choice for Plano\'s mix of contemporary and traditional architecture. Stone-coated steel is widely chosen in HOA communities with traditional aesthetic guidelines. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.' },
   ],
 }

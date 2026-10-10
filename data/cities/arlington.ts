@@ -8,13 +8,13 @@ export const ARLINGTON_DATA: CityData = {
   region: 'Mid-Cities',
   zip: '76010',
   slug: 'arlington',
-  metaTitle: 'Metal & Synthetic Slate Roofing Arlington TX | Metroplex',
-  metaDesc: 'Premium standing seam, stone-coated steel & synthetic slate roofing in Arlington, TX. Serving Viridian and North Arlington.',
+  metaTitle: 'Metal & Brava Slate Roofing Arlington TX | Metroplex',
+  metaDesc: 'Premium standing seam, stone-coated steel & Brava synthetic slate roofing in Arlington, TX. Serving Viridian and North Arlington.',
 
   heroHeadline: "Arlington Weathers Every Season —\nYour Roof Should Too",
   heroSub: "Between Fort Worth and Dallas, Arlington sits directly in the path of North Texas's worst hail seasons. Metal roofing ends the cycle of asphalt replacement for good.",
 
-  localContext: "Arlington's mix of established mid-century neighborhoods and newer master-planned communities like Viridian gives the city one of the widest ranges of roofing needs in the Mid-Cities. Tarrant County storm exposure hits North and South Arlington alike, and with the city's older housing stock aging past its original shingle life expectancy, more homeowners are opting to replace once and be done rather than reroof with asphalt every 12 to 15 years.",
+  localContext: "Arlington's mix of established mid-century neighborhoods and newer master-planned communities like Viridian gives the city one of the widest ranges of roofing needs in the Mid-Cities. Tarrant County storm exposure hits North and South Arlington alike, and with the city's older housing stock aging past its original shingle life expectancy, more homeowners are opting to replace once and be done rather than reroof with asphalt every 12 to 15 years. Homeowners who want the look of natural slate, shake, or tile have an equally strong option in Brava synthetic slate, which we install alongside standing seam and stone-coated steel for homes in communities like Viridian and North Arlington.",
 
   hoaNote: "Viridian's architectural review process is well-established and metal roofing in approved profiles is already common throughout the community. Older, non-HOA neighborhoods across North and South Arlington have no such restrictions. Where an HOA does apply, we provide full documentation — material samples, color chips, and manufacturer spec sheets — at no additional cost.",
 
@@ -71,8 +71,8 @@ export const ARLINGTON_DATA: CityData = {
       a: 'Most residential installations in Arlington are completed in one to three days. The exact timeline depends on roof size and material selection — we provide a specific estimate timeline for your home before any work begins.',
     },
     {
-      q: 'What metal roofing styles work best for Arlington homes?',
-      a: 'Standing seam suits the more contemporary builds going up in Viridian and other newer developments, while stone-coated steel is a strong match for the traditional ranch and mid-century homes common across North and South Arlington. Both carry Class 4 hail ratings and 50-plus year lifespans.',
+      q: 'What metal and Brava roofing styles work best for Arlington homes?',
+      a: 'Standing seam suits the more contemporary builds going up in Viridian and other newer developments, while stone-coated steel is a strong match for the traditional ranch and mid-century homes common across North and South Arlington. Both carry Class 4 hail ratings and 50-plus year lifespans. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.',
     },
   ],
 }

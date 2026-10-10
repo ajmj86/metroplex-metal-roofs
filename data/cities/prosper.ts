@@ -8,13 +8,13 @@ export const PROSPER_DATA: CityData = {
   region: 'North Dallas',
   zip: '75078',
   slug: 'prosper',
-  metaTitle: 'Metal & Synthetic Slate Roofing Prosper TX | Metroplex',
-  metaDesc: 'Premium standing seam, stone-coated steel & synthetic slate roofing in Prosper, TX. Serving Windsong Ranch and Star Trail.',
+  metaTitle: 'Metal & Brava Slate Roofing Prosper TX | Metroplex',
+  metaDesc: 'Premium standing seam, stone-coated steel & Brava synthetic slate roofing in Prosper, TX. Serving Windsong Ranch and Star Trail.',
 
   heroHeadline: "Prosper Built to Last —\nYour Roof Should Too",
   heroSub: "From Windsong Ranch to Star Trail, Prosper homeowners are making the same upgrade new construction already has. A metal roof that matches the permanence of the home beneath it.",
 
-  localContext: "Prosper has become one of the fastest-growing communities in North Texas, with new construction consistently specifying metal roofing as the standard across its master-planned developments. For existing homeowners, the case is equally clear — Collin County's active hail corridor, rising home values above $700,000, and 2% wind/hail deductibles mean asphalt shingles represent a recurring five-figure liability. Metal roofing eliminates that cycle entirely.",
+  localContext: "Prosper has become one of the fastest-growing communities in North Texas, with new construction consistently specifying metal roofing as the standard across its master-planned developments. For existing homeowners, the case is equally clear — Collin County's active hail corridor, rising home values above $700,000, and 2% wind/hail deductibles mean asphalt shingles represent a recurring five-figure liability. Metal roofing eliminates that cycle entirely. Homeowners who want the look of natural slate, shake, or tile have an equally strong option in Brava synthetic slate, which we install alongside standing seam and stone-coated steel for homes in communities like Windsong Ranch and Star Trail.",
 
   hoaNote: "Prosper's master-planned communities including Windsong Ranch, Star Trail, and Lakes of Prosper have established architectural review processes for roofing material changes. Metal roofing in approved profiles and colors is widely permitted and increasingly common across these neighborhoods. We provide the full documentation package — material samples, color chips, and manufacturer spec sheets — to support your HOA submission.",
 
@@ -79,8 +79,8 @@ export const PROSPER_DATA: CityData = {
       a: 'Most residential metal roofing installations in Prosper are completed in one to three days. The timeline depends on roof size, pitch complexity, and material — standing seam typically takes slightly longer than stone-coated steel. We provide a specific installation timeline for your home as part of the estimate process.',
     },
     {
-      q: 'What is the difference between standing seam and stone-coated steel for a Prosper home?',
-      a: 'Standing seam features hidden fasteners and clean vertical lines — ideal for contemporary and modern architecture common in newer Prosper builds. Stone-coated steel replicates the look of traditional shingles or shake in steel form, making it well-suited for neighborhoods with traditional HOA aesthetic guidelines. Both carry Class 4 hail ratings and 50+ year lifespans. The right choice depends on your home\'s architecture and HOA requirements.',
+      q: 'What is the difference between standing seam, stone-coated steel, and Brava for a Prosper home?',
+      a: 'Standing seam features hidden fasteners and clean vertical lines — ideal for contemporary and modern architecture common in newer Prosper builds. Stone-coated steel replicates the look of traditional shingles or shake in steel form, making it well-suited for neighborhoods with traditional HOA aesthetic guidelines. Both carry Class 4 hail ratings and 50+ year lifespans. The right choice depends on your home\'s architecture and HOA requirements. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.',
     },
   ],
 }

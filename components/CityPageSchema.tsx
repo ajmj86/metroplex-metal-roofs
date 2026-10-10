@@ -47,13 +47,13 @@ export function CitySchema({ city }: { city: CityData }) {
         },
         'hasOfferCatalog': {
           '@type': 'OfferCatalog',
-          'name': 'Metal & Synthetic Slate Roofing Services',
+          'name': 'Metal & Brava Synthetic Slate Roofing Services',
           'itemListElement': [
             { '@type': 'Offer', 'itemOffered': { '@type': 'Service', 'name': 'Standing Seam Metal Roofing' } },
             { '@type': 'Offer', 'itemOffered': { '@type': 'Service', 'name': 'Copper Roofing' } },
             { '@type': 'Offer', 'itemOffered': { '@type': 'Service', 'name': 'Stone-Coated Steel Roofing' } },
             { '@type': 'Offer', 'itemOffered': { '@type': 'Service', 'name': 'R-Panel Metal Roofing' } },
-            { '@type': 'Offer', 'itemOffered': { '@type': 'Service', 'name': 'Synthetic Slate Roofing' } },
+            { '@type': 'Offer', 'itemOffered': { '@type': 'Service', 'name': 'Brava Synthetic Slate Roofing' } },
           ]
         },
       },

@@ -33,7 +33,7 @@ test('journey: /n/SL05 -> 3 header links -> CTA -> visualizer submission still c
   await expect.poll(async () => (await readStorage(page)).utm_content).toBe('SL05')
 
   // three header links, each a full navigation; every one must keep the attribution
-  for (const label of ['About Us', 'Why Metal', 'Pricing']) {
+  for (const label of ['About Us', 'Why Metal & Brava', 'Pricing']) {
     await page.locator('nav a', { hasText: new RegExp(`^${label}$`, 'i') }).first().click()
     await page.waitForLoadState('load')
     await expect.poll(async () => (await readStorage(page)).utm_content, { message: `after "${label}"` }).toBe('SL05')
@@ -48,7 +48,7 @@ test('journey: /n/SL05 -> 3 header links -> CTA -> visualizer submission still c
   // drive the visualizer: typed address (Places unavailable) -> Brava Slate / Standard / Arendale -> contact form -> submit
   await page.getByPlaceholder('Enter your home address…').fill('1301 Coffeyville Trail, Plano, TX 75023')
   await page.getByRole('button', { name: /Visualize my roof/i }).click()
-  await page.getByRole('button', { name: /^Synthetic Slate$/i }).click()
+  await page.getByRole('button', { name: /^Brava Synthetic Slate$/i }).click()
   await page.getByRole('button', { name: /^Brava Slate$/i }).click()
   await page.getByRole('button', { name: /^Standard Slate$/i }).click()
   await page.getByText('Arendale', { exact: true }).click()

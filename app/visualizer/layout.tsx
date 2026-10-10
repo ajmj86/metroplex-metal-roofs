@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'See Your Home With a Metal Roof | AI Visualizer | Metroplex Metal Roofs',
-  description: 'Enter your address and see a rendered image of your actual home with your chosen metal roof style and color — before you talk to anyone or commit to anything.',
+  title: 'See Your Home With Metal or Brava | AI Visualizer | Metroplex',
+  description: 'Enter your address and see a rendered image of your actual home with your chosen metal or Brava synthetic slate roof and color, before you talk to anyone or commit to anything.',
   alternates: {
     canonical: '/visualizer',
   },

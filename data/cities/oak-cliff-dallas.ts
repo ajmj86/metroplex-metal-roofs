@@ -8,13 +8,14 @@ export const OAK_CLIFF_DALLAS_DATA: CityData = {
   county: 'Dallas',
   region: 'Southwest Dallas',
   slug: 'oak-cliff-dallas',
-  metaTitle: 'Metal Roofing Oak Cliff Dallas TX | Metroplex',
-  metaDesc: 'Stone-coated steel, Brava synthetic slate and standing seam roofing in Oak Cliff, a Dallas neighborhood. Free 40-point assessment and HOA-ready documents.',
+  leadWithBrava: true,
+  metaTitle: 'Brava Slate & Metal Roofing Oak Cliff Dallas TX | Metroplex',
+  metaDesc: 'Brava synthetic slate, stone-coated steel and standing seam roofing in Oak Cliff, a Dallas neighborhood. Free 40-point assessment and HOA-ready documents.',
 
   heroHeadline: "Oak Cliff's Historic Homes\nDeserve a Lasting Roof",
   heroSub: "Craftsman bungalows, Tudors, and Spanish revival houses give Oak Cliff its character. A roof that lasts keeps that character from fading with every re-roof.",
 
-  localContext: "Oak Cliff is a neighborhood of Dallas, southwest of downtown across the Trinity River, and it was a separate city before Dallas annexed it in 1903. Its older areas hold Craftsman, Prairie, Tudor, and Spanish revival homes from the early twentieth century, with mid-century houses in other parts. Roofs are mostly composition shingle with some older tile, and many are overdue for replacement. Stone-coated steel can echo the shingle or shake look of a bungalow, Brava synthetic slate or tile suits Tudor and Spanish revival homes, and standing seam fits updated houses. Winnetka Heights is a designated City of Dallas historic district, so exterior changes there go through city review. Elsewhere requirements vary by address, and we handle the submission. For the wider city, see our Dallas page.",
+  localContext: "Oak Cliff is a neighborhood of Dallas, southwest of downtown across the Trinity River, and it was a separate city before Dallas annexed it in 1903. Its older areas hold Craftsman, Prairie, Tudor, and Spanish revival homes from the early twentieth century, with mid-century houses in other parts. Roofs are mostly composition shingle with some older tile, and many are overdue for replacement. Brava synthetic slate or tile suits Tudor and Spanish revival homes, Brava shake and stone-coated steel can echo the shingle or shake look of a bungalow, and standing seam fits updated houses. Winnetka Heights is a designated City of Dallas historic district, so exterior changes there go through city review. Elsewhere requirements vary by address, and we handle the submission. For the wider city, see our Dallas page.",
 
   hoaNote: "Design review and permit requirements vary by address, and we handle the submission. Winnetka Heights is a designated City of Dallas historic district with its own review process. We provide material samples, color chips, and manufacturer spec sheets for any review at no additional cost.",
 
@@ -39,16 +40,16 @@ export const OAK_CLIFF_DALLAS_DATA: CityData = {
       a: "Every roof we install carries a 10-year workmanship warranty written into your contract, plus the manufacturer's material warranty on the panels and finish. With a 50+ year system lifespan, that is coverage most Oak Cliff homeowners will never need to use.",
     },
     {
-      q: 'Will a metal roof suit an older Oak Cliff bungalow?',
-      a: "Yes. Stone-coated steel replicates the look of shingle or shake, which suits Craftsman and Prairie bungalows, and Brava synthetic slate or tile suits Tudor and Spanish revival homes. We bring samples so you can judge color against your siding or stucco.",
+      q: 'Will a Brava or metal roof suit an older Oak Cliff bungalow?',
+      a: "Yes. Brava synthetic slate or tile suits Tudor and Spanish revival homes, while Brava shake and stone-coated steel replicate the look of shingle or shake on Craftsman and Prairie bungalows. We bring samples so you can judge color against your siding or stucco.",
     },
     {
       q: 'Does a roof in Winnetka Heights need historic district review?',
       a: "Yes, Winnetka Heights is a designated City of Dallas historic district, so exterior changes go through city review. We handle the submission and prepare samples, color chips, and spec sheets. Other Oak Cliff areas vary by address, so we confirm what applies before you choose a material.",
     },
     {
-      q: 'How much does a metal or synthetic slate roof cost in Oak Cliff?',
-      a: `Cost depends on roof size, pitch, and complexity, and Oak Cliff bungalows often have smaller roofs than newer suburban homes. By material, that runs about ${FAQ_RATE.stoneCoated()}/sq ft for stone-coated steel, ${FAQ_RATE.standingSeam()}/sq ft for standing seam, and ${FAQ_RATE.slate()}/sq ft for synthetic slate. We give a satellite-based range first and a firm number after your free on-site assessment.`,
+      q: 'How much does a metal or Brava synthetic slate roof cost in Oak Cliff?',
+      a: `Cost depends on roof size, pitch, and complexity, and Oak Cliff bungalows often have smaller roofs than newer suburban homes. By material, that runs about ${FAQ_RATE.stoneCoated()}/sq ft for stone-coated steel, ${FAQ_RATE.standingSeam()}/sq ft for standing seam, and ${FAQ_RATE.slate()}/sq ft for Brava synthetic slate. We give a satellite-based range first and a firm number after your free on-site assessment.`,
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Oak Cliff?',

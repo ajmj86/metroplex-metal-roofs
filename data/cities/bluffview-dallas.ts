@@ -8,13 +8,14 @@ export const BLUFFVIEW_DALLAS_DATA: CityData = {
   county: 'Dallas',
   region: 'North Dallas',
   slug: 'bluffview-dallas',
-  metaTitle: 'Metal Roofing Bluffview Dallas TX | Metroplex',
-  metaDesc: 'Standing seam, stone-coated steel and Brava synthetic slate roofing in Bluffview, a Dallas neighborhood. Free 40-point assessment and HOA-ready documents.',
+  leadWithBrava: true,
+  metaTitle: 'Brava Slate & Metal Roofing Bluffview Dallas TX | Metroplex',
+  metaDesc: 'Brava synthetic slate, stone-coated steel and standing seam roofing in Bluffview, a Dallas neighborhood. Free 40-point assessment and HOA-ready documents.',
 
   heroHeadline: "Bluffview's Tree-Lined Streets\nDeserve a Roof That Lasts",
-  heroSub: "Established homes under mature trees take a lot from a roof. Bluffview homeowners are moving to metal and synthetic slate that handles debris, heat, and storms.",
+  heroSub: "Established homes under mature trees take a lot from a roof. Bluffview homeowners are moving to metal and Brava synthetic slate that handles debris, heat, and storms.",
 
-  localContext: "Bluffview is a neighborhood of Dallas, in the north part of the city, with tree-covered streets and homes built largely from the 1960s onward. Ranch and traditional houses sit beside newer custom rebuilds, so roofs range from older composition shingle to newer premium systems. Mature trees mean leaves, branches, and extra wear, which is one more reason a durable roof makes sense here. Stone-coated steel and Brava synthetic slate suit the traditional homes, and standing seam fits contemporary rebuilds. For the wider city, see our Dallas page.",
+  localContext: "Bluffview is a neighborhood of Dallas, in the north part of the city, with tree-covered streets and homes built largely from the 1960s onward. Ranch and traditional houses sit beside newer custom rebuilds, so roofs range from older composition shingle to newer premium systems. Mature trees mean leaves, branches, and extra wear, which is one more reason a durable roof makes sense here. Brava synthetic slate and shake suit the traditional homes, with stone-coated steel and standing seam as strong metal options, especially on contemporary rebuilds. For the wider city, see our Dallas page.",
 
   hoaNote: "Design review and permit requirements vary by street and by project, and we handle the submission. We provide material samples, color chips, and manufacturer spec sheets for any review or HOA package at no additional cost.",
 
@@ -39,11 +40,11 @@ export const BLUFFVIEW_DALLAS_DATA: CityData = {
     },
     {
       q: 'What roof style fits a 1960s ranch or traditional home in Bluffview?',
-      a: "Stone-coated steel in a shingle or shake profile and Brava synthetic slate both suit ranch and traditional homes. Standing seam is a clean modern choice, especially on rebuilds and remodels. We bring samples so you can compare colors against your brick and trim.",
+      a: "Brava synthetic shake or slate, and stone-coated steel in a shingle or shake profile, both suit ranch and traditional homes. Standing seam is a clean modern choice, especially on rebuilds and remodels. We bring samples so you can compare colors against your brick and trim.",
     },
     {
-      q: 'How much does a metal or synthetic slate roof cost in Bluffview?',
-      a: `Cost depends on roof size, pitch, and complexity, and most Bluffview homes fall in a mid-size range. By material, that runs about ${FAQ_RATE.stoneCoated()}/sq ft for stone-coated steel, ${FAQ_RATE.standingSeam()}/sq ft for standing seam, and ${FAQ_RATE.slate()}/sq ft for synthetic slate. We give a satellite-based range first and a firm number after your free on-site assessment.`,
+      q: 'How much does a metal or Brava synthetic slate roof cost in Bluffview?',
+      a: `Cost depends on roof size, pitch, and complexity, and most Bluffview homes fall in a mid-size range. By material, that runs about ${FAQ_RATE.stoneCoated()}/sq ft for stone-coated steel, ${FAQ_RATE.standingSeam()}/sq ft for standing seam, and ${FAQ_RATE.slate()}/sq ft for Brava synthetic slate. We give a satellite-based range first and a firm number after your free on-site assessment.`,
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Bluffview?',
