@@ -557,7 +557,7 @@ export default function ProductsSection({
       <section id={id} className="section-pad products-section" style={{background:C.surface,borderTop:`1px solid ${C.border}`}}>
         <div className="inner">
           <Reveal>
-            <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end",marginBottom:48,flexWrap:"wrap",gap:20}}>
+            <div style={{display:"flex",flexDirection:"column",alignItems:"flex-start",marginBottom:48,gap:28}}>
               {/*
                * maxWidth is a safety net, not the fix -- flex-wrap's
                * line-breaking decision uses each item's natural
@@ -590,7 +590,7 @@ export default function ProductsSection({
                * selection leaves the tab strip below completely untouched;
                * Synthetic Slate swaps it to the 3 Brava profiles.
                */}
-              <div style={{display:"flex",flexDirection:"column",alignItems:"flex-end",gap:10,flexShrink:0,maxWidth:"100%"}}>
+              <div style={{display:"flex",flexDirection:"column",alignItems:"flex-start",gap:10,flexShrink:0,maxWidth:"100%"}}>
                 <div style={{display:"flex",border:`1px solid ${C.border}`,borderRadius:4,overflow:"hidden",flexShrink:0}}>
                   {["metal","synthetic_slate"].map(mt=>(
                     <button key={mt} onClick={()=>handleMaterialTypeChange(mt)}
@@ -598,8 +598,8 @@ export default function ProductsSection({
                     >{MATERIAL_TYPE_DISPLAY_LABELS[mt]}</button>
                   ))}
                 </div>
-                {/* Tab strip — scrollable on mobile */}
-                <div style={{display:"flex",border:`1px solid ${C.border}`,borderRadius:4,overflow:"hidden",overflowX:"auto",flexShrink:0,maxWidth:"100%"}}>
+                {/* Tab strip: wraps on narrow screens instead of scrolling */}
+                <div style={{display:"flex",flexWrap:"wrap",border:`1px solid ${C.border}`,borderRadius:4,overflow:"hidden",flexShrink:0,maxWidth:"100%"}}>
                   {(materialType==="metal" ? roofTypes : bravaStyles).map(t=>(
                     <button key={t.id} onClick={()=>setActiveTab(t.id)}
                       style={{padding:"9px 14px",fontSize:10,letterSpacing:1,textTransform:"uppercase",color:activeTab===t.id?C.black:C.muted,background:activeTab===t.id?C.accent:"transparent",borderRight:`1px solid ${C.border}`,transition:"all 0.2s",whiteSpace:"nowrap"}}
