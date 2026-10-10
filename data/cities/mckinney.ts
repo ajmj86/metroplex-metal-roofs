@@ -38,7 +38,7 @@ export const MCKINNEY_DATA: CityData = {
     },
     {
       q: 'Is metal roofing common in McKinney master-planned communities?',
-      a: 'Yes. Metal roofing has become increasingly standard in McKinney\'s newer master-planned developments including Craig Ranch and Trinity Falls. Existing homeowners throughout the city have been upgrading at a significant rate, particularly following hail seasons that exposed the limitations of asphalt in Collin County\'s storm corridor.',
+      a: "Metal roofing is an option in McKinney's newer master-planned developments, including Craig Ranch and Trinity Falls. Existing homeowners across the city also ask about it after hail seasons that expose the limits of asphalt in Collin County's storm corridor.",
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in McKinney?',
@@ -54,7 +54,7 @@ export const MCKINNEY_DATA: CityData = {
     },
     {
       q: 'What is the difference between standing seam, stone-coated steel, and Brava for McKinney homes?',
-      a: 'Standing seam features clean vertical lines with hidden fasteners, well-suited to contemporary architecture. Stone-coated steel replicates the look of traditional shingles in steel form, popular in neighborhoods with traditional HOA aesthetic requirements. Both carry Class 4 hail ratings and 50-plus year lifespans. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.',
+      a: "Standing seam features clean vertical lines with hidden fasteners, well-suited to contemporary architecture. Stone-coated steel replicates the look of traditional shingles in steel form, popular in neighborhoods with traditional HOA aesthetic requirements. Both carry a Class 4 impact rating. Brava synthetic slate, shake, and Spanish barrel tile are also available, and suit homes where you want the look of natural slate, shake, or tile. We bring samples of metal and Brava so you can compare them on your own home.",
     },
     {
       q: "What is oil canning, and should McKinney homeowners worry about it?",

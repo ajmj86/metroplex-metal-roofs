@@ -30,7 +30,7 @@ export const ROANOKE_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Roanoke, TX?',
-      a: "A 10-year workmanship warranty from Metroplex is written into every Roanoke contract. Material defects in the panels and finish fall under the manufacturer's own warranty. Between the two, you have coverage for both the installation and the product, on a roof designed to last 50 years or more. Your project lead explains what each covers on installation day.",
+      a: "A 10-year workmanship warranty from Metroplex is written into every Roanoke contract. Material defects in the panels and finish fall under the manufacturer's own warranty. Between the two, you have coverage for both the installation and the product, on a roof designed for a long service life. Your project lead explains what each covers on installation day.",
     },
     {
       q: 'How much does a metal roof cost in Roanoke, TX?',

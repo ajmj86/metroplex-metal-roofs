@@ -28,7 +28,7 @@ export const ROYSE_CITY_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Royse City, TX?',
-      a: "We back every Royse City installation with a 10-year workmanship warranty that sits in your contract, not on a handshake. The manufacturer adds its own material warranty on the panels and finish. A lifespan of 50 years or more means these warranties offer peace of mind more than repairs. Questions about either one are welcome at any point.",
+      a: "We back every Royse City installation with a 10-year workmanship warranty that sits in your contract, not on a handshake. The manufacturer adds its own material warranty on the panels and finish. The roof is designed for a long service life, and these warranties add peace of mind. Questions about either one are welcome at any point.",
     },
     {
       q: 'How much does a metal roof cost in Royse City, TX?',
@@ -36,7 +36,7 @@ export const ROYSE_CITY_DATA: CityData = {
     },
     {
       q: 'Is metal roofing a good investment in Royse City?',
-      a: "For many Royse City homeowners, yes: metal roofing ends the cycle of recurring asphalt replacements and offers long life, low maintenance, and a Class 4 impact rating. Most Texas insurers discount Class 4 roofs, so ask your carrier how it applies to your policy. Whether it fits depends on how long you plan to stay in the home.",
+      a: "For many Royse City homeowners, yes: metal roofing offers long life, low maintenance, and a Class 4 impact rating. Most Texas insurers discount Class 4 roofs, so ask your carrier how it applies to your policy. Whether it fits depends on how long you plan to stay in the home.",
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Rockwall County?',
@@ -44,7 +44,7 @@ export const ROYSE_CITY_DATA: CityData = {
     },
     {
       q: 'Will my Royse City HOA approve a metal roof?',
-      a: "In Royse City, many associations allow metal or Brava once the profile and color meet their guidelines. If you live in Woodcreek Farms or Falcon Heights, check your association's guidelines early. We handle the submission with samples, color chips, and manufacturer spec sheets, at no extra charge.",
+      a: "In Royse City, many associations allow metal or Brava once the profile and color meet their guidelines. If you live in Falcon Heights, check your association's guidelines early. We handle the submission with samples, color chips, and manufacturer spec sheets, at no extra charge.",
     },
     {
       q: 'How long does metal roof installation take in Royse City?',
@@ -52,7 +52,7 @@ export const ROYSE_CITY_DATA: CityData = {
     },
     {
       q: 'What metal and Brava roofing styles are available in Royse City?',
-      a: "Whatever your Royse City home's architecture, there is a metal or Brava profile to suit it. R-Panel offers a cost-effective metal option with a strong 40 to 60 year lifespan. If you lean toward a slate or tile appearance, Brava's three profiles are worth a look. The Free Roof Visualizer lets you preview each option on your actual home before you decide.",
+      a: "Whatever your Royse City home's architecture, there is a metal or Brava profile to suit it. R-Panel offers a cost-effective metal option. If you lean toward a slate or tile appearance, Brava's three profiles are worth a look. The Free Roof Visualizer lets you preview each option on your actual home before you decide.",
     },
     {
       q: "Will a metal roof rust on a Royse City home?",

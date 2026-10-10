@@ -41,7 +41,7 @@ export const UNIVERSITY_PARK_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in University Park, TX?',
-      a: "Workmanship is covered for 10 years on every University Park roof, and the terms are spelled out in your contract. The metal itself carries the manufacturer's material warranty for the panels and their finish. Since the roof itself is built to last 50 years or more, claims are uncommon. Keep the paperwork with your home records for future reference.",
+      a: "Workmanship is covered for 10 years on every University Park roof, and the terms are spelled out in your contract. The metal itself carries the manufacturer's material warranty for the panels and their finish. Because the roof is designed for a long service life, these warranties are there for peace of mind. Keep the paperwork with your home records for future reference.",
     },
     {
       q: 'Will a metal or Brava synthetic slate roof suit a Tudor or Colonial home?',

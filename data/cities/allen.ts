@@ -29,7 +29,7 @@ export const ALLEN_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Allen, TX?',
-      a: "A 10-year workmanship warranty from Metroplex is written into every Allen contract. The manufacturer adds its own material warranty on the panels and finish. Paired with a system lifespan of 50 years or more, it is coverage most Allen homeowners rarely have to use. Copies of both are yours to keep.",
+      a: "A 10-year workmanship warranty from Metroplex is written into every Allen contract. The manufacturer adds its own material warranty on the panels and finish. Paired with a roof designed for a long service life, it is coverage built for peace of mind. Copies of both are yours to keep.",
     },
     {
       q: 'How much does a metal roof cost in Allen, TX?',
@@ -37,7 +37,7 @@ export const ALLEN_DATA: CityData = {
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Allen?',
-      a: "Yes, a Class 4 impact-rated metal roof can lower your premium, since most Texas insurers discount Class 4 roofs. For Allen homeowners with median home values near $500,000, eliminating repeated asphalt replacements and qualifying for carrier discounts can be a sound long-term decision. The size of the discount depends on your carrier and policy, so check with your insurance carrier.",
+      a: "Yes, a Class 4 impact-rated metal roof can lower your premium, since most Texas insurers discount Class 4 roofs. For Allen homeowners with median home values near $500,000, long life, low maintenance, and a Class 4 rating can make the upgrade a sound long-term decision. The size of the discount depends on your carrier and policy, so check with your insurance carrier.",
     },
     {
       q: 'Will my Allen HOA approve a metal roof?',

@@ -30,7 +30,7 @@ export const COPPELL_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Coppell, TX?',
-      a: "We back every Coppell installation with a 10-year workmanship warranty that sits in your contract, not on a handshake. The metal itself carries the manufacturer's material warranty for the panels and their finish. Between the two, you have coverage for both the installation and the product, on a roof designed to last 50 years or more. We can send the warranty documents ahead of time if you would like to read them.",
+      a: "We back every Coppell installation with a 10-year workmanship warranty that sits in your contract, not on a handshake. The metal itself carries the manufacturer's material warranty for the panels and their finish. Between the two, you have coverage for both the installation and the product, on a roof designed for a long service life. We can send the warranty documents ahead of time if you would like to read them.",
     },
     {
       q: 'How much does a metal roof cost in Coppell, TX?',
@@ -38,7 +38,7 @@ export const COPPELL_DATA: CityData = {
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Coppell?',
-      a: "In many cases, yes. Metal roofing with a Class 4 impact rating is the type of roof most Texas insurers discount. Coppell homeowners with median home values above $550,000 can benefit financially from fewer repeat claims and possible premium reductions. We suggest asking your insurance carrier for a quote that reflects the new roof.",
+      a: "In many cases, yes. Metal roofing with a Class 4 impact rating is the type of roof most Texas insurers discount. Coppell homeowners with median home values above $550,000 may find long life, low maintenance, and a Class 4 rating worth weighing. We suggest asking your insurance carrier for a quote that reflects the new roof.",
     },
     {
       q: 'Will my Coppell HOA approve a metal roof?',

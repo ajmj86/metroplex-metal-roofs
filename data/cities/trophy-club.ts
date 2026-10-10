@@ -42,7 +42,7 @@ export const TROPHY_CLUB_DATA: CityData = {
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Trophy Club?',
-      a: "Yes, a Class 4 metal roof is a common way Trophy Club homeowners earn a premium discount, since most Texas insurers offer one. Trophy Club homeowners with median home values above $600,000 may see financial benefits from lower annual premiums and reduced deductible exposure. Because discounts vary, check with your insurance carrier and keep our documentation handy.",
+      a: "Yes, a Class 4 metal roof is a common way Trophy Club homeowners earn a premium discount, since most Texas insurers offer one. Trophy Club homeowners with median home values above $600,000 often weigh long life, low maintenance, and a Class 4 rating. Because discounts vary, check with your insurance carrier and keep our documentation handy.",
     },
     {
       q: 'How long does metal roof installation take in Trophy Club?',

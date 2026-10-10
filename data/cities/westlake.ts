@@ -38,11 +38,11 @@ export const WESTLAKE_DATA: CityData = {
     },
     {
       q: 'Is copper roofing available for Westlake homes?',
-      a: "Yes. Copper standing seam is available and particularly well-suited to Westlake estate properties. Copper develops a natural patina over time, lasts 100 years or more, and makes a permanent architectural statement. It is the highest-tier option we offer and needs very little maintenance.",
+      a: "Yes. Copper standing seam is available and particularly well-suited to Westlake estate properties. Copper develops a natural patina over time, is designed for a long service life, and makes a lasting architectural statement. It is the highest-tier option we offer and needs very little maintenance.",
     },
     {
       q: 'Will my Westlake HOA approve a metal roof?',
-      a: "HOA rules in Westlake differ by neighborhood, and many associations permit metal or Brava in neutral, approved colors. Copper roofing is permitted on many estate properties. We help with the paperwork and submission, and the committee makes the final call.",
+      a: "HOA rules in Westlake differ by neighborhood, and many associations permit metal or Brava in neutral, approved colors. We help with the paperwork and submission, and the committee makes the final call.",
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Tarrant County?',

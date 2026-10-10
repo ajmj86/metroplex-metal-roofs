@@ -37,7 +37,7 @@ export const OAK_CLIFF_DALLAS_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Oak Cliff?',
-      a: "We back every Oak Cliff installation with a 10-year workmanship warranty that sits in your contract, not on a handshake. You also receive the manufacturer's material warranty for the panels and finish. Since the roof itself is built to last 50 years or more, claims are uncommon. Copies of both are yours to keep.",
+      a: "We back every Oak Cliff installation with a 10-year workmanship warranty that sits in your contract, not on a handshake. You also receive the manufacturer's material warranty for the panels and finish. Because the roof is designed for a long service life, these warranties are there for peace of mind. Copies of both are yours to keep.",
     },
     {
       q: 'Will a Brava or metal roof suit an older Oak Cliff bungalow?',

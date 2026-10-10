@@ -37,7 +37,7 @@ export const ARGYLE_DATA: CityData = {
     },
     {
       q: "What metal and Brava roofing options suit Argyle estate homes?",
-      a: "In Argyle, the choice usually comes down to a shingle or shake look in stone-coated steel, a clean standing seam line, or a Brava profile. Standing seam is the most popular choice for Argyle estate properties due to its clean architectural lines and hidden fastener system. Copper is available for homeowners seeking the highest-tier permanent finish. Brava gives a premium alternative to metal, with slate, cedar shake, and Spanish barrel tile profiles. We set samples next to your siding or brick so you can see how each material reads in daylight.",
+      a: "In Argyle, the choice usually comes down to a shingle or shake look in stone-coated steel, a clean standing seam line, or a Brava profile. Standing seam is the most popular choice for Argyle estate properties due to its clean architectural lines and hidden fastener system. Copper is available for homeowners seeking the highest-tier, long-lasting finish. Brava gives a premium alternative to metal, with slate, cedar shake, and Spanish barrel tile profiles. We set samples next to your siding or brick so you can see how each material reads in daylight.",
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Argyle?',
@@ -45,7 +45,7 @@ export const ARGYLE_DATA: CityData = {
     },
     {
       q: 'Will my Argyle HOA approve a metal roof?',
-      a: "Many HOAs in Argyle approve these profiles, and each association sets its own rules. Rules can differ between areas such as Harvest and Canyon Falls. We can supply everything the committee asks for, from color chips to manufacturer specifications, at no additional cost.",
+      a: "Many HOAs in Argyle approve these profiles, and each association sets its own rules. Rules can differ between neighborhoods, so check with your association early. We can supply everything the committee asks for, from color chips to manufacturer specifications, at no additional cost.",
     },
     {
       q: 'How long does metal roof installation take in Argyle?',

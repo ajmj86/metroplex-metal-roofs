@@ -30,7 +30,7 @@ export const GRAPEVINE_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Grapevine, TX?',
-      a: "Each roof we build in Grapevine carries a 10-year workmanship warranty covering how it was installed. Material defects in the panels and finish fall under the manufacturer's own warranty. Since the roof itself is built to last 50 years or more, claims are uncommon. You will see the details in writing before you commit.",
+      a: "Each roof we build in Grapevine carries a 10-year workmanship warranty covering how it was installed. Material defects in the panels and finish fall under the manufacturer's own warranty. Because the roof is designed for a long service life, these warranties are there for peace of mind. You will see the details in writing before you commit.",
     },
     {
       q: 'How much does a metal roof cost in Grapevine, TX?',

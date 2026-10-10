@@ -37,7 +37,7 @@ export const PRESTON_HOLLOW_DALLAS_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Preston Hollow?',
-      a: "On a Preston Hollow job, our 10-year workmanship warranty is part of the signed agreement. Panels and finish are covered separately by the manufacturer's material warranty. Between the two, you have coverage for both the installation and the product, on a roof designed to last 50 years or more. You will see the details in writing before you commit.",
+      a: "On a Preston Hollow job, our 10-year workmanship warranty is part of the signed agreement. Panels and finish are covered separately by the manufacturer's material warranty. Between the two, you have coverage for both the installation and the product, on a roof designed for a long service life. You will see the details in writing before you commit.",
     },
     {
       q: 'Is Preston Hollow a good fit for Brava synthetic slate or stone-coated steel?',
@@ -45,7 +45,7 @@ export const PRESTON_HOLLOW_DALLAS_DATA: CityData = {
     },
     {
       q: 'Do large, complex roofs cost much more to replace with metal?',
-      a: `Larger roofs with many hips and valleys do cost more, and the layout matters as much as the size. By material, that runs about ${FAQ_RATE.stoneCoated()}/sq ft for stone-coated steel, ${FAQ_RATE.standingSeam()}/sq ft for standing seam, and ${FAQ_RATE.slate()}/sq ft for Brava synthetic slate. We give a satellite-based range first and a firm number after your free on-site assessment.`,
+      a: "Larger roofs with many hips and valleys do cost more, and the layout matters as much as the size. The pricing table above lists the typical range for each material. We give a satellite-based range first and a firm number after your free on-site assessment.",
     },
     {
       q: 'Does my Preston Hollow home need HOA or design review for a new roof?',

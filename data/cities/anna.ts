@@ -27,7 +27,7 @@ export const ANNA_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Anna, TX?',
-      a: "Your Anna roof comes with our 10-year workmanship warranty, put in writing before work begins. Panels and finish are covered separately by the manufacturer's material warranty. A lifespan of 50 years or more means these warranties offer peace of mind more than repairs. Your project lead explains what each covers on installation day.",
+      a: "Your Anna roof comes with our 10-year workmanship warranty, put in writing before work begins. Panels and finish are covered separately by the manufacturer's material warranty. The roof is designed for a long service life, and these warranties add peace of mind. Your project lead explains what each covers on installation day.",
     },
     {
       q: 'How much does a metal roof cost in Anna, TX?',
@@ -35,7 +35,7 @@ export const ANNA_DATA: CityData = {
     },
     {
       q: 'Is metal roofing common on new construction in Anna?',
-      a: "Yes, metal roofing is showing up more often on new homes in Anna. Storm exposure in Collin County and long-term upkeep are common reasons buyers ask for it.",
+      a: "Metal roofing is an option on new homes in Anna. Storm exposure in Collin County and long-term upkeep are common reasons buyers ask for it.",
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Collin County?',

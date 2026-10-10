@@ -35,7 +35,7 @@ export const LAKE_HIGHLANDS_DALLAS_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Lake Highlands?',
-      a: "Your Lake Highlands roof comes with our 10-year workmanship warranty, put in writing before work begins. A second layer of protection comes from the manufacturer, whose material warranty covers the panels and finish. Between the two, you have coverage for both the installation and the product, on a roof designed to last 50 years or more. Questions about either one are welcome at any point.",
+      a: "Your Lake Highlands roof comes with our 10-year workmanship warranty, put in writing before work begins. A second layer of protection comes from the manufacturer, whose material warranty covers the panels and finish. Between the two, you have coverage for both the installation and the product, on a roof designed for a long service life. Questions about either one are welcome at any point.",
     },
     {
       q: 'What Brava or metal roof style suits a brick ranch in Lake Highlands?',
@@ -43,7 +43,7 @@ export const LAKE_HIGHLANDS_DALLAS_DATA: CityData = {
     },
     {
       q: 'Is metal worth it on a mid-size Lake Highlands home?',
-      a: "For many owners, yes, because a metal roof replaces several asphalt replacement cycles with one install. You also get a Class 4 impact rating and a lasting finish. We show the numbers for your roof so you can decide with real figures.",
+      a: "For many owners, yes, because metal offers long life and low maintenance. You also get a Class 4 impact rating and a long-lasting finish. We are happy to talk through your roof so you can decide with real information.",
     },
     {
       q: 'How much does a metal or Brava synthetic slate roof cost in Lake Highlands?',

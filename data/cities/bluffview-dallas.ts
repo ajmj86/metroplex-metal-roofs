@@ -32,7 +32,7 @@ export const BLUFFVIEW_DALLAS_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Bluffview?',
-      a: "On a Bluffview job, our 10-year workmanship warranty is part of the signed agreement. A second layer of protection comes from the manufacturer, whose material warranty covers the panels and finish. Since the roof itself is built to last 50 years or more, claims are uncommon. If you ever need to make a claim, we help you through the process.",
+      a: "On a Bluffview job, our 10-year workmanship warranty is part of the signed agreement. A second layer of protection comes from the manufacturer, whose material warranty covers the panels and finish. Because the roof is designed for a long service life, these warranties are there for peace of mind. If you ever need to make a claim, we help you through the process.",
     },
     {
       q: 'Is metal a good choice for a home under mature trees?',

@@ -30,7 +30,7 @@ export const LEWISVILLE_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Lewisville, TX?',
-      a: "Each roof we build in Lewisville carries a 10-year workmanship warranty covering how it was installed. You also receive the manufacturer's material warranty for the panels and finish. A lifespan of 50 years or more means these warranties offer peace of mind more than repairs. We can send the warranty documents ahead of time if you would like to read them.",
+      a: "Each roof we build in Lewisville carries a 10-year workmanship warranty covering how it was installed. You also receive the manufacturer's material warranty for the panels and finish. The roof is designed for a long service life, and these warranties add peace of mind. We can send the warranty documents ahead of time if you would like to read them.",
     },
     {
       q: 'How much does a metal roof cost in Lewisville, TX?',

@@ -56,7 +56,7 @@ export const DALLAS_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Dallas, TX?',
-      a: "Each roof we build in Dallas carries a 10-year workmanship warranty covering how it was installed. A second layer of protection comes from the manufacturer, whose material warranty covers the panels and finish. Paired with a system lifespan of 50 years or more, it is coverage most Dallas homeowners rarely have to use. Keep the paperwork with your home records for future reference.",
+      a: "Each roof we build in Dallas carries a 10-year workmanship warranty covering how it was installed. A second layer of protection comes from the manufacturer, whose material warranty covers the panels and finish. Paired with a roof designed for a long service life, it is coverage built for peace of mind. Keep the paperwork with your home records for future reference.",
     },
     {
       q: 'How much does a metal roof cost in Dallas?',

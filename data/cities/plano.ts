@@ -38,7 +38,7 @@ export const PLANO_DATA: CityData = {
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Plano?',
-      a: "Most Texas insurers discount Class 4 roofs, so upgrading to a Class 4 metal roof in Plano can reduce what you pay. Plano homeowners with median home values above $500,000 can benefit financially from fewer repeat claims and possible premium reductions. Your insurance carrier decides the amount, so it is worth a quick call once you pick a material.",
+      a: "Most Texas insurers discount Class 4 roofs, so upgrading to a Class 4 metal roof in Plano can reduce what you pay. Plano homeowners with median home values above $500,000 may find long life, low maintenance, and a Class 4 rating worth weighing. Your insurance carrier decides the amount, so it is worth a quick call once you pick a material.",
     },
     {
       q: 'Will my Plano HOA approve a metal roof?',

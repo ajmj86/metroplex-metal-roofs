@@ -50,7 +50,7 @@ export const PROSPER_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Prosper, TX?',
-      a: "Workmanship is covered for 10 years on every Prosper roof, and the terms are spelled out in your contract. On top of that, the product maker stands behind its panels and coatings with a material warranty. Paired with a system lifespan of 50 years or more, it is coverage most Prosper homeowners rarely have to use. Questions about either one are welcome at any point.",
+      a: "Workmanship is covered for 10 years on every Prosper roof, and the terms are spelled out in your contract. On top of that, the product maker stands behind its panels and coatings with a material warranty. Paired with a roof designed for a long service life, it is coverage built for peace of mind. Questions about either one are welcome at any point.",
     },
     {
       q: 'How much does a metal roof cost in Prosper, TX?',
@@ -58,11 +58,11 @@ export const PROSPER_DATA: CityData = {
     },
     {
       q: 'Is metal roofing common in Prosper neighborhoods like Windsong Ranch?',
-      a: 'Yes, metal roofing has become increasingly standard across Prosper\'s master-planned developments, with many new homes built with standing seam or stone-coated steel from the start. Existing homeowners in Windsong Ranch, Star Trail, and Lakes of Prosper have been upgrading at a significant rate, particularly after hail seasons that exposed the limitations of asphalt in Collin County\'s storm corridor.',
+      a: "Metal roofing is an option across Prosper's master-planned developments, including standing seam or stone-coated steel from the start on a new home. Existing homeowners in Windsong Ranch, Star Trail, and Lakes of Prosper also ask about it after hail seasons that expose the limits of asphalt in Collin County's storm corridor.",
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Prosper?',
-      a: "A Class 4 impact rating is what carriers look for, and most Texas insurers discount roofs that have it. For Prosper homeowners with median home values above $700,000, the 2% wind/hail deductible means a single storm event can cost $14,000 or more out of pocket on asphalt. A metal roof reduces that exposure and can lower your annual premium. The size of the discount depends on your carrier and policy, so check with your insurance carrier.",
+      a: "A Class 4 impact rating is what carriers look for, and most Texas insurers discount roofs that have it. For Prosper homeowners with median home values above $700,000, the 2% wind/hail deductible means a single storm event can cost $14,000 or more out of pocket on asphalt. Metal's long life, low maintenance, and Class 4 rating are why many Prosper homeowners consider it. The size of the discount depends on your carrier and policy, so check with your insurance carrier.",
     },
     {
       q: 'Will my Prosper HOA approve a metal roof?',

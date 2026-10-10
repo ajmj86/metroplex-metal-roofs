@@ -43,7 +43,7 @@ export const MESQUITE_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Mesquite, TX?',
-      a: "The paperwork for a Mesquite roof starts with a 10-year workmanship warranty, written into the contract. On top of that, the product maker stands behind its panels and coatings with a material warranty. Since the roof itself is built to last 50 years or more, claims are uncommon. Your project lead explains what each covers on installation day.",
+      a: "The paperwork for a Mesquite roof starts with a 10-year workmanship warranty, written into the contract. On top of that, the product maker stands behind its panels and coatings with a material warranty. We are glad to explain both documents before any work begins. Your project lead explains what each covers on installation day.",
     },
     {
       q: 'How much does a metal roof cost in Mesquite?',
@@ -51,7 +51,7 @@ export const MESQUITE_DATA: CityData = {
     },
     {
       q: 'Is metal roofing common in newer Mesquite developments like Solterra?',
-      a: "Yes. Solterra's guidelines permit metal roofing in approved profiles, which is why it shows up on newer Mesquite builds. Reroofing owners there face the same Dallas County hail season as the rest of the city.",
+      a: "Many associations accept metal in approved profiles and colors; we confirm yours. Reroofing owners in newer areas like Solterra face the same Dallas County hail season as the rest of the city.",
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Mesquite?',
@@ -59,7 +59,7 @@ export const MESQUITE_DATA: CityData = {
     },
     {
       q: 'Will my Mesquite HOA approve a metal roof?',
-      a: "HOA rules in Mesquite differ by neighborhood, and many associations permit metal or Brava in neutral, approved colors. Communities such as Casa View Heights and Highland Hills each have their own review process. We can supply everything the committee asks for, from color chips to manufacturer specifications, at no additional cost.",
+      a: "HOA rules in Mesquite differ by neighborhood, and many associations permit metal or Brava in neutral, approved colors. Neighborhoods across Mesquite each have their own review process. We can supply everything the committee asks for, from color chips to manufacturer specifications, at no additional cost.",
     },
     {
       q: 'How long does metal roof installation take in Mesquite?',
@@ -67,7 +67,7 @@ export const MESQUITE_DATA: CityData = {
     },
     {
       q: "What metal and Brava roofing style suits Mesquite homes?",
-      a: "A Mesquite roof can take several looks: standing seam panels, stone-coated steel, or one of three Brava profiles. Stone-coated steel is a strong match for the traditional ranch homes common in Town East Estates and Casa View Heights, while standing seam suits the more contemporary builds going up in Solterra. For the look of natural slate, shake, or tile, Brava offers three profiles in a durable composite. We are happy to compare options side by side during your free assessment.",
+      a: "A Mesquite roof can take several looks: standing seam panels, stone-coated steel, or one of three Brava profiles. Stone-coated steel is a strong match for the traditional ranch homes common in Town East Estates, while standing seam suits the more contemporary builds going up in Solterra. For the look of natural slate, shake, or tile, Brava offers three profiles in a durable composite. We are happy to compare options side by side during your free assessment.",
     },
     {
       q: "Is a metal roof louder than shingles in a Mesquite rainstorm?",

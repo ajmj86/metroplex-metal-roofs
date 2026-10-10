@@ -53,7 +53,7 @@ export const GRAND_PRAIRIE_DATA: CityData = {
     },
     {
       q: 'Is metal roofing common in newer Grand Prairie communities like Mira Lagos?',
-      a: 'Yes. Mira Lagos, Sheffield, and Westchester all have architectural guidelines that already permit metal roofing in approved profiles, and it\'s an increasingly common choice among homeowners building or upgrading in these communities.',
+      a: "Many associations accept metal in approved profiles and colors; we confirm yours. Newer Grand Prairie communities like Mira Lagos have their own guidelines, so we check them before you choose a material.",
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Grand Prairie?',

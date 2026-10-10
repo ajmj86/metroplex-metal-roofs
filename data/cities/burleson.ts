@@ -39,7 +39,7 @@ export const BURLESON_DATA: CityData = {
     },
     {
       q: 'Will my Burleson HOA approve a metal roof?',
-      a: "Some Burleson neighborhoods have no HOA, and where one exists, many approve metal and Brava in approved profiles and colors. Villages of Benbrook, Retreat at Willow Creek, and similar communities often have their own architectural committees. Samples, color chips, and spec sheets come with our free help preparing your submission.",
+      a: "Some Burleson neighborhoods have no HOA, and where one exists, many approve metal and Brava in approved profiles and colors. Retreat at Willow Creek and similar communities often have their own architectural committees. Samples, color chips, and spec sheets come with our free help preparing your submission.",
     },
     {
       q: 'How long does metal roof installation take in Burleson?',
@@ -51,7 +51,7 @@ export const BURLESON_DATA: CityData = {
     },
     {
       q: 'What metal and Brava roofing styles are available in Burleson?',
-      a: "A Burleson roof can take several looks: standing seam panels, stone-coated steel, or one of three Brava profiles. Stone-coated steel is the most popular choice for traditional homes throughout the area. R-Panel offers a cost-effective metal option with a 40 to 60 year lifespan. Homeowners drawn to natural slate, shake, or tile can compare Brava's three profiles with the steel options. Class 4 impact ratings apply to our steel systems, and we will walk through color and profile choices on site.",
+      a: "A Burleson roof can take several looks: standing seam panels, stone-coated steel, or one of three Brava profiles. Stone-coated steel is the most popular choice for traditional homes throughout the area. R-Panel offers a cost-effective metal option. Homeowners drawn to natural slate, shake, or tile can compare Brava's three profiles with the steel options. Class 4 impact ratings apply to our steel systems, and we will walk through color and profile choices on site.",
     },
     {
       q: "Will a metal roof block cell or Wi-Fi signal in Burleson?",

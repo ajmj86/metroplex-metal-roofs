@@ -36,7 +36,7 @@ export const MIDLOTHIAN_DATA: CityData = {
     },
     {
       q: 'Is metal roofing common on new construction in Midlothian?',
-      a: "More and more new homes in Midlothian are finished with metal roofing. Builders in the area are specifying standing seam and stone-coated steel more frequently as homebuyers prioritize durability in an active storm corridor. Homeowners in Ellis County like that it is built to handle hail and needs little upkeep.",
+      a: "Metal roofing is an option on new homes in Midlothian. Standing seam and stone-coated steel are available to builders and buyers in the area, where durability matters in an active storm corridor. Homeowners in Ellis County like that it is built to handle hail and needs little upkeep.",
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Ellis County?',

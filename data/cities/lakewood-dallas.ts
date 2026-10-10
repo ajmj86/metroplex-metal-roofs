@@ -36,7 +36,7 @@ export const LAKEWOOD_DALLAS_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Lakewood?',
-      a: "We back every Lakewood installation with a 10-year workmanship warranty that sits in your contract, not on a handshake. Material defects in the panels and finish fall under the manufacturer's own warranty. Paired with a system lifespan of 50 years or more, it is coverage most Lakewood homeowners rarely have to use. If you ever need to make a claim, we help you through the process.",
+      a: "We back every Lakewood installation with a 10-year workmanship warranty that sits in your contract, not on a handshake. Material defects in the panels and finish fall under the manufacturer's own warranty. Paired with a roof designed for a long service life, it is coverage built for peace of mind. If you ever need to make a claim, we help you through the process.",
     },
     {
       q: 'Will a Brava or metal roof look right on a Lakewood bungalow?',
@@ -52,7 +52,7 @@ export const LAKEWOOD_DALLAS_DATA: CityData = {
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Lakewood?',
-      a: "In many cases, yes. Metal roofing with a Class 4 impact rating is the type of roof most Texas insurers discount. After years of hail in North Texas, many Lakewood homeowners are looking at metal to reduce repeat claims. The size of the discount depends on your carrier and policy, so check with your insurance carrier.",
+      a: "In many cases, yes. Metal roofing with a Class 4 impact rating is the type of roof most Texas insurers discount. After years of hail in North Texas, many Lakewood homeowners are looking at metal for its long life, low maintenance, and Class 4 rating. The size of the discount depends on your carrier and policy, so check with your insurance carrier.",
     },
     {
       q: 'How much does a metal or Brava synthetic slate roof cost in Lakewood?',

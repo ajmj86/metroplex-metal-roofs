@@ -30,7 +30,7 @@ export const RICHARDSON_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Richardson, TX?',
-      a: "The paperwork for a Richardson roof starts with a 10-year workmanship warranty, written into the contract. The metal itself carries the manufacturer's material warranty for the panels and their finish. A lifespan of 50 years or more means these warranties offer peace of mind more than repairs. If you ever need to make a claim, we help you through the process.",
+      a: "The paperwork for a Richardson roof starts with a 10-year workmanship warranty, written into the contract. The metal itself carries the manufacturer's material warranty for the panels and their finish. The roof is designed for a long service life, and these warranties add peace of mind. If you ever need to make a claim, we help you through the process.",
     },
     {
       q: 'How much does a metal roof cost in Richardson, TX?',
@@ -38,7 +38,7 @@ export const RICHARDSON_DATA: CityData = {
     },
     {
       q: 'Does a metal roof work on older homes in Richardson?',
-      a: 'Yes. Stone-coated steel is specifically designed to replicate the look of traditional shingles or shake in steel form, making it an excellent choice for Richardson\'s established older homes. The AI visualizer lets you see exactly what it will look like on your actual house before you decide.',
+      a: "Yes. Stone-coated steel is specifically designed to replicate the look of traditional shingles or shake in steel form, making it an excellent choice for Richardson's established older homes. The AI visualizer lets you see how it will look on your actual house before you decide.",
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Richardson?',

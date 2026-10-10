@@ -43,7 +43,7 @@ export const IRVING_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Irving, TX?',
-      a: "The paperwork for an Irving roof starts with a 10-year workmanship warranty, written into the contract. Panels and finish are covered separately by the manufacturer's material warranty. Paired with a system lifespan of 50 years or more, it is coverage most Irving homeowners rarely have to use. We can send the warranty documents ahead of time if you would like to read them.",
+      a: "The paperwork for an Irving roof starts with a 10-year workmanship warranty, written into the contract. Panels and finish are covered separately by the manufacturer's material warranty. Paired with a roof designed for a long service life, it is coverage built for peace of mind. We can send the warranty documents ahead of time if you would like to read them.",
     },
     {
       q: 'How much does a metal roof cost in Irving?',
@@ -51,7 +51,7 @@ export const IRVING_DATA: CityData = {
     },
     {
       q: 'Will my Las Colinas or Valley Ranch HOA approve a metal roof?',
-      a: "Las Colinas and Valley Ranch both run established architectural reviews, and metal in approved profiles and colors is common in each. We prepare the submission for you, and your association makes the final call. Some Irving neighborhoods have no HOA at all.",
+      a: "Many associations accept metal in approved profiles and colors; we confirm yours. Las Colinas and Valley Ranch each have their own review process, and we prepare the submission for you. Some Irving neighborhoods have no HOA at all.",
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Irving?',
@@ -67,7 +67,7 @@ export const IRVING_DATA: CityData = {
     },
     {
       q: 'Is metal roofing common on Irving homes near Lake Carolyn and the canals?',
-      a: 'Yes, properties near Lake Carolyn and the Las Colinas canal system have increasingly moved to standing seam metal roofing, both for the clean architectural lines and for the added storm protection given the area\'s open exposure.',
+      a: "Standing seam suits homes near Lake Carolyn and the Las Colinas canals, where owners value its clean architectural lines and a roof built for storm exposure. We can show it on your own home in the Free Roof Visualizer.",
     },
     {
       q: "Will hail dent a metal roof in Dallas County?",

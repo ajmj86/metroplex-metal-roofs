@@ -50,7 +50,7 @@ export const ARLINGTON_DATA: CityData = {
     },
     {
       q: 'Is metal roofing common in newer Arlington developments like Viridian?',
-      a: 'Yes. Viridian\'s architectural guidelines already permit metal roofing in approved profiles, and it\'s an increasingly common choice among homeowners building or reroofing in the community given the neighborhood\'s exposure to the same Tarrant County hail corridor as the rest of Arlington.',
+      a: "Many associations accept metal in approved profiles and colors; we confirm yours. Newer developments like Viridian share the same Tarrant County hail exposure as the rest of Arlington, so roof material is a common question for owners there.",
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Arlington?',

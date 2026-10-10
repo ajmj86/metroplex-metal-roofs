@@ -49,7 +49,7 @@ export const COLLEYVILLE_DATA: CityData = {
     },
     {
       q: "What metal and Brava roofing suits high-value homes in Colleyville?",
-      a: "The right profile for a Colleyville home depends on its architecture, and we install steel and Brava options to match. Standing seam is the most popular choice for Colleyville estate properties due to its clean architectural lines and hidden fastener system. Copper is available for homeowners seeking a premium, permanent finish that develops a natural patina over time. Brava gives a premium alternative to metal, with slate, cedar shake, and Spanish barrel tile profiles. Class 4 impact ratings apply to our steel systems, and we will walk through color and profile choices on site.",
+      a: "The right profile for a Colleyville home depends on its architecture, and we install steel and Brava options to match. Standing seam is the most popular choice for Colleyville estate properties due to its clean architectural lines and hidden fastener system. Copper is available for homeowners seeking a premium, long-lasting finish that develops a natural patina over time. Brava gives a premium alternative to metal, with slate, cedar shake, and Spanish barrel tile profiles. Class 4 impact ratings apply to our steel systems, and we will walk through color and profile choices on site.",
     },
     {
       q: 'How does metal roofing hold up in Tarrant County hail storms?',

@@ -35,7 +35,7 @@ export const FORNEY_DATA: CityData = {
     },
     {
       q: 'Is metal roofing common on new construction in Forney?',
-      a: "Metal has become a familiar choice on new Forney homes. Its Class 4 impact rating and long life appeal to Forney buyers thinking about storms.",
+      a: "Metal is an available choice on new Forney homes. Its Class 4 impact rating and long life appeal to Forney buyers thinking about storms.",
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Kaufman County?',

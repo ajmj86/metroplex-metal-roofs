@@ -51,7 +51,7 @@ export const FRISCO_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Frisco, TX?',
-      a: "A 10-year workmanship warranty from Metroplex is written into every Frisco contract. On top of that, the product maker stands behind its panels and coatings with a material warranty. A lifespan of 50 years or more means these warranties offer peace of mind more than repairs. Keep the paperwork with your home records for future reference.",
+      a: "A 10-year workmanship warranty from Metroplex is written into every Frisco contract. On top of that, the product maker stands behind its panels and coatings with a material warranty. The roof is designed for a long service life, and these warranties add peace of mind. Keep the paperwork with your home records for future reference.",
     },
     {
       q: 'How much does a metal roof cost in Frisco, TX?',

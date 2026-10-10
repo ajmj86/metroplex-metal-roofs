@@ -28,7 +28,7 @@ export const ROCKWALL_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Rockwall, TX?',
-      a: "Your Rockwall roof comes with our 10-year workmanship warranty, put in writing before work begins. You also receive the manufacturer's material warranty for the panels and finish. Paired with a system lifespan of 50 years or more, it is coverage most Rockwall homeowners rarely have to use. You will see the details in writing before you commit.",
+      a: "Your Rockwall roof comes with our 10-year workmanship warranty, put in writing before work begins. You also receive the manufacturer's material warranty for the panels and finish. Paired with a roof designed for a long service life, it is coverage built for peace of mind. You will see the details in writing before you commit.",
     },
     {
       q: 'How much does a metal roof cost in Rockwall, TX?',
@@ -40,11 +40,11 @@ export const ROCKWALL_DATA: CityData = {
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Rockwall County?',
-      a: "Often it does, because most Texas insurers discount Class 4 roofs and metal systems carry that rating. Rockwall homeowners may see lower annual premiums after upgrading, and Class 4 roofing can reduce deductible exposure on future hail claims. The size of the discount depends on your carrier and policy, so check with your insurance carrier.",
+      a: "Often it does, because most Texas insurers discount Class 4 roofs and metal systems carry that rating. Rockwall homeowners often weigh long life, low maintenance, and a Class 4 rating when choosing a roof. The size of the discount depends on your carrier and policy, so check with your insurance carrier.",
     },
     {
       q: 'Will my Rockwall HOA approve a metal roof?',
-      a: "Some Rockwall neighborhoods have no HOA, and where one exists, many approve metal and Brava in approved profiles and colors. Rules can differ between areas such as Lake Ray Hubbard Estates and Chandler Creek. We prepare material samples, color chips, and spec sheets for your submission at no additional cost.",
+      a: "Some Rockwall neighborhoods have no HOA, and where one exists, many approve metal and Brava in approved profiles and colors. Rules can differ between neighborhoods such as Chandler Creek, so check your association's guidelines early. We prepare material samples, color chips, and spec sheets for your submission at no additional cost.",
     },
     {
       q: 'How long does metal roof installation take in Rockwall?',

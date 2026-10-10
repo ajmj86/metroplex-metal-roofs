@@ -77,7 +77,7 @@ export const SOUTHLAKE_DATA: CityData = {
     },
     {
       q: 'What metal roofing colors are HOA-approved in Southlake neighborhoods?',
-      a: "Approval depends on your Southlake community's guidelines, and many HOAs accept metal and Brava profiles in approved colors. The most commonly approved colors across Southlake HOAs include charcoal gray, aged bronze, and weathered brown tones for standing seam, and earth-tone blends for stone-coated steel. We recommend confirming with your specific HOA before selection, and we prepare material samples, color chips, and spec sheets for your submission at no additional cost.",
+      a: "Many associations accept metal in approved profiles and colors; we confirm yours. We recommend confirming with your specific HOA before selection, and we prepare material samples, color chips, and spec sheets for your submission at no additional cost.",
     },
     {
       q: 'How does Brava compare to DaVinci roofing?',

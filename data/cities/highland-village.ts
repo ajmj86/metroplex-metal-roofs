@@ -29,7 +29,7 @@ export const HIGHLAND_VILLAGE_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Highland Village, TX?',
-      a: "Workmanship is covered for 10 years on every Highland Village roof, and the terms are spelled out in your contract. The manufacturer adds its own material warranty on the panels and finish. Between the two, you have coverage for both the installation and the product, on a roof designed to last 50 years or more. If you ever need to make a claim, we help you through the process.",
+      a: "Workmanship is covered for 10 years on every Highland Village roof, and the terms are spelled out in your contract. The manufacturer adds its own material warranty on the panels and finish. Between the two, you have coverage for both the installation and the product, on a roof designed for a long service life. If you ever need to make a claim, we help you through the process.",
     },
     {
       q: 'How much does a metal roof cost in Highland Village, TX?',

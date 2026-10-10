@@ -37,7 +37,7 @@ export const NORTHLAKE_DATA: CityData = {
     },
     {
       q: 'Is metal roofing common on new construction in Northlake?',
-      a: "Metal roofing is a growing option for new construction across Northlake. For Northlake buyers, the draw is a roof that stands up to storm seasons and lasts.",
+      a: "Metal roofing is an option for new construction across Northlake. For Northlake buyers, the draw is a roof that stands up to storm seasons and lasts.",
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Northlake?',

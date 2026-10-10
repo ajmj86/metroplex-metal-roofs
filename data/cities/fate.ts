@@ -28,7 +28,7 @@ export const FATE_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Fate, TX?',
-      a: "On a Fate job, our 10-year workmanship warranty is part of the signed agreement. Material defects in the panels and finish fall under the manufacturer's own warranty. A lifespan of 50 years or more means these warranties offer peace of mind more than repairs. Copies of both are yours to keep.",
+      a: "On a Fate job, our 10-year workmanship warranty is part of the signed agreement. Material defects in the panels and finish fall under the manufacturer's own warranty. The roof is designed for a long service life, and these warranties add peace of mind. Copies of both are yours to keep.",
     },
     {
       q: 'How much does a metal roof cost in Fate, TX?',
@@ -36,7 +36,7 @@ export const FATE_DATA: CityData = {
     },
     {
       q: 'Is metal roofing a good choice for new construction in Fate?',
-      a: "Yes. Metal roofing is increasingly common on new construction throughout Fate and the surrounding Rockwall County area. Many homeowners in newer developments are upgrading from builder-grade shingles to standing seam or stone-coated steel after the first hail season. Buyers in Rockwall County often weigh storm resilience and lasting value when choosing.",
+      a: "Yes. Metal roofing is an option on new construction throughout Fate and the surrounding Rockwall County area. Some homeowners in newer developments choose to upgrade from builder-grade shingles to standing seam or stone-coated steel after a hail season. Buyers in Rockwall County often weigh storm resilience and lasting value when choosing.",
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Rockwall County?',

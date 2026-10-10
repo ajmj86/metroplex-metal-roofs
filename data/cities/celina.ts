@@ -29,7 +29,7 @@ export const CELINA_DATA: CityData = {
   faqs: [
     {
       q: 'What warranty comes with a metal roof in Celina, TX?',
-      a: "A 10-year workmanship warranty from Metroplex is written into every Celina contract. Panels and finish are covered separately by the manufacturer's material warranty. Since the roof itself is built to last 50 years or more, claims are uncommon. Questions about either one are welcome at any point.",
+      a: "A 10-year workmanship warranty from Metroplex is written into every Celina contract. Panels and finish are covered separately by the manufacturer's material warranty. Because the roof is designed for a long service life, these warranties are there for peace of mind. Questions about either one are welcome at any point.",
     },
     {
       q: 'How much does a metal roof cost in Celina, TX?',
@@ -37,7 +37,7 @@ export const CELINA_DATA: CityData = {
     },
     {
       q: 'Is metal roofing common on new construction in Celina?',
-      a: "New builds in Celina increasingly include metal roofs, and the trend is growing. Collin County weather and low maintenance are what draw many buyers to it.",
+      a: "Metal roofs are an option on new builds in Celina. Collin County weather and low maintenance are what draw many buyers to it.",
     },
     {
       q: 'Does a metal roof qualify for an insurance discount in Collin County?',
