@@ -43,6 +43,13 @@ export const DALLAS_DATA: CityData = {
     { name: 'Mesquite', slug: 'mesquite' },
     { name: 'Irving', slug: 'irving' },
     { name: 'Grand Prairie', slug: 'grand-prairie' },
+    { name: 'Preston Hollow', slug: 'preston-hollow-dallas' },
+    { name: 'Bluffview', slug: 'bluffview-dallas' },
+    { name: 'Lakewood', slug: 'lakewood-dallas' },
+    { name: 'Lake Highlands', slug: 'lake-highlands-dallas' },
+    { name: 'Oak Cliff', slug: 'oak-cliff-dallas' },
+    { name: 'Highland Park', slug: 'highland-park' },
+    { name: 'University Park', slug: 'university-park' },
   ],
 
   review: {

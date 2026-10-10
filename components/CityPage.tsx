@@ -37,7 +37,7 @@ export interface CityData {
   state: string
   county: string
   region: string
-  zip: string
+  zip?: string   // omit when not confirmed; schema then drops postalCode
   slug: string
   metaTitle: string
   metaDesc: string
@@ -45,10 +45,16 @@ export interface CityData {
   heroSub: string
   localContext: string
   hoaNote: string
-  localStat: { val: string; label: string; source: string }
+  // Optional: pages without a defensible figure omit it and the hero renders
+  // single-column with no stat card.
+  localStat?: { val: string; label: string; source: string }
   neighborhoods: string[]
   nearbyCities: { name: string; slug: string }[]
-  review: { name: string; neighborhood: string; text: string; rating: number }
+  // Optional: nothing renders it today (replaced by the Metroplex Standard
+  // block), and the 2026 neighborhood pages deliberately omit it.
+  review?: { name: string; neighborhood: string; text: string; rating: number }
+  // Set for neighborhoods of a larger city (e.g. 'Dallas'); drives schema address.
+  parentCity?: string
   faqs: CityFAQ[]
 }
 
@@ -179,7 +185,7 @@ export default function CityPage({ city }: { city: CityData }) {
               </span>
             </div>
 
-            <div className="g2" style={{ gap: 48, alignItems: 'center' }}>
+            <div className="g2" style={{ gap: 48, alignItems: 'center', ...(city.localStat ? {} : { gridTemplateColumns: '1fr' }) }}>
               <div>
                 <h1 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 'clamp(56px,5.5vw,112px)', fontWeight: 700, lineHeight: 1.05, color: C.white, marginBottom: 24, animation: 'fadeUp 0.7s ease 0.1s both', whiteSpace: 'pre-line' }}>
                   {city.heroHeadline.split('\n').map((line, i) => (
@@ -214,6 +220,7 @@ export default function CityPage({ city }: { city: CityData }) {
               </div>
 
               {/* Hero stat card */}
+              {city.localStat && (
               <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <div style={{ background: C.card, border: `1px solid ${C.accentDark}`, borderRadius: 8, padding: '40px 48px', textAlign: 'center', minWidth: 220, position: 'relative', overflow: 'hidden' }}>
                   <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg,${C.accentDark},${C.accent},${C.accentDark})` }}/>
@@ -224,6 +231,7 @@ export default function CityPage({ city }: { city: CityData }) {
                   <div style={{ fontSize: 9, color: C.muted, opacity: 0.6 }}>{city.localStat.source}</div>
                 </div>
               </div>
+              )}
             </div>
           </div>
         </section>

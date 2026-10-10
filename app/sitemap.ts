@@ -16,6 +16,8 @@ const CITY_SLUGS = [
   'southlake', 'trophy-club', 'waxahachie', 'westlake',
   'dallas', 'arlington', 'irving', 'garland', 'mesquite', 'carrollton',
   'grand-prairie',
+  'highland-park', 'university-park', 'preston-hollow-dallas', 'bluffview-dallas',
+  'lakewood-dallas', 'lake-highlands-dallas', 'oak-cliff-dallas',
 ]
 
 export default function sitemap(): MetadataRoute.Sitemap {

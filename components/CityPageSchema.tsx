@@ -27,16 +27,22 @@ export function CitySchema({ city }: { city: CityData }) {
         'url': `https://www.metroplexmetalroofs.com/metal-roofing-${city.slug}-tx/`,
         'telephone': '+18173823338',
         'description': city.metaDesc,
-        'areaServed': {
-          '@type': 'City',
-          'name': city.name,
-          'containedInPlace': { '@type': 'State', 'name': 'Texas' }
-        },
+        'areaServed': city.parentCity
+          ? {
+              '@type': 'Place',
+              'name': `${city.name}, ${city.parentCity}`,
+              'containedInPlace': { '@type': 'City', 'name': city.parentCity, 'containedInPlace': { '@type': 'State', 'name': 'Texas' } }
+            }
+          : {
+              '@type': 'City',
+              'name': city.name,
+              'containedInPlace': { '@type': 'State', 'name': 'Texas' }
+            },
         'address': {
           '@type': 'PostalAddress',
-          'addressLocality': city.name,
+          'addressLocality': city.parentCity ?? city.name,
           'addressRegion': 'TX',
-          'postalCode': city.zip,
+          ...(city.zip ? { 'postalCode': city.zip } : {}),
           'addressCountry': 'US'
         },
         'hasOfferCatalog': {

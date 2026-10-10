@@ -398,6 +398,8 @@ const cities = [
   "Richardson","Highland Village","Argyle","Northlake","Roanoke",
   "Grapevine","Anna","Fate","Royse City",
   "Dallas","Arlington","Irving","Garland","Mesquite","Carrollton","Grand Prairie",
+  "Highland Park","University Park",
+  "Preston Hollow, Dallas","Bluffview, Dallas","Lakewood, Dallas","Lake Highlands, Dallas","Oak Cliff, Dallas",
 ];
 const galleryItems = GALLERY_ITEMS;
 
@@ -840,6 +842,13 @@ const HomePage = ({ activeTab, setActiveTab }) => {
                   city === "Mesquite"          ? "/metal-roofing-mesquite-tx" :
                   city === "Carrollton"        ? "/metal-roofing-carrollton-tx" :
                   city === "Grand Prairie"     ? "/metal-roofing-grand-prairie-tx" :
+                  city === "Highland Park"     ? "/metal-roofing-highland-park-tx" :
+                  city === "University Park"   ? "/metal-roofing-university-park-tx" :
+                  city === "Preston Hollow, Dallas"  ? "/metal-roofing-preston-hollow-dallas-tx" :
+                  city === "Bluffview, Dallas"       ? "/metal-roofing-bluffview-dallas-tx" :
+                  city === "Lakewood, Dallas"        ? "/metal-roofing-lakewood-dallas-tx" :
+                  city === "Lake Highlands, Dallas"  ? "/metal-roofing-lake-highlands-dallas-tx" :
+                  city === "Oak Cliff, Dallas"       ? "/metal-roofing-oak-cliff-dallas-tx" :
                   "#"
                 } style={{padding:"9px 18px",border:`1px solid ${C.border}`,borderRadius:2,fontSize:12,color:C.mutedLight,letterSpacing:1,transition:"all 0.2s"}}
                   onMouseEnter={e=>{e.currentTarget.style.borderColor=C.accent;e.currentTarget.style.color=C.accent;}}
