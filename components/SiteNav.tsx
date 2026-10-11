@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import { C, Logo } from './brand'
 import { useUtmHref } from '@/lib/useUtmHref'
+import { trackVisualizerCta } from '@/lib/analytics'
 
 // Order matches the homepage's actual top-to-bottom section order (the
 // canonical default every other page type falls back to) -- About Us stays
@@ -136,7 +137,7 @@ export default function SiteNav() {
               onMouseLeave={e=>e.currentTarget.style.color=C.mutedLight}
             >{l.label}</a>
           ))}
-          <a href={utm("/visualizer")}
+          <a href={utm("/visualizer")} onClick={()=>trackVisualizerCta("nav","/visualizer")}
             style={{padding:"9px 22px",background:C.accent,color:C.black,fontSize:11,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"background 0.2s",whiteSpace:"nowrap",textDecoration:"none",fontFamily:"'Outfit',sans-serif"}}
             onMouseEnter={e=>e.currentTarget.style.background=C.accentLight}
             onMouseLeave={e=>e.currentTarget.style.background=C.accent}
@@ -197,7 +198,7 @@ export default function SiteNav() {
               style={{padding:"16px 0",fontSize:18,letterSpacing:2,textTransform:"uppercase",color:C.mutedLight,fontFamily:"'Cormorant Garamond',serif",borderBottom:`1px solid ${C.border}`,textDecoration:"none"}}
             >{l.label}</a>
           ))}
-          <a href={utm("/visualizer")} onClick={()=>setMOpen(false)}
+          <a href={utm("/visualizer")} onClick={()=>{trackVisualizerCta("nav","/visualizer");setMOpen(false)}}
             style={{marginTop:24,padding:"16px",background:C.accent,color:C.black,fontSize:12,letterSpacing:2,textTransform:"uppercase",fontWeight:700,borderRadius:4,textAlign:"center",textDecoration:"none",fontFamily:"'Outfit',sans-serif"}}
           >Free Visualizer + Estimate</a>
         </div>

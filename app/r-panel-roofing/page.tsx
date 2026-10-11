@@ -157,7 +157,7 @@ export default function RPanelRoofingPage() {
               <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="cta-btn rpanel-cta-primary"
                 style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '15px 32px', color: C.black, fontSize: 12, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 600, borderRadius: 2, whiteSpace: 'nowrap', textDecoration: 'none' }}
               >Get a Free Consultation →</a>
-              <UtmLink href="/visualizer?roofType=r_panel" className="cta-btn rpanel-cta-secondary"
+              <UtmLink href="/visualizer?roofType=r_panel" ctaLocation="product_page" className="cta-btn rpanel-cta-secondary"
                 style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '15px 32px', background: 'transparent', color: C.white, fontSize: 12, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 600, borderRadius: 2, whiteSpace: 'nowrap', textDecoration: 'none' }}
               >See It On Your Home →</UtmLink>
             </div>

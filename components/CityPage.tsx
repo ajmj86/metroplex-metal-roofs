@@ -9,6 +9,7 @@ import Counter from '@/components/Counter'
 import StatItem from '@/components/StatItem'
 import { HERO_FOOTNOTE, STAT_FOOTNOTE } from '@/lib/landingPageFootnotes'
 import { useUtmHref } from '@/lib/useUtmHref'
+import { trackVisualizerCta } from '@/lib/analytics'
 import ProductGallery from '@/components/ProductGallery'
 import ProductsSection from '@/components/ProductsSection'
 import PricingTable from '@/components/PricingTable'
@@ -200,7 +201,7 @@ export default function CityPage({ city }: { city: CityData }) {
                   {city.heroSub}
                 </p>
                 <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', animation: 'fadeUp 0.7s ease 0.3s both' }}>
-                  <a href={utm("/visualizer")}
+                  <a href={utm("/visualizer")} onClick={()=>trackVisualizerCta("city_hero","/visualizer")}
                     style={{ padding: '15px 32px', background: C.accent, color: C.black, fontSize: 12, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 600, borderRadius: 2, transition: 'all 0.2s', whiteSpace: 'nowrap', textDecoration: 'none' }}
                     onMouseEnter={e => (e.currentTarget.style.background = C.accentLight)}
                     onMouseLeave={e => (e.currentTarget.style.background = C.accent)}
@@ -420,6 +421,7 @@ export default function CityPage({ city }: { city: CityData }) {
                     const linkProps = s.href ? {
                       href: utm(s.href),
                       ...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {}),
+                      ...(s.href?.startsWith('/visualizer') ? { onClick: () => trackVisualizerCta('how_it_works', s.href as string) } : {}),
                       style: { textDecoration: 'none', display: 'block', height: '100%' },
                     } : { style: { height: '100%' } }
                     return (
@@ -592,7 +594,7 @@ export default function CityPage({ city }: { city: CityData }) {
                 See your home with a metal roof before you commit to anything. Satellite-based estimate. No obligation.
               </p>
               <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
-                <a href={utm("/visualizer")}
+                <a href={utm("/visualizer")} onClick={()=>trackVisualizerCta("city_bottom_cta","/visualizer")}
                   style={{ padding: '15px 36px', background: C.accent, color: C.black, fontSize: 12, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 600, borderRadius: 2, transition: 'all 0.2s', whiteSpace: 'nowrap', textDecoration: 'none' }}
                   onMouseEnter={e => (e.currentTarget.style.background = C.accentLight)}
                   onMouseLeave={e => (e.currentTarget.style.background = C.accent)}

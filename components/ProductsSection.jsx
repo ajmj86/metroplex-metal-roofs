@@ -26,6 +26,7 @@
 import { useState, useEffect, useRef } from "react";
 import { C } from "./brand";
 import { useUtmHref } from "@/lib/useUtmHref";
+import { trackVisualizerCta, trackGuideLinkClick } from "@/lib/analytics";
 import ProductGallery from "./ProductGallery";
 import {
   STANDING_SEAM_COLORS, R_PANEL_COLORS, STONE_COLORS, STONE_PROFILE_TILES, STONE_SHINGLE_TILES,
@@ -554,7 +555,7 @@ export default function ProductsSection({
           <span style={{color:C.white,fontWeight:600,fontSize:16}}>{modalItem?.name}</span>
         </div>
       )}
-      <a href={utm(swatchModalHref)} className="cta-btn"
+      <a href={utm(swatchModalHref)} onClick={()=>trackVisualizerCta("products_card",swatchModalHref)} className="cta-btn"
         style={{display:"inline-flex",alignItems:"center",gap:8,padding:"13px 26px",background:C.accent,color:C.black,fontSize:11,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"background 0.2s"}}
         onMouseEnter={e=>e.currentTarget.style.background=C.accentLight}
         onMouseLeave={e=>e.currentTarget.style.background=C.accent}
@@ -695,6 +696,7 @@ export default function ProductsSection({
                 <div style={{display:"flex",flexDirection:"column",height:"100%",minWidth:0}}>
                   <a
                     href={utm(materialVisualizerHref(activeTab))}
+                    onClick={()=>trackVisualizerCta("products_card",materialVisualizerHref(activeTab))}
                     style={{display:"block",overflow:"hidden",cursor:"pointer",flex:"0 0 auto",aspectRatio:"4 / 3",width:"100%"}}
                   >
                     <img
@@ -816,13 +818,13 @@ export default function ProductsSection({
                     @media (max-width:640px){.ps-cta-row{flex-direction:column;align-items:flex-start;gap:16px}.ps-guide-link{flex:0 0 auto;min-height:3em}}
                   `}</style>
                   <div className="ps-cta-row">
-                    <a href={utm(materialVisualizerHref(activeTab))} className="cta-btn"
+                    <a href={utm(materialVisualizerHref(activeTab))} onClick={()=>trackVisualizerCta("products_card",materialVisualizerHref(activeTab))} className="cta-btn"
                       style={{display:"inline-flex",alignItems:"center",justifyContent:"center",gap:8,padding:"14px 24px",background:C.accent,color:C.black,fontSize:11,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"background 0.2s",width:"fit-content"}}
                       onMouseEnter={e=>e.currentTarget.style.background=C.accentLight}
                       onMouseLeave={e=>e.currentTarget.style.background=C.accent}
                     >See it on your home →</a>
                     {productPageMap[activeTab] && (
-                      <a href={productPageMap[activeTab]} className="ps-guide-link"
+                      <a href={productPageMap[activeTab]} onClick={()=>trackGuideLinkClick(visualizerRoofTypeMap[activeTab] ?? activeTab)} className="ps-guide-link"
                         aria-label={`Learn more about ${guideLabelMap[activeTab]}`}
                         title={`Learn more about ${guideLabelMap[activeTab]}`}
                       >Learn more about <span style={{whiteSpace:"nowrap"}}>{guideLabelMap[activeTab]} →</span></a>

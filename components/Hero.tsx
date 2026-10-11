@@ -26,6 +26,7 @@ export default function Hero({
   subhead,
   ctaLabel,
   ctaHref,
+  ctaLocation,
   microcopy,
   trustBullets,
   trustBulletFootnote,
@@ -37,6 +38,7 @@ export default function Hero({
   subhead: string
   ctaLabel: string
   ctaHref: string
+  ctaLocation?: string
   microcopy?: string
   trustBullets?: string[]
   trustBulletFootnote?: string
@@ -78,7 +80,7 @@ export default function Hero({
         <p style={{ ...HERO_SUBHEAD_STYLE, animation: 'fadeUp 0.8s ease 0.2s both' }}>{subhead}</p>
 
         <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'center', animation: 'fadeUp 0.8s ease 0.3s both' }}>
-          <LandingCTAButton label={ctaLabel} href={ctaHref} />
+          <LandingCTAButton label={ctaLabel} href={ctaHref} location={ctaLocation} />
         </div>
 
         {microcopy && (

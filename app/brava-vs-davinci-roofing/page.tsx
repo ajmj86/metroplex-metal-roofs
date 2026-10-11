@@ -209,7 +209,7 @@ export default function BravaVsDaVinciPage() {
               Here are the published specifications from each manufacturer, laid out side by side so you can compare them on the facts.
             </p>
             <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'center' }}>
-              <UtmLink href="/visualizer" className="cta-btn cmp-cta-primary"
+              <UtmLink href="/visualizer" ctaLocation="comparison_page" className="cta-btn cmp-cta-primary"
                 style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '15px 32px', color: C.black, fontSize: 12, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 600, borderRadius: 2, whiteSpace: 'nowrap', textDecoration: 'none' }}
               >See Brava on Your Home →</UtmLink>
             </div>
@@ -290,7 +290,7 @@ export default function BravaVsDaVinciPage() {
                   <div style={{ fontSize: 12, letterSpacing: 1.5, textTransform: 'uppercase', color: C.accent, marginBottom: 10, fontWeight: 600 }}>{item.label}</div>
                   <p style={{ fontSize: 14, color: C.mutedLight, lineHeight: 1.75, margin: 0 }}>{item.val}</p>
                   {item.link && (
-                    <UtmLink href="/visualizer" style={{ display: 'inline-block', marginTop: 14, fontSize: 12, color: C.accent, letterSpacing: 1.5, textTransform: 'uppercase', textDecoration: 'underline' }}>
+                    <UtmLink href="/visualizer" ctaLocation="comparison_page" style={{ display: 'inline-block', marginTop: 14, fontSize: 12, color: C.accent, letterSpacing: 1.5, textTransform: 'uppercase', textDecoration: 'underline' }}>
                       Try the Free Roof Visualizer →
                     </UtmLink>
                   )}
@@ -325,7 +325,7 @@ export default function BravaVsDaVinciPage() {
               Render your home with Brava Slate, Cedar Shake, or Spanish Barrel Tile, then talk through the specifications with our team. No pressure, no obligation.
             </p>
             <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', justifyContent: 'center' }}>
-              <UtmLink href="/visualizer" className="cta-btn cmp-cta-primary"
+              <UtmLink href="/visualizer" ctaLocation="comparison_page" className="cta-btn cmp-cta-primary"
                 style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '15px 32px', color: C.black, fontSize: 12, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 600, borderRadius: 2, whiteSpace: 'nowrap', textDecoration: 'none' }}
               >Get Your Roof Rendering & Estimate →</UtmLink>
               <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="cta-btn cmp-cta-secondary"

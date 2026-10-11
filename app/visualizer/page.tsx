@@ -890,7 +890,7 @@ export default function VisualizerPage() {
       trackEvent('visualizer_lead_failed', { roof_type: selType || '' })
       return
     }
-    trackEvent('visualizer_lead_submitted', { roof_type: selType || '' })
+    trackEvent('visualizer_lead_submitted', { roof_type: selType || '', product: selType || 'none' })
 
     // Case B only (returning contact, different address — see the
     // welcome-back / "not this property" flow): n8n's own opportunity

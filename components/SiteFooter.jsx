@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { C, LEGAL_ENTITY, DBA_NAME, YEAR, Logo } from "./brand";
 import { useUtmHref } from "@/lib/useUtmHref";
+import { trackVisualizerCta } from "@/lib/analytics";
 
 export function SiteFooter({ setActiveTab = () => {}, setPage = null }) {
   const utm = useUtmHref();   // the footer "Free Roof Visualizer" link is a CTA: carry the stored UTMs
@@ -70,7 +71,7 @@ export function SiteFooter({ setActiveTab = () => {}, setPage = null }) {
                   onMouseLeave:(e)=>e.currentTarget.style.color=C.muted,
                 };
                 if (fl?.href?.startsWith("/") && !fl.onClick) {
-                  return <Link key={l} href={fl.href.startsWith("/visualizer") ? utm(fl.href) : fl.href} style={linkStyle} {...hoverProps}>{l}</Link>;
+                  return <Link key={l} href={fl.href.startsWith("/visualizer") ? utm(fl.href) : fl.href} onClick={fl.href.startsWith("/visualizer") ? ()=>trackVisualizerCta("footer",fl.href) : undefined} style={linkStyle} {...hoverProps}>{l}</Link>;
                 }
                 return (
                   <a key={l} href={fl?.href ?? "#"}

@@ -14,3 +14,18 @@ export function trackEvent(name: string, params?: Record<string, unknown>) {
     : params
   gtag('event', name, withVariant)
 }
+
+// Marketing-site click events. Built on trackEvent so they share its no-op guard.
+// product is the roofType the link carries ("none" if it carries none); never
+// any visitor-entered data.
+export function trackVisualizerCta(location: string, href: string) {
+  if (typeof window === 'undefined') return
+  let product = 'none'
+  try { product = new URL(href, 'https://x.invalid').searchParams.get('roofType') || 'none' } catch { /* keep "none" */ }
+  trackEvent('visualizer_cta_click', { location, product, page_path: window.location.pathname })
+}
+
+export function trackGuideLinkClick(product: string) {
+  if (typeof window === 'undefined') return
+  trackEvent('guide_link_click', { product, page_path: window.location.pathname })
+}
