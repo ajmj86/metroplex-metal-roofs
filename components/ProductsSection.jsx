@@ -408,6 +408,15 @@ export default function ProductsSection({
 
   const activeType = [...roofTypes, ...bravaStyles].find(t=>t.id===activeTab);
   const groupTypes = materialType === "metal" ? roofTypes : bravaStyles;
+  // Under 768px the sub-tab strip is one horizontally scrolling row; keep the
+  // active tab in view. Scrolls the strip itself, never the page.
+  const subTabsRef = useRef(null);
+  useEffect(() => {
+    const strip = subTabsRef.current;
+    const btn = strip?.querySelector('[data-active="true"]');
+    if (!strip || !btn || strip.scrollWidth <= strip.clientWidth) return;
+    strip.scrollTo({ left: Math.max(0, btn.offsetLeft - (strip.clientWidth - btn.offsetWidth) / 2), behavior: "smooth" });
+  }, [activeTab]);
   const [swatchModal, setSwatchModal] = useState(null); // { material, tileKey?, items, index } | null
   // Independent of swatchModal so it survives modal close (Back/Escape/backdrop) — see openStoneColorModal.
   const [stoneTileLevel, setStoneTileLevel] = useState("profiles"); // "profiles" | "shingle"
@@ -611,10 +620,17 @@ export default function ProductsSection({
                     >{MATERIAL_TYPE_DISPLAY_LABELS[mt]}</button>
                   ))}
                 </div>
-                {/* Tab strip: wraps on narrow screens instead of scrolling */}
-                <div style={{display:"flex",flexWrap:"wrap",border:`1px solid ${C.border}`,borderRadius:4,overflow:"hidden",flexShrink:0,maxWidth:"100%"}}>
+                {/* Tab strip: wraps from 768px up; under 768px one row that scrolls sideways (see .ps-subtabs) */}
+                <style>{`
+                  @media (max-width:767px){
+                    .ps-subtabs{flex-wrap:nowrap !important;overflow-x:auto !important;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+                    .ps-subtabs::-webkit-scrollbar{display:none}
+                    .ps-subtabs button{flex:0 0 auto;scroll-snap-align:start}
+                  }
+                `}</style>
+                <div ref={subTabsRef} className="ps-subtabs" style={{display:"flex",flexWrap:"wrap",border:`1px solid ${C.border}`,borderRadius:4,overflow:"hidden",flexShrink:0,maxWidth:"100%"}}>
                   {(materialType==="metal" ? roofTypes : bravaStyles).map(t=>(
-                    <button key={t.id} onClick={()=>setActiveTab(t.id)}
+                    <button key={t.id} data-active={activeTab===t.id} onClick={()=>setActiveTab(t.id)}
                       style={{padding:"9px 14px",fontSize:10,letterSpacing:1,textTransform:"uppercase",color:activeTab===t.id?C.black:C.muted,background:activeTab===t.id?C.accent:"transparent",borderRight:`1px solid ${C.border}`,transition:"all 0.2s",whiteSpace:"nowrap"}}
                     >{t.label}</button>
                   ))}
@@ -675,15 +691,6 @@ export default function ProductsSection({
                          * two-button toggle instead of tiles since there's
                          * no separate preview image per width tier here.
                          */}
-                        {BRAVA_TAB_IDS.includes(activeTab) && (
-                          <div aria-hidden={activeTab !== "slate" || undefined} style={{display:"flex",gap:8,marginBottom:16,visibility:activeTab === "slate" && slateHasWidthVariants ? "visible" : "hidden"}}>
-                            {["standard","multi"].map(w=>(
-                              <button key={w} tabIndex={activeTab === "slate" ? 0 : -1} onClick={()=>setSlateWidth(w)}
-                                style={{padding:"7px 14px",fontSize:10,letterSpacing:1,textTransform:"uppercase",color:slateWidth===w?C.black:C.muted,background:slateWidth===w?C.accent:"transparent",border:`1px solid ${slateWidth===w?C.accent:C.border}`,borderRadius:4,cursor:"pointer",transition:"all 0.2s",whiteSpace:"nowrap"}}
-                              >{w==="standard" ? "Standard Slate" : "Multi-Width Slate"}</button>
-                            ))}
-                          </div>
-                        )}
                         <div style={{display:"flex",alignItems:"flex-start",gap:10,overflowX:"auto",flex:"0 0 auto",padding:"12px 12px 14px",margin:"-12px -12px -14px"}}>
                           {swatchChips.map((chip,i)=>(
                             <SwatchChip key={chip.src || chip.hex || `${chip.name}-${i}`} chip={chip} onClick={()=>openSwatchModal(activeTab, chip)}/>
@@ -692,12 +699,25 @@ export default function ProductsSection({
                             <SwatchChip label={`+${swatchOverflow}`} onClick={()=>openSwatchModal(activeTab)}/>
                           )}
                         </div>
-                        <div style={{marginTop:"auto",paddingTop:18,minHeight:57}}><button
+                        <div className="ps-cap-wrap">
+                          {/* Slate-only Standard/Multi-Width toggle lives with the caption: beside it on wide
+                              blocks, above it otherwise. Only rendered when the tab has it, so no tab reserves space. */}
+                          {activeTab === "slate" && slateHasWidthVariants && (
+                            <div className="ps-width-toggle">
+                              {["standard","multi"].map(w=>(
+                                <button key={w} onClick={()=>setSlateWidth(w)}
+                                  style={{padding:"7px 14px",fontSize:10,letterSpacing:1,textTransform:"uppercase",color:slateWidth===w?C.black:C.muted,background:slateWidth===w?C.accent:"transparent",border:`1px solid ${slateWidth===w?C.accent:C.border}`,borderRadius:4,cursor:"pointer",transition:"all 0.2s",whiteSpace:"nowrap"}}
+                                >{w==="standard" ? "Standard Slate" : "Multi-Width Slate"}</button>
+                              ))}
+                            </div>
+                          )}
+                        <div style={{paddingTop:18,minHeight:57}}><button
                           onClick={()=>openSwatchModal(activeTab)}
                           style={{display:"block",fontSize:13,letterSpacing:0.6,color:C.muted,background:"none",border:"none",padding:0,cursor:"pointer",textAlign:"left",transition:"color 0.2s"}}
                           onMouseEnter={e=>e.currentTarget.style.color=C.mutedLight}
                           onMouseLeave={e=>e.currentTarget.style.color=C.muted}
                         >{swatchData.caption(swatchData.full.length)}</button></div>
+                        </div>
                       </>
                     )}
                   </div>
@@ -735,6 +755,9 @@ export default function ProductsSection({
                   </div>
                   <style>{`
                     .ps-spec-grid{--ps-spec-row:67px}
+                    .ps-cap-wrap{margin-top:auto;position:relative}
+                    .ps-width-toggle{display:flex;gap:8px;margin-bottom:-10px}
+                    @media (min-width:768px) and (max-width:1024px),(min-width:1280px){.ps-width-toggle{position:absolute;right:0;top:12px;margin:0}}
                     .ps-swatch-block{display:flex;flex-direction:column;flex:0 0 auto;height:254px;overflow:hidden}
                     @media (max-width:640px){.ps-swatch-block{height:240px}}
                     .ps-cta-row{display:flex;flex-direction:row;align-items:center;flex-wrap:nowrap;gap:14px 28px}
