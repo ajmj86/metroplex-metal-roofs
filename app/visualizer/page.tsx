@@ -656,6 +656,7 @@ export default function VisualizerPage() {
     if (!address.trim()) { setAddrError('Please enter your home address.'); return }
     setAddrError(''); setLocating(true)
     trackEvent('visualizer_address_selected', { method: addressComponents ? 'places' : 'plain_text' })
+    trackEvent('visualizer_address_submitted', { method: addressComponents ? 'places' : 'plain_text' })
     try {
       const res = await fetch('/api/resolve-image', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
