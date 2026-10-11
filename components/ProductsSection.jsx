@@ -411,6 +411,29 @@ export default function ProductsSection({
   // Under 768px the sub-tab strip is one horizontally scrolling row; keep the
   // active tab in view. Scrolls the strip itself, never the page.
   const subTabsRef = useRef(null);
+  // Edge fades / chevrons for that row: shown only while there is more to scroll that way.
+  const [subScroll, setSubScroll] = useState({ left: false, right: false });
+  useEffect(() => {
+    const strip = subTabsRef.current;
+    if (!strip) return;
+    const update = () => {
+      const max = strip.scrollWidth - strip.clientWidth;
+      setSubScroll(prev => {
+        const next = { left: strip.scrollLeft > 4, right: strip.scrollLeft < max - 4 };
+        return prev.left === next.left && prev.right === next.right ? prev : next;
+      });
+    };
+    update();
+    strip.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => { strip.removeEventListener("scroll", update); window.removeEventListener("resize", update); };
+  }, [materialType]);
+  const nudgeSubTabs = (dir) => {
+    const strip = subTabsRef.current;
+    if (!strip) return;
+    const w = strip.querySelector("button")?.offsetWidth ?? 120;
+    strip.scrollBy({ left: dir * w, behavior: "smooth" });
+  };
   useEffect(() => {
     const strip = subTabsRef.current;
     const btn = strip?.querySelector('[data-active="true"]');
@@ -625,15 +648,29 @@ export default function ProductsSection({
                   @media (max-width:767px){
                     .ps-subtabs{flex-wrap:nowrap !important;overflow-x:auto !important;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
                     .ps-subtabs::-webkit-scrollbar{display:none}
-                    .ps-subtabs button{flex:0 0 auto;scroll-snap-align:start}
+                    .ps-subtabs button{flex:0 0 auto;scroll-snap-align:start;padding:9px 11px !important}
                   }
+                  .ps-subtabs-wrap{position:relative;display:flex;max-width:100%;flex-shrink:0}
+                  .ps-subtabs-wrap .ps-subtabs{min-width:0}
+                  .ps-subtabs-wrap .ps-fade,.ps-subtabs-wrap .ps-chev{display:none;position:absolute;top:1px;bottom:1px}
+                  .ps-fade{width:40px;pointer-events:none;z-index:1}
+                  .ps-fade-r{right:1px;background:linear-gradient(to left,${C.surface} 25%,rgba(17,17,19,0))}
+                  .ps-fade-l{left:1px;background:linear-gradient(to right,${C.surface} 25%,rgba(17,17,19,0))}
+                  .ps-chev{width:26px;z-index:2;padding:0 0 2px;background:none;border:none;color:${C.accent};font-size:20px;line-height:1;cursor:pointer}
+                  .ps-chev-r{right:1px}
+                  .ps-chev-l{left:1px}
+                  @media (max-width:767px){.ps-subtabs-wrap .ps-fade,.ps-subtabs-wrap .ps-chev{display:block}}
                 `}</style>
+                <div className="ps-subtabs-wrap">
                 <div ref={subTabsRef} className="ps-subtabs" style={{display:"flex",flexWrap:"wrap",border:`1px solid ${C.border}`,borderRadius:4,overflow:"hidden",flexShrink:0,maxWidth:"100%"}}>
                   {(materialType==="metal" ? roofTypes : bravaStyles).map(t=>(
                     <button key={t.id} data-active={activeTab===t.id} onClick={()=>setActiveTab(t.id)}
                       style={{padding:"9px 14px",fontSize:10,letterSpacing:1,textTransform:"uppercase",color:activeTab===t.id?C.black:C.muted,background:activeTab===t.id?C.accent:"transparent",borderRight:`1px solid ${C.border}`,transition:"all 0.2s",whiteSpace:"nowrap"}}
                     >{t.label}</button>
                   ))}
+                </div>
+                {subScroll.left && <><div className="ps-fade ps-fade-l" aria-hidden="true"/><button type="button" className="ps-chev ps-chev-l" aria-label="Previous options" onClick={()=>nudgeSubTabs(-1)}>‹</button></>}
+                {subScroll.right && <><div className="ps-fade ps-fade-r" aria-hidden="true"/><button type="button" className="ps-chev ps-chev-r" aria-label="More options" onClick={()=>nudgeSubTabs(1)}>›</button></>}
                 </div>
               </div>
             </div>
