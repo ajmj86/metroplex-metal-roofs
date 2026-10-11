@@ -646,16 +646,16 @@ export default function ProductsSection({
                 {/* Tab strip: wraps from 768px up; under 768px one row that scrolls sideways (see .ps-subtabs) */}
                 <style>{`
                   @media (max-width:767px){
-                    .ps-subtabs{flex-wrap:nowrap !important;overflow-x:auto !important;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+                    .ps-subtabs{flex-wrap:nowrap !important;overflow-x:auto !important;scroll-snap-type:x proximity;overscroll-behavior-x:none;scrollbar-width:none;-webkit-overflow-scrolling:touch}
                     .ps-subtabs::-webkit-scrollbar{display:none}
                     .ps-subtabs button{flex:0 0 auto;scroll-snap-align:start;padding:9px 11px !important}
                   }
                   .ps-subtabs-wrap{position:relative;display:flex;max-width:100%;flex-shrink:0}
                   .ps-subtabs-wrap .ps-subtabs{min-width:0}
                   .ps-subtabs-wrap .ps-fade,.ps-subtabs-wrap .ps-chev{display:none;position:absolute;top:1px;bottom:1px}
-                  .ps-fade{width:40px;pointer-events:none;z-index:1}
-                  .ps-fade-r{right:1px;background:linear-gradient(to left,${C.surface} 25%,rgba(17,17,19,0))}
-                  .ps-fade-l{left:1px;background:linear-gradient(to right,${C.surface} 25%,rgba(17,17,19,0))}
+                  .ps-fade{width:56px;pointer-events:none;z-index:1}
+                  .ps-fade-r{right:1px;background:linear-gradient(to left,${C.surface} 0,${C.surface} 48%,rgba(17,17,19,0))}
+                  .ps-fade-l{left:1px;background:linear-gradient(to right,${C.surface} 0,${C.surface} 48%,rgba(17,17,19,0))}
                   .ps-chev{width:26px;z-index:2;padding:0 0 2px;background:none;border:none;color:${C.accent};font-size:20px;line-height:1;cursor:pointer}
                   .ps-chev-r{right:1px}
                   .ps-chev-l{left:1px}
