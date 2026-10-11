@@ -412,27 +412,38 @@ export default function ProductsSection({
   // active tab in view. Scrolls the strip itself, never the page.
   const subTabsRef = useRef(null);
   // Edge fades / chevrons for that row: shown only while there is more to scroll that way.
-  const [subScroll, setSubScroll] = useState({ left: false, right: false });
+  const [subScroll, setSubScroll] = useState({ left: false, right: false, activeL: false, activeR: false });
   useEffect(() => {
     const strip = subTabsRef.current;
     if (!strip) return;
     const update = () => {
       const max = strip.scrollWidth - strip.clientWidth;
+      // Whether the active tab sits under a chevron, so the glyph can switch to a dark color.
+      const sr = strip.getBoundingClientRect();
+      const ab = strip.querySelector('[data-active="true"]')?.getBoundingClientRect();
       setSubScroll(prev => {
-        const next = { left: strip.scrollLeft > 4, right: strip.scrollLeft < max - 4 };
-        return prev.left === next.left && prev.right === next.right ? prev : next;
+        const next = {
+          left: strip.scrollLeft > 4,
+          right: strip.scrollLeft < max - 4,
+          activeL: !!ab && ab.left < sr.left + 30 && ab.right > sr.left,
+          activeR: !!ab && ab.right > sr.right - 30 && ab.left < sr.right,
+        };
+        return Object.keys(next).every(k => prev[k] === next[k]) ? prev : next;
       });
     };
     update();
     strip.addEventListener("scroll", update, { passive: true });
     window.addEventListener("resize", update);
     return () => { strip.removeEventListener("scroll", update); window.removeEventListener("resize", update); };
-  }, [materialType]);
+  }, [materialType, activeTab]);
   const nudgeSubTabs = (dir) => {
     const strip = subTabsRef.current;
     if (!strip) return;
     const w = strip.querySelector("button")?.offsetWidth ?? 120;
-    strip.scrollBy({ left: dir * w, behavior: "smooth" });
+    // Clamp to the real scroll range: an unclamped target made iOS scroll past the ends and show an empty box.
+    const max = Math.max(0, strip.scrollWidth - strip.clientWidth);
+    const target = Math.max(0, Math.min(strip.scrollLeft + dir * w, max));
+    strip.scrollTo({ left: target, behavior: "smooth" });
   };
   useEffect(() => {
     const strip = subTabsRef.current;
@@ -648,7 +659,8 @@ export default function ProductsSection({
                   @media (max-width:767px){
                     .ps-subtabs{flex-wrap:nowrap !important;overflow-x:auto !important;scroll-snap-type:x proximity;overscroll-behavior-x:none;scrollbar-width:none;-webkit-overflow-scrolling:touch}
                     .ps-subtabs::-webkit-scrollbar{display:none}
-                    .ps-subtabs button{flex:0 0 auto;scroll-snap-align:start;padding:9px 11px !important}
+                    .ps-subtabs button{flex:0 0 auto;scroll-snap-align:start;padding:9px 11px !important;position:relative}
+                    .ps-subtabs button[data-active="true"]{z-index:2}
                   }
                   .ps-subtabs-wrap{position:relative;display:flex;max-width:100%;flex-shrink:0}
                   .ps-subtabs-wrap .ps-subtabs{min-width:0}
@@ -656,8 +668,9 @@ export default function ProductsSection({
                   .ps-fade{width:56px;pointer-events:none;z-index:1}
                   .ps-fade-r{right:1px;background:linear-gradient(to left,${C.surface} 0,${C.surface} 48%,rgba(17,17,19,0))}
                   .ps-fade-l{left:1px;background:linear-gradient(to right,${C.surface} 0,${C.surface} 48%,rgba(17,17,19,0))}
-                  .ps-chev{width:26px;z-index:2;padding:0 0 2px;background:none;border:none;color:${C.accent};font-size:20px;line-height:1;cursor:pointer}
+                  .ps-chev{width:26px;z-index:3;padding:0 0 2px;background:none;border:none;color:${C.accent};font-size:20px;line-height:1;cursor:pointer}
                   .ps-chev-r{right:1px}
+                  .ps-chev-dark{color:${C.black}}
                   .ps-chev-l{left:1px}
                   @media (max-width:767px){.ps-subtabs-wrap .ps-fade,.ps-subtabs-wrap .ps-chev{display:block}}
                 `}</style>
@@ -669,8 +682,8 @@ export default function ProductsSection({
                     >{t.label}</button>
                   ))}
                 </div>
-                {subScroll.left && <><div className="ps-fade ps-fade-l" aria-hidden="true"/><button type="button" className="ps-chev ps-chev-l" aria-label="Previous options" onClick={()=>nudgeSubTabs(-1)}>‹</button></>}
-                {subScroll.right && <><div className="ps-fade ps-fade-r" aria-hidden="true"/><button type="button" className="ps-chev ps-chev-r" aria-label="More options" onClick={()=>nudgeSubTabs(1)}>›</button></>}
+                {subScroll.left && <><div className="ps-fade ps-fade-l" aria-hidden="true"/><button type="button" className={`ps-chev ps-chev-l${subScroll.activeL ? " ps-chev-dark" : ""}`} aria-label="Previous options" onClick={()=>nudgeSubTabs(-1)}>‹</button></>}
+                {subScroll.right && <><div className="ps-fade ps-fade-r" aria-hidden="true"/><button type="button" className={`ps-chev ps-chev-r${subScroll.activeR ? " ps-chev-dark" : ""}`} aria-label="More options" onClick={()=>nudgeSubTabs(1)}>›</button></>}
                 </div>
               </div>
             </div>
