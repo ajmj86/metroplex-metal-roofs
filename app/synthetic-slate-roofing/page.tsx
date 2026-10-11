@@ -301,7 +301,7 @@ export default function SyntheticSlateRoofingPage() {
               <p style={{ fontSize: 14, color: C.mutedLight, lineHeight: 1.7, margin: 0, flex: 1, minWidth: 240 }}>
                 All three Brava profiles (Spanish Barrel Tile, Cedar Shake, and Slate) are live in our Free Roof Visualizer, so you can see each one rendered on your own home before you decide.
               </p>
-              <UtmLink href="/visualizer" style={{ fontSize: 12, color: C.accent, letterSpacing: 1, textTransform: 'uppercase', textDecoration: 'underline', whiteSpace: 'nowrap', flexShrink: 0 }}>See it on your home →</UtmLink>
+              <UtmLink href="/visualizer" ctaLocation="product_page" style={{ fontSize: 12, color: C.accent, letterSpacing: 1, textTransform: 'uppercase', textDecoration: 'underline', whiteSpace: 'nowrap', flexShrink: 0 }}>See it on your home →</UtmLink>
             </div>
           </div>
         </section>

@@ -656,6 +656,7 @@ export default function VisualizerPage() {
     if (!address.trim()) { setAddrError('Please enter your home address.'); return }
     setAddrError(''); setLocating(true)
     trackEvent('visualizer_address_selected', { method: addressComponents ? 'places' : 'plain_text' })
+    trackEvent('visualizer_address_submitted', { method: addressComponents ? 'places' : 'plain_text' })
     try {
       const res = await fetch('/api/resolve-image', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
@@ -890,7 +891,7 @@ export default function VisualizerPage() {
       trackEvent('visualizer_lead_failed', { roof_type: selType || '' })
       return
     }
-    trackEvent('visualizer_lead_submitted', { roof_type: selType || '' })
+    trackEvent('visualizer_lead_submitted', { roof_type: selType || '', product: selType || 'none' })
 
     // Case B only (returning contact, different address — see the
     // welcome-back / "not this property" flow): n8n's own opportunity

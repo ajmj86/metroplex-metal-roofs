@@ -58,7 +58,7 @@ export default function PricingTable({
       </div>
       <p style={{ fontSize: 12, color: C.mutedLight, lineHeight: 1.7, marginTop: 16, maxWidth: 720 }}>
         *Rates are per sq ft of gross roofing material, which includes waste and overage (typically 10–30% depending on material and roof complexity). Get an estimate for your exact roof with our{' '}
-        <UtmLink href="/visualizer" style={{ color: C.accent, textDecoration: 'underline' }}>free visualizer</UtmLink>.
+        <UtmLink href="/visualizer" ctaLocation="pricing_table" style={{ color: C.accent, textDecoration: 'underline' }}>free visualizer</UtmLink>.
       </p>
       <p style={{ fontSize: 11, color: C.muted, lineHeight: 1.7, marginTop: 8, maxWidth: 720 }}>
         DFW-wide installed-cost ranges as of 2026, for material and labor combined. Actual cost depends on your roof&apos;s exact size, slope, tear-off needs, and site conditions.
@@ -68,6 +68,7 @@ export default function PricingTable({
       <style>{`.pt-cta:hover{background:${C.accentLight} !important}`}</style>
       <UtmLink
         href="/visualizer"
+        ctaLocation="pricing_table"
         className="cta-btn pt-cta"
         style={{
           display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 10, marginTop: 24,

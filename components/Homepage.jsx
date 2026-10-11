@@ -8,6 +8,7 @@ import Hero from '@/components/Hero'
 import StatItem from '@/components/StatItem'
 import { HERO_FOOTNOTE, STAT_FOOTNOTE } from '@/lib/landingPageFootnotes'
 import { useUtmHref } from '@/lib/useUtmHref'
+import { trackVisualizerCta } from '@/lib/analytics'
 import ProductGallery from '@/components/ProductGallery'
 import ProductsSection from '@/components/ProductsSection'
 import PricingTable from '@/components/PricingTable'
@@ -102,7 +103,7 @@ const Nav = ({ scrolled }) => {
               onMouseLeave={e=>e.currentTarget.style.color=C.mutedLight}
             >{l.label}</a>
           ))}
-          <a href={utm("/visualizer")} style={{padding:"9px 22px",background:C.accent,color:C.black,fontSize:11,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"background 0.2s",whiteSpace:"nowrap"}}
+          <a href={utm("/visualizer")} onClick={()=>trackVisualizerCta("nav","/visualizer")} style={{padding:"9px 22px",background:C.accent,color:C.black,fontSize:11,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"background 0.2s",whiteSpace:"nowrap"}}
             onMouseEnter={e=>e.currentTarget.style.background=C.accentLight}
             onMouseLeave={e=>e.currentTarget.style.background=C.accent}
           >Free Visualizer + Estimate</a>
@@ -188,7 +189,7 @@ const Nav = ({ scrolled }) => {
               style={{padding:"16px 0",fontSize:18,letterSpacing:2,textTransform:"uppercase",color:C.mutedLight,fontFamily:"'Cormorant Garamond',serif",borderBottom:`1px solid ${C.border}`}}
             >{l.label}</a>
           ))}
-          <a href={utm("/visualizer")} onClick={()=>setMOpen(false)} className="cta-btn" style={{marginTop:24,padding:"16px",background:C.accent,color:C.black,fontSize:12,letterSpacing:2,textTransform:"uppercase",fontWeight:700,borderRadius:4,textAlign:"center"}}>
+          <a href={utm("/visualizer")} onClick={()=>{trackVisualizerCta("nav","/visualizer");setMOpen(false)}} className="cta-btn" style={{marginTop:24,padding:"16px",background:C.accent,color:C.black,fontSize:12,letterSpacing:2,textTransform:"uppercase",fontWeight:700,borderRadius:4,textAlign:"center"}}>
             Free Visualizer + Estimate
           </a>
         </div>
@@ -432,6 +433,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
         subhead="For DFW homeowners done replacing their asphalt roof every decade."
         ctaLabel="See Your Home With Metal →"
         ctaHref="/visualizer"
+        ctaLocation="hero"
         microcopy="See your home in metal and get a free price range, no photo upload, no obligation."
         trustBullets={["50-Year Lifespan","Insurance Discount Eligible*","10-Year Workmanship Warranty"]}
         trustBulletFootnote={HERO_FOOTNOTE}
@@ -606,7 +608,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
                     For a home in the $700K–$1M range, the real question isn't whether you can afford metal or Brava, it's whether paying for asphalt again makes any sense at all.
                   </p>
                 </div>
-                <a href={utm("/visualizer")} className="cta-btn" style={{display:"inline-flex",alignItems:"center",gap:10,padding:"16px 32px",background:C.accent,color:C.black,fontSize:11,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"all 0.2s",whiteSpace:"nowrap",flexShrink:0}}
+                <a href={utm("/visualizer")} onClick={()=>trackVisualizerCta("homepage_mid_cta","/visualizer")} className="cta-btn" style={{display:"inline-flex",alignItems:"center",gap:10,padding:"16px 32px",background:C.accent,color:C.black,fontSize:11,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"all 0.2s",whiteSpace:"nowrap",flexShrink:0}}
                   onMouseEnter={e=>e.currentTarget.style.background=C.accentLight}
                   onMouseLeave={e=>e.currentTarget.style.background=C.accent}
                 >Get Your Roof Rendering & Estimate →</a>
@@ -689,7 +691,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
           <div className="grid-5" style={{gap:2}}>
             {steps.map((step,i)=>{
               const Tag = step.href ? 'a' : 'div';
-              const linkProps = step.href ? {href:utm(step.href),...(step.href.startsWith('http')?{target:"_blank",rel:"noopener noreferrer"}:{})} : {};
+              const linkProps = step.href ? {href:utm(step.href),...(step.href.startsWith('http')?{target:"_blank",rel:"noopener noreferrer"}:{}),...(step.href.startsWith("/visualizer")?{onClick:()=>trackVisualizerCta("how_it_works",step.href)}:{})} : {};
               return (
               <Reveal key={step.n} delay={i*0.09}>
                 <Tag {...linkProps} style={{padding:"40px 28px",background:C.card,border:`1px solid ${C.border}`,borderRadius:4,height:"100%",transition:"border-color 0.3s",...(step.href?{display:"block",textDecoration:"none"}:{})}}
@@ -951,7 +953,7 @@ const HomePage = ({ activeTab, setActiveTab }) => {
               We use satellite imagery to measure your roof's size, not a guess from the driveway. Your ballpark range gets refined into a firm number after your free on-site assessment, where we account for slope, roof levels, and every detail of your specific project.
             </p>
             <div style={{display:"flex",gap:14,justifyContent:"center",flexWrap:"wrap"}}>
-              <a href={utm("/visualizer")} className="cta-btn" style={{padding:"16px 36px",background:C.accent,color:C.black,fontSize:12,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"all 0.2s"}}
+              <a href={utm("/visualizer")} onClick={()=>trackVisualizerCta("homepage_bottom_cta","/visualizer")} className="cta-btn" style={{padding:"16px 36px",background:C.accent,color:C.black,fontSize:12,letterSpacing:2,textTransform:"uppercase",fontWeight:600,borderRadius:2,transition:"all 0.2s"}}
                 onMouseEnter={e=>e.currentTarget.style.background=C.accentLight}
                 onMouseLeave={e=>e.currentTarget.style.background=C.accent}
               >Get Your Roof Rendering & Estimate →</a>
